@@ -18,7 +18,7 @@ var getRandomDots = function (element, x, y) {
   	  randomDots = [
   					 [-30, -30], 
   					 [-30, element.height+30],
-  					 [element.width+30, 0],
+  					 [element.width+30, -30],
   					 [element.width+30, element.height+30]
   				   ];
     
