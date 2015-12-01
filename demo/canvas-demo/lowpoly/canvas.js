@@ -16,10 +16,10 @@ var getRandomDots = function (element, x, y) {
   var blockWidth = element.width/x,
       blockHeight = element.height/y,
   	  randomDots = [
-  					 [-30, -30], 
-  					 [-30, element.height+30],
-  					 [element.width+30, -30],
-  					 [element.width+30, element.height+30]
+  					 [0, 0], 
+  					 [0, element.height],
+  					 [element.width, 0],
+  					 [element.width, element.height]
   				   ];
     
   for (var i = 0; i < x; i++) {
