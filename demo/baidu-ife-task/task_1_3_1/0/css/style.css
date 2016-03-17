@@ -1,0 +1,41 @@
+* {
+	margin: 0;
+	padding: 0;
+	outline: 1px solid #999;
+}
+h1, p, .left, .medium, .right {
+	outline: none;
+}
+h1 {
+	margin: 20px 0;
+}
+p {
+	margin-top: 20px;
+	line-height: 1.5em;
+}
+img {
+	width: 80px;
+	height: 80px;
+}
+img:not(:first-child) {
+	margin-top: 20px;
+}
+body, .container, .left-wrapper, .medium-wrapper, .right-wrapper {
+	padding: 20px;
+	background-color: #fff;
+}
+.container {
+	display: flex;
+	background-color: #eee;
+}
+.left {
+	min-width: 200px;
+}
+.medium {
+	width: 100%;
+	margin: 0 20px;
+}
+.right {
+	width: 120px;
+}
+
