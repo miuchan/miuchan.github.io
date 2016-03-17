@@ -1,0 +1,45 @@
+* {
+	margin: 0;
+	padding: 0;
+	outline: 1px solid #999;
+}
+h1, p {
+	outline: none;
+}
+h1 {
+	margin: 20px 0;
+}
+p {
+	margin-top: 20px;
+	line-height: 1.5em;
+}
+img {
+	width: 80px;
+	height: 80px;
+}
+img:not(:first-child) {
+	margin-top: 20px;
+}
+body, .container, .left, .medium, .right {
+	padding: 20px;
+	background-color: #fff;
+}
+.container {
+	background-color: #eee;
+	overflow: hidden;
+}
+.left {
+	float: left;
+	min-width: 160px;
+}
+.medium {
+	float: left;
+	width: calc(100% - 400px);
+	margin-left: 20px;
+	margin-right: 20px;
+}
+.right {
+	float: left;
+	width: 80px;
+}
+
