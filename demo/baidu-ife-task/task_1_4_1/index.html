@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>task_1_4_1</title>
+    <style>
+    .box {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        height: 200px;
+        width: 400px;
+        margin-top: -100px;
+        margin-left: -200px;
+        background-color: #ccc;
+        overflow: hidden;
+    }
+
+    .sector {
+        position: absolute;
+        height: 100px;
+        width: 100px;
+        border-radius: 50%;
+        background-color: #fc0;
+    }
+
+    .sector-lt {
+        left: -50px;
+        top: -50px;
+    }
+
+    .sector-rb {
+        right: -50px;
+        bottom: -50px;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div class="sector sector-lt"></div>
+        <div class="sector sector-rb"></div>
+    </div>
+</body>
+
+</html>
