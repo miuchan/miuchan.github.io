@@ -1,0 +1,380 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font: 12px/16px "微软雅黑", sans-serif;
+}
+
+.clearfix:before,
+.clearfix:after {
+    content: "";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+.wrapper {
+    width: 892px;
+    height: 1386px;
+    padding: 0 44px;
+    margin: 0 auto;
+}
+
+
+/* header */
+
+.header {
+    border-bottom: 2px solid #938e8c;
+    font-family: "黑体";
+    font-size: 12px;
+    overflow: hidden;
+}
+
+.header-logo {
+    float: left;
+    width: 104px;
+    padding: 44px 0 3px 5px;
+    color: #fff;
+    background-color: #d45d5c;
+}
+
+.header-time {
+    float: right;
+    color: #d45d5c;
+    padding: 44px 0 3px 0;
+}
+
+
+/* main */
+
+main>section {
+    margin: 34px 0;
+}
+
+.banner-img {
+    float: left;
+    position: relative;
+    width: 641px;
+    height: 301px;
+}
+
+.banner .left-mask,
+.banner .right-mask {
+    position: absolute;
+    width: 191px;
+    height: 301px;
+}
+
+.banner .left-mask {
+    left: 0;
+    top: 0;
+    background-color: rgba(65, 140, 89, .5);
+}
+
+.banner .right-mask {
+    right: 0;
+    top: 0;
+    background-color: rgba(204, 118, 128, .5);
+}
+
+.about {
+    float: right;
+    width: 203px;
+    border-top: 2px solid #cc8091;
+}
+
+.about-head {
+    font-size: 24px;
+    font-weight: lighter;
+    font-variant: small-caps;
+    line-height: 30px;
+    text-transform: capitalize;
+    text-decoration: underline;
+}
+
+.about-subhead {
+    font-size: 12px;
+    font-family: "楷体";
+    font-style: italic;
+    color: #676767;
+    line-height: 10px;
+}
+
+.p-700 {
+    margin-left: -20px;
+    font-size: 116px;
+    line-height: 150px;
+    font-style: italic;
+    color: #75b86b;
+}
+
+.p-3 {
+    float: left;
+    font-size: 55px;
+    line-height: 72px;
+    color: #cc8091;
+    margin-left: 10px;
+}
+
+.css {
+    font-size: 21px;
+    line-height: 21px;
+    margin-top: 26px;
+    color: #cc8091;
+}
+
+.subcss {
+    line-height: 12px;
+    color: #676767;
+}
+
+.help {
+    display: flex;
+    width: 641px;
+}
+
+.what {
+    width: 34%;
+    color: #418c59;
+}
+
+.when {
+    width: 30%;
+    margin: 0 30px;
+    color: #d2994f;
+}
+
+.how {
+    width: 25%;
+    color: #cc7680;
+}
+
+.help-head {
+    padding: 10px 0;
+    font-size: 16px;
+    text-decoration: underline;
+}
+
+.help-body {
+    font: "宋体";
+    color: #767777;
+}
+
+.percent {
+    margin-top: 30px;
+    font-size: 12px;
+    line-height: 22px;
+    color: #767777;
+}
+
+.percent span {
+    color: rgba(205, 74, 72, .7);
+    font-style: italic;
+}
+
+.bottom {
+    margin-top: 40px;
+}
+
+.bottom-left {
+    float: left;
+    width: 415px;
+    overflow: hidden;
+}
+
+.bottom-left .title {
+    margin: 30px 0;
+    font-family: "黑体";
+    color: #11456b;
+    border-bottom: 2px solid #11456b;
+}
+
+.title-en {
+    font-size: 42px;
+    text-transform: uppercase;
+    line-height: 40px;
+}
+
+.title-hans {
+    font-size: 33px;
+    line-height: 60px;
+}
+
+.title-en span {
+    font-size: 72px;
+    font-style: italic;
+    color: #f5e327;
+}
+
+.content {
+    color: #676767;
+}
+
+.content p:not(:first-child) {
+    text-indent: 2em;
+}
+
+.content p span {
+    display: block;
+    float: left;
+    font-size: 70px;
+    line-height: 70px;
+    padding-right: 5px;
+    color: #f5e327;
+}
+
+.article-img {
+    float: right;
+    padding: 16px 10px 16px 16px;
+}
+
+.bottom-right {
+    float: right;
+    width: 458px;
+}
+
+.bottom-right .title {
+    position: relative;
+    width: 458px;
+    height: 257px;
+    margin: 30px 0;
+}
+
+.bottom-right .title-text {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    height: 61px;
+    background-color: rgba(4, 0, 0, .4);
+}
+
+.bottom-right .title-text h2 {
+    position: relative;
+    top: 50%;
+    margin-top: -22px;
+    margin-left: 40px;
+    line-height: 24px;
+    padding: 10px;
+    color: #fff;
+    border-left: 3px solid #72b16a;
+}
+
+.bottom-right .title-text h2 span {
+    padding-left: 10px;
+    font-size: 12px;
+    font-style: italic;
+    color: #72b16a;
+}
+
+.br-bottom {
+    position: relative;
+    width: 459px;
+    height: 318px;
+    margin-top: 30px;
+    padding: 10px;
+    background-color: #eeedd6;
+    box-sizing: border-box;
+}
+
+.list {
+    margin: 10px 0 20px 30px;
+    font-size: 16px;
+    font-family: "宋体";
+    line-height: 40px;
+    list-style: url(../images/list-dec.png);
+    color: #5a5b5b;
+}
+
+.list span {
+    font-size: 12px;
+    font-style: italic;
+}
+
+.number {
+    position: absolute;
+    box-sizing: border-box;
+    left: 0;
+    bottom: 0;
+    width: 260px;
+    height: 160px;
+    padding: 25px 5px;
+    font-family: "黑体";
+    color: #fff;
+    background-color: #d45d5c;
+}
+
+.zero {
+    float: left;
+    display: block;
+    font-size: 110px;
+    font-family: "微软雅黑";
+    line-height: 110px;
+}
+
+.onetwo {
+    position: relative;
+    height: 86px;
+    top: 50%;
+    margin-top: -43px;
+    margin-left: 70px;
+    padding-left: 5px;
+    border-left: 2px solid #fff;
+    box-sizing: border-box;
+}
+
+.onetwo-num {
+    font-size: 21px;
+    line-height: 24px;
+    text-transform: uppercase;
+    font-style: italic;
+}
+
+.hello {
+    position: relative;
+    display: block;
+    margin-top: 40px;
+    margin-left: 270px;
+    font-size: 14px;
+    font-family: "黑体";
+    color: #5a5b5b;
+}
+
+.quot-l,
+.quot-r {
+    position: relative;
+    display: block;
+    font-size: 72px;
+    line-height: 72px;
+    height: 36px;
+    width: 34px;
+    color: #d45d5c;
+}
+
+.quot-l {
+    float: left;
+    left: -40px;
+    margin-top: -20px;
+}
+
+.quot-r {
+    float: right;
+    left: -8px;
+}
+
+
+/* footer */
+
+.footer {
+    border-top: 1px solid #938e8c;
+}
+
+.footer p {
+    float: right;
+    font-family: "黑体";
+    color: #d45d5c;
+}
