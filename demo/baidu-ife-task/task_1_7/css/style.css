@@ -1,0 +1,757 @@
+body,
+p,
+ul {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    font: 14px/16px "微软雅黑", sans-serif;
+    color: #fff;
+}
+
+a {
+    text-decoration: none;
+}
+
+hr {
+    height: 2px;
+    width: 30px;
+    border: none;
+    background-color: #fff;
+}
+
+input,
+textarea,
+button {
+    padding: 10px;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+}
+
+.btn-white {
+    color: #fff;
+}
+
+.btn-red {
+    color: #e7504d;
+}
+
+.btn-red:hover {
+    color: #fff;
+    background: #e7504d;
+    transition: .15s linear;
+}
+
+.btn-white:hover {
+    color: #e7504d;
+    background: #fff;
+    transition: .15s linear;
+}
+
+.clearfix:before,
+.clearfix:after {
+    content: "";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+.wrap {
+    min-width: 1280px;
+    overflow: hidden;
+}
+
+.header {
+    position: fixed;
+    height: 56px;
+    width: 100%;
+    min-width: 1280px;
+    background-color: #fff;
+    box-shadow: 0 0 3px rgba(0, 0, 0, .2);
+    z-index: 9;
+}
+
+.logo {
+    float: left;
+    margin-top: 13px;
+    margin-left: 60px;
+    font: 21px/31px "SimHei";
+    color: #393a3a;
+}
+
+.logo img {
+    float: left;
+    height: 31px;
+    width: 31px;
+    margin-right: 10px;
+}
+
+.nav {
+    float: right;
+}
+
+.nav a {
+    display: inline-block;
+    line-height: 50px;
+    margin-right: 20px;
+    padding: 0 18px 3px 18px;
+    color: #787b83;
+}
+
+.nav a.active,
+.nav a:hover {
+    color: #e74f4d;
+    border-bottom: 3px solid #e74f4d;
+}
+
+.login {
+    float: right;
+    margin-right: 60px;
+    padding-left: 1.4em;
+    line-height: 50px;
+    color: #e74f4d;
+    background: url(../images/login.png) left no-repeat;
+}
+
+
+/* banner */
+
+.banner {
+    height: 690px;
+    background: url(../images/banner.jpg) no-repeat;
+    background-size: cover;
+}
+
+.banner-wrap {
+    position: relative;
+    top: 40%;
+    margin-left: 10%;
+}
+
+.banner-wrap h1 {
+    font-size: 60px;
+    font-weight: lighter;
+}
+
+.banner-wrap p {
+    font-size: 21px;
+    line-height: 1.6em;
+}
+
+.banner-btn {
+    display: block;
+    width: 330px;
+    height: 66px;
+    margin-top: 65px;
+    text-align: center;
+    font-size: 30px;
+    line-height: 66px;
+    color: #fff;
+    background-color: #e7504d;
+}
+
+.banner-btn:hover {
+    background-color: #e87a78;
+    transition: .15s linear;
+}
+
+
+/* section-1 */
+
+.section-1 {
+    display: flex;
+    height: 250px;
+    font-family: "SimHei";
+    color: #767777;
+}
+
+.section-1>.box {
+    width: 25%;
+    text-align: center;
+}
+
+.section-1>.box>img {
+    margin: 50px auto;
+}
+
+.section-1>.box:not(:first-child)>div {
+    border-left: 1px solid #767777;
+}
+
+.section-1>.box p {
+    display: block;
+    width: 11em;
+    height: 4em;
+    margin: 0 auto;
+    line-height: 1.5em;
+}
+
+
+/* section-2 */
+
+.section-2 {
+    display: flex;
+    height: 360px;
+    text-align: center;
+    color: #a1a1a1;
+    background-color: #ececec;
+    box-sizing: border-box;
+}
+
+.section-2>.section-2-wrap {
+    margin: auto;
+}
+
+.section-2 img {
+    margin-bottom: 40px;
+}
+
+.section-2 h2 {
+    margin: 0;
+    font-size: 54px;
+    font-weight: normal;
+    line-height: 54px;
+}
+
+
+/* section-3 */
+
+.section-3 {
+    height: 340px;
+    text-align: center;
+    background: url(../images/map_bg.jpg) no-repeat;
+    background-size: cover;
+}
+
+.section-3 h2 {
+    display: inline-block;
+    margin-top: 50px;
+    margin-bottom: 5px;
+    font-size: 21px;
+    line-height: 21px;
+    font-weight: normal;
+}
+
+.section-3>p {
+    font-size: 12px;
+    margin-top: 20px;
+}
+
+.section-3>.search-box {
+    display: flex;
+    width: 1030px;
+    margin: 50px auto;
+}
+
+.section-3>.search-box>div,
+.section-3>.search-box>button {
+    margin: 0 auto;
+}
+
+.section-3 .select {
+    position: relative;
+    height: 35px;
+    width: 236px;
+    background: url(../images/arrow.png) center right 10px no-repeat, #fff;
+}
+
+.section-3 input {
+    height: 35px;
+    width: 236px;
+    background: transparent;
+    cursor: pointer;
+}
+
+.section-3 input:focus,
+.section-3 input.focus {
+    padding: 9px;
+    border-top: 1px solid #be4f48;
+    border-left: 1px solid #be4f48;
+    border-right: 1px solid #be4f48;
+}
+
+.section-3 .select ul.focus {
+    display: block;
+}
+
+.section-3 .options {
+    display: none;
+    position: absolute;
+    list-style: none;
+    width: 234px;
+    max-height: 160px;
+    text-align: left;
+    color: #323333;
+    background-color: #e3e2e4;
+    color: #323333;
+    border-left: 1px solid #be4f48;
+    border-right: 1px solid #be4f48;
+    border-bottom: 1px solid #be4f48;
+    overflow-y: auto;
+}
+
+.section-3 .options>.option {
+    height: 26px;
+    padding-left: 35px;
+    line-height: 26px;
+}
+
+.section-3 .select li.option:hover {
+    background: url(../images/check.png) center left 10px no-repeat, #be4f48;
+}
+
+.section-3 .search-btn {
+    height: 35px;
+    width: 236px;
+    line-height: 35px;
+    font-size: 14px;
+    background-color: #be4f48;
+    cursor: pointer;
+}
+
+.section-3 .search-btn:hover {
+    background-color: #bf6761;
+    transition: .15s linear;
+}
+
+
+/* activity */
+
+.activity {
+    background-color: #f7f7f7;
+    overflow: hidden;
+}
+
+.activity>.activity-wrap {
+    display: flex;
+    width: 1000px;
+    margin: 100px auto;
+}
+
+.activity>.activity-wrap>div {
+    width: 220px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.activity>.activity-wrap h3 {
+    font-size: 21px;
+    line-height: 21px;
+    color: #6f7178;
+}
+
+.activity>.activity-wrap>.shanghai>h3 {
+    position: relative;
+    left: 0.8em;
+    letter-spacing: 1.5em;
+}
+
+.activity>.activity-wrap p {
+    margin: 10px 0;
+    color: #aaaaaa;
+}
+
+.activity>.activity-wrap>div>img {
+    padding: 10px 5px;
+    border: 1px solid #dddddd;
+    background-color: #fff;
+}
+
+
+/* newworld */
+
+.newworld {
+    display: flex;
+    height: 560px;
+}
+
+.newworld>.left {
+    position: relative;
+    display: flex;
+    width: 66.66%;
+    height: 100%;
+    background: url(../images/newworld_bg.jpg) no-repeat;
+    background-size: cover;
+}
+
+.newworld>.left .triangle {
+    position: absolute;
+    width: 50px;
+    height: 30px;
+    top: 50%;
+    margin-top: -15px;
+    right: 0;
+    box-sizing: border-box;
+    border-right: 25px solid #fff;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+}
+
+.newworld .left-wrap {
+    margin: auto;
+    text-align: center;
+    font-size: 21px;
+    line-height: 2em;
+}
+
+.newworld .left-wrap .title {
+    margin: 0;
+    font-size: 50px;
+    line-height: 50px;
+    font-weight: normal;
+}
+
+.newworld .left-wrap .subtitle {
+    margin: 0;
+    font-size: 158px;
+    line-height: 158px;
+    text-transform: uppercase;
+    font-weight: normal;
+}
+
+.newworld .left-wrap p {}
+
+.newworld>.right {
+    position: relative;
+    width: 33.33%;
+    color: #000;
+}
+
+.newworld>.right>.tab {
+    position: absolute;
+    display: flex;
+    width: 66px;
+    left: 50%;
+    margin-left: -33px;
+    bottom: 190px;
+}
+
+.newworld>.right>.tab>div {
+    height: 12px;
+    width: 12px;
+    margin: 0 auto;
+    background: url(../images/dot.png) no-repeat;
+}
+
+.newworld>.right>.tab>.active {
+    background: url(../images/dot_active.png) no-repeat;
+}
+
+.newworld>.right>.tabcard {
+    display: none;
+    position: absolute;
+    width: 290px;
+    height: 400px;
+    left: 50%;
+    top: 50%;
+    margin-top: -200px;
+    margin-left: -145px;
+    font: 12px/2.5em "SimSun";
+    color: #aaaaaa;
+}
+
+.newworld>.right .active {
+    display: block;
+}
+
+.newworld>.right>.tabcard>.title {
+    margin: 20px 0;
+    text-align: center;
+    color: #323333;
+}
+
+.newworld>.right>.tabcard>.title h3 {
+    font-size: 20px;
+    line-height: 20px;
+    font-family: "微软雅黑";
+    font-weight: normal;
+}
+
+.newworld>.right>.tabcard>.title img {
+    vertical-align: -3px;
+}
+
+.newworld>.right>.tabcard>.title span {
+    color: #e74f4d;
+}
+
+.newworld>.right .detail-btn {
+    display: block;
+    width: 104px;
+    height: 32px;
+    line-height: 34px;
+    margin: 40px auto;
+    text-align: center;
+    font-family: "微软雅黑";
+    border: 1px solid #e7504d;
+}
+
+
+/* newtime */
+
+.newtime {
+    display: flex;
+    height: 520px;
+}
+
+.newtime>div {
+    display: flex;
+    width: 33.33%;
+}
+
+.newtime .newtime-wrap {
+    font-size: 21px;
+    line-height: 1.5em;
+    width: 8em;
+    margin: auto;
+    text-align: center;
+}
+
+.newtime-btn {
+    display: block;
+    width: 166px;
+    height: 42px;
+    line-height: 42px;
+    border: 1px solid;
+}
+
+.newtime hr {
+    margin: 25px auto;
+}
+
+.newtime>.left {
+    background-color: #e7504d;
+    color: #fff;
+}
+
+.newtime>.middle {
+    color: #323333;
+}
+
+.newtime>.middle hr {
+    background-color: #abaaaa;
+}
+
+.newtime>.right {
+    position: relative;
+    background: url(../images/newtime.jpg) no-repeat;
+    background-size: cover;
+}
+
+.newtime>.right .triangle {
+    position: absolute;
+    width: 50px;
+    height: 30px;
+    top: 50%;
+    margin-top: -15px;
+    box-sizing: border-box;
+    border-left: 25px solid #fff;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+}
+
+
+/* volunteer*/
+
+.volunteer {
+    color: #aaaaaa;
+}
+
+.volunteer-wrap {
+    width: 1000px;
+    margin: 20px auto 160px auto;
+}
+
+.volunteer .head {
+    height: 300px;
+    display: flex;
+}
+
+.volunteer .head-wrap {
+    margin: auto;
+    text-align: center;
+    line-height: 1.5em;
+}
+
+.volunteer .head h2 {
+    font-size: 21px;
+    font-family: "SimHei";
+    font-weight: normal;
+    color: #323333;
+}
+
+.volunteer .head hr {
+    margin: 25px auto;
+    background-color: #e7504d;
+}
+
+.volunteer .body {
+    width: 1000px;
+}
+
+.volunteer .policy {
+    float: left;
+    width: 288px;
+    font-size: 12px;
+    font-family: "SimSun";
+}
+
+.volunteer .policy>div {
+    margin-bottom: 50px;
+}
+
+.volunteer .policy h4 {
+    margin-top: 0;
+    font-family: "SimHei";
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.volunteer .policy .more {
+    float: right;
+    padding-left: 1.5em;
+    background: url(../images/more.png) left center no-repeat;
+}
+
+.volunteer form {
+    float: right;
+    width: 640px;
+}
+
+.volunteer input {
+    width: 310px;
+    height: 40px;
+    margin-bottom: 13px;
+    background-color: #ededef;
+    border: none;
+}
+
+.volunteer input:nth-child(2n+1) {
+    float: right;
+}
+
+.volunteer textarea {
+    width: 100%;
+    height: 120px;
+    margin-bottom: 13px;
+    background-color: #ededef;
+    resize: none;
+}
+
+.volunteer button {
+    width: 100%;
+    height: 40px;
+    background-color: #ededef;
+    color: #323333;
+}
+
+.volunteer input:focus,
+.volunteer textarea:focus,
+.volunteer button:focus,
+.volunteer button:hover {
+    background-color: #ccc;
+    transition: .3s linear;
+}
+
+
+/* footer */
+
+footer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 416px;
+    background-color: #32353e;
+}
+
+footer .main-footer {
+    position: relative;
+    width: 510px;
+    top: calc(50% - 29px);
+    transform: translateY(-50%);
+    left: 50%;
+    margin-left: -255px;
+    text-align: center;
+}
+
+footer .contact p {
+    margin-left: 18px;
+    margin-right: 18px;
+}
+
+footer .contact {
+    font-family: "SimSun";
+    font-size: 12px;
+    line-height: 1.5em;
+}
+
+footer .contact h2 {
+    font-size: 21px;
+    font-family: "SimHei";
+    font-weight: normal;
+}
+
+footer .contact form {
+    display: inline-block;
+    margin-top: 30px;
+    margin-bottom: 40px;
+}
+
+footer .contact input {
+    float: left;
+    width: 430px;
+    height: 40px;
+}
+
+footer .contact button {
+    width: 80px;
+    height: 40px;
+    font-family: "微软雅黑";
+    font-size: 15px;
+    color: #fff;
+    background-color: #6f7178;
+}
+
+footer .contact button:hover,
+footer .contact button:focus {
+    background-color: #8f9198;
+    transition: .15s linear;
+}
+
+footer .social-media {
+    display: flex;
+    width: 200px;
+    margin: 0 auto;
+}
+
+footer .social-media img {
+    margin: 0 auto;
+}
+
+footer .bottom {
+    position: absolute;
+    bottom: 0;
+    height: 58px;
+    width: 100%;
+    font-size: 12px;
+    font-family: "SimSun";
+    background-color: #2f2f38;
+}
+
+footer .bottom .copyleft {
+    float: left;
+    margin-left: 100px;
+    line-height: 58px;
+    color: #fff;
+}
+
+footer .bottom .back-to-top {
+    float: right;
+    margin-right: 50px;
+    line-height: 58px;
+    color: #fff;
+}
