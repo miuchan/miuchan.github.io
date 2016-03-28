@@ -1,0 +1,47 @@
+* {
+	padding: 20px;
+	box-sizing: border-box;
+}
+html, body {
+	padding: 0;
+	margin: 0;
+}
+
+.flex-box {
+	display: flex;
+	min-height: 500px;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-content: space-around;
+	align-items: flex-start;
+	outline: 1px solid #f00;
+}
+
+[class*='flex-item-'] {
+	width: 150px;
+	outline: 1px solid #f00;
+}
+
+.flex-item-1 {
+	height: 300px;
+	outline: 1px solid #00f;
+}
+.flex-item-2 {
+	height: 120px;
+}
+.flex-item-3 {
+	height: 100px;
+}
+.flex-item-4 {
+	height: 40px;
+}
+
+@media screen and (min-width: 640px) {
+	.flex-box {
+		align-items: center;
+	}
+	.flex-item-1 {
+		order: 1;
+	}
+
+}
