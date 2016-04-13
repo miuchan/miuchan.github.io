@@ -72,7 +72,7 @@ var colors = {
  */
 function getColor(aqi) {
     var color;
-    persent = aqi / 600;
+    persent = aqi / 500;
 
     if (persent <= 0.2) {
         color = colors.extraLow;
@@ -106,8 +106,8 @@ function renderChart() {
     aqiChartWrap.innerHTML = "";
 
     aqiChart.setAttribute("style",
-        "width:1200px;height:500px;display:flex;justify-content:space-around;" +
-        "align-items:flex-end;margin:0 auto;");
+        "position:relative;width:1200px;height:500px;display:flex;justify-content:space-around;" +
+        "align-items:flex-end;margin:0 auto;bottom:0;");
     switch (pageState.nowGraTime) {
         case "week":
             legend.innerText = pageState.nowSelectCity + "市周平均空气质量";
@@ -132,7 +132,7 @@ function renderChart() {
                     color = getColor(nowData[data][week]);
 
                     if (nowData[data].hasOwnProperty(week)) {
-                        var height = 500 * nowData[data][week] / 1200;
+                        var height = nowData[data][week];
                         column = document.createElement("div");
                         column.setAttribute("style", "width:" + width + ";height:" +
                             height + "px;background-color:" + color);
@@ -140,7 +140,7 @@ function renderChart() {
                     }
                 }
             } else {
-                var height = 600 * nowData[data] / 1200;
+                var height = nowData[data];
                 color = getColor(nowData[data]);
                 column = document.createElement("div");
                 column.setAttribute("style", "width:" + width + ";height:" +
@@ -150,6 +150,7 @@ function renderChart() {
     }
 
     fieldset.appendChild(aqiChart);
+    fieldset.setAttribute("style", "height:530px");
     aqiChartWrap.appendChild(fieldset);
 
 }
@@ -298,10 +299,11 @@ function initAqiChartData() {
  * 初始化函数
  */
 function init() {
-    initGraTimeForm()
+    initGraTimeForm();
     initCitySelector();
     initAqiChartData();
-    renderChart()
+    renderChart();
+    console.log(aqiSourceData);
 }
 
 init();
