@@ -94,7 +94,6 @@ function getColor(aqi) {
  */
 function renderChart() {
     var aqiChartWrap = document.getElementsByClassName("aqi-chart-wrap")[0],
-        nowData = chartData[pageState.nowSelectCity][pageState.nowGraTime],
         fieldset = document.createElement("fieldset"),
         legend = document.createElement("legend"),
         aqiChart = document.createElement("div"),
@@ -124,29 +123,14 @@ function renderChart() {
 
     fieldset.appendChild(legend);
 
-    for (data in nowData) {
+    for (aqiData in chartData) {
+        var height = chartData[aqiData];
+        color = getColor(chartData[aqiData]);
+        column = document.createElement("div");
+        column.setAttribute("style", "width:" + width + ";height:" +
+            height + "px;background-color:" + color + ";border:1px solid #fff");
+        aqiChart.appendChild(column);
 
-            if (pageState.nowGraTime === "week") {
-
-                for (week in nowData[data]) {
-                    color = getColor(nowData[data][week]);
-
-                    if (nowData[data].hasOwnProperty(week)) {
-                        var height = nowData[data][week];
-                        column = document.createElement("div");
-                        column.setAttribute("style", "width:" + width + ";height:" +
-                            height + "px;background-color:" + color);
-                        aqiChart.appendChild(column);
-                    }
-                }
-            } else {
-                var height = nowData[data];
-                color = getColor(nowData[data]);
-                column = document.createElement("div");
-                column.setAttribute("style", "width:" + width + ";height:" +
-                    height + "px;background-color:" + color);
-                aqiChart.appendChild(column);
-            }
     }
 
     fieldset.appendChild(aqiChart);
@@ -168,6 +152,7 @@ function graTimeChange(e) {
 
         // 设置对应数据
         pageState.nowGraTime = time;
+        initAqiChartData()
 
         // 调用图表渲染函数
         renderChart();
@@ -189,6 +174,7 @@ function citySelectChange() {
 
         // 设置对应数据
         pageState.nowSelectCity = city;
+        initAqiChartData()
 
         // 调用图表渲染函数
         renderChart();
@@ -235,59 +221,51 @@ function initCitySelector() {
 function initAqiChartData() {
     // 将原始的源数据处理成图表需要的数据格式
     // 处理好的数据存到 chartData 中
-    var startWeek = 0,	     // 开始计数时的星期
-        currentMonth = 1,    // 目前计数时的月份
-        weekCount = 0,       // 按周统计时已相加的天数
-        weekSum = 0,         // 按周统计的和
-        weekNum = 0,         // 目前统计的周到序数
-        monthSum = 0,        // 按周统计的和
-        monthCount = 0;      // 按月统计时已相加的天数
 
-    for (city in aqiSourceData) {
-        var days = Object.keys(aqiSourceData[city]),
-            dateObj = new Date(days[0]);
-        startWeek = dateObj.getDay();
-        currentMonth = parseInt(days[0].substr(5, 2));
+    var nowCityData = aqiSourceData[pageState.nowSelectCity],
+        dateObj = new Date("2016-01-01"),
+        sum = 0,
+        count = 0,
+        nowMonth;
 
-        chartData[city] = {};
-        chartData[city].day = aqiSourceData[city];
-        chartData[city].week = {};
-        chartData[city].week[currentMonth] = {};
-        chartData[city].month = {};
+    chartData = {};
+    nowMonth = dateObj.getMonth();
 
-        for (var i = 0; i < days.length; i++) {
+    if (pageState.nowGraTime === "day") {
+        chartData = nowCityData;
+    }
 
-            if (currentMonth !== parseInt(days[i].substr(5, 2))) {
-                var dateObj = new Date(days[0]);
-                startWeek = dateObj.getDay();
-                chartData[city].month[currentMonth] = (monthSum / monthCount).toFixed();
-                currentMonth = parseInt(days[i].substr(5, 2));
-                chartData[city].week[currentMonth] = {};
+    if (pageState.nowGraTime === "week") {
 
-                weekCount = 0;
-                weekNum = 0;
-                monthSum = 0;
-                monthCount = 0;
+        for (aqiData in nowCityData) {
+            if (dateObj.getDay() === 6 || dateObj.getMonth() !== nowMonth) {
+                console.log(count);
+                chartData[getDateStr(dateObj)] = Math.round(sum / count);
+                nowMonth = dateObj.getMonth();
+                sum = 0;
+                count = 0;
+
             }
-            if (i === days.length - 1) {
-                chartData[city].month[currentMonth] = (monthSum / monthCount).toFixed();
-            }
-
-            if (weekCount + startWeek === 7 || i === days.length - 1) {
-                chartData[city].week[currentMonth][weekNum] = (weekSum / weekCount).toFixed();
-                weekCount = 0;
-                startWeek = 0;
-                weekSum = 0;
-                weekNum++;
-            }
-
-            weekSum += aqiSourceData[city][days[i]];
-            monthSum += aqiSourceData[city][days[i]];
-            weekCount++;
-            monthCount++;
+            sum += nowCityData[aqiData];
+            dateObj.setDate(dateObj.getDate() + 1);
+            count++;
 
         }
-        weekNum = 0;
+
+    }
+
+    if (pageState.nowGraTime === "month") {
+        var keys = Object.keys(nowCityData);
+        for (var i = 0; i < keys.length; i++) {
+            if (dateObj.getMonth() !== nowMonth || i === keys.length - 1) {
+                console.log(count);
+                chartData[getDateStr(dateObj)] = Math.round(sum / count);
+                nowMonth = dateObj.getMonth();
+            }
+            sum += nowCityData[keys[i]];
+            dateObj.setDate(dateObj.getDate() + 1);
+            count++;
+        }
     }
 
     console.log(chartData);
