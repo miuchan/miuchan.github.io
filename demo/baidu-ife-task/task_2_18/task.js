@@ -20,10 +20,12 @@
 	}
 	//
 	function rander(queueWrap, queue) {
+		var i,
+			len;
 		queueWrap.innerHTML = "";
-		queue.forEach(function (ele) {
-			queueWrap.innerHTML += "<div>" + ele + "</div>";
-		});
+		for (i = 0, len = queue.length; i < len; i++) {
+			queueWrap.innerHTML += "<div class='queue-items' data-index="+ i +">" + queue[i] + "</div>";
+		}
 	}
 
 	function handle(e) {
@@ -60,6 +62,16 @@
 	    	}
 
 	    	console.log(queue);
+	    	rander(queueWrap, queue);
+	    }
+
+	    console.log(target.className);
+	    if (target.className === "queue-items") {
+	    	var index = target.dataset.index;
+	    	console.log(index);
+	    	queue.splice(index, 1);
+	    	console.log(queue);
+
 	    	rander(queueWrap, queue);
 	    }
 
