@@ -33,11 +33,13 @@
 	    	value = doc.getElementById("input").value,
 	        queueWrap = doc.getElementById("queue-wrap");
 
-	    if (target.className === "opt") {
+	    if (target.classList.contains("opt")) {
 
-	    	if (!validate(value)) {
+	    	if (target.classList.contains("in") && !validate(value)) {
 	    		alert("输入必须为整数！");
 	    		return;
+	    	} else {
+	    		value = parseInt(value);
 	    	}
 
 	    	switch(target.id) {
@@ -61,20 +63,18 @@
 	    			return;
 	    	}
 
-	    	console.log(queue);
-	    	rander(queueWrap, queue);
 	    }
 
 	    console.log(target.className);
+
 	    if (target.className === "queue-items") {
 	    	var index = target.dataset.index;
-	    	console.log(index);
-	    	queue.splice(index, 1);
-	    	console.log(queue);
 
-	    	rander(queueWrap, queue);
+	    	queue.splice(index, 1);
 	    }
 
+	    console.log(queue);
+	    rander(queueWrap, queue);
 
 	}
 
