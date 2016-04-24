@@ -30,7 +30,7 @@
 
 	function handle(e) {
 	    var target = e.target,
-	    	value = doc.getElementById("input").value,
+	    	value = doc.getElementById("input").value.trim(),
 	        queueWrap = doc.getElementById("queue-wrap");
 
 	    if (target.classList.contains("opt")) {
