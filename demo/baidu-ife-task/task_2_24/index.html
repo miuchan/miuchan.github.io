@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>IFE JavaScript Task 23</title>
+
+    <style type="text/css">
+        .container {
+            width: 95%;
+     
+            min-height: 400px;
+            margin: 0 auto;
+  
+            box-sizing: border-box;
+        }
+        
+        .container div {
+            height: calc(80% - 40px);
+            width: calc(50% - 40px);
+            margin: 5px;
+            min-height: 50px;
+            min-width: 50px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            align-items: center;
+            background-color: white;
+            border: 2px solid black;
+        }
+        
+        div.supper {
+            width: 100%;
+            height: auto;
+            margin: 0px;
+            min-height: 400px;
+        }
+        
+        .option {
+            height: 50px;
+            margin: auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            align-items: center;
+        }
+        
+        .highlight {
+            background-color: blue !important;
+        }
+
+        .selected {
+            background-color: pink !important;
+        }
+
+        .search-result {
+            background-color: green !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" >
+        <div class="supper" data-name="supper">
+            Supper
+            <div class="cat" data-name="cat">
+                Cat
+                <div class="apple" data-name="apple">
+                    Apple
+                    <div class="pear" data-name="pear">
+                        Pear
+                    </div>
+                    <div class="pig" data-name="pig">
+                        Pig
+                    </div>
+                    <div class="cola" data-name="cola">
+                        Cola
+                    </div>
+                    <div class="soccer" data-name="soccer">
+                        Soccer
+                    </div>
+                </div>
+                <div class="phone" data-name="supper">
+                    Phone    
+                </div>
+                <div data-name="">
+                    <div class="book" data-name="book">
+                        Book
+                    </div>
+                    <div class="school" data-name="school">
+                        School
+                    </div>
+                </div>
+            </div>
+            <div class="note" data-name="note">
+                Note
+                <div class="human" data-name="human">
+                    Human
+                    <div class="code" data-name="code">
+                        Code
+                    </div>
+                    <div class="operate" data-name="operate">
+                        Operate
+                    </div>
+                    <div class="man" data-name="man">
+                        Man
+                    </div>
+                </div>
+                <div class="program" data-name="program">
+                    Program
+                    <div class="bement" data-name="bement">
+                        Bement
+                        <div class="cat" data-name="cat">
+                            Cat
+                        </div>
+                    </div>
+                    <div class="glass" data-name="glass">
+                        Glass
+                    </div>
+                </div>
+            </div>
+            <div class="fish" data-name="fish">
+                Fish
+            </div>
+        </div>
+
+    </div>
+    <div class="option">
+        <button id="traverseDF-btn" type="button">深度优先遍历</button>
+        <button id="traverseBF-btn" type="button">广度优先遍历</button>
+        <input id="input" type="text" name="input">
+        <button id="searchDF-btn" type="button">深度优先搜索</button>
+        <button id="searchBF-btn" type="button">广度优先搜索</button>
+        <button id="add-btn" type="button">添加节点</button>
+        <button id="remove-btn" type="button">删除节点</button>
+    </div>
+    <script src="main.js"></script>
+</body>
+
+</html>
