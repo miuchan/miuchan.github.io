@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>IFE JavaScript Task 22</title>
+    
+    <style>
+        .container {
+            width: 80%;
+            height: 400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .container div {
+            border: 2px solid black;
+            height: calc(100% - 40px);
+            flex: auto;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background-color: white;
+        }
+        
+        .root div {
+            max-width: calc(50% - 40px);
+        }
+        
+        .button-wrapper {
+            height: 50px;
+            width: 200px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .highlight {
+            background-color: blue !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="root">
+            <div class="child_1">
+                <div class="child_2">
+                    <div class="child_3">
+
+                    </div>
+                    <div class="child_3">
+
+                    </div>
+                </div>
+                <div class="child_2">
+                    <div class="child_3">
+
+                    </div>
+                    <div class="child_3">
+
+                    </div>
+                </div>
+            </div>
+            <div class="child_1">
+                <div class="child_2">
+                    <div class="child_3">
+
+                    </div>
+                    <div class="child_3">
+
+                    </div>
+                </div>
+                <div class="child_2">
+                    <div class="child_3">
+
+                    </div>
+                    <div class="child_3">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="button-wrapper">
+        <button id="pre-btn" type="button">前序</button>
+        <button id="in-btn" type="button">中序</button>
+        <button id="post-btn" type="button">后序</button>
+    </div>
+    <script src="main.js"></script>
+</body>
+
+</html>
