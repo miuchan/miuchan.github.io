@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>IFE JavaScript Task 01</title>
+    <style>
+        #queue-wrap div {
+            float: left;
+            font-size: 20px;
+            line-height: 20px;
+            margin: 10px;
+            padding: 10px;
+            background-color: red;
+            color: #fff;
+        }
+
+        .search-result {
+            background-color: green !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrap">
+        <textarea id="add-input" cols="30" rows="5"></textarea>
+        <button id="left-in" class="opt in">左侧入</button>
+        <button id="right-in" class="opt in">右侧入</button>
+        <button id="left-out" class="opt out">左侧出</button>
+        <button id="right-out" class="opt out">右侧出</button>
+        <input id="search-input" type="text">
+        <button id="search-btn" class="opt search">搜索</button>
+        <div id="queue-wrap">
+
+        </div>
+    </div>
+
+
+    <script src="task.js"></script>
+</body>
+
+</html>
