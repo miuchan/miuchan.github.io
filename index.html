@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Miuchan · 数字花园</title>
+  <meta name="description" content="康嘉琦（Miuchan）的个人主页，收录了博客、项目演示与在线简历。">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/main.css">
+</head>
+<body>
+  <div class="wrapper">
+    <nav>
+      <a href="#top" class="logo">miuchan.github.io</a>
+      <div class="nav-links">
+        <a href="#about">关于</a>
+        <a href="#projects">作品</a>
+        <a href="#writing">写作</a>
+        <a href="#contact">联系</a>
+      </div>
+    </nav>
+
+    <section class="hero" id="top">
+      <div class="hero-content">
+        <h1>你好，我是康嘉琦（Miuchan）。</h1>
+        <p>一名专注于打造舒适交互和细腻体验的前端开发者，喜欢把创意变成可触摸的界面，也乐于分享一路上学到的点点滴滴。</p>
+        <div class="hero-actions">
+          <a class="button primary" href="resume/index.html">查看简历</a>
+          <a class="button secondary" href="blog/index.html">阅读博客</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="section-header">
+        <h2>关于我</h2>
+        <span class="subtitle">以用户为中心，把工程与设计揉在一起。</span>
+      </div>
+      <div class="grid">
+        <div class="card">
+          <h3>前端 + 体验设计</h3>
+          <p>从信息架构到像素细节都感兴趣，擅长把复杂功能拆解成友好的流程，并让页面在不同设备上都顺滑自然。</p>
+          <p>目前持续探索性能优化、无障碍和可维护的组件化体系，让作品既有质感也好维护。</p>
+        </div>
+        <div class="card">
+          <h3>知识花园</h3>
+          <p>博客里记录了 Hexo 时代的文章，持续整理读书笔记、工作心得与代码片段，希望让成长的路径更清晰。</p>
+          <a class="link" href="blog/index.html">走进博客 →</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="projects">
+      <div class="section-header">
+        <h2>作品一角</h2>
+        <span class="subtitle">一些有趣的实验与练习，欢迎随意探索。</span>
+      </div>
+      <div class="grid cards">
+        <a class="card" href="demo/blockchan/index.html">
+          <h3>Blockchan</h3>
+          <p>区块链主题的视觉实验，使用组件化方式搭建，尝试用动效呈现信息结构。</p>
+          <span class="link">打开演示 →</span>
+        </a>
+        <a class="card" href="demo/canvas-demo/lowpoly/index.html">
+          <h3>Canvas Low Poly</h3>
+          <p>基于 Delaunay 三角剖分的低多边形生成器，探索 Canvas 与色彩的更多可能性。</p>
+          <span class="link">立即体验 →</span>
+        </a>
+        <a class="card" href="demo/baidu-ife-task/task_1_06/index.html">
+          <h3>Baidu IFE 系列</h3>
+          <p>IFE 训练营阶段性作品集，涵盖布局、交互与组件练习，是成长路上的重要脚印。</p>
+          <span class="link">查看练习 →</span>
+        </a>
+        <a class="card" href="resume/index.html">
+          <h3>在线简历</h3>
+          <p>完整介绍我的技能栈、经历与项目情况，也是保持自我复盘的重要方式。</p>
+          <span class="link">阅读简历 →</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="section" id="writing">
+      <div class="section-header">
+        <h2>最近在写</h2>
+        <span class="subtitle">从 Hello World 起步，持续迭代自己的观点与方法论。</span>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <time datetime="2015-10-20">2015 · Oct 20</time>
+          <h3><a href="blog/2015/10/20/hello-world/index.html">Hello World</a></h3>
+          <p>搭建博客后的第一篇文章，记录了向开源与分享迈出的第一步。</p>
+        </div>
+        <div class="timeline-item">
+          <time datetime="2015-10-20">2015 · Oct 20</time>
+          <h3><a href="blog/2015/10/20/test/index.html">测试页面</a></h3>
+          <p>尝试新的排版与样式设置，让内容的呈现方式更加灵活。</p>
+        </div>
+        <div class="timeline-item">
+          <time datetime="2024">持续更新</time>
+          <h3>更多灵感</h3>
+          <p>更多关于前端实践、工具笔记与生活观察，正在整理上架，敬请期待。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="section-header">
+        <h2>保持联系</h2>
+        <span class="subtitle">欢迎交流前端技术、设计灵感或任何有趣的话题。</span>
+      </div>
+      <div class="card">
+        <p>如果你对我的项目感兴趣，或想聊聊新的合作机会，欢迎通过以下方式与我取得联系，也可以直接在 GitHub 上找到我。</p>
+        <div class="social-links">
+          <a href="https://github.com/miuchan" target="_blank" rel="noopener">GitHub</a>
+          <a href="blog/index.html">博客</a>
+          <a href="resume/index.html">简历</a>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div>© <span id="year"></span> Miuchan. 用心做点酷酷的东西。</div>
+    </footer>
+  </div>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
