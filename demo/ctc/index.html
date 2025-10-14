@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>封闭类时曲线 · 小型可视化实验</title>
+  <meta name="description" content="通过可交互的时空图，直观理解广义相对论中的封闭类时曲线概念。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <a class="back-link" href="../../index.html#projects">← 返回作品集合</a>
+      <h1>封闭类时曲线</h1>
+      <p>Closed Timelike Curve（CTC）描述了一个在时空中环绕自身的世界线，它让一个观察者沿着时间前进，却最终回到起点。本实验用一幅渐进式的时空图帮助理解这一抽象概念。</p>
+      <div class="meta">
+        <span class="badge">广义相对论</span>
+        <span class="badge">可视化</span>
+        <span class="meta-note">拖动滑杆观察不同的时空畸变程度。</span>
+      </div>
+    </header>
+
+    <section class="diagram-card">
+      <div class="canvas-wrapper">
+        <canvas id="ctc-diagram" width="720" height="480" role="img" aria-label="展示封闭类时曲线的时空图"></canvas>
+      </div>
+      <div class="controls" aria-describedby="control-help">
+        <div class="control">
+          <label for="warp">畸变强度</label>
+          <input id="warp" type="range" min="0" max="0.9" step="0.01" value="0.55">
+          <span class="value" id="warp-value">0.55</span>
+        </div>
+        <div class="control">
+          <label for="loops">扭曲环数</label>
+          <input id="loops" type="range" min="1" max="5" step="1" value="2">
+          <span class="value" id="loops-value">2</span>
+        </div>
+        <p class="control-help" id="control-help">调节参数可以看到世界线在光锥内部发生的不同形态。</p>
+      </div>
+      <div class="readings">
+        <div class="reading">
+          <span class="label">当前速度</span>
+          <span class="number"><span id="velocity">0.00</span> c</span>
+        </div>
+        <div class="reading">
+          <span class="label">固有时间</span>
+          <span class="number"><span id="proper-time">0.00</span> τ</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="explain">
+      <h2>如何理解这条曲线？</h2>
+      <p>在普通的时空图中，竖直方向代表时间，水平方向代表空间。光速所界定的光锥决定了“因果”的边界——任何世界线只要保持在光锥内部，就意味着它的速度低于光速，仍然遵循物理规律。封闭类时曲线是一条在光锥内部闭合的路径，表示观察者沿着这条路径运动时，可以在未来重新回到自己曾经所在的事件。</p>
+      <p>滑动上方的控制器可以改变时空扭曲的强度与次数，观察世界线如何被“拉扯”成一个封闭环。浅蓝色区域是光锥，黄色曲线则是被扭曲后的时间路径。图中动态的发光节点代表一名旅行者沿着曲线前进；旁边的读数显示了此刻相对光速的速度以及经历的固有时间。</p>
+    </section>
+
+    <section class="notes">
+      <h2>进一步阅读</h2>
+      <ul>
+        <li><span class="note-title">因果结构</span> — 了解光锥如何限制信号传播的方向，以及为什么封闭类时曲线会带来悖论。</li>
+        <li><span class="note-title">Gödel 宇宙解</span> — 广义相对论中最著名的 CTC 解之一，描述了一个整体旋转的宇宙。</li>
+        <li><span class="note-title">量子力学的可能补救</span> — 讨论在量子世界中如何避免 CTC 导致的自相矛盾。</li>
+      </ul>
+    </section>
+
+    <footer class="footer">
+      <p>希望这个小实验能帮助你更直观地理解封闭类时曲线。如果你有更多点子，欢迎回到 <a href="../../index.html">首页</a> 联系我。</p>
+    </footer>
+  </main>
+  <script src="ctc.js"></script>
+</body>
+</html>
