@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>奇点生命场</title>
+  <meta name="description" content="通过在生命游戏中植入引力奇点，观察自组织结构在弯曲时空中的分形生命。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="layout">
+    <header class="hero">
+      <a class="back" href="../../index.html#projects">← 返回作品集合</a>
+      <h1>奇点生命场</h1>
+      <p>在经典生命游戏的网格中嵌入时空奇点，观察它们如何扭曲邻域的出生与死亡阈值，让细胞在弯曲的引力井里自发编织出新的分形组织。</p>
+      <div class="tags" aria-label="演示特性">
+        <span class="tag">元胞自动机</span>
+        <span class="tag">奇点引力</span>
+        <span class="tag">交互可视化</span>
+      </div>
+    </header>
+
+    <section class="stage" aria-labelledby="canvas-title">
+      <div class="stage__canvas">
+        <canvas id="lifeCanvas" width="840" height="540" role="img" aria-labelledby="canvas-title"></canvas>
+      </div>
+      <div class="stage__caption">
+        <h2 id="canvas-title">奇点引力织构</h2>
+        <p>蓝绿色表示处于平衡状态的生命细胞，越靠近奇点越会呈现偏紫的能量涌动；奇点本身以炽热的品红脉冲显示。</p>
+        <ul>
+          <li>单击/拖拽激活或关闭生命细胞。</li>
+          <li>按住 Shift 再点击可放置或移动奇点，Alt 点击可清空网格。</li>
+          <li>奇点会改变邻域阈值，让生命在局部时空弯曲中延续。</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="controls" aria-describedby="control-help">
+      <div class="control">
+        <label for="tempo">演化节奏</label>
+        <input id="tempo" type="range" min="1" max="24" step="1" value="8">
+        <span class="value" id="tempoValue">8 代/秒</span>
+      </div>
+      <div class="control">
+        <label for="gravity">奇点引力</label>
+        <input id="gravity" type="range" min="0" max="1" step="0.02" value="0.52">
+        <span class="value" id="gravityValue">0.52</span>
+      </div>
+      <div class="control">
+        <label for="reach">弯曲半径</label>
+        <input id="reach" type="range" min="3" max="14" step="1" value="8">
+        <span class="value" id="reachValue">8 格</span>
+      </div>
+      <div class="control control--buttons">
+        <button id="toggle" type="button">暂停演化</button>
+        <button id="step" type="button" class="secondary">单步推进</button>
+        <button id="random" type="button" class="secondary">随机播种</button>
+        <button id="clear" type="button" class="secondary">清空场域</button>
+        <button id="seedSingularity" type="button" class="secondary">注入奇点</button>
+      </div>
+      <p class="controls__help" id="control-help">奇点引力越强，邻近格子的出生阈值越低，生命会更容易被拉入引力井；弯曲半径控制奇点影响的范围。Shift + 拖拽可以雕刻奇点轨迹。</p>
+    </section>
+
+    <section class="readout" aria-live="polite">
+      <div class="stat">
+        <span class="label">存活密度</span>
+        <span class="stat-value" id="population">--</span>
+      </div>
+      <div class="stat">
+        <span class="label">奇点数量</span>
+        <span class="stat-value" id="singularityCount">--</span>
+      </div>
+      <div class="stat">
+        <span class="label">引力熵</span>
+        <span class="stat-value" id="entropy">--</span>
+      </div>
+      <p class="narrative" id="narrative">等待引力井缓缓成形…</p>
+    </section>
+
+    <section class="explain">
+      <h2>为什么叫“奇点生命”？</h2>
+      <p>传统生命游戏只考虑存活邻居的数量，而奇点生命在此基础上引入“弯曲”的概念：奇点像是镶嵌在网格中的时空裂缝，会降低附近细胞的出生阈值并延长它们的寿命。</p>
+      <p>在模拟中，奇点影响强度与范围都可调。当多个奇点彼此牵引时，生命会沿着扭曲的势能谷聚集，形成类似星系环带的有序结构，也可能触发无序的湍流与碎裂。</p>
+      <p>你可以尝试：先放置两个相距不远的奇点，设置较高的引力，再让随机播种的生命演化，观察它们如何被拉成光环；或者在弱引力下布置一条滑翔机通道，看奇点是否会改写它的命运。</p>
+    </section>
+
+    <footer class="footer">
+      <p>© <span id="year"></span> Miuchan · 奇点生命场实验</p>
+    </footer>
+  </main>
+
+  <script src="singularity-life.js" type="module"></script>
+</body>
+</html>
