@@ -37,6 +37,26 @@
         <p>由于吸子在碰撞后仍保持原样，它可以不断地与新的引子发生反应，就像现实中的催化剂一样重复使用。你可以点击上方按钮随时重新开始流程。</p>
       </article>
     </section>
+    <section class="pattern-showcase" aria-labelledby="pattern-heading">
+      <h2 id="pattern-heading">吸子与引子的基本形态</h2>
+      <p class="pattern-intro">下面的示意图给出了两种经典图灵结构在生命游戏中的初始布局。吸子是稳定的静物，适合作为“催化剂”；引子则会沿对角线移动，携带动量撞向吸子。</p>
+      <div class="pattern-grid" role="list">
+        <article class="pattern-card" role="listitem">
+          <div class="pattern-visual" aria-hidden="true">
+            <canvas width="200" height="200" data-pattern-preview="eater"></canvas>
+          </div>
+          <h3>吸子（Eater）</h3>
+          <p>吸子是一种 7 单元的静物，它能够吸收来袭的滑翔子而自身几乎不受影响。吸子常用于构建逻辑门或计数器，是生命游戏中最常见的催化剂之一。</p>
+        </article>
+        <article class="pattern-card" role="listitem">
+          <div class="pattern-visual" aria-hidden="true">
+            <canvas width="200" height="200" data-pattern-preview="glider"></canvas>
+          </div>
+          <h3>引子（Glider）</h3>
+          <p>引子是最小的自我复制移动结构之一，由 5 个活细胞组成。每经过 4 代，它就会沿斜对角方向平移一个单位，常被用作传递信息或触发器件的激活信号。</p>
+        </article>
+      </div>
+    </section>
   </main>
   <script src="life.js"></script>
 </body>

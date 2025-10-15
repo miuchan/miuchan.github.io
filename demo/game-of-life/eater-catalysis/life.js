@@ -67,6 +67,108 @@
     }
   }
 
+  function getPatternBounds(pattern) {
+    let minX = Infinity;
+    let maxX = -Infinity;
+    let minY = Infinity;
+    let maxY = -Infinity;
+    for (const [dx, dy] of pattern) {
+      if (dx < minX) minX = dx;
+      if (dx > maxX) maxX = dx;
+      if (dy < minY) minY = dy;
+      if (dy > maxY) maxY = dy;
+    }
+    return { minX, maxX, minY, maxY };
+  }
+
+  function drawPatternPreview(canvas, pattern, options = {}) {
+    const ratio = window.devicePixelRatio || 1;
+    const width = canvas.clientWidth || canvas.width;
+    const height = canvas.clientHeight || canvas.height;
+    if (!width || !height) {
+      return;
+    }
+
+    if (canvas.width !== width * ratio || canvas.height !== height * ratio) {
+      canvas.width = width * ratio;
+      canvas.height = height * ratio;
+    }
+
+    const ctxPreview = canvas.getContext('2d');
+    ctxPreview.save();
+    ctxPreview.setTransform(1, 0, 0, 1, 0, 0);
+    ctxPreview.scale(ratio, ratio);
+    ctxPreview.clearRect(0, 0, width, height);
+
+    const gradient = ctxPreview.createRadialGradient(
+      width * 0.4,
+      height * 0.35,
+      Math.min(width, height) * 0.15,
+      width * 0.5,
+      height * 0.6,
+      Math.max(width, height) * 0.75
+    );
+    gradient.addColorStop(0, 'rgba(56, 189, 248, 0.12)');
+    gradient.addColorStop(1, 'rgba(2, 6, 23, 0.92)');
+    ctxPreview.fillStyle = gradient;
+    ctxPreview.fillRect(0, 0, width, height);
+
+    const bounds = getPatternBounds(pattern);
+    const patternWidth = bounds.maxX - bounds.minX + 1;
+    const patternHeight = bounds.maxY - bounds.minY + 1;
+    const paddingCells = 2;
+    const gridSize = Math.max(patternWidth + paddingCells * 2, patternHeight + paddingCells * 2, 8);
+    const cell = Math.min(width, height) / gridSize;
+    const margin = cell * 0.18;
+    const offsetX = Math.floor((gridSize - patternWidth) / 2) - bounds.minX;
+    const offsetY = Math.floor((gridSize - patternHeight) / 2) - bounds.minY;
+
+    ctxPreview.strokeStyle = 'rgba(148, 163, 184, 0.15)';
+    ctxPreview.lineWidth = 1;
+    for (let i = 0; i <= gridSize; i += 1) {
+      const x = i * cell + 0.5;
+      ctxPreview.beginPath();
+      ctxPreview.moveTo(x, 0);
+      ctxPreview.lineTo(x, height);
+      ctxPreview.stroke();
+    }
+    for (let j = 0; j <= gridSize; j += 1) {
+      const y = j * cell + 0.5;
+      ctxPreview.beginPath();
+      ctxPreview.moveTo(0, y);
+      ctxPreview.lineTo(width, y);
+      ctxPreview.stroke();
+    }
+
+    ctxPreview.fillStyle = options.cellColor || 'rgba(56, 189, 248, 0.95)';
+    for (const [dx, dy] of pattern) {
+      const px = (dx + offsetX) * cell;
+      const py = (dy + offsetY) * cell;
+      ctxPreview.fillRect(px + margin, py + margin, cell - margin * 2, cell - margin * 2);
+    }
+
+    ctxPreview.restore();
+  }
+
+  function renderPatternPreviews() {
+    if (!renderPatternPreviews.canvases) {
+      const list = document.querySelectorAll('[data-pattern-preview]');
+      renderPatternPreviews.canvases = Array.from(list);
+    }
+    const previews = renderPatternPreviews.canvases;
+    const configs = {
+      eater: { pattern: eaterPattern, cellColor: 'rgba(165, 243, 252, 0.95)' },
+      glider: { pattern: gliderPattern, cellColor: 'rgba(56, 189, 248, 0.95)' }
+    };
+
+    for (const canvas of previews) {
+      const key = canvas.dataset.patternPreview;
+      const config = configs[key];
+      if (!config) continue;
+      drawPatternPreview(canvas, config.pattern, { cellColor: config.cellColor });
+    }
+  }
+
   function step() {
     for (let y = 0; y < ROWS; y += 1) {
       for (let x = 0; x < COLS; x += 1) {
@@ -201,5 +303,10 @@
   seedGlider();
   draw();
   updateUI();
+  renderPatternPreviews();
   requestAnimationFrame(tick);
+
+  window.addEventListener('resize', () => {
+    renderPatternPreviews();
+  });
 })();
