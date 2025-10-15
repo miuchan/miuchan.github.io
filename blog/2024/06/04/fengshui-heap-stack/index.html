@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+
+  <title>药代动力学中的风水堆与风水栈及其设计与实现 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="用“风水堆/风水栈”的隐喻，整理药代动力学中的数据组织、算法实现与实验设计。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="药代动力学中的风水堆与风水栈及其设计与实现">
+<meta property="og:url" content="http://miuchan.github.io/2024/06/04/fengshui-heap-stack/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="用“风水堆/风水栈”的隐喻，整理药代动力学中的数据组织、算法实现与实验设计。">
+<meta property="og:updated_time" content="2024-06-04T00:00:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="药代动力学中的风水堆与风水栈及其设计与实现">
+<meta name="twitter:description" content="用“风水堆/风水栈”的隐喻，整理药代动力学中的数据组织、算法实现与实验设计。">
+
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.png">
+
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+
+          <a class="main-nav-link" href="/">Home</a>
+
+          <a class="main-nav-link" href="/archives">Archives</a>
+
+      </nav>
+      <nav id="sub-nav">
+
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://miuchan.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-fengshui-heap-stack" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2024/06/04/fengshui-heap-stack/" class="article-date">
+  <time datetime="2024-06-04T00:00:00.000Z" itemprop="datePublished">2024-06-04</time>
+</a>
+
+  </div>
+  <div class="article-inner">
+
+
+      <header class="article-header">
+
+
+    <h1 class="article-title" itemprop="name">
+      药代动力学中的风水堆与风水栈及其设计与实现
+    </h1>
+
+
+      </header>
+
+    <div class="article-entry" itemprop="articleBody">
+
+        <p>在中文互联网中，“风水堆”和“风水栈”常被拿来戏称算法与工程实践中那些玄而又玄的技巧。把这个意象带入药代动力学（PK）世界，倒也让人眼前一亮：药物在体内的吸收、分布、代谢与排泄，正像一座需要调气的屋宅。本文试图把风水堆与风水栈的比喻，化作分析药代动力学系统时的一套可执行框架。</p>
+<h2 id="风水堆：数据的势能布阵">风水堆：数据的势能布阵</h2>
+<p>如果把风水堆视作一个不断堆叠、强调平衡的结构，那么它在 PK 中对应的就是数据预处理与模型假设的建构。我们需要按血药浓度时间曲线的关键节点来堆石：</p>
+<ul>
+<li><strong>稳固基石</strong>：生理参数（体重、肝肾功能、蛋白结合率）决定了堆底的形状。没有可靠的基线数据，后续分析必然倾斜。</li>
+<li><strong>层层叠高</strong>：采样时间点、分析方法、实验批次等因素如同逐层垒上的石块。它们之间的间距代表采样密度与质量控制的力度。</li>
+<li><strong>调节水位</strong>：所谓“水”，在 PK 里对应流体区室模型。选择一室还是多室模型，就像决定堆石旁的水池深浅，必须结合药物理化性质与临床给药方式。</li>
+</ul>
+<p>一旦堆叠完成，我们可以通过可视化手段（半对数曲线、累积暴露量等）检查势能是否均衡，类似风水师傅绕堆一圈确认是否顺眼。</p>
+<h2 id="风水栈：算法的动线调气">风水栈：算法的动线调气</h2>
+<p>风水栈强调“进得去、出得来”的流动性，对应 PK 分析中的模型求解与参数估计流程。借助“栈”的概念，我们可以设计一条清晰的运算动线：</p>
+<ol>
+<li><strong>入栈——建立方程</strong>：根据药动学假设写出微分方程，把吸收速率常数、消除速率常数等变量压栈。</li>
+<li><strong>压栈——数值求解</strong>：选择求解器（如 Runge-Kutta 或解析解），并将初值条件与约束条件逐一压入，确保算法始终在可控范围内运行。</li>
+<li><strong>出栈——参数回收</strong>：通过非线性最小二乘或贝叶斯估计，将估计出的参数弹出栈顶，再与真实世界指标对照。</li>
+</ol>
+<p>这个“栈”允许我们追踪每一步的假设与数据来源，从而在需要时快速回溯。例如，当模型残差出现系统性偏差，就像栈底出现不稳，我们可以定位到是采样点不足还是初值设定不当。</p>
+<h2 id="设计与实现：让堆与栈同频共振">设计与实现：让堆与栈同频共振</h2>
+<p>只有当数据堆的势能与算法栈的动线相互协调时，风水才真正“转起来”。这里给出一份可落地的设计蓝图：</p>
+<ul>
+<li><strong>仪式化的数据流</strong>：在实验设计阶段预设数据管线，例如“采样后 30 分钟内完成上机检测、24 小时内完成质控、48 小时内写入数据库”，让堆的每块石头都按时归位。</li>
+<li><strong>可追踪的计算脚本</strong>：把建模脚本按栈的结构拆成模块（导入数据、建模、拟合、验证、报告），每个模块输出中间结果与日志，像在栈帧中记录返回地址。</li>
+<li><strong>反馈闭环</strong>：当模型预测失灵时，建立“逆风水”流程：先检查栈（算法参数、求解器稳定性），再检查堆（数据完整性、实验偏差），最后更新 SOP。</li>
+</ul>
+<p>这套设计既尊重科学方法论，又保留了风水隐喻带来的叙事张力——每一项指标都不再是冷冰冰的数字，而是决定气场流动的关键节点。</p>
+<h2 id="小结：从玩笑到方法论">小结：从玩笑到方法论</h2>
+<p>风水堆与风水栈原本只是程序员茶余饭后的梗，但放在药代动力学的舞台上，它们提醒我们：<strong>一切复杂系统都需要既有静态秩序（堆）也要有动态流程（栈）</strong>。当我们借助这个隐喻来规划实验、组织数据、编写模型时，团队之间的沟通成本被大幅压缩——每个人都知道自己在堆的哪一层、栈的哪一帧。</p>
+<p>所以，不妨在下一次 PK 项目启动会上，把“风水堆/栈”写进白板。只要设计得当，风水也可以成为科学决策的一部分。</p>
+
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://miuchan.github.io/2024/06/04/fengshui-heap-stack/" data-id="post-fengshui-heap-stack" class="article-share-link">Share</a>
+
+
+    </footer>
+  </div>
+
+
+<nav id="article-nav">
+
+
+    <a href="/2024/06/03/ambient-programming-basics/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">氛围编程的最简单形式</div>
+    </a>
+
+</nav>
+
+
+</article>
+
+</section>
+
+          <aside id="sidebar">
+
+
+
+
+
+
+
+
+
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+
+          <li>
+            <a href="/2024/06/04/fengshui-heap-stack/">药代动力学中的风水堆与风水栈及其设计与实现</a>
+          </li>
+
+          <li>
+            <a href="/2024/06/03/ambient-programming-basics/">氛围编程的最简单形式</a>
+          </li>
+
+          <li>
+            <a href="/2015/10/20/hello-world/">Hello World</a>
+          </li>
+
+      </ul>
+    </div>
+  </div>
+
+
+</aside>
+
+      </div>
+      <footer id="footer">
+
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2024 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+
+    <a href="/" class="mobile-nav-link">Home</a>
+
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+
+</nav>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>
