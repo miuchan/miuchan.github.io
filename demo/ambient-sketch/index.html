@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>美羽的环境乐随想</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="page">
+    <header>
+      <h1>美羽的环境乐随想</h1>
+      <p>点下播放键，聆听一段为美羽的数字花园写下的即兴循环。可以调节速度，让和弦、低音与旋律慢慢编织出不同的空间光影。</p>
+    </header>
+
+    <section class="controls">
+      <button id="toggle" class="primary">▶︎ 开始播放</button>
+      <div class="slider">
+        <label for="tempo">速度：<span id="tempoValue">78</span> BPM</label>
+        <input id="tempo" type="range" min="60" max="110" value="78" step="1">
+      </div>
+    </section>
+
+    <section class="status" aria-live="polite">
+      <div class="status-item">
+        <span class="label">当前和弦</span>
+        <span id="currentChord" class="value">—</span>
+      </div>
+      <div class="status-item">
+        <span class="label">旋律音符</span>
+        <span id="currentNote" class="value">—</span>
+      </div>
+    </section>
+
+    <section class="notes">
+      <h2>作品笔记</h2>
+      <p>循环采用 C 大调里常见的四个和弦：Cmaj7 → Am9 → Fmaj7 → Gsus4。按钮启动后，页面会用 Web Audio API 生成一条温柔的 Pad、沉稳的低音与轻盈的旋律，并根据你的 BPM 设置实时调度。每小节 4 拍、每拍 4 个 16 分音符，旋律会带着随机的停顿，为重复带来呼吸感。</p>
+      <p>停止时我们让增益包络自然衰减，因此不会出现突兀的噪声。刷新或再次点击开始，可以重新拾起这段不断生长的即兴。</p>
+    </section>
+  </main>
+  <script type="module" src="main.js"></script>
+</body>
+</html>

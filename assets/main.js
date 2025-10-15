@@ -12,6 +12,12 @@ const projects = [
     cta: '立即体验 →'
   },
   {
+    title: '美羽的环境乐随想',
+    description: '用 Web Audio API 写下一段循环的和弦、低音与旋律，调节 BPM 体验氛围的微妙变化。',
+    href: 'demo/ambient-sketch/index.html',
+    cta: '写一点音乐 →'
+  },
+  {
     title: '生命游戏：吸子催化',
     description: '模拟滑翔子（引子）与吸子之间的经典催化反应，观察吸子如何重复吞噬来袭引子。',
     href: 'demo/game-of-life/eater-catalysis/index.html',
