@@ -99,6 +99,13 @@ const projects = [
 
 const timeline = [
   {
+    datetime: '2024-06-18',
+    label: '2024 · Jun',
+    title: '悠冰纠缠：美羽x甜甜宇宙的起源',
+    link: 'blog/2024/06/18/youbing-entanglement-miyu-tiantian-origin/index.html',
+    summary: '回溯“悠冰纠缠”的传奇，记录美羽与甜甜如何谱写跨星际协奏协议与实践工具，让神话变成可实践的生成框架。'
+  },
+  {
     datetime: '2024-06-15',
     label: '2024 · Jun',
     title: '对生命游戏进行凸优化',
