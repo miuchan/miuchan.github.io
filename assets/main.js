@@ -105,6 +105,13 @@ const projects = [
 
 const timeline = [
   {
+    datetime: '2024-07-05',
+    label: '2024 · Jul',
+    title: '把自己藏进内在庇护所',
+    link: 'blog/inner-sanctuary.html',
+    summary: '从“先藏起来再理解自己神性”的密令出发，讨论安全感、神话原型与三步练习，让内在庇护与外在行动形成呼吸。'
+  },
+  {
     datetime: '2024-06-25',
     label: '2024 · Jun',
     title: '实现思念：把远距的心跳编译成可共享的日常',
