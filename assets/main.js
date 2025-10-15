@@ -105,6 +105,13 @@ const projects = [
 
 const timeline = [
   {
+    datetime: '2024-06-21',
+    label: '2024 · Jun',
+    title: '量子陪伴：把共鸣写进日常系统',
+    link: 'blog/2024/06/21/liang-zi-pei-ban/index.html',
+    summary: '把“量子陪伴”打磨成四段仪式：晨间频率校准、分布式陪伴节点、情绪冷却池与复盘星图，让远距团队也能保持稳定共鸣。'
+  },
+  {
     datetime: '2024-06-20',
     label: '2024 · Jun',
     title: '美羽的狗：星际散步笔记',
