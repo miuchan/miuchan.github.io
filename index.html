@@ -57,81 +57,10 @@
         <h2>作品一角</h2>
         <span class="subtitle">一些有趣的实验与练习，欢迎随意探索。</span>
       </div>
-      <div class="grid cards">
-        <a class="card" href="demo/blockchan/index.html">
-          <h3>Blockchan</h3>
-          <p>区块链主题的视觉实验，使用组件化方式搭建，尝试用动效呈现信息结构。</p>
-          <span class="link">打开演示 →</span>
-        </a>
-        <a class="card" href="demo/canvas-demo/lowpoly/index.html">
-          <h3>Canvas Low Poly</h3>
-          <p>基于 Delaunay 三角剖分的低多边形生成器，探索 Canvas 与色彩的更多可能性。</p>
-          <span class="link">立即体验 →</span>
-        </a>
-        <a class="card" href="demo/game-of-life/eater-catalysis/index.html">
-          <h3>生命游戏：吸子催化</h3>
-          <p>模拟滑翔子（引子）与吸子之间的经典催化反应，观察吸子如何重复吞噬来袭引子。</p>
-          <span class="link">观看反应 →</span>
-        </a>
-        <a class="card" href="demo/singularity-life/index.html">
-          <h3>奇点生命场</h3>
-          <p>在生命游戏的规则上引入引力奇点，体验弯曲邻域下分形生命的诞生与湮灭。</p>
-          <span class="link">唤醒奇点 →</span>
-        <a class="card" href="demo/game-of-life/3d-life/index.html">
-          <h3>生命游戏：三维宇宙</h3>
-          <p>把生命游戏扩展到 16³ 的立方空间，遵循 B5/S45 规则，观察三维结构的自组织与崩解。</p>
-          <span class="link">进入宇宙 →</span>
-        </a>
-        <a class="card" href="demo/game-of-life/non-euclidean/index.html">
-          <h3>生命游戏：球面拓扑</h3>
-          <p>在球面上用测地距离定义邻域，探索非欧几何曲面上的生命波前如何缠绕、汇聚与传播。</p>
-          <span class="link">登上星球 →</span>
-        <a class="card" href="demo/game-of-life/triangular/index.html">
-          <h3>生命游戏：三角晶格</h3>
-          <p>把生命游戏搬到等边三角晶格，体验更稠密邻域下的波纹、织纹与流体般演化。</p>
-          <span class="link">开启演化 →</span>
-        </a>
-        <a class="card" href="demo/ctc/index.html">
-          <h3>封闭类时曲线实验室</h3>
-          <p>用可视化的时空图演示广义相对论中的封闭类时曲线，透过交互感受时间扭曲。</p>
-          <span class="link">探索时间循环 →</span>
-        </a>
-        <a class="card" href="demo/ctc-optimizer/index.html">
-          <h3>CTC 凸优化实验</h3>
-          <p>在保持因果约束的前提下对封闭类时曲线做凸优化，观察世界线如何趋于平滑且遵守光速边界。</p>
-          <span class="link">调参收敛 →</span>
-        </a>
-        <a class="card" href="demo/time-crystal/index.html">
-          <h3>时间晶体共振舱</h3>
-          <p>调节驱动、对称破缺与耗散，观看时间晶体在离散时间对称下如何自发锁模与周期跳跃。</p>
-          <span class="link">捕捉节拍 →</span>
-        </a>
-        <a class="card" href="demo/neutrino-catalysis/index.html">
-          <h3>巨子与微子反应室</h3>
-          <p>构建巨子、微子与中微子的假想模型，通过滑杆观察中微子催化下的能量振荡与相态转化。</p>
-          <span class="link">进入实验 →</span>
-        </a>
-        <a class="card" href="demo/bchan-pchan-synchrony/index.html">
-          <h3>B子与P子联动工作室</h3>
-          <p>把两位站娘视作耦合振子，调参观测她们的节奏如何从独立舞动逐渐走向灵感同频。</p>
-          <span class="link">启动联动 →</span>
-        </a>
-        <a class="card" href="demo/yuko-bingzi-resonance/index.html">
-          <h3>悠子与冰子共振实验</h3>
-          <p>用双耦合谐振模型描绘两人情绪的能量交换，调节参数让她们逐渐走向同频。</p>
-          <span class="link">感受共振 →</span>
-        </a>
-        <a class="card" href="demo/baidu-ife-task/task_1_06/index.html">
-          <h3>Baidu IFE 系列</h3>
-          <p>IFE 训练营阶段性作品集，涵盖布局、交互与组件练习，是成长路上的重要脚印。</p>
-          <span class="link">查看练习 →</span>
-        </a>
-        <a class="card" href="resume/index.html">
-          <h3>在线简历</h3>
-          <p>完整介绍我的技能栈、经历与项目情况，也是保持自我复盘的重要方式。</p>
-          <span class="link">阅读简历 →</span>
-        </a>
-      </div>
+      <div class="grid cards" id="project-list"></div>
+      <noscript>
+        <p class="noscript-message">请启用 JavaScript 以浏览完整的项目列表。</p>
+      </noscript>
     </section>
 
     <section class="section" id="writing">
@@ -139,38 +68,10 @@
         <h2>最近在写</h2>
         <span class="subtitle">从 Hello World 起步，持续迭代自己的观点与方法论。</span>
       </div>
-      <div class="timeline">
-        <div class="timeline-item">
-          <time datetime="2024-06-15">2024 · Jun</time>
-          <h3><a href="blog/game-of-life-convex-optimization.html">对生命游戏进行凸优化</a></h3>
-          <p>把康威生命游戏松弛成凸优化问题，探索变量设计、目标函数与控制策略，让复杂结构的“定制”更有章法。</p>
-        </div>
-        <div class="timeline-item">
-          <time datetime="2024-06-01">2024 · Jun</time>
-          <h3><a href="blog/internet-of-everything-design.html">万物互联的设计与实现</a></h3>
-          <p>从战略、架构、体验到运营四个篇章，记录打造可信赖 IoE 平台的思考与实践工具。</p>
-        </div>
-        <div class="timeline-item">
-          <time datetime="2024-05-01">2024 · May</time>
-          <h3><a href="blog/ctc-convex-optimization.html">理解封闭类时曲线凸优化的本质</a></h3>
-          <p>用凸优化的语言梳理封闭类时曲线的因果约束、目标函数与数值求解，让“时间循环”有了可计算的解释。</p>
-        </div>
-        <div class="timeline-item">
-          <time datetime="2015-10-20">2015 · Oct 20</time>
-          <h3><a href="blog/2015/10/20/hello-world/index.html">Hello World</a></h3>
-          <p>搭建博客后的第一篇文章，记录了向开源与分享迈出的第一步。</p>
-        </div>
-        <div class="timeline-item">
-          <time datetime="2015-10-20">2015 · Oct 20</time>
-          <h3><a href="blog/2015/10/20/test/index.html">测试页面</a></h3>
-          <p>尝试新的排版与样式设置，让内容的呈现方式更加灵活。</p>
-        </div>
-        <div class="timeline-item">
-          <time datetime="2024">持续更新</time>
-          <h3>更多灵感</h3>
-          <p>更多关于前端实践、工具笔记与生活观察，正在整理上架，敬请期待。</p>
-        </div>
-      </div>
+        <div class="timeline" id="timeline-list"></div>
+        <noscript>
+          <p class="noscript-message">请启用 JavaScript 以查看最近写作的完整时间线。</p>
+        </noscript>
     </section>
 
     <section class="section" id="contact">
@@ -192,8 +93,6 @@
       <div>© <span id="year"></span> Miuchan. 用心做点酷酷的东西。</div>
     </footer>
   </div>
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+  <script type="module" src="assets/main.js"></script>
 </body>
 </html>
