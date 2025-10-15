@@ -105,6 +105,13 @@ const projects = [
 
 const timeline = [
   {
+    datetime: '2024-06-25',
+    label: '2024 · Jun',
+    title: '实现思念：把远距的心跳编译成可共享的日常',
+    link: 'blog/2024/06/25/shi-nian/index.html',
+    summary: '把思念拆成心跳波形、语素片段与空间截面，设计三段远距仪式与共用工作台，让彼此的等待拥有节奏化的回响。'
+  },
+  {
     datetime: '2024-06-21',
     label: '2024 · Jun',
     title: '量子陪伴：把共鸣写进日常系统',
