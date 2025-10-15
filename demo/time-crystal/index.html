@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>时间晶体共振舱</title>
+  <meta name="description" content="通过调节驱动频率、对称破缺与耗散，观察时间晶体在多重谐波下的自发锁模与相位跳跃。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="layout">
+    <header class="hero">
+      <a class="back" href="../../index.html#projects">← 返回作品集合</a>
+      <h1>时间晶体共振舱</h1>
+      <p>调配驱动、对称破缺与能量耗散，让时间晶体在离散时间对称下自发锁模，感受跨周期的量子节拍。</p>
+      <div class="tags" aria-label="演示特性">
+        <span class="tag">时间晶体</span>
+        <span class="tag">非平衡系统</span>
+        <span class="tag">可视化</span>
+      </div>
+    </header>
+
+    <section class="stage" aria-labelledby="canvas-title">
+      <div class="stage__canvas">
+        <canvas id="crystalCanvas" width="780" height="520" role="img" aria-labelledby="canvas-title"></canvas>
+      </div>
+      <div class="stage__caption">
+        <h2 id="canvas-title">晶体态演化</h2>
+        <p>中央光环代表基态晶格，外层轨迹展示被驱动后的离散时间对称破缺。在多重谐波的叠加下，晶体能量在几个子谐波之间游走。</p>
+        <ul>
+          <li>亮度表示瞬时能量密度。</li>
+          <li>色相根据子谐波频率漂移而变。</li>
+          <li>轨迹拖影用于观察周期加倍的稳定性。</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="controls" aria-describedby="control-help">
+      <div class="control">
+        <label for="drive">驱动频率</label>
+        <input id="drive" type="range" min="0.6" max="3.2" step="0.02" value="1.45">
+        <span class="value" id="driveValue">1.45 Hz</span>
+      </div>
+      <div class="control">
+        <label for="phase">相位偏移</label>
+        <input id="phase" type="range" min="0" max="6.28" step="0.05" value="2.4">
+        <span class="value" id="phaseValue">2.40 rad</span>
+      </div>
+      <div class="control">
+        <label for="symmetry">对称破缺</label>
+        <input id="symmetry" type="range" min="0" max="1" step="0.02" value="0.58">
+        <span class="value" id="symmetryValue">58%</span>
+      </div>
+      <div class="control">
+        <label for="damping">耗散强度</label>
+        <input id="damping" type="range" min="0" max="0.28" step="0.01" value="0.08">
+        <span class="value" id="dampingValue">0.08</span>
+      </div>
+      <div class="control control--buttons">
+        <button id="toggle" type="button">暂停演化</button>
+        <button id="reset" type="button" class="secondary">重置参数</button>
+      </div>
+      <p class="controls__help" id="control-help">驱动频率调节外部周期性激励；对称破缺越强，时间晶体越容易进入周期加倍态；适度的耗散可帮助系统锁模，但过强会熄灭振荡。</p>
+    </section>
+
+    <section class="readout" aria-live="polite">
+      <div class="stat">
+        <span class="label">时序有序度</span>
+        <span class="stat-value" id="orderParam">--</span>
+      </div>
+      <div class="stat">
+        <span class="label">锁模指数</span>
+        <span class="stat-value" id="modeLock">--</span>
+      </div>
+      <div class="stat">
+        <span class="label">晶体能量</span>
+        <span class="stat-value" id="energyLevel">--</span>
+      </div>
+      <p class="narrative" id="narrative">等待晶体捕捉第一道时间脉冲…</p>
+    </section>
+
+    <section class="explain">
+      <h2>关于这间共振舱</h2>
+      <p>时间晶体是一种打破连续时间平移对称性的非平衡态。尽管在外部驱动下获得能量，它仍在更长的周期上重复自己，形成“离散时间对称”。</p>
+      <p>在本演示中，我们构建了一个简化的多谐波模型：驱动频率决定外部周期；对称破缺系数调节二次谐波的强度；耗散项模拟环境对能量的抽取。通过调整参数，可观察晶体如何从基态进入周期加倍、再到混沌区间。</p>
+    </section>
+
+    <footer class="footer">
+      <p>© <span id="year"></span> Miuchan · 时间晶体可视化实验</p>
+    </footer>
+  </main>
+
+  <script src="time-crystal.js" type="module"></script>
+</body>
+</html>
