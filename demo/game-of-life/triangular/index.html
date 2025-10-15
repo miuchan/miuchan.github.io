@@ -77,6 +77,17 @@
       <p id="controls-help">调节出生与存活条件即可探索不同的演化生态：提高出生阈值会让图样更稀疏，放宽存活范围则有助于形成稳定的织纹。</p>
     </section>
 
+    <section class="leaderboard" aria-labelledby="leaderboard-title">
+      <div class="leaderboard-header">
+        <h2 id="leaderboard-title">演化排行榜</h2>
+        <button type="button" id="recordScore" class="secondary">记录当前成绩</button>
+      </div>
+      <p class="leaderboard-description">随时记录当前代数与活细胞数量，排行榜会根据最高代数排序，并在本地保存你的最佳实验。</p>
+      <p class="leaderboard-empty" data-leaderboard-empty>排行榜暂时为空，启动演化并点击“记录当前成绩”尝试刷新纪录吧。</p>
+      <ol class="leaderboard-list" data-leaderboard></ol>
+      <p class="leaderboard-status" data-leaderboard-status aria-live="polite"></p>
+    </section>
+
     <section class="insight">
       <h2>为什么选择三角晶格？</h2>
       <p>在方格网格中，每个细胞最多感知 8 个邻居，而三角晶格则拥有更稠密的触角，意味着能量扩散更具方向性。结构会沿着 60° 的对称轴传递，常见的滑翔子被分解成波纹状的条带，震荡器也变得更像晶格振动。通过调节规则，可以观察到类似流体的脉冲、蜂窝状的稳定区域，甚至在高出生阈值下出现的“沙丘”迁移。</p>
