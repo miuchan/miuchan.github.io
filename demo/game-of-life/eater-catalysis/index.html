@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>生命游戏：吸子与引子的催化反应</title>
+  <meta name="description" content="使用康威生命游戏模拟吸子（Eater）与引子（Glider）之间的经典催化反应，观察吸子如何稳定地吞掉来袭引子。">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <header class="page-header">
+      <a class="back-link" href="../../../index.html">← 返回主页</a>
+      <h1>生命游戏：吸子与引子的催化反应</h1>
+      <p>吸子是一种稳定的静物结构，而引子（通常是滑翔子）则会在网格上移动。本示例展示经典的催化现象：吸子吞掉引子后能够回到原始状态，因此可以一次又一次地充当“催化剂”。</p>
+      <div class="stats">
+        <div class="stat">
+          <span class="label">代数</span>
+          <strong data-generation>0</strong>
+        </div>
+        <div class="stat">
+          <span class="label">距离下次引子</span>
+          <strong data-countdown>0</strong>
+        </div>
+        <button type="button" class="action" data-reset>重新开始反应</button>
+      </div>
+    </header>
+    <section class="demo">
+      <canvas id="life" width="720" height="480" role="img" aria-label="展示吸子催化反应的生命游戏网格"></canvas>
+      <article class="panel">
+        <h2>反应步骤</h2>
+        <ol>
+          <li>引子从左下角出发，沿对角线滑向吸子。</li>
+          <li>吸子边缘会暂时出现轻微扰动，用来消解引子的能量。</li>
+          <li>若干代之后，吸子恢复为最初的静物形态，而引子被完全吸收。</li>
+        </ol>
+        <p>由于吸子在碰撞后仍保持原样，它可以不断地与新的引子发生反应，就像现实中的催化剂一样重复使用。你可以点击上方按钮随时重新开始流程。</p>
+      </article>
+    </section>
+  </main>
+  <script src="life.js"></script>
+</body>
+</html>
