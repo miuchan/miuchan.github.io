@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>对生命游戏进行凸优化 | Miuchan</title>
+  <meta name="description" content="用凸优化的视角理解生命游戏中的结构探索，从模式重建到控制策略，构造可求解的目标函数与约束。">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/main.css">
+  <style>
+    main.article {
+      max-width: 760px;
+      margin: 64px auto 120px;
+      background: rgba(15, 23, 42, 0.55);
+      border: 1px solid var(--card-border);
+      border-radius: 28px;
+      padding: 48px 56px;
+      box-shadow: var(--shadow);
+    }
+    main.article header h1 {
+      margin: 0 0 12px;
+      font-size: clamp(2.2rem, 4vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: -0.015em;
+    }
+    main.article header p.meta {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    main.article section {
+      margin-top: 40px;
+    }
+    main.article h2 {
+      margin: 0 0 16px;
+      font-size: 1.5rem;
+    }
+    main.article p {
+      color: #e2e8f0;
+      margin: 0 0 18px;
+      text-align: justify;
+    }
+    main.article ul {
+      margin: 0 0 18px 20px;
+      color: #e2e8f0;
+      padding-left: 16px;
+    }
+    main.article li + li {
+      margin-top: 8px;
+    }
+    main.article .quote {
+      margin: 24px 0;
+      padding: 18px 24px;
+      border-left: 3px solid var(--accent);
+      background: rgba(59, 130, 246, 0.12);
+      color: #bfdbfe;
+      border-radius: 0 18px 18px 0;
+    }
+    main.article code {
+      font-family: 'Source Code Pro', 'JetBrains Mono', monospace;
+      background: rgba(148, 163, 184, 0.15);
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+    }
+    main.article figure {
+      margin: 28px 0;
+      padding: 20px 24px;
+      background: rgba(30, 41, 59, 0.6);
+      border-radius: 20px;
+      border: 1px solid rgba(148, 163, 184, 0.2);
+    }
+    main.article figure figcaption {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      text-align: center;
+    }
+    nav.article-nav {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 48px;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+    nav.article-nav a {
+      color: var(--text);
+    }
+    @media (max-width: 768px) {
+      main.article {
+        margin: 32px 0 80px;
+        padding: 32px 24px;
+        border-radius: 22px;
+      }
+      nav.article-nav {
+        flex-direction: column;
+        gap: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <nav>
+      <a href="../index.html" class="logo">miuchan.github.io</a>
+      <div class="nav-links">
+        <a href="../index.html#about">关于</a>
+        <a href="../index.html#projects">作品</a>
+        <a href="../index.html#writing">写作</a>
+        <a href="../index.html#contact">联系</a>
+      </div>
+    </nav>
+
+    <main class="article">
+      <header>
+        <h1>对生命游戏进行凸优化</h1>
+        <p class="meta">2024 年 6 月 · 复杂系统 / 数值实验笔记</p>
+      </header>
+
+      <section>
+        <p>在康威生命游戏里，局部规则能涌现出惊人的复杂度：滑翔子会穿越棋盘、振荡子保持节奏、枪炮结构自发生成无限序列。若我们想“设计”或“控制”这些结构，与其穷举搜索，不如将问题转化为凸优化。在凸域内求解，让我们能够对目标模式、能量消耗甚至外部干预做出可计算的规划。</p>
+        <div class="quote">把离散的生命游戏搬进凸优化框架，就是寻找一个可行的连续松弛：变量可被放宽，但最终结果仍能被投影回合法的细胞状态。</div>
+      </section>
+
+      <section>
+        <h2>1. 变量松弛：把细胞激活写成向量</h2>
+        <p>生命游戏的基本变量是格点 <code>(i, j, t)</code> 的存活状态 <code>x_{i,j}^t \in \{0,1\}</code>。为了进入凸优化世界，我们将其放松为区间变量 <code>y_{i,j}^t \in [0,1]</code>，并把所有状态拼接成向量 <code>y</code>。同时引入线性算子 <code>S</code> 统计邻域存活数，以及演化算子 <code>G</code> 表示规则的线性松弛形式。</p>
+        <p>演化规则的放松可以写成如下凸约束：</p>
+        <ul>
+          <li><strong>保持存活</strong>：若上一帧激活度足够且邻域总和在目标区间内，则通过不等式约束保证当前帧的激活度不低于阈值。</li>
+          <li><strong>诞生条件</strong>：用线性斜坡或分段凸函数逼近“邻居等于 3 才活”的逻辑，将硬阈值转换成可求导的凸锥。</li>
+          <li><strong>熄灭条件</strong>：通过上界约束抑制邻域超载导致的激活。</li>
+        </ul>
+        <p>这样一来，原本布尔的演化被松弛成一个在高维超立方体中的凸可行域 <code>\mathcal{F}</code>。</p>
+      </section>
+
+      <section>
+        <h2>2. 目标函数：设计期望的涌现</h2>
+        <p>在凸优化视角下，我们可以定义多种目标函数，让系统向预想的模式收敛：</p>
+        <ul>
+          <li><strong>轨迹重建</strong>：给定目标帧 <code>\hat{x}^t</code>，最小化二次损失 <code>\sum_t \|y^t - \hat{x}^t\|_2^2</code>，寻找与样例最贴近的演化。</li>
+          <li><strong>能量正则</strong>：添加 <code>\ell_1</code> 或 <code>\ell_2</code> 正则项，鼓励稀疏或平滑的激活，避免无意义的噪声。</li>
+          <li><strong>稳定振荡</strong>：最小化周期差异 <code>\|y^{t+T} - y^t\|_2^2</code>，用于自动合成周期振荡子。</li>
+        </ul>
+        <p>这些目标都是凸的，因此组合后仍旧形成标准的凸优化问题 <code>\min_{y \in \mathcal{F}} f(y)</code>。</p>
+      </section>
+
+      <section>
+        <h2>3. 约束补强：让解能投影回离散状态</h2>
+        <p>松弛虽然让问题可解，但我们最终仍需回到布尔格局。为了让凸解易于量化，我们会额外加入几类约束：</p>
+        <ul>
+          <li><strong>二值接近</strong>：通过惩罚 <code>y_{i,j}^t (1 - y_{i,j}^t)</code> 的上界，使得解倾向 0 或 1。</li>
+          <li><strong>局部一致性</strong>：要求同一结构中的细胞激活度相近，比如对滑翔子的 5 个格点施加二范数约束。</li>
+          <li><strong>投影可行性</strong>：在求解结束后，对 <code>y</code> 进行阈值投影，并验证真实演化是否保持目标属性；如果失败，则将违反的帧添加为新的凸约束迭代优化。</li>
+        </ul>
+        <p>这种“求解—投影—修正”的流程类似于半定规划中的剪切平面方法，可以逐步逼近真正的离散可行解。</p>
+      </section>
+
+      <section>
+        <h2>4. 算法实践：投影梯度与内点法</h2>
+        <p>当我们把生命游戏写成凸优化后，常见的求解器就派上用场了：</p>
+        <ul>
+          <li><strong>投影梯度法</strong>：利用问题的稀疏结构，按时间步并行计算梯度，并把结果投影回 <code>\mathcal{F}</code>。</li>
+          <li><strong>交替方向乘子法（ADMM）</strong>：把时间演化约束、目标函数和二值近似拆分成多个子问题交替求解，便于利用 GPU。</li>
+          <li><strong>内点法</strong>：适合处理带有二次锥或半正定松弛的情况，在目标模式高度复杂时更稳定。</li>
+        </ul>
+        <p>数值上，合理的初始化（例如从随机噪声或已知模板出发）可以显著缩短收敛时间。</p>
+      </section>
+
+      <section>
+        <h2>5. 控制视角：从优化走向干预</h2>
+        <p>一旦我们可以凸化生命游戏，就能把它视作离散的动力系统控制问题。我们可以引入外部控制量 <code>u^t</code>（例如强制点亮某些格点），把其作为优化变量，并添加成本项 <code>\gamma \|u\|_1</code> 惩罚干预次数，从而规划如何以最小代价把系统引导至目标模式。</p>
+        <p>更进一步，我们还能分析对偶变量的意义：拉格朗日乘子对应着“违反规则”的影子价格，帮助我们找出哪些区域最难满足约束，为后续的结构设计提供灵感。</p>
+      </section>
+
+      <section>
+        <h2>6. 总结</h2>
+        <p>生命游戏的魅力在于简单规则下的无限可能。通过凸优化，我们为这些可能性装上了可计算的舵轮：定义目标、松弛约束、求解并投影。虽然松弛解仍需回到离散世界检验，但它极大扩展了我们探索复杂模式、自动设计结构乃至实时干预的能力。</p>
+        <p>与其盲目搜索，不如构建一个稳健的凸优化器，让生命游戏成为可操控的算法舞台。</p>
+      </section>
+
+      <nav class="article-nav">
+        <span><a href="internet-of-everything-design.html">← 万物互联的设计与实现</a></span>
+        <span><a href="ctc-convex-optimization.html">理解封闭类时曲线凸优化的本质 →</a></span>
+      </nav>
+    </main>
+  </div>
+</body>
+</html>
