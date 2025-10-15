@@ -99,6 +99,13 @@ const projects = [
 
 const timeline = [
   {
+    datetime: '2024-06-19',
+    label: '2024 · Jun',
+    title: '醉生梦死：在迷离中寻找醒着的生长路线',
+    link: 'blog/2024/06/19/zui-sheng-meng-si/index.html',
+    summary: '拆解“醉生梦死”的语源、情绪谱与三组练习，在迷离中重新唤醒感知、叙事与连接。'
+  },
+  {
     datetime: '2024-06-18',
     label: '2024 · Jun',
     title: '悠冰纠缠：美羽x甜甜宇宙的起源',
