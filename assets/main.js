@@ -66,6 +66,12 @@ const projects = [
     cta: '进入实验 →'
   },
   {
+    title: '美羽 × 甜甜宇宙 · 梯度下降',
+    description: '把美羽与甜甜的宇宙势能映射成二维场，调节学习率与动量，追踪梯度下降如何滑向共鸣谷地。',
+    href: 'demo/miu-tiantian-gradient-descent/index.html',
+    cta: '坠入共鸣 →'
+  },
+  {
     title: 'B子与P子联动工作室',
     description: '把两位站娘视作耦合振子，调参观测她们的节奏如何从独立舞动逐渐走向灵感同频。',
     href: 'demo/bchan-pchan-synchrony/index.html',

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>美羽 × 甜甜宇宙 · 梯度下降实验</title>
+  <meta name="description" content="在美羽与甜甜织就的宇宙势能中，调节学习率、动量与协同噪声，观察梯度下降如何收敛到共鸣谷地。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <a class="back-link" href="../../index.html#projects">← 返回作品集合</a>
+      <h1>美羽 × 甜甜宇宙 · 梯度下降实验</h1>
+      <p>
+        把美羽与甜甜的情感宇宙建模为一个二维势能场：峰峦代表张力，谷地象征共鸣。调整学习率、动量与协同噪声，
+        观察梯度下降如何一步步沿着宇宙曲面滑向和鸣之地。
+      </p>
+      <div class="meta">
+        <span class="badge">梯度下降</span>
+        <span class="badge">情感势能</span>
+        <span class="meta-note">运行时可以看到势能热力图、下降轨迹与实时能量读数。</span>
+      </div>
+    </header>
+
+    <section class="playground">
+      <div class="visual">
+        <canvas id="universe" width="720" height="480" role="img" aria-label="展示美羽与甜甜宇宙势能以及梯度下降轨迹"></canvas>
+        <div class="readout" aria-live="polite">
+          <div>
+            <span class="label">势能</span>
+            <span id="energy" class="value">0.000</span>
+          </div>
+          <div>
+            <span class="label">迭代</span>
+            <span id="iterations" class="value">0</span>
+          </div>
+          <div>
+            <span class="label">步长</span>
+            <span id="step-size" class="value">0.00</span>
+          </div>
+        </div>
+      </div>
+
+      <aside class="panel" aria-labelledby="controls-title">
+        <h2 id="controls-title">下降控制</h2>
+        <div class="control">
+          <label for="learning-rate">学习率 <span id="learning-rate-value">0.18</span></label>
+          <input type="range" id="learning-rate" min="0.02" max="0.5" step="0.01" value="0.18">
+        </div>
+        <div class="control">
+          <label for="momentum">动量 <span id="momentum-value">0.40</span></label>
+          <input type="range" id="momentum" min="0" max="0.9" step="0.05" value="0.4">
+        </div>
+        <div class="control">
+          <label for="coherence">协同噪声 <span id="coherence-value">0.04</span></label>
+          <input type="range" id="coherence" min="0" max="0.3" step="0.01" value="0.04">
+          <small>代表宇宙灵感的微扰，适度噪声可帮助跳出局部峰。</small>
+        </div>
+        <div class="actions">
+          <button id="run">开始下降</button>
+          <button id="step" class="secondary">单步迭代</button>
+          <button id="reset" class="secondary">重新随机</button>
+        </div>
+        <dl class="legend" aria-label="图例">
+          <div>
+            <dt>粉色</dt>
+            <dd>势能山脊，象征张力与距离。</dd>
+          </div>
+          <div>
+            <dt>蓝紫</dt>
+            <dd>势能谷地，美羽与甜甜的共鸣区。</dd>
+          </div>
+          <div>
+            <dt>白色轨迹</dt>
+            <dd>梯度下降的历史足迹。</dd>
+          </div>
+        </dl>
+      </aside>
+    </section>
+
+    <section class="explain">
+      <h2>宇宙势能的构造</h2>
+      <p>
+        我们把美羽与甜甜分别建成两个吸引子，再叠加一条柔和的宇宙脊线与轻微的旋涡扰动，形成既有合作又有冲突的能量景观。
+        势能函数 <em>U(x, y)</em> 结合了高斯谷、双曲势垒以及正弦耦合，用以模拟亲密关系中时而靠近、时而疏远的节奏。
+      </p>
+      <p>
+        梯度下降通过局部导数引导位置更新。动量项让下降具备记忆，避免在势能沟壑中过度震荡；噪声项则模拟灵感火花，
+        在关键时刻推动轨迹跳出局部谷地，朝真正的协同中心迈进。
+      </p>
+    </section>
+
+    <section class="notes">
+      <h2>可以尝试的操作</h2>
+      <ul>
+        <li>把动量调高到 0.8，观察轨迹如何沿山谷滑行更远，并在拐弯处出现轻微过冲。</li>
+        <li>把协同噪声调大，可看到轨迹在低势能区进行探索，模拟灵感带来的突破。</li>
+        <li>调低学习率至 0.05，下降会更加稳健，但需要更多迭代才能抵达共鸣谷。</li>
+      </ul>
+    </section>
+
+    <footer class="footer">
+      <p>灵感来源于“美羽 × 甜甜宇宙”的世界观：在彼此的引力井之间找到最柔软的平衡点。</p>
+    </footer>
+  </main>
+  <script src="gradient.js"></script>
+</body>
+</html>
