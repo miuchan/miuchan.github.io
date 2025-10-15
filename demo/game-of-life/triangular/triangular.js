@@ -16,6 +16,13 @@ const generationEl = document.querySelector('[data-generation]');
 const aliveEl = document.querySelector('[data-alive]');
 const ruleEl = document.querySelector('[data-rule]');
 const yearEl = document.getElementById('year');
+const leaderboardList = document.querySelector('[data-leaderboard]');
+const leaderboardEmptyEl = document.querySelector('[data-leaderboard-empty]');
+const leaderboardStatusEl = document.querySelector('[data-leaderboard-status]');
+const recordScoreBtn = document.getElementById('recordScore');
+
+const LEADERBOARD_STORAGE_KEY = 'triangular-life-leaderboard';
+let leaderboardEntries = [];
 
 if (yearEl) {
   yearEl.textContent = new Date().getFullYear();
@@ -93,6 +100,154 @@ function formatRule(birth, surviveMin, surviveMax) {
   return surviveMin === surviveMax
     ? `B${birth}/S${surviveMin}`
     : `B${birth}/S${surviveMin}-${surviveMax}`;
+}
+
+function entryScore(entry) {
+  return entry.generation * 1_000_000 + entry.alive;
+}
+
+function normalizeEntry(entry) {
+  if (!entry || typeof entry !== 'object') return null;
+  const generation = Number(entry.generation);
+  const alive = Number(entry.alive);
+  if (!Number.isFinite(generation) || !Number.isFinite(alive)) return null;
+  const rule = typeof entry.rule === 'string' ? entry.rule : '';
+  const recordedAt = typeof entry.recordedAt === 'string' ? entry.recordedAt : new Date().toISOString();
+  return {
+    generation: Math.max(0, Math.round(generation)),
+    alive: Math.max(0, Math.round(alive)),
+    rule,
+    recordedAt,
+  };
+}
+
+function sortLeaderboard(entries) {
+  return entries
+    .slice()
+    .sort((a, b) => {
+      const scoreDiff = entryScore(b) - entryScore(a);
+      if (scoreDiff !== 0) return scoreDiff;
+      const timeA = new Date(a.recordedAt).getTime();
+      const timeB = new Date(b.recordedAt).getTime();
+      if (Number.isNaN(timeA) || Number.isNaN(timeB)) return 0;
+      return timeB - timeA;
+    });
+}
+
+function loadLeaderboard() {
+  if (typeof window === 'undefined' || !window.localStorage) {
+    return [];
+  }
+  try {
+    const raw = window.localStorage.getItem(LEADERBOARD_STORAGE_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed)) return [];
+    return parsed.map(normalizeEntry).filter(Boolean);
+  } catch (error) {
+    console.warn('无法读取排行榜数据:', error);
+    return [];
+  }
+}
+
+function saveLeaderboard(entries) {
+  if (typeof window === 'undefined' || !window.localStorage) {
+    return false;
+  }
+  try {
+    window.localStorage.setItem(LEADERBOARD_STORAGE_KEY, JSON.stringify(entries));
+    return true;
+  } catch (error) {
+    console.warn('无法保存排行榜数据:', error);
+    return false;
+  }
+}
+
+function formatTimestamp(isoString) {
+  if (!isoString) return '刚刚';
+  const date = new Date(isoString);
+  if (Number.isNaN(date.getTime())) return '刚刚';
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  return `${year}-${month}-${day} ${hours}:${minutes}`;
+}
+
+function announceLeaderboardStatus(message, isError = false) {
+  if (!leaderboardStatusEl) return;
+  leaderboardStatusEl.textContent = message;
+  if (isError) {
+    leaderboardStatusEl.classList.add('is-error');
+  } else {
+    leaderboardStatusEl.classList.remove('is-error');
+  }
+}
+
+function renderLeaderboard(entries = leaderboardEntries) {
+  if (!leaderboardList || !leaderboardEmptyEl) return;
+  leaderboardList.innerHTML = '';
+  if (!entries.length) {
+    leaderboardList.hidden = true;
+    leaderboardEmptyEl.hidden = false;
+    return;
+  }
+  leaderboardList.hidden = false;
+  leaderboardEmptyEl.hidden = true;
+  const displayEntries = entries.slice(0, 8);
+  displayEntries.forEach((entry, index) => {
+    const item = document.createElement('li');
+    item.className = 'leaderboard-item';
+
+    const rankEl = document.createElement('span');
+    rankEl.className = 'leaderboard-rank';
+    rankEl.textContent = `#${index + 1}`;
+    item.appendChild(rankEl);
+
+    const scoreEl = document.createElement('div');
+    scoreEl.className = 'leaderboard-score';
+    const generationEl = document.createElement('strong');
+    generationEl.textContent = `第 ${entry.generation} 代`;
+    scoreEl.appendChild(generationEl);
+    const detailEl = document.createElement('span');
+    const ruleText = entry.rule ? ` · 规则 ${entry.rule}` : '';
+    detailEl.textContent = `活细胞 ${entry.alive}${ruleText}`;
+    scoreEl.appendChild(detailEl);
+    item.appendChild(scoreEl);
+
+    const timeEl = document.createElement('time');
+    timeEl.dateTime = entry.recordedAt;
+    timeEl.textContent = formatTimestamp(entry.recordedAt);
+    item.appendChild(timeEl);
+
+    leaderboardList.appendChild(item);
+  });
+}
+
+leaderboardEntries = sortLeaderboard(loadLeaderboard());
+renderLeaderboard();
+
+function handleRecordScore() {
+  if (!recordScoreBtn) return;
+  if (generation === 0 && aliveCount === 0) {
+    announceLeaderboardStatus('请先演化或绘制图样后再记录成绩。', true);
+    return;
+  }
+  const entry = {
+    generation,
+    alive: aliveCount,
+    rule: formatRule(birthValue(), surviveMinValue(), surviveMaxValue()),
+    recordedAt: new Date().toISOString(),
+  };
+  leaderboardEntries = sortLeaderboard([...leaderboardEntries, entry]).slice(0, 20);
+  const saved = saveLeaderboard(leaderboardEntries);
+  renderLeaderboard();
+  if (saved) {
+    announceLeaderboardStatus(`已记录第 ${entry.generation} 代（活细胞 ${entry.alive}）。`);
+  } else {
+    announceLeaderboardStatus('成绩已记录，但浏览器阻止了排行榜的持久化存储。', true);
+  }
 }
 
 function updateStats() {
@@ -355,6 +510,8 @@ randomBtn.addEventListener('click', () => {
   randomizeBoard();
   needsRedraw = true;
 });
+
+recordScoreBtn?.addEventListener('click', handleRecordScore);
 
 speedInput.addEventListener('input', handleSpeedChange);
 birthInput.addEventListener('input', () => {
