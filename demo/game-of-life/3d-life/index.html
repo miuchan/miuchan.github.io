@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>三维生命游戏</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="layout">
+    <section class="viewer">
+      <canvas id="life-3d"></canvas>
+      <div class="overlay">
+        <h1>三维生命游戏</h1>
+        <p>规则：B5 / S45（5 个邻居诞生，4 或 5 个邻居存活），空间采用环面边界。</p>
+        <p><span data-generation>0</span> 代 · <span data-population>0</span> 个活细胞</p>
+        <button type="button" data-random>重新随机</button>
+      </div>
+    </section>
+    <section class="description">
+      <h2>关于这个实验</h2>
+      <p>
+        这是 Conway 生命游戏的三维扩展版本。我们使用一个 16×16×16 的立方网格，
+        细胞按照 B5/S45 的经典三维规则演化：当周围 26 个邻居中恰好有 5 个存活时，
+        死细胞诞生；存活细胞仅在拥有 4 或 5 个邻居时继续存在。
+      </p>
+      <p>
+        为了便于观察，渲染中为不同高度的细胞赋予了不同的色调，并提供了轨道控制可自由旋转视角。
+      </p>
+    </section>
+  </main>
+  <script type="module" src="life3d.js"></script>
+</body>
+</html>
