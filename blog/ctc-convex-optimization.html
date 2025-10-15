@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>理解封闭类时曲线凸优化的本质 | Miuchan</title>
+  <meta name="description" content="通过凸优化视角理解封闭类时曲线的结构与可计算性，探索因果约束、目标函数与拉格朗日乘子之间的关系。">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/main.css">
+  <style>
+    main.article {
+      max-width: 760px;
+      margin: 64px auto 120px;
+      background: rgba(15, 23, 42, 0.55);
+      border: 1px solid var(--card-border);
+      border-radius: 28px;
+      padding: 48px 56px;
+      box-shadow: var(--shadow);
+    }
+    main.article header h1 {
+      margin: 0 0 12px;
+      font-size: clamp(2.2rem, 4vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: -0.015em;
+    }
+    main.article header p.meta {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    main.article section {
+      margin-top: 40px;
+    }
+    main.article h2 {
+      margin: 0 0 16px;
+      font-size: 1.5rem;
+    }
+    main.article p {
+      color: #e2e8f0;
+      margin: 0 0 18px;
+      text-align: justify;
+    }
+    main.article ul {
+      margin: 0 0 18px 20px;
+      color: #e2e8f0;
+      padding-left: 16px;
+    }
+    main.article li + li {
+      margin-top: 8px;
+    }
+    main.article .quote {
+      margin: 24px 0;
+      padding: 18px 24px;
+      border-left: 3px solid var(--accent);
+      background: rgba(139, 92, 246, 0.12);
+      color: #e0e7ff;
+      border-radius: 0 18px 18px 0;
+    }
+    main.article code {
+      font-family: 'Source Code Pro', 'JetBrains Mono', monospace;
+      background: rgba(148, 163, 184, 0.15);
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+    }
+    nav.article-nav {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 48px;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+    nav.article-nav a {
+      color: var(--text);
+    }
+    @media (max-width: 768px) {
+      main.article {
+        margin: 32px 0 80px;
+        padding: 32px 24px;
+        border-radius: 22px;
+      }
+      nav.article-nav {
+        flex-direction: column;
+        gap: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <nav>
+      <a href="../index.html" class="logo">miuchan.github.io</a>
+      <div class="nav-links">
+        <a href="../index.html#about">关于</a>
+        <a href="../index.html#projects">作品</a>
+        <a href="../index.html#writing">写作</a>
+        <a href="../index.html#contact">联系</a>
+      </div>
+    </nav>
+
+    <main class="article">
+      <header>
+        <h1>理解封闭类时曲线凸优化的本质</h1>
+        <p class="meta">2024 年 5 月 · 理论物理 / 数值优化随笔</p>
+      </header>
+
+      <section>
+        <p>当我们谈论封闭类时曲线（Closed Timelike Curves, CTC）时，常常把注意力放在其奇幻的物理含义：沿着时间轴回到过去，甚至与自己相遇。然而，从计算的角度看，CTC 的研究也可以转化为一个凸优化问题。理解这一点，能帮助我们把抽象的时空几何转写为可操作的数值框架，并更清晰地把握“因果一致性”在数学上的落脚点。</p>
+        <div class="quote">核心问题不是“能否穿越时空”，而是“在怎样的约束下，世界线会收敛到一个自洽的循环”。这正是凸优化擅长回答的。</div>
+      </section>
+
+      <section>
+        <h2>1. 将时空描述映射到变量空间</h2>
+        <p>在广义相对论中，类时曲线表示观测者的世界线。若我们以离散时间步 <code>t = 0, \dots, T</code> 描述一条曲线，其状态可以表示为四维坐标 <code>x_t</code> 与速度四矢量 <code>u_t</code>。为了落地为优化问题，我们将这些连续变量放入一个高维向量 <code>z</code>，并引入矩阵 <code>A</code> 用以表示平滑性、闭合性等线性约束。</p>
+        <p>封闭条件意味着 <code>x_0 = x_T</code>，而类时条件则要求度规内积满足 <code>g(u_t, u_t) = -1</code>。若我们选择局部洛伦兹框架并对速度作适当归一化，这些约束可被放松为半正定不等式，从而嵌入到凸集 <code>\mathcal{C}</code> 中。</p>
+      </section>
+
+      <section>
+        <h2>2. 因果一致性作为凸集</h2>
+        <p>所谓“因果一致性”，指的是曲线在整个循环中既不违反光速界，也不会与外界的边界条件冲突。我们可以构造如下集合：</p>
+        <ul>
+          <li><strong>速度约束</strong>：<code>\|u_t\|_g \leq 1</code>，在闵可夫斯基度规下这是一个椭球体，对应的可行域是凸的。</li>
+          <li><strong>交互约束</strong>：如果曲线与某个时空区域的交互需要满足守恒律，可写成线性约束 <code>Bz \leq b</code>。</li>
+          <li><strong>自洽约束</strong>：考虑到“与过去的自己一致”，可以使用固定点形式 <code>x_t - F(x_{t-1}) = 0</code>。当 <code>F</code> 为非扩张映射时，其图像同样构成一个凸集。</li>
+        </ul>
+        <p>将这些集合求交得到的可行域 <code>\mathcal{F} = \mathcal{C}_1 \cap \mathcal{C}_2 \cap \mathcal{C}_3</code> 是凸的，于是我们可以在其上安全地进行优化，不必担心局部极小值困境。</p>
+      </section>
+
+      <section>
+        <h2>3. 目标函数：从“最佳循环”谈起</h2>
+        <p>不同的物理问题会给出不同目标。常见的选择包括：</p>
+        <ul>
+          <li><strong>能量最小化</strong>：令 <code>f(z) = \sum_t \|u_t\|_g^2</code>，寻找最“省力”的循环。</li>
+          <li><strong>相位平滑</strong>：最小化相邻时间步之间的加速度，以避免尖锐折返。</li>
+          <li><strong>目标匹配</strong>：若我们希望世界线在某个片段接近给定轨迹，可添加二次罚项 <code>\|x_t - \hat{x}_t\|^2</code>。</li>
+        </ul>
+        <p>这些函数在 <code>z</code> 上都是凸的，因此整体问题成为标准的凸优化：<code>\min_{z \in \mathcal{F}} f(z)</code>。</p>
+      </section>
+
+      <section>
+        <h2>4. 拉格朗日乘子与物理解释</h2>
+        <p>将约束写成拉格朗日函数 <code>\mathcal{L}(z, \lambda) = f(z) + \lambda^\top (Az - c)</code> 后，KKT 条件告诉我们：乘子 <code>\lambda</code> 实际上对应着“违反因果的代价”。例如，当速度约束即将被触碰时，乘子会增大，提醒优化器不要越界；在物理上，这可以解读为局部张力或反作用力的大小。</p>
+        <p>对偶问题 <code>\max_{\lambda \geq 0} -f^*(A^\top \lambda) - c^\top \lambda</code> 则揭示了另一面：如果我们能找到一组乘子让对偶目标有界，就说明原问题的因果结构是一致的。否则，对偶解发散意味着原本的几何设定无法闭合——这恰好对应了所谓的“时间悖论”。</p>
+      </section>
+
+      <section>
+        <h2>5. 数值求解与稳定性</h2>
+        <p>在实际模拟中，常见的算法包括投影梯度法与内点法。投影梯度法利用可行域的凸性，每次沿梯度下降后投影回 <code>\mathcal{F}</code>，能快速验证约束是否被满足。内点法则通过对数势函数把硬约束软化，适合处理复杂的半正定条件。</p>
+        <p>为了保证循环的稳定，我们还会：</p>
+        <ul>
+          <li>使用分层时间步长，让曲线在关键节点附近有更细致的采样；</li>
+          <li>引入鲁棒项，抵御数值噪声导致的轻微违反因果；</li>
+          <li>结合物理仿真，迭代更新背景度规，确保几何与优化彼此一致。</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>6. 总结</h2>
+        <p>当我们把封闭类时曲线放到凸优化的框架里，就能够同时拥抱物理直觉与算法工具：曲线的自洽性变成可验证的凸约束，时间旅行的悖论则转化为对偶问题的不可行。与其纠结科幻式的争论，不如在这一框架下构建更清晰的模型，探索哪些几何假设能带来稳定、可靠的时间循环。</p>
+        <p>下一步，我们可以尝试把这个思路运用到交互式模拟器上，让用户亲手拖拽世界线、观察优化器如何把它收敛成自洽闭环。数学与想象力，也许就在这个过程中找到新的交汇点。</p>
+      </section>
+
+      <nav class="article-nav">
+        <span><a href="../index.html#writing">← 返回写作列表</a></span>
+        <span><a href="2015/10/20/hello-world/index.html">阅读更早的 Hello World →</a></span>
+      </nav>
+    </main>
+  </div>
+</body>
+</html>
