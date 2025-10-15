@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>生命游戏：三角晶格演化实验室</title>
+  <meta name="description" content="在等边三角形晶格上体验康威生命游戏的变体，观察不同规则下的流动、震荡与自组织模式。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="layout">
+    <header class="hero">
+      <a class="back" href="../../../index.html#projects">← 返回作品集合</a>
+      <h1>生命游戏：三角晶格演化实验室</h1>
+      <p>把康威生命游戏搬到等边三角形的晶格上，让规则在新的邻域结构里延展。更紧密的相邻方向孕育出与方格世界截然不同的波纹、流动与晶格花纹。</p>
+      <div class="tags" aria-label="演示标签">
+        <span class="tag">生命游戏</span>
+        <span class="tag">三角网格</span>
+        <span class="tag">细胞自动机</span>
+      </div>
+    </header>
+
+    <section class="stage">
+      <canvas id="lifeCanvas" width="840" height="600" role="img" aria-label="展示三角网格上生命游戏演化的画布"></canvas>
+      <aside class="panel">
+        <h2>玩法说明</h2>
+        <ul>
+          <li>点击画布切换单元状态，拖动可连续绘制。</li>
+          <li>默认规则为 B4/S2-3，针对三角网格的扩展邻域做了调优，可根据需要调整。</li>
+          <li>试着随机生成初态，观察波前如何在晶格间折射与干涉。</li>
+        </ul>
+      </aside>
+    </section>
+
+    <section class="controls" aria-describedby="controls-help">
+      <div class="stats" role="status" aria-live="polite">
+        <div class="stat">
+          <span class="label">代数</span>
+          <strong data-generation>0</strong>
+        </div>
+        <div class="stat">
+          <span class="label">活细胞</span>
+          <strong data-alive>0</strong>
+        </div>
+        <div class="stat">
+          <span class="label">规则</span>
+          <strong data-rule>B4/S2-3</strong>
+        </div>
+      </div>
+      <div class="control-group">
+        <button type="button" id="toggle">暂停演化</button>
+        <button type="button" id="step" class="secondary">单步</button>
+        <button type="button" id="clear" class="secondary">清空</button>
+        <button type="button" id="random" class="secondary">随机填充</button>
+      </div>
+      <div class="control-group sliders">
+        <label class="slider">
+          <span>演化速度 <strong data-speed>160 ms</strong></span>
+          <input type="range" id="speed" min="40" max="500" value="160" step="10">
+        </label>
+        <label class="slider">
+          <span>出生条件（B） <strong data-birth>4</strong></span>
+          <input type="range" id="birth" min="1" max="12" value="4">
+        </label>
+        <label class="slider">
+          <span>存活下限（S<sub>min</sub>） <strong data-survive-min>2</strong></span>
+          <input type="range" id="surviveMin" min="0" max="12" value="2">
+        </label>
+        <label class="slider">
+          <span>存活上限（S<sub>max</sub>） <strong data-survive-max>3</strong></span>
+          <input type="range" id="surviveMax" min="0" max="12" value="3">
+        </label>
+      </div>
+      <p id="controls-help">调节出生与存活条件即可探索不同的演化生态：提高出生阈值会让图样更稀疏，放宽存活范围则有助于形成稳定的织纹。</p>
+    </section>
+
+    <section class="insight">
+      <h2>为什么选择三角晶格？</h2>
+      <p>在方格网格中，每个细胞最多感知 8 个邻居，而三角晶格则拥有更稠密的触角，意味着能量扩散更具方向性。结构会沿着 60° 的对称轴传递，常见的滑翔子被分解成波纹状的条带，震荡器也变得更像晶格振动。通过调节规则，可以观察到类似流体的脉冲、蜂窝状的稳定区域，甚至在高出生阈值下出现的“沙丘”迁移。</p>
+    </section>
+
+    <footer class="footer">
+      <p>© <span id="year"></span> Miuchan · 三角晶格生命游戏实验</p>
+    </footer>
+  </main>
+  <script type="module" src="triangular.js"></script>
+</body>
+</html>
