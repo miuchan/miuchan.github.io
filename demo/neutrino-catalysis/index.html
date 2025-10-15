@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>巨子与微子 · 中微子催化实验</title>
+  <meta name="description" content="一个交互式小实验，用巨子、微子与中微子的简化模型，观察催化反应如何让物质态发生转化。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <a class="back-link" href="../../index.html#projects">← 返回作品集合</a>
+      <h1>巨子与微子</h1>
+      <p>受未来物理学设想启发，构建一个由巨子（Macrotron）、微子（Microtron）与中微子（Neutrino）组成的简化场景。通过调节参数，观察中微子催化下物质态的快速互化。</p>
+      <div class="meta">
+        <span class="badge">科幻物理</span>
+        <span class="badge">动力系统</span>
+        <span class="meta-note">拖动滑杆、点击按钮即可实时演化。</span>
+      </div>
+    </header>
+
+    <section class="panel" aria-labelledby="diagram-heading">
+      <div class="visual">
+        <canvas id="state-plot" width="720" height="420" role="img" aria-label="显示巨子、微子与中微子浓度随时间的折线图"></canvas>
+      </div>
+      <div class="stats">
+        <h2 id="diagram-heading">当前态</h2>
+        <div class="stat">
+          <span class="label">巨子含量</span>
+          <span class="value" id="giant-count">0.00</span>
+        </div>
+        <div class="stat">
+          <span class="label">微子含量</span>
+          <span class="value" id="micro-count">0.00</span>
+        </div>
+        <div class="stat">
+          <span class="label">催化通量</span>
+          <span class="value" id="flux-value">0.00</span>
+        </div>
+        <div class="stat">
+          <span class="label">反应速率</span>
+          <span class="value" id="reaction-rate">0.000</span>
+        </div>
+        <div class="stat">
+          <span class="label">能量释放</span>
+          <span class="value" id="energy-output">0.000</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="controls" aria-describedby="control-help">
+      <div class="control">
+        <label for="flux">中微子通量</label>
+        <input id="flux" type="range" min="0.1" max="1.0" step="0.01" value="0.55">
+        <span class="range-value" id="flux-display">0.55</span>
+      </div>
+      <div class="control">
+        <label for="coupling">耦合强度</label>
+        <input id="coupling" type="range" min="0.1" max="2.0" step="0.05" value="1.1">
+        <span class="range-value" id="coupling-display">1.10</span>
+      </div>
+      <div class="control">
+        <label for="initial-giant">巨子初始比例</label>
+        <input id="initial-giant" type="range" min="0.1" max="0.9" step="0.01" value="0.65">
+        <span class="range-value" id="initial-giant-display">0.65</span>
+      </div>
+      <p class="control-help" id="control-help">巨子在催化作用下转化为微子，反之亦然。中微子通量越高，转化速度越快；耦合强度决定催化效率。</p>
+      <div class="buttons">
+        <button id="toggle">暂停演化</button>
+        <button id="reset">重新初始化</button>
+      </div>
+    </section>
+
+    <section class="explain">
+      <h2>为什么是“巨子—微子—中微子”？</h2>
+      <p>在这一设想里，巨子代表宏观稳态结构，微子象征微观游离态，而中微子是一种遍布宇宙的弱相互作用媒介。我们把它们的相互作用抽象为非线性动力系统，核心反应式为：</p>
+      <div class="equation">巨子 + 中微子 ⇌ 微子 + 中微子</div>
+      <p>中微子并不被消耗，却能降低巨子和微子之间的转化势垒。为了让模型更贴近“催化”直觉，我们在方程中加入微子回凝成巨子的自发项，以及巨子在高通量下的裂解项。系统的整体守恒性通过温和的归一化保持。</p>
+
+      <h2>如何解读图像？</h2>
+      <ul>
+        <li>左侧折线图展示了最近一段时间内三种粒子的归一化浓度。</li>
+        <li>右侧读数显示此刻的具体含量、催化通量和反应速率。能量输出被简单地设为速率的平方，象征级联过程释放的效应。</li>
+        <li>当曲线出现振荡，意味着巨子与微子在中微子驱动下形成了反馈循环；耦合强度越大，振幅越高。</li>
+      </ul>
+
+      <h2>进一步思考</h2>
+      <p>虽然这个模型极度简化，却可以作为构建更复杂设想的起点：我们可以在未来加入空间分布、延迟耦合，甚至让中微子产生自组织模式。交互式的可视化让脑海中的概念具象化，也让“未来物理”更易于讨论。</p>
+    </section>
+
+    <footer class="footer">
+      <p>© <span id="year"></span> Miuchan. 若你对巨子、微子或其他假想粒子有新想法，欢迎回到 <a href="../../index.html">首页</a> 与我交流。</p>
+    </footer>
+  </main>
+  <script src="catalysis.js"></script>
+</body>
+</html>
