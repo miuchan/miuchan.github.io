@@ -1,0 +1,109 @@
+:root {
+  color-scheme: dark;
+  font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: radial-gradient(circle at 20% 20%, #0f172a 0%, #020617 100%);
+  color: #e2e8f0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+}
+
+main.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(280px, 1fr);
+  width: min(1200px, 100vw);
+  padding: 24px;
+  gap: 24px;
+}
+
+section.viewer {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  min-height: 520px;
+}
+
+canvas#life-3d {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+div.overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 12px;
+  background: linear-gradient(180deg, rgba(2, 6, 23, 0.65) 0%, rgba(2, 6, 23, 0.05) 60%, rgba(2, 6, 23, 0) 100%);
+}
+
+div.overlay h1 {
+  margin: 0;
+  font-size: 1.75rem;
+  letter-spacing: 1px;
+}
+
+div.overlay p {
+  margin: 0;
+  max-width: 420px;
+  line-height: 1.6;
+}
+
+div.overlay button {
+  pointer-events: auto;
+  align-self: flex-start;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: none;
+  background: rgba(56, 189, 248, 0.85);
+  color: #020617;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 150ms ease, background 150ms ease;
+}
+
+div.overlay button:hover {
+  transform: translateY(-1px);
+  background: rgba(125, 211, 252, 0.95);
+}
+
+section.description {
+  backdrop-filter: blur(16px);
+  background: rgba(15, 23, 42, 0.65);
+  border-radius: 16px;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  padding: 24px;
+  line-height: 1.7;
+}
+
+section.description h2 {
+  margin-top: 0;
+  font-size: 1.4rem;
+  color: #38bdf8;
+}
+
+@media (max-width: 900px) {
+  main.layout {
+    grid-template-columns: 1fr;
+    padding: 16px;
+  }
+
+  section.viewer {
+    min-height: 420px;
+  }
+}

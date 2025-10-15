@@ -1,0 +1,108 @@
+:root {
+  color-scheme: dark;
+  font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: radial-gradient(circle at 30% 20%, #111827 0%, #020617 100%);
+  color: #e2e8f0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+}
+
+main.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(280px, 1fr);
+  width: min(1200px, 100vw);
+  padding: 24px;
+  gap: 24px;
+}
+
+section.viewer {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(8, 11, 26, 0.92);
+  border: 1px solid rgba(56, 189, 248, 0.15);
+  min-height: 520px;
+}
+
+canvas#life-sphere {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+div.overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: linear-gradient(180deg, rgba(8, 47, 73, 0.6) 0%, rgba(2, 6, 23, 0.05) 65%, rgba(2, 6, 23, 0) 100%);
+}
+
+div.overlay h1 {
+  margin: 0;
+  font-size: 1.7rem;
+  letter-spacing: 0.05em;
+}
+
+div.overlay p {
+  margin: 0;
+  max-width: 420px;
+  line-height: 1.6;
+}
+
+div.overlay button {
+  pointer-events: auto;
+  align-self: flex-start;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 999px;
+  background: rgba(59, 130, 246, 0.85);
+  color: #020617;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 150ms ease, background 150ms ease;
+}
+
+div.overlay button:hover {
+  transform: translateY(-1px);
+  background: rgba(96, 165, 250, 0.95);
+}
+
+section.description {
+  backdrop-filter: blur(16px);
+  background: rgba(15, 23, 42, 0.6);
+  border-radius: 16px;
+  border: 1px solid rgba(56, 189, 248, 0.15);
+  padding: 24px;
+  line-height: 1.7;
+}
+
+section.description h2 {
+  margin-top: 0;
+  font-size: 1.4rem;
+  color: #60a5fa;
+}
+
+@media (max-width: 900px) {
+  main.layout {
+    grid-template-columns: 1fr;
+    padding: 16px;
+  }
+
+  section.viewer {
+    min-height: 420px;
+  }
+}
