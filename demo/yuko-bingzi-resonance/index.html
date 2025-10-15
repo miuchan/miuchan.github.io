@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>悠子与冰子的共振实验室</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="layout">
+    <section class="stage">
+      <canvas id="resonanceCanvas" width="720" height="480" aria-label="悠子与冰子的共振能量场"></canvas>
+      <div class="stage__overlay">
+        <h1>悠子与冰子的共振实验室</h1>
+        <p>调节频率、耦合度与阻尼，观察两位主角的情绪如何由独奏逐渐走向同频共振。</p>
+      </div>
+    </section>
+
+    <section class="controls" aria-label="调节共振参数">
+      <div class="control">
+        <label for="yukoFrequency">悠子频率 <span id="yukoFrequencyLabel"></span></label>
+        <input id="yukoFrequency" type="range" min="0.5" max="4" step="0.1" value="1.4">
+      </div>
+      <div class="control">
+        <label for="bingziFrequency">冰子频率 <span id="bingziFrequencyLabel"></span></label>
+        <input id="bingziFrequency" type="range" min="0.5" max="4" step="0.1" value="1.8">
+      </div>
+      <div class="control">
+        <label for="coupling">情绪耦合度 <span id="couplingLabel"></span></label>
+        <input id="coupling" type="range" min="0" max="1" step="0.05" value="0.35">
+      </div>
+      <div class="control">
+        <label for="damping">冷静阻尼 <span id="dampingLabel"></span></label>
+        <input id="damping" type="range" min="0" max="0.15" step="0.01" value="0.04">
+      </div>
+    </section>
+
+    <section class="readout" aria-live="polite">
+      <h2>共振速记</h2>
+      <p id="synchrony">共振指数：--</p>
+      <p id="energy">总能量：--</p>
+      <p id="mood">情绪状态：静默观测中…</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>基于简化的双耦合谐振模型，呈现角色之间的能量流转与节奏同调。</p>
+  </footer>
+
+  <script src="resonance.js"></script>
+</body>
+</html>

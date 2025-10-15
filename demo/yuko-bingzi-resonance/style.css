@@ -1,0 +1,139 @@
+:root {
+  color-scheme: light dark;
+  --bg: #0b1026;
+  --panel: rgba(16, 23, 52, 0.72);
+  --accent-yuko: #ff9edb;
+  --accent-bingzi: #5ddcff;
+  --text: #f2f4ff;
+  --text-muted: rgba(242, 244, 255, 0.75);
+  --shadow: 0 20px 40px rgba(8, 12, 24, 0.45);
+  font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: radial-gradient(circle at 15% 25%, rgba(255, 158, 219, 0.35), transparent 45%),
+              radial-gradient(circle at 80% 30%, rgba(93, 220, 255, 0.35), transparent 55%),
+              var(--bg);
+  color: var(--text);
+}
+
+main.layout {
+  width: min(1100px, 90vw);
+  margin: 3.5rem auto 2rem;
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  gap: 2rem;
+  align-items: start;
+}
+
+.stage {
+  position: relative;
+  background: rgba(12, 17, 38, 0.8);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.stage canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.stage__overlay {
+  position: absolute;
+  inset: auto 0 0;
+  padding: 1.75rem 2rem;
+  background: linear-gradient(to top, rgba(8, 12, 28, 0.86), rgba(8, 12, 28, 0));
+}
+
+.stage__overlay h1 {
+  margin: 0 0 0.35rem;
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  letter-spacing: 0.02em;
+}
+
+.stage__overlay p {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.controls,
+.readout {
+  background: var(--panel);
+  border-radius: 24px;
+  padding: 1.75rem;
+  box-shadow: var(--shadow);
+}
+
+.controls {
+  display: grid;
+  gap: 1.2rem;
+}
+
+.control label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.control input[type="range"] {
+  width: 100%;
+  margin-top: 0.5rem;
+  accent-color: var(--accent-yuko);
+}
+
+.readout {
+  margin-top: 1.5rem;
+  display: grid;
+  gap: 0.75rem;
+  color: var(--text-muted);
+}
+
+.readout h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: var(--text);
+}
+
+footer {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 1.5rem 1rem 2.5rem;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 960px) {
+  main.layout {
+    grid-template-columns: 1fr;
+  }
+
+  .controls,
+  .readout {
+    margin-inline: auto;
+    width: min(500px, 100%);
+  }
+}
+
+@media (max-width: 640px) {
+  main.layout {
+    width: min(100%, 92vw);
+  }
+
+  .stage__overlay {
+    position: static;
+    background: transparent;
+    padding: 1.2rem 1.5rem 1.8rem;
+  }
+
+  .stage__overlay h1 {
+    font-size: 1.8rem;
+  }
+}
