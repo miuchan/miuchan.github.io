@@ -105,6 +105,13 @@ const projects = [
 
 const timeline = [
   {
+    datetime: '2024-06-20',
+    label: '2024 · Jun',
+    title: '美羽的狗：星际散步笔记',
+    link: 'blog/2024/06/20/miu-dog/index.html',
+    summary: '记录美羽与犬类伙伴「量子」的陪伴手册：手势语言、星际散步地图与日程中的陪伴仪式，让忙碌的创作者也能与宠物保持共鸣。'
+  },
+  {
     datetime: '2024-06-19',
     label: '2024 · Jun',
     title: '醉生梦死：在迷离中寻找醒着的生长路线',
