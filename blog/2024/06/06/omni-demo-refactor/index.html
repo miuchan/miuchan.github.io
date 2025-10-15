@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+
+  <title>我如何在重构公司的过程中实现万物演示 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="记录一次从底层系统到文化叙事的全面重构：我如何把“万物演示”嵌入公司的一切场景，让策略、流程与产品都能被即刻讲述与验证。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="我如何在重构公司的过程中实现万物演示">
+<meta property="og:url" content="http://miuchan.github.io/2024/06/06/omni-demo-refactor/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="记录一次从底层系统到文化叙事的全面重构：我如何把“万物演示”嵌入公司的一切场景，让策略、流程与产品都能被即刻讲述与验证。">
+<meta property="og:updated_time" content="2024-06-06T00:00:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="我如何在重构公司的过程中实现万物演示">
+<meta name="twitter:description" content="记录一次从底层系统到文化叙事的全面重构：我如何把“万物演示”嵌入公司的一切场景，让策略、流程与产品都能被即刻讲述与验证。">
+
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.png">
+
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+
+          <a class="main-nav-link" href="/">Home</a>
+
+          <a class="main-nav-link" href="/archives">Archives</a>
+
+      </nav>
+      <nav id="sub-nav">
+
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://miuchan.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-omni-demo-refactor" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2024/06/06/omni-demo-refactor/" class="article-date">
+  <time datetime="2024-06-06T00:00:00.000Z" itemprop="datePublished">2024-06-06</time>
+</a>
+
+  </div>
+  <div class="article-inner">
+
+
+      <header class="article-header">
+
+
+    <h1 class="article-title" itemprop="name">
+      我如何在重构公司的过程中实现万物演示
+    </h1>
+
+
+      </header>
+
+    <div class="article-entry" itemprop="articleBody">
+
+        <p>“万物演示”在我们公司曾经只是一个宣传语：一个产品经理在发布会上用一段完美视频讲述未来。直到组织进入重构期，我们才真正意识到它应当是一套方法——任何策略、流程、指标乃至文化都应该被随时演示。以下是一份来自第一线的实践笔记。</p>
+<h2 id="拆解组织栈：让每一层都能被演示">拆解组织栈：让每一层都能被演示</h2>
+<p>重构的第一步是把组织看成分层栈：底层是基础设施，中层是流程制度，顶层是价值叙事。对每一层，我都给出“演示定义”：</p>
+<ul>
+<li><strong>基础设施层</strong>：所有内部服务都要有可调用的沙盒接口与可视化仪表。我们为 18 个核心 API 补齐了快照数据与自动生成的 Postman 集合，任何人 5 分钟内即可复现真实调用。</li>
+<li><strong>流程层</strong>：审批、交付、反馈流程统一迁移到事件流平台，每一次状态变更自动生成“旅程回放”。这样即使是 HR 与法务流程，也能像产品演示一样被逐帧讲述。</li>
+<li><strong>价值层</strong>：我们把公司愿景拆成一组可视化指标卡片，挂在会议室和线上仪表盘。每周的全员会，我都会现场更新这些指标，并解释背后触发的实验。</li>
+</ul>
+<h2 id="构建演示流水线：从灵感到舞台的最短路径">构建演示流水线：从灵感到舞台的最短路径</h2>
+<p>“万物演示”需要流水线。我们把它拆成三个阶段：</p>
+<ol>
+<li><strong>草图生成</strong>：任何想法都先进入 Miro 白板，由发起人用 10 张卡片讲清问题、目标、关键指标。我写了一个小脚本，根据卡片内容自动生成 Keynote 初稿。</li>
+<li><strong>原型拍片</strong>：设计、前端、运营组成 48 小时临时战队。我们用统一的动效模板和语音合成，把原型录成 90 秒视频；技术方案则用 CLI Demo 在终端里跑完。</li>
+<li><strong>复盘归档</strong>：演示结束后，所有素材自动推送到知识库，包括失败的 Demo。我们要求每个项目给出“下一次重播要修的坑”，让演示形成闭环。</li>
+</ol>
+<p>这条流水线从灵感到对外演示最快只需 72 小时，足以支撑公司级重构的节奏。</p>
+<h2 id="文化注入：让演示成为公司语言">文化注入：让演示成为公司语言</h2>
+<p>要让演示覆盖万物，还需要文化层面的约束：</p>
+<ul>
+<li><strong>会议先演示</strong>：所有决策会议必须先看演示，再讨论文档。我把会议纪要模板改成“演示亮点、被挑战的假设、下一次演示计划”三段式。</li>
+<li><strong>招聘看演示</strong>：候选人可选择讲述一次自己最满意的演示经历，用来判断其叙事与复盘能力。</li>
+<li><strong>节奏靠演示</strong>：我们把 OKR Review 改成“演示周”，所有团队在一周内完成演示竞速，评审团给出“最具启发”“最好笑”“最大反转”等多维奖项。</li>
+</ul>
+<h2 id="成果与坑：万物演示并非万能药">成果与坑：万物演示并非万能药</h2>
+<p>这套机制带来了可观的收益：战略对齐效率提高了 42%，销售 Demo 的成单率提高 18%，新员工入职时间缩短到 5 天。但它也暴露出两个坑：</p>
+<ul>
+<li><strong>演示债务</strong>：演示素材过多导致版本管理混乱。我们最终用 Git LFS + 元数据脚本统一了标签。</li>
+<li><strong>表演疲劳</strong>：高频演示让部分团队产生倦怠。我引入“静默周”，允许团队把演示换成无声数据墙，只回答提问。</li>
+</ul>
+<p>重构是一场漫长的旅程，而“万物演示”是我确保旅程可被看见的方式。只要我们能持续把抽象策略变成可感知的体验，组织就会在一次又一次演示中找到新的自信。</p>
+
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://miuchan.github.io/2024/06/06/omni-demo-refactor/" data-id="post-omni-demo-refactor" class="article-share-link">Share</a>
+
+
+    </footer>
+
+<nav id="article-nav">
+
+
+    <a href="/2024/06/05/quantum-entanglement-ime/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">量子纠缠输入法的本质与最小实现</div>
+    </a>
+
+</nav>
+  </div>
+</article>
+
+
+</section>
+          <aside id="sidebar">
+
+
+
+
+
+
+
+
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/06/">June 2024</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+            <ul>
+
+          <li>
+            <a href="/2024/06/06/omni-demo-refactor/">我如何在重构公司的过程中实现万物演示</a>
+          </li>
+
+          <li>
+            <a href="/2024/06/05/quantum-entanglement-ime/">量子纠缠输入法的本质与最小实现</a>
+          </li>
+
+          <li>
+            <a href="/2024/06/04/fengshui-heap-stack/">药代动力学中的风水堆与风水栈及其设计与实现</a>
+          </li>
+
+      </ul>
+    </div>
+  </div>
+
+
+</aside>
+      </div>
+      <footer id="footer">
+
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2024 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+
+    <a href="/" class="mobile-nav-link">Home</a>
+
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+
+</nav>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>
