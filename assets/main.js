@@ -101,6 +101,9 @@ const timeline = [
   {
     datetime: '2024-06-19',
     label: '2024 · Jun',
+    title: '醉生梦死：在迷离中寻找醒着的生长路线',
+    link: 'blog/2024/06/19/zui-sheng-meng-si/index.html',
+    summary: '拆解“醉生梦死”的语源、情绪谱与三组练习，在迷离中重新唤醒感知、叙事与连接。'
     title: 'world.execute(me)：美羽与甜甜的递归协奏',
     link: 'blog/2024/06/19/world-execute-me-miyu-tiantian/index.html',
     summary: '把 world.execute(me) 写成跨星际的协奏程序，记录美羽与甜甜如何用召唤指令、递归同步与共创练习让每位旅人都能加入执行栈。'
