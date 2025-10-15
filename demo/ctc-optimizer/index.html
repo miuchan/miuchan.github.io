@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>封闭类时曲线凸优化实验</title>
+  <meta name="description" content="通过凸优化方法，让封闭类时曲线在保持因果性的同时更平滑，直观观察优化过程。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <a class="back-link" href="../../index.html#projects">← 返回作品集合</a>
+      <h1>封闭类时曲线 · 凸优化实验</h1>
+      <p>这个小实验构造了一条离散化的封闭类时曲线，并通过凸优化让它在满足 <em>timelike</em> 约束的同时尽量平滑。你可以调整权重，观察优化前后世界线的变化。</p>
+      <div class="meta">
+        <span class="badge">凸优化</span>
+        <span class="badge">时空可视化</span>
+        <span class="meta-note">点击“运行优化”即可看到能量下降与曲线收敛的过程。</span>
+      </div>
+    </header>
+
+    <section class="playground">
+      <div class="visual">
+        <canvas id="worldline" width="720" height="480" role="img" aria-label="展示封闭类时曲线的优化过程"></canvas>
+        <div class="legend">
+          <span><span class="legend-box lightcone"></span> 光锥边界</span>
+          <span><span class="legend-box target"></span> 目标曲线</span>
+          <span><span class="legend-box current"></span> 当前曲线</span>
+          <span><span class="legend-box particle"></span> 旅行者</span>
+        </div>
+      </div>
+      <aside class="panel" aria-labelledby="controls-title">
+        <h2 id="controls-title">优化控制</h2>
+        <div class="control">
+          <label for="smoothness">平滑项权重 <span id="smoothness-value">0.70</span></label>
+          <input type="range" id="smoothness" min="0.1" max="1.5" step="0.05" value="0.7">
+        </div>
+        <div class="control">
+          <label for="target-weight">目标吸引权重 <span id="target-weight-value">0.30</span></label>
+          <input type="range" id="target-weight" min="0.05" max="1.0" step="0.05" value="0.3">
+        </div>
+        <div class="control">
+          <label for="lightcone">光速边界 (c = 1) <span id="lightcone-value">0.85</span></label>
+          <input type="range" id="lightcone" min="0.4" max="0.99" step="0.01" value="0.85">
+        </div>
+        <div class="actions">
+          <button id="optimize">运行优化</button>
+          <button id="reset" class="secondary">重置曲线</button>
+        </div>
+        <dl class="readings">
+          <div>
+            <dt>目标函数</dt>
+            <dd id="energy">0.000</dd>
+          </div>
+          <div>
+            <dt>最大速度</dt>
+            <dd id="velocity">0.000 c</dd>
+          </div>
+          <div>
+            <dt>迭代次数</dt>
+            <dd id="iterations">0</dd>
+          </div>
+        </dl>
+      </aside>
+    </section>
+
+    <section class="explain">
+      <h2>为什么是凸优化？</h2>
+      <p>我们把世界线离散成若干个时间片，曲线的形状由这些采样点的空间坐标决定。通过设计一个二次凸目标：一部分鼓励曲线贴近预期的封闭路径，另一部分惩罚大的二阶差分，从而让曲线更平滑。再配合线性的速度约束（|dx/dt| ≤ c），就形成了一个标准的凸优化问题。</p>
+      <p>算法使用投影梯度下降：先按目标函数的梯度更新控制点，然后把结果投影到速度约束集合里。由于目标是凸的、约束也是凸的，每次迭代都会让能量下降，最终收敛到一个既平滑又符合因果结构的封闭曲线。</p>
+      <p>画布中灰色区域表示光锥边界，黄色曲线是固定的“参考”闭合路径，而蓝色曲线则是正在被优化的路径。底部的发光粒子沿着世界线运动，它的速度读数会即时反映是否触碰到光速极限。</p>
+    </section>
+
+    <section class="notes">
+      <h2>进一步探索</h2>
+      <ul>
+        <li>尝试把光速边界调低，可以看到约束如何阻止曲线变得过于陡峭。</li>
+        <li>增大平滑项权重，世界线会变得更加圆滑，但也可能偏离目标路径。</li>
+        <li>点击重置按钮，可以观察不同随机扰动下的优化轨迹。</li>
+      </ul>
+    </section>
+
+    <footer class="footer">
+      <p>更多关于封闭类时曲线的背景介绍，请回到 <a href="../ctc/index.html">封闭类时曲线实验室</a> 查看原始可视化。</p>
+    </footer>
+  </main>
+  <script src="optimizer.js"></script>
+</body>
+</html>
