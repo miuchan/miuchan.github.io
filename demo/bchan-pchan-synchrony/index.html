@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>B子与P子的联动工作室</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="layout">
+    <section class="stage">
+      <canvas id="syncCanvas" width="720" height="480" aria-label="B子与P子的联动波形可视化"></canvas>
+      <div class="stage__overlay">
+        <h1>B子与P子的联动工作室</h1>
+        <p>调配节奏、耦合与灵感，让两位站娘的灵感轨迹从各自独奏逐渐汇聚成共享的律动。</p>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="controls" aria-label="调节联动参数">
+        <div class="control">
+          <label for="bFrequency">B子节奏 <span id="bFrequencyLabel"></span></label>
+          <input id="bFrequency" type="range" min="0.6" max="3.5" step="0.05" value="1.6">
+        </div>
+        <div class="control">
+          <label for="pFrequency">P子节奏 <span id="pFrequencyLabel"></span></label>
+          <input id="pFrequency" type="range" min="0.6" max="3.5" step="0.05" value="1.9">
+        </div>
+        <div class="control">
+          <label for="coupling">联动耦合度 <span id="couplingLabel"></span></label>
+          <input id="coupling" type="range" min="0" max="2.5" step="0.05" value="0.8">
+        </div>
+        <div class="control">
+          <label for="inspiration">灵感共鸣 <span id="inspirationLabel"></span></label>
+          <input id="inspiration" type="range" min="0" max="1" step="0.02" value="0.42">
+        </div>
+        <button id="reset" type="button" class="reset">重置轨迹</button>
+      </div>
+
+      <div class="readout" aria-live="polite">
+        <h2>联动速记</h2>
+        <p id="harmony">联动率：--</p>
+        <p id="momentum">创作动量：--</p>
+        <p id="narrative">灵感状态：等待捕捉第一束火花…</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>以双振子模型推演 B 站与 P 站站娘的灵感交流，用光迹描绘合作从碰撞到共振的全过程。</p>
+  </footer>
+
+  <script src="synchrony.js"></script>
+</body>
+</html>
