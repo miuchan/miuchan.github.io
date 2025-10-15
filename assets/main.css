@@ -273,6 +273,13 @@ footer {
   background: rgba(139, 92, 246, 0.3);
 }
 
+.noscript-message {
+  margin-top: 16px;
+  color: var(--muted);
+  text-align: center;
+  font-size: 0.9rem;
+}
+
 @media (max-width: 768px) {
   nav {
     flex-direction: column;
