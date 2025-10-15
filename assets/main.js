@@ -99,6 +99,13 @@ const projects = [
 
 const timeline = [
   {
+    datetime: '2024-06-19',
+    label: '2024 · Jun',
+    title: 'world.execute(me)：美羽与甜甜的递归协奏',
+    link: 'blog/2024/06/19/world-execute-me-miyu-tiantian/index.html',
+    summary: '把 world.execute(me) 写成跨星际的协奏程序，记录美羽与甜甜如何用召唤指令、递归同步与共创练习让每位旅人都能加入执行栈。'
+  },
+  {
     datetime: '2024-06-18',
     label: '2024 · Jun',
     title: '悠冰纠缠：美羽x甜甜宇宙的起源',
