@@ -4,6 +4,7 @@ const ctx = canvas.getContext('2d');
 const smoothSlider = document.getElementById('smoothness');
 const targetSlider = document.getElementById('target-weight');
 const lightconeSlider = document.getElementById('lightcone');
+const curveSelect = document.getElementById('curve-type');
 const smoothValue = document.getElementById('smoothness-value');
 const targetValue = document.getElementById('target-weight-value');
 const lightconeValue = document.getElementById('lightcone-value');
@@ -13,46 +14,82 @@ const iterationLabel = document.getElementById('iterations');
 const optimizeButton = document.getElementById('optimize');
 const resetButton = document.getElementById('reset');
 
+const STRONG_MARGIN = 0.96;
+const POSITION_CORRIDOR = 0.96;
 const N = 120;
-const loops = 3; // how many periods until we meet the starting event again
+const loopsByMode = {
+  closed: 3,
+  open: 1
+};
+
+let curveMode = curveSelect ? curveSelect.value : 'closed';
+let loops = loopsByMode[curveMode] || loopsByMode.closed;
 const t = new Float64Array(N);
 const targetX = new Float64Array(N);
 const stateX = new Float64Array(N);
 const velocity = new Float64Array(N - 1);
-const dt = loops / (N - 1);
+let dt = 0;
 
 const particle = {
   index: 0,
   alpha: 0
 };
 
-for (let i = 0; i < N; i++) {
-  t[i] = i * dt;
+let iterations = 0;
+let animationFrame = null;
+
+function updateTimeAxis() {
+  loops = loopsByMode[curveMode] || loopsByMode.closed;
+  dt = loops / (N - 1);
+  for (let i = 0; i < N; i++) {
+    t[i] = i * dt;
+  }
 }
 
-function buildTarget() {
+function buildClosedTarget() {
   for (let i = 0; i < N; i++) {
-    const phase = (t[i] / loops) * Math.PI * 2 * loops;
-    const envelope = 0.65 * Math.sin(Math.PI * t[i] / loops) ** 2 + 0.1;
+    const normalized = t[i] / loops;
+    const phase = normalized * Math.PI * 2 * loops;
+    const envelope = 0.65 * Math.sin(Math.PI * normalized) ** 2 + 0.1;
     targetX[i] = envelope * Math.sin(phase * 0.5) + 0.1 * Math.cos(phase * 0.33);
   }
   targetX[0] = 0;
   targetX[N - 1] = 0;
 }
 
-function addNoise() {
+function buildOpenTarget() {
   for (let i = 0; i < N; i++) {
-    stateX[i] = targetX[i] + (Math.random() - 0.5) * 0.6;
+    const normalized = i / (N - 1);
+    const ramp = -0.42 + 0.5 * normalized;
+    const wave = 0.07 * Math.sin(Math.PI * normalized);
+    const ripple = 0.015 * Math.sin(3 * Math.PI * normalized) * (1 - 0.35 * normalized);
+    const arch = 0.08 * normalized * (1 - normalized);
+    targetX[i] = ramp + wave + ripple + arch + 0.22;
   }
-  stateX[0] = 0;
-  stateX[N - 1] = 0;
+  targetX[0] = -0.2;
+  targetX[N - 1] = 0.3;
 }
 
-buildTarget();
-addNoise();
+function buildTarget() {
+  if (curveMode === 'open') {
+    buildOpenTarget();
+  } else {
+    buildClosedTarget();
+  }
+}
 
-let iterations = 0;
-let animationFrame = null;
+function lockBoundaries() {
+  stateX[0] = targetX[0];
+  stateX[N - 1] = targetX[N - 1];
+}
+
+function addNoise() {
+  const noiseScale = curveMode === 'open' ? 0.35 : 0.6;
+  for (let i = 0; i < N; i++) {
+    stateX[i] = targetX[i] + (Math.random() - 0.5) * noiseScale;
+  }
+  lockBoundaries();
+}
 
 function computeObjective(smoothWeight, targetWeight) {
   let smooth = 0;
@@ -90,23 +127,28 @@ function computeGradient(smoothWeight, targetWeight) {
 }
 
 function enforceConstraints(cMax) {
-  // forward pass
+  const safeLimit = Math.max(1e-4, cMax * dt * STRONG_MARGIN);
+  lockBoundaries();
+
   for (let i = 0; i < N - 1; i++) {
-    const limit = cMax * dt;
     const diff = stateX[i + 1] - stateX[i];
-    const clamped = Math.max(-limit, Math.min(limit, diff));
+    const clamped = Math.max(-safeLimit, Math.min(safeLimit, diff));
     stateX[i + 1] = stateX[i] + clamped;
   }
-  // backward pass to prevent drift
+
+  lockBoundaries();
+
   for (let i = N - 1; i > 0; i--) {
-    const limit = cMax * dt;
-    const diff = stateX[i] - stateX[i - 1];
-    const clamped = Math.max(-limit, Math.min(limit, diff));
-    stateX[i - 1] = stateX[i] - clamped;
+    const diff = stateX[i - 1] - stateX[i];
+    const clamped = Math.max(-safeLimit, Math.min(safeLimit, diff));
+    stateX[i - 1] = stateX[i] + clamped;
   }
 
-  stateX[0] = 0;
-  stateX[N - 1] = 0;
+  for (let i = 1; i < N - 1; i++) {
+    stateX[i] = Math.max(-POSITION_CORRIDOR, Math.min(POSITION_CORRIDOR, stateX[i]));
+  }
+
+  lockBoundaries();
 }
 
 function updateVelocity() {
@@ -149,10 +191,11 @@ function render() {
   ctx.translate(margin, margin);
 
   // draw light cone stripes
+  const stripeCount = Math.max(1, Math.round(loops));
   ctx.fillStyle = 'rgba(255,255,255,0.04)';
-  for (let i = 0; i < loops; i++) {
-    const yStart = (i / loops) * drawHeight;
-    const yEnd = ((i + 1) / loops) * drawHeight;
+  for (let i = 0; i < stripeCount; i++) {
+    const yStart = (i / stripeCount) * drawHeight;
+    const yEnd = ((i + 1) / stripeCount) * drawHeight;
     ctx.fillRect(0, yStart, drawWidth, yEnd - yStart);
   }
 
@@ -169,19 +212,31 @@ function render() {
   ctx.lineTo(drawWidth, drawHeight - 1);
   ctx.stroke();
 
-  // draw light cone boundaries from origin repeated
+  // draw light cone boundaries
   ctx.strokeStyle = 'rgba(255,255,255,0.18)';
   ctx.setLineDash([6, 6]);
   ctx.beginPath();
   ctx.moveTo(drawWidth / 2, drawHeight);
-  ctx.lineTo(drawWidth, drawHeight - drawHeight / loops);
+  ctx.lineTo(drawWidth, drawHeight - drawHeight / stripeCount);
   ctx.moveTo(drawWidth / 2, drawHeight);
-  ctx.lineTo(0, drawHeight - drawHeight / loops);
+  ctx.lineTo(0, drawHeight - drawHeight / stripeCount);
   ctx.stroke();
   ctx.setLineDash([]);
 
   const xScale = drawWidth / 2;
   const centerX = drawWidth / 2;
+
+  const safeSlope = parseFloat(lightconeSlider.value) * STRONG_MARGIN;
+  const maxOffset = Math.min(drawWidth / 2, safeSlope * loops * xScale);
+  ctx.strokeStyle = 'rgba(63, 191, 246, 0.25)';
+  ctx.setLineDash([4, 10]);
+  ctx.beginPath();
+  ctx.moveTo(centerX, drawHeight);
+  ctx.lineTo(centerX + maxOffset, 0);
+  ctx.moveTo(centerX, drawHeight);
+  ctx.lineTo(centerX - maxOffset, 0);
+  ctx.stroke();
+  ctx.setLineDash([]);
 
   function toCanvas(i) {
     const y = drawHeight - (t[i] / loops) * drawHeight;
@@ -211,6 +266,19 @@ function render() {
     else ctx.lineTo(x, y);
   }
   ctx.stroke();
+
+  if (curveMode === 'open') {
+    const start = toCanvas(0);
+    const end = toCanvas(N - 1);
+    ctx.fillStyle = '#f97316';
+    ctx.beginPath();
+    ctx.arc(start.x, start.y, 5, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = '#34d399';
+    ctx.beginPath();
+    ctx.arc(end.x, end.y, 5, 0, Math.PI * 2);
+    ctx.fill();
+  }
 
   // draw particle
   particle.alpha += 0.008;
@@ -245,6 +313,19 @@ function animate() {
   animationFrame = requestAnimationFrame(animate);
 }
 
+function resetState(withNoise = true) {
+  if (withNoise) {
+    addNoise();
+  } else {
+    lockBoundaries();
+  }
+  enforceConstraints(parseFloat(lightconeSlider.value));
+  iterations = 0;
+  particle.index = 0;
+  particle.alpha = 0;
+  render();
+}
+
 optimizeButton.addEventListener('click', () => {
   cancelAnimationFrame(animationFrame);
   const steps = 80;
@@ -265,19 +346,31 @@ optimizeButton.addEventListener('click', () => {
 
 resetButton.addEventListener('click', () => {
   cancelAnimationFrame(animationFrame);
-  addNoise();
-  iterations = 0;
-  particle.index = 0;
-  particle.alpha = 0;
-  render();
+  resetState(true);
   animationFrame = requestAnimationFrame(animate);
 });
 
+if (curveSelect) {
+  curveSelect.addEventListener('change', () => {
+    curveMode = curveSelect.value;
+    cancelAnimationFrame(animationFrame);
+    updateTimeAxis();
+    buildTarget();
+    resetState(true);
+    animationFrame = requestAnimationFrame(animate);
+  });
+}
+
 [smoothSlider, targetSlider, lightconeSlider].forEach((slider) => {
   slider.addEventListener('input', () => {
+    if (slider === lightconeSlider) {
+      enforceConstraints(parseFloat(lightconeSlider.value));
+    }
     render();
   });
 });
 
-render();
+updateTimeAxis();
+buildTarget();
+resetState(true);
 animationFrame = requestAnimationFrame(animate);

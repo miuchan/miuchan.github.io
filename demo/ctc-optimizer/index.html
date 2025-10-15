@@ -36,6 +36,14 @@
       <aside class="panel" aria-labelledby="controls-title">
         <h2 id="controls-title">优化控制</h2>
         <div class="control">
+          <label for="curve-type">曲线类型</label>
+          <select id="curve-type">
+            <option value="closed">封闭类时曲线（CTC）</option>
+            <option value="open">开放类时曲线（OTC）</option>
+          </select>
+          <small>两类世界线都会投影到更严格的因果带内，保证速度始终低于光速边界。</small>
+        </div>
+        <div class="control">
           <label for="smoothness">平滑项权重 <span id="smoothness-value">0.70</span></label>
           <input type="range" id="smoothness" min="0.1" max="1.5" step="0.05" value="0.7">
         </div>
@@ -73,6 +81,7 @@
       <p>我们把世界线离散成若干个时间片，曲线的形状由这些采样点的空间坐标决定。通过设计一个二次凸目标：一部分鼓励曲线贴近预期的封闭路径，另一部分惩罚大的二阶差分，从而让曲线更平滑。再配合线性的速度约束（|dx/dt| ≤ c），就形成了一个标准的凸优化问题。</p>
       <p>算法使用投影梯度下降：先按目标函数的梯度更新控制点，然后把结果投影到速度约束集合里。由于目标是凸的、约束也是凸的，每次迭代都会让能量下降，最终收敛到一个既平滑又符合因果结构的封闭曲线。</p>
       <p>画布中灰色区域表示光锥边界，黄色曲线是固定的“参考”闭合路径，而蓝色曲线则是正在被优化的路径。底部的发光粒子沿着世界线运动，它的速度读数会即时反映是否触碰到光速极限。</p>
+      <p>选择“开放”或“封闭”两种类时曲线后，投影步骤都会使用强约束：除了钳制每一段速度，还会锁定起止边界，让世界线在整个演化过程中始终留在光锥内部。</p>
     </section>
 
     <section class="notes">
