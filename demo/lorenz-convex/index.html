@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <title>洛伦兹吸引子的凸优化演示</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        color-scheme: light dark;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Noto Sans SC", system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+        line-height: 1.6;
+        background: #0f172a;
+        color: #e2e8f0;
+      }
+
+      header {
+        padding: 2.5rem 1.5rem 1rem;
+        background: linear-gradient(135deg, rgba(59, 130, 246, 0.8), rgba(14, 116, 144, 0.7));
+        color: white;
+        text-align: center;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        backdrop-filter: blur(12px);
+        box-shadow: 0 12px 30px rgba(15, 23, 42, 0.45);
+      }
+
+      header h1 {
+        margin: 0;
+        font-size: clamp(2rem, 4vw, 2.75rem);
+        letter-spacing: 0.05em;
+      }
+
+      header p {
+        margin: 0.5rem auto 0;
+        max-width: 720px;
+        font-size: clamp(1rem, 2vw, 1.15rem);
+        opacity: 0.85;
+      }
+
+      main {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 2rem 1.5rem 4rem;
+      }
+
+      section {
+        margin-bottom: 2.5rem;
+        padding: 1.5rem;
+        border-radius: 18px;
+        background: rgba(15, 23, 42, 0.85);
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        box-shadow: 0 20px 45px rgba(15, 23, 42, 0.35);
+      }
+
+      h2 {
+        margin-top: 0;
+        font-size: clamp(1.5rem, 3vw, 1.85rem);
+        color: #38bdf8;
+      }
+
+      p {
+        margin: 0 0 1rem;
+        font-size: 1.02rem;
+      }
+
+      .controls {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      label {
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+        font-weight: 600;
+        color: #94a3b8;
+        font-size: 0.9rem;
+      }
+
+      input[type="number"],
+      input[type="range"] {
+        width: 100%;
+        padding: 0.6rem 0.75rem;
+        border-radius: 12px;
+        border: 1px solid rgba(148, 163, 184, 0.3);
+        background: rgba(15, 23, 42, 0.7);
+        color: #e2e8f0;
+        font-size: 1rem;
+      }
+
+      button {
+        border: none;
+        padding: 0.75rem 1.25rem;
+        border-radius: 999px;
+        background: linear-gradient(135deg, #3b82f6, #22d3ee);
+        color: #0f172a;
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        box-shadow: 0 14px 25px rgba(34, 211, 238, 0.35);
+      }
+
+      button:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 18px 30px rgba(59, 130, 246, 0.35);
+      }
+
+      .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1.25rem;
+      }
+
+      .summary-card {
+        padding: 1.25rem;
+        border-radius: 16px;
+        background: rgba(30, 41, 59, 0.9);
+        border: 1px solid rgba(148, 163, 184, 0.2);
+      }
+
+      .summary-card h3 {
+        margin-top: 0;
+        margin-bottom: 0.5rem;
+        color: #f1f5f9;
+        font-size: 1.1rem;
+      }
+
+      .summary-card pre {
+        margin: 0;
+        background: rgba(15, 23, 42, 0.9);
+        padding: 0.75rem;
+        border-radius: 12px;
+        overflow-x: auto;
+        font-family: "Fira Code", "SFMono-Regular", SFMono-Regular, ui-monospace,
+          "DejaVu Sans Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+          monospace;
+        font-size: 0.95rem;
+        color: #94a3b8;
+      }
+
+      #plot {
+        width: 100%;
+        height: 520px;
+        margin-top: 1rem;
+        border-radius: 18px;
+        overflow: hidden;
+      }
+
+      #optimization-log {
+        max-height: 240px;
+        overflow-y: auto;
+        padding: 1rem;
+        border-radius: 14px;
+        background: rgba(15, 23, 42, 0.9);
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        font-family: "Fira Code", monospace;
+        font-size: 0.95rem;
+        color: #94a3b8;
+      }
+
+      a {
+        color: #38bdf8;
+      }
+
+      footer {
+        text-align: center;
+        padding: 2rem 1.5rem;
+        color: rgba(226, 232, 240, 0.6);
+      }
+
+      @media (max-width: 640px) {
+        header {
+          padding-top: 2rem;
+          padding-bottom: 1.5rem;
+        }
+
+        section {
+          padding: 1.25rem;
+        }
+      }
+    </style>
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js" defer></script>
+    <script type="module" defer>
+      const defaultParams = {
+        sigma: 10,
+        rho: 28,
+        beta: 8 / 3,
+        dt: 0.01,
+        steps: 5000,
+      };
+
+      const state0 = { x: 1.2, y: 1.3, z: 23.0 };
+
+      const trueTrajectory = integrateLorenz(defaultParams, state0);
+
+      const optimizationLog = [];
+
+      function integrateLorenz(params, initialState) {
+        const { sigma, rho, beta, dt, steps } = params;
+        const trajectory = [];
+        let { x, y, z } = { ...initialState };
+
+        for (let i = 0; i < steps; i += 1) {
+          trajectory.push({ x, y, z });
+
+          const { dx: k1x, dy: k1y, dz: k1z } = lorenzDeriv(x, y, z, params);
+          const { dx: k2x, dy: k2y, dz: k2z } = lorenzDeriv(
+            x + (params.dt * k1x) / 2,
+            y + (params.dt * k1y) / 2,
+            z + (params.dt * k1z) / 2,
+            params,
+          );
+          const { dx: k3x, dy: k3y, dz: k3z } = lorenzDeriv(
+            x + (params.dt * k2x) / 2,
+            y + (params.dt * k2y) / 2,
+            z + (params.dt * k2z) / 2,
+            params,
+          );
+          const { dx: k4x, dy: k4y, dz: k4z } = lorenzDeriv(
+            x + params.dt * k3x,
+            y + params.dt * k3y,
+            z + params.dt * k3z,
+            params,
+          );
+
+          x += (params.dt / 6) * (k1x + 2 * k2x + 2 * k3x + k4x);
+          y += (params.dt / 6) * (k1y + 2 * k2y + 2 * k3y + k4y);
+          z += (params.dt / 6) * (k1z + 2 * k2z + 2 * k3z + k4z);
+        }
+
+        return trajectory;
+      }
+
+      function lorenzDeriv(x, y, z, params) {
+        const { sigma, rho, beta } = params;
+        return {
+          dx: sigma * (y - x),
+          dy: x * (rho - z) - y,
+          dz: x * y - beta * z,
+        };
+      }
+
+      function estimateParameters(trajectory, dt) {
+        const A1 = [];
+        const b1 = [];
+        const A2 = [];
+        const b2 = [];
+        const A3 = [];
+        const b3 = [];
+
+        for (let i = 1; i < trajectory.length - 1; i += 1) {
+          const prev = trajectory[i - 1];
+          const curr = trajectory[i];
+          const next = trajectory[i + 1];
+
+          const dxdt = (next.x - prev.x) / (2 * dt);
+          const dydt = (next.y - prev.y) / (2 * dt);
+          const dzdt = (next.z - prev.z) / (2 * dt);
+
+          A1.push(curr.y - curr.x);
+          b1.push(dxdt);
+
+          A2.push(curr.x);
+          b2.push(dydt + curr.y + curr.x * curr.z);
+
+          if (Math.abs(curr.z) > 1e-6) {
+            A3.push(curr.z);
+            b3.push(curr.x * curr.y - dzdt);
+          }
+        }
+
+        const sigma = solveLeastSquares(A1, b1);
+        const rho = solveLeastSquares(A2, b2);
+        const beta = solveLeastSquares(A3, b3);
+
+        return { sigma, rho, beta };
+      }
+
+      function solveLeastSquares(A, b) {
+        let numerator = 0;
+        let denominator = 0;
+        for (let i = 0; i < A.length; i += 1) {
+          numerator += A[i] * b[i];
+          denominator += A[i] * A[i];
+        }
+        return numerator / denominator;
+      }
+
+      function addNoise(trajectory, level) {
+        return trajectory.map((p) => ({
+          x: p.x + (Math.random() * 2 - 1) * level,
+          y: p.y + (Math.random() * 2 - 1) * level,
+          z: p.z + (Math.random() * 2 - 1) * level,
+        }));
+      }
+
+      function renderPlot(trace) {
+        const data = [
+          {
+            x: trace.map((p) => p.x),
+            y: trace.map((p) => p.y),
+            z: trace.map((p) => p.z),
+            mode: "lines",
+            type: "scatter3d",
+            line: {
+              width: 3,
+              color: trace.map((_, i) => i),
+              colorscale: "Viridis",
+            },
+          },
+        ];
+
+        const layout = {
+          paper_bgcolor: "rgba(15, 23, 42, 1)",
+          plot_bgcolor: "rgba(15, 23, 42, 1)",
+          scene: {
+            xaxis: { title: "x" },
+            yaxis: { title: "y" },
+            zaxis: { title: "z" },
+            camera: { eye: { x: 1.5, y: 1.5, z: 1.1 } },
+            bgcolor: "rgba(15, 23, 42, 0.9)",
+          },
+          margin: { l: 0, r: 0, t: 0, b: 0 },
+        };
+
+        Plotly.newPlot("plot", data, layout, { responsive: true });
+      }
+
+      function log(message) {
+        const timestamp = new Date().toLocaleTimeString();
+        optimizationLog.unshift(`[${timestamp}] ${message}`);
+        const maxEntries = 15;
+        if (optimizationLog.length > maxEntries) {
+          optimizationLog.splice(maxEntries);
+        }
+        const container = document.getElementById("optimization-log");
+        container.innerHTML = optimizationLog.map((item) => `<div>${item}</div>`).join("");
+      }
+
+      function populateTrueValues() {
+        const params = document.querySelectorAll('[data-true-value]');
+        params.forEach((el) => {
+          el.textContent = Number.parseFloat(el.dataset.trueValue).toFixed(6);
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        populateTrueValues();
+        renderPlot(trueTrajectory);
+        runOptimization();
+
+        const button = document.getElementById("run-optimization");
+        button.addEventListener("click", () => {
+          runOptimization();
+        });
+
+        document.getElementById("noise-level").addEventListener("input", (event) => {
+          document.getElementById("noise-value").textContent = Number(
+            event.target.value,
+          ).toFixed(2);
+        });
+      });
+
+      function runOptimization() {
+        const noiseLevel = Number(document.getElementById("noise-level").value);
+        const sampleRatio = Number(document.getElementById("sample-ratio").value);
+        const sampleSteps = Math.floor(defaultParams.steps * sampleRatio);
+
+        const truncated = trueTrajectory.slice(0, Math.max(sampleSteps, 200));
+        const noisy = noiseLevel > 0 ? addNoise(truncated, noiseLevel) : truncated;
+
+        const estimates = estimateParameters(noisy, defaultParams.dt);
+        const { sigma, rho, beta } = estimates;
+
+        document.getElementById("sigma-estimate").textContent = sigma.toFixed(6);
+        document.getElementById("rho-estimate").textContent = rho.toFixed(6);
+        document.getElementById("beta-estimate").textContent = beta.toFixed(6);
+
+        const sigmaError = Math.abs(sigma - defaultParams.sigma);
+        const rhoError = Math.abs(rho - defaultParams.rho);
+        const betaError = Math.abs(beta - defaultParams.beta);
+
+        document.getElementById("sigma-error").textContent = sigmaError.toExponential(2);
+        document.getElementById("rho-error").textContent = rhoError.toExponential(2);
+        document.getElementById("beta-error").textContent = betaError.toExponential(2);
+
+        renderPlot(noisy);
+
+        log(
+          `优化完成：σ=${sigma.toFixed(4)}, ρ=${rho.toFixed(4)}, β=${beta.toFixed(
+            4,
+          )}, 噪声=${noiseLevel.toFixed(2)}, 采样比例=${sampleRatio}`,
+        );
+      }
+    </script>
+  </head>
+  <body>
+    <header>
+      <h1>洛伦兹吸引子的凸优化演示</h1>
+      <p>
+        通过最小二乘凸优化重新估计经典洛伦兹系统的参数
+        (σ, ρ, β)，并用三维轨迹展示噪声下的优化效果。
+      </p>
+    </header>
+    <main>
+      <section>
+        <h2>凸优化目标</h2>
+        <p>
+          对于洛伦兹方程组
+          <code>dx/dt = σ(y-x)</code>, <code>dy/dt = x(ρ - z) - y</code>,
+          <code>dz/dt = xy - βz</code>，在轨迹数据已知时参数均以线性方式出现，因而可以构造三组最小二乘问题：
+        </p>
+        <div class="summary-grid">
+          <div class="summary-card">
+            <h3>σ 的优化</h3>
+            <pre>minimize  Σ (σ(yᵢ - xᵢ) - ẋᵢ)²</pre>
+            <p>偏导线性 ⇒ 目标函数是凸的二次型。</p>
+          </div>
+          <div class="summary-card">
+            <h3>ρ 的优化</h3>
+            <pre>minimize  Σ (ρ xᵢ - (ẏᵢ + yᵢ + xᵢzᵢ))²</pre>
+            <p>同样是线性最小二乘。</p>
+          </div>
+          <div class="summary-card">
+            <h3>β 的优化</h3>
+            <pre>minimize  Σ (β zᵢ - (xᵢ yᵢ - żᵢ))²</pre>
+            <p>保持凸性，可直接求闭式解。</p>
+          </div>
+        </div>
+      </section>
+      <section>
+        <h2>参数设置</h2>
+        <div class="controls">
+          <label>
+            噪声水平 ±
+            <input id="noise-level" type="range" min="0" max="1" step="0.05" value="0" />
+            <span id="noise-value">0.00</span>
+          </label>
+          <label>
+            采样比例
+            <input id="sample-ratio" type="number" min="0.1" max="1" step="0.05" value="1" />
+          </label>
+        </div>
+        <button id="run-optimization">重新运行凸优化</button>
+      </section>
+      <section>
+        <h2>最优参数对比</h2>
+        <div class="summary-grid">
+          <div class="summary-card">
+            <h3>σ</h3>
+            <p>真实值：<span data-true-value="10"></span></p>
+            <p>估计值：<span id="sigma-estimate">--</span></p>
+            <p>绝对误差：<span id="sigma-error">--</span></p>
+          </div>
+          <div class="summary-card">
+            <h3>ρ</h3>
+            <p>真实值：<span data-true-value="28"></span></p>
+            <p>估计值：<span id="rho-estimate">--</span></p>
+            <p>绝对误差：<span id="rho-error">--</span></p>
+          </div>
+          <div class="summary-card">
+            <h3>β</h3>
+            <p>真实值：<span data-true-value="2.6666667"></span></p>
+            <p>估计值：<span id="beta-estimate">--</span></p>
+            <p>绝对误差：<span id="beta-error">--</span></p>
+          </div>
+        </div>
+      </section>
+      <section>
+        <h2>三维轨迹与优化日志</h2>
+        <div id="plot"></div>
+        <div id="optimization-log"></div>
+      </section>
+      <section>
+        <h2>方法说明</h2>
+        <p>
+          最小二乘问题属于经典的凸优化。当模型对参数是线性的时，目标函数是凸二次函数，
+          通过闭式解 <code>θ = (AᵀA)⁻¹Aᵀb</code> 或梯度法即可得到全局最优解。
+          本演示利用 Runge-Kutta 生成洛伦兹轨迹，并在不同噪声水平和采样比例下重新估计参数，
+          以可视化凸优化带来的鲁棒性。
+        </p>
+        <p>
+          通过调整噪声和采样比例可以观察误差如何变化。采样较少或噪声较大会导致拟合误差增大，
+          但因目标函数保持凸性，优化仍然收敛到唯一全局最优解。
+        </p>
+      </section>
+    </main>
+    <footer>
+      构建者：GPT-5-CODEX · 数据与可视化均在浏览器端完成
+    </footer>
+  </body>
+</html>
