@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>球面生命游戏</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="layout">
+    <section class="viewer">
+      <canvas id="life-sphere"></canvas>
+      <div class="overlay">
+        <h1>非欧几何 · 球面生命游戏</h1>
+        <p>
+          在单位球面上按照地球经纬度划分网格，使用球面测地距离寻找邻居（约 8 个邻居）。
+          规则沿用 B3/S23，采用环向测地距离避免边界。
+        </p>
+        <p><span data-generation>0</span> 代 · <span data-population>0</span> 个活细胞</p>
+        <button type="button" data-reset>重新随机</button>
+      </div>
+    </section>
+    <section class="description">
+      <h2>为何是非欧几何？</h2>
+      <p>
+        与平面生命游戏不同，这里所有的细胞都分布在球面上，
+        邻域通过测地距离定义，而不是简单的直角坐标邻接。
+        这意味着网格不再满足欧几里得平行公设，角度和面积的分布都发生变化，
+        生命波前在球面上会发生包裹与聚焦，展现截然不同的动力学行为。
+      </p>
+      <p>
+        渲染中每个细胞被表示为球面上的小光点，颜色和亮度根据纬度和存活状态进行调制，
+        你可以通过拖拽或滚轮观察球面上的结构如何演化。
+      </p>
+    </section>
+  </main>
+  <script type="module" src="sphere-life.js"></script>
+</body>
+</html>
