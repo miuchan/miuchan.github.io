@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>寻子自发对称破缺游戏</title>
+  <meta name="description" content="通过噪声与微弱偏置设计一个模拟“自发对称破缺”的寻子策略游戏，体验从均衡态到选择的全过程。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <h1>寻子自发对称破缺游戏</h1>
+      <p>村庄里的线索完美对称，直到微弱的偏置与随机噪声让局势失衡。通过观察序参量的波动，在最佳时机下达命令，把搜查队派往正确的方向。</p>
+    </header>
+
+    <section class="playground">
+      <div class="village" id="village" aria-live="polite"></div>
+      <aside class="status-panel">
+        <div class="meter">
+          <div class="meter-header">
+            <h2>序参量监测</h2>
+            <span class="value" id="orderValue">0.00</span>
+          </div>
+          <div class="order-track" aria-hidden="true">
+            <div class="order-fill left" id="orderFillLeft"></div>
+            <div class="order-fill right" id="orderFillRight"></div>
+            <div class="order-zero">0</div>
+            <div class="order-label left">← 左岸</div>
+            <div class="order-label right">右岸 →</div>
+          </div>
+        </div>
+        <p class="status" id="statusText">对称仍在维持，序参量停留在 0。</p>
+      </aside>
+    </section>
+
+    <section class="controls" aria-label="游戏控制面板">
+      <div class="control-group">
+        <label for="noiseRange">场景噪声
+          <span class="small">(对称破缺的随机扰动强度)</span>
+        </label>
+        <div class="range-line">
+          <input type="range" id="noiseRange" min="0.02" max="0.32" step="0.01" value="0.12">
+          <span class="range-value" id="noiseValue">0.12</span>
+        </div>
+      </div>
+      <div class="control-group">
+        <label for="biasRange">暗示偏置
+          <span class="small">(你对某一侧的主观判断)</span>
+        </label>
+        <div class="range-line">
+          <input type="range" id="biasRange" min="-0.25" max="0.25" step="0.01" value="0.00">
+          <span class="range-value" id="biasValue">0.00</span>
+        </div>
+      </div>
+      <div class="buttons">
+        <button type="button" id="startRound">开始新一轮</button>
+        <button type="button" id="commitLeft" class="secondary" disabled>命令搜左岸</button>
+        <button type="button" id="commitRight" class="secondary" disabled>命令搜右岸</button>
+        <button type="button" id="resetScore" class="ghost">清空战绩</button>
+      </div>
+    </section>
+
+    <section class="scoreboard" aria-label="战绩面板">
+      <div class="score-cards">
+        <div class="score-card">
+          <span class="label">轮次</span>
+          <strong id="roundCount">0</strong>
+        </div>
+        <div class="score-card">
+          <span class="label">成功</span>
+          <strong id="successCount">0</strong>
+        </div>
+        <div class="score-card">
+          <span class="label">失误</span>
+          <strong id="failureCount">0</strong>
+        </div>
+        <div class="score-card">
+          <span class="label">平均反应时间</span>
+          <strong id="avgReaction">—</strong>
+        </div>
+      </div>
+      <table>
+        <caption>最近 6 轮详细记录</caption>
+        <thead>
+          <tr>
+            <th scope="col">轮次</th>
+            <th scope="col">噪声</th>
+            <th scope="col">偏置</th>
+            <th scope="col">结果</th>
+            <th scope="col">孩子位置</th>
+            <th scope="col">指令</th>
+            <th scope="col">反应时间</th>
+          </tr>
+        </thead>
+        <tbody id="logBody">
+          <tr><td colspan="7">暂无记录</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="notes">
+      <h2>设计思路与玩法提示</h2>
+      <ul>
+        <li><strong>自发对称破缺</strong>：序参量初始为 0，表示左右线索完全镜像。随机噪声会不断扰动系统，而你的偏置会让某一侧略占优势。</li>
+        <li><strong>观察与决策</strong>：当序参量迅速远离 0 时，意味着平衡即将打破。你只能下达一次命令，一旦队伍动身就难以回头。</li>
+        <li><strong>反应时间</strong>：若判断正确，越接近临界时刻下达命令，反应时间越短，代表你更善于捕捉破缺瞬间；若判断失误，就得重新思考偏置策略。</li>
+        <li><strong>策略调参</strong>：噪声越大越难预测，但也更容易迅速破缺；偏置越大越容易把局势推向某一侧，却可能被噪声反噬。</li>
+      </ul>
+    </section>
+  </main>
+  <script src="script.js" type="module"></script>
+</body>
+</html>
