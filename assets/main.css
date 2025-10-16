@@ -432,6 +432,236 @@ p {
   box-shadow: var(--shadow);
 }
 
+.profile-grid {
+  display: grid;
+  gap: 22px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.profile-card {
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: calc(var(--radius) + 4px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 20px 44px rgba(60, 77, 255, 0.14);
+  padding: clamp(24px, 4vw, 30px);
+  display: grid;
+  gap: 14px;
+}
+
+.profile-card h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: var(--text);
+}
+
+.profile-card p {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+.profile-card ul {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--muted);
+  display: grid;
+  gap: 6px;
+  font-size: 0.92rem;
+}
+
+.profile-card.highlight {
+  background: linear-gradient(140deg, rgba(255, 255, 255, 0.95), rgba(241, 96, 168, 0.1));
+  border-color: rgba(241, 96, 168, 0.3);
+}
+
+.profile-card dl {
+  margin: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.profile-card dl div {
+  display: grid;
+  gap: 4px;
+}
+
+.profile-card dt {
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-strong);
+}
+
+.profile-card dd {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+.focus-grid {
+  display: grid;
+  gap: 22px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.focus-card {
+  background: var(--card);
+  border-radius: calc(var(--radius) + 2px);
+  border: 1px solid rgba(255, 255, 255, 0.78);
+  box-shadow: 0 18px 40px rgba(60, 77, 255, 0.12);
+  padding: clamp(22px, 4vw, 28px);
+  display: grid;
+  gap: 12px;
+}
+
+.focus-card h3 {
+  margin: 0;
+  font-size: 1.15rem;
+  color: var(--text);
+}
+
+.focus-card p {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+.focus-card ul {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--muted);
+  display: grid;
+  gap: 6px;
+  font-size: 0.92rem;
+}
+
+.project-grid {
+  display: grid;
+  gap: 24px;
+}
+
+.project-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 26px;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 24px 52px rgba(60, 77, 255, 0.16);
+  padding: clamp(24px, 4.5vw, 32px);
+  display: grid;
+  gap: 16px;
+}
+
+.project-card header h3 {
+  margin: 0;
+  font-size: 1.3rem;
+  color: var(--text);
+}
+
+.project-meta {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.project-card p {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+.project-highlights {
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.project-highlights div {
+  display: grid;
+  gap: 4px;
+}
+
+.project-highlights dt {
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-strong);
+}
+
+.project-highlights dd {
+  margin: 0;
+  color: var(--muted);
+}
+
+.metrics-grid {
+  display: grid;
+  gap: 22px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.metric-card {
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: calc(var(--radius) + 2px);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  box-shadow: 0 20px 44px rgba(60, 77, 255, 0.13);
+  padding: clamp(20px, 4vw, 28px);
+  display: grid;
+  gap: 12px;
+}
+
+.metric-card h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  color: var(--text);
+}
+
+.metric-card p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.metric-value {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--accent-strong);
+}
+
+.process-flow {
+  margin: 0;
+  padding-left: 24px;
+  display: grid;
+  gap: 18px;
+  counter-reset: step;
+}
+
+.process-flow li {
+  list-style: none;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: calc(var(--radius) + 2px);
+  border: 1px solid rgba(255, 255, 255, 0.82);
+  box-shadow: 0 20px 40px rgba(60, 77, 255, 0.12);
+  padding: clamp(22px, 4vw, 28px);
+  position: relative;
+}
+
+.process-flow li::before {
+  counter-increment: step;
+  content: counter(step, decimal-leading-zero);
+  position: absolute;
+  left: -24px;
+  top: 24px;
+  font-size: 0.82rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-strong);
+}
+
+.process-flow h3 {
+  margin: 0 0 8px;
+  font-size: 1.1rem;
+  color: var(--text);
+}
+
+.process-flow p {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
 .grid {
   display: grid;
   gap: 24px;
