@@ -12,7 +12,7 @@
 </head>
 <body>
   <div class="wrapper">
-    <nav>
+    <nav class="site-nav">
       <a href="#top" class="logo">miuchan.github.io</a>
       <div class="nav-links">
         <a href="#about">关于</a>
@@ -24,38 +24,92 @@
 
     <section class="hero" id="top">
       <div class="hero-content">
-        <h1>你好，我是康嘉琦（Miuchan）。</h1>
-        <p>一名专注于打造舒适交互和细腻体验的前端开发者，喜欢把创意变成可触摸的界面，也乐于分享一路上学到的点点滴滴。</p>
+        <span class="eyebrow">前端体验设计师 · Creative Coder</span>
+        <h1>让界面更柔软，也更有生命力。</h1>
+        <p>我是康嘉琦（Miuchan）。我喜欢把想法拆成清晰的信息结构，再用流畅的交互和细腻的视觉让它们发光。无论是实验性的可视化，还是长期维护的产品体验，我都愿意把工程与叙事编织在一起。</p>
+        <div class="hero-highlights">
+          <span class="chip">正在研究 · 无障碍体验</span>
+          <span class="chip">热爱 · Creative Coding &amp; Web Audio</span>
+          <span class="chip">想聊 · 温柔的协作流程</span>
+        </div>
         <div class="hero-actions">
           <a class="button primary" href="resume/index.html">查看简历</a>
           <a class="button secondary" href="blog/index.html">阅读博客</a>
+          <a class="button ghost" href="#projects">看看作品</a>
+        </div>
+        <div class="hero-stats">
+          <div>
+            <strong>10+</strong>
+            <span>沉浸式交互实验</span>
+          </div>
+          <div>
+            <strong>7 年</strong>
+            <span>前端与体验设计经验</span>
+          </div>
+          <div>
+            <strong>持续</strong>
+            <span>记录成长与灵感</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <div class="orbit"></div>
+        <div class="sun"></div>
+        <div class="sparkles">
+          <span></span>
+          <span></span>
+          <span></span>
         </div>
       </div>
     </section>
 
-    <section class="section" id="about">
+    <section class="section bright" id="about">
       <div class="section-header">
-        <h2>关于我</h2>
-        <span class="subtitle">以用户为中心，把工程与设计揉在一起。</span>
-      </div>
-      <div class="grid">
-        <div class="card">
-          <h3>前端 + 体验设计</h3>
-          <p>从信息架构到像素细节都感兴趣，擅长把复杂功能拆解成友好的流程，并让页面在不同设备上都顺滑自然。</p>
-          <p>目前持续探索性能优化、无障碍和可维护的组件化体系，让作品既有质感也好维护。</p>
+        <div>
+          <span class="eyebrow">关于我</span>
+          <h2>把工程与情感一起打磨</h2>
         </div>
-        <div class="card">
-          <h3>知识花园</h3>
-          <p>博客里记录了 Hexo 时代的文章，持续整理读书笔记、工作心得与代码片段，希望让成长的路径更清晰。</p>
-          <a class="link" href="blog/index.html">走进博客 →</a>
+        <p class="section-intro">我相信好的体验来自扎实的代码与真诚的叙事。拆解复杂需求、整理信息架构、设计可持续的组件体系，是我每天的日常。与此同时，也不断记录那些让我动心的瞬间。</p>
+      </div>
+      <div class="about-grid">
+        <article class="story-card">
+          <h3>从“可用”到“可感”</h3>
+          <p>我在 C 端与 B 端产品里穿梭过，也乐于做一些偏艺术的视觉实验。无论形式如何变化，我最在意的是如何让人们真正感受到界面的节奏与温度。</p>
+          <p>我会从用户的目标与语境出发，把流程梳理清晰，再用细致的动效、响应式排版与语义化代码，让体验轻盈而稳固。</p>
+        </article>
+        <div class="mini-cards">
+          <article class="mini-card">
+            <h4>关注的议题</h4>
+            <ul>
+              <li>Accessible &amp; Inclusive Design</li>
+              <li>性能与感知速度的平衡</li>
+              <li>多人协作中的知识沉淀</li>
+            </ul>
+          </article>
+          <article class="mini-card">
+            <h4>创作的形态</h4>
+            <ul>
+              <li>Creative Coding 交互实验</li>
+              <li>Web Audio 与视觉共鸣</li>
+              <li>读书笔记与工作方法论</li>
+            </ul>
+          </article>
+          <article class="mini-card highlight">
+            <h4>知识花园</h4>
+            <p>持续整理长期主义的知识库，欢迎来博客一起探索这些灵光一现的灵感。</p>
+            <a class="link" href="blog/index.html">走进博客 →</a>
+          </article>
         </div>
       </div>
     </section>
 
     <section class="section" id="projects">
       <div class="section-header">
-        <h2>作品一角</h2>
-        <span class="subtitle">一些有趣的实验与练习，欢迎随意探索。</span>
+        <div>
+          <span class="eyebrow">Selected Works</span>
+          <h2>作品一角</h2>
+        </div>
+        <p class="section-intro">这里收录了近年我最享受的探索：从生命游戏到远距协作的体验原型，每一件都藏着不同的实验与故事。</p>
       </div>
       <div class="grid cards" id="project-list"></div>
       <noscript>
@@ -65,22 +119,31 @@
 
     <section class="section" id="writing">
       <div class="section-header">
-        <h2>最近在写</h2>
-        <span class="subtitle">从 Hello World 起步，持续迭代自己的观点与方法论。</span>
+        <div>
+          <span class="eyebrow">Writing &amp; Notes</span>
+          <h2>最近在写</h2>
+        </div>
+        <p class="section-intro">记录开发心得、共创方法论与日常的光芒，把零散的灵感整理成可反复使用的知识。</p>
       </div>
-        <div class="timeline" id="timeline-list"></div>
-        <noscript>
-          <p class="noscript-message">请启用 JavaScript 以查看最近写作的完整时间线。</p>
-        </noscript>
+      <div class="timeline" id="timeline-list"></div>
+      <noscript>
+        <p class="noscript-message">请启用 JavaScript 以查看最近写作的完整时间线。</p>
+      </noscript>
     </section>
 
     <section class="section" id="contact">
       <div class="section-header">
-        <h2>保持联系</h2>
-        <span class="subtitle">欢迎交流前端技术、设计灵感或任何有趣的话题。</span>
+        <div>
+          <span class="eyebrow">Stay in Touch</span>
+          <h2>保持联系</h2>
+        </div>
+        <p class="section-intro">欢迎交流前端技术、设计灵感或任何能让生活更有趣的议题。</p>
       </div>
-      <div class="card">
-        <p>如果你对我的项目感兴趣，或想聊聊新的合作机会，欢迎通过以下方式与我取得联系，也可以直接在 GitHub 上找到我。</p>
+      <div class="contact-card">
+        <div>
+          <h3>一起把想法做成体验</h3>
+          <p>如果你对我的项目感兴趣，或想聊聊新的合作机会，欢迎给我写信或在社交平台上找到我。</p>
+        </div>
         <div class="social-links">
           <a href="https://github.com/miuchan" target="_blank" rel="noopener">GitHub</a>
           <a href="blog/index.html">博客</a>
@@ -90,7 +153,7 @@
     </section>
 
     <footer>
-      <div>© <span id="year"></span> Miuchan. 用心做点酷酷的东西。</div>
+      <div>© <span id="year"></span> Miuchan · Keep creating gentle interactions.</div>
     </footer>
   </div>
   <script type="module" src="assets/main.js"></script>
