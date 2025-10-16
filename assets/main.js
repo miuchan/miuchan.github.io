@@ -1,109 +1,37 @@
 const projects = [
   {
-    title: '寻子自发对称破缺游戏',
-    description: '通过调节噪声与偏置，体验镜像线索被随机扰动打破的瞬间，在临界点前下达命令找到走失的孩子。',
-    href: 'demo/seek-child-ssb/index.html',
-    cta: '进入游戏 →'
-  },
-  {
-    title: 'Blockchan',
-    description: '区块链主题的视觉实验，使用组件化方式搭建，尝试用动效呈现信息结构。',
-    href: 'demo/blockchan/index.html',
-    cta: '打开演示 →'
-  },
-  {
-    title: 'Canvas Low Poly',
-    description: '基于 Delaunay 三角剖分的低多边形生成器，探索 Canvas 与色彩的更多可能性。',
-    href: 'demo/canvas-demo/lowpoly/index.html',
-    cta: '立即体验 →'
-  },
-  {
-    title: '美羽的环境乐随想',
-    description: '用 Web Audio API 写下一段循环的和弦、低音与旋律，调节 BPM 体验氛围的微妙变化。',
-    href: 'demo/ambient-sketch/index.html',
-    cta: '写一点音乐 →'
-  },
-  {
-    title: '生命游戏：吸子催化',
-    description: '模拟滑翔子（引子）与吸子之间的经典催化反应，观察吸子如何重复吞噬来袭引子。',
-    href: 'demo/game-of-life/eater-catalysis/index.html',
-    cta: '观看反应 →'
-  },
-  {
-    title: '奇点生命场',
-    description: '在生命游戏的规则上引入引力奇点，体验弯曲邻域下分形生命的诞生与湮灭。',
-    href: 'demo/singularity-life/index.html',
-    cta: '唤醒奇点 →'
-  },
-  {
-    title: '生命游戏：三维宇宙',
-    description: '把生命游戏扩展到 16³ 的立方空间，遵循 B5/S45 规则，观察三维结构的自组织与崩解。',
-    href: 'demo/game-of-life/3d-life/index.html',
-    cta: '进入宇宙 →'
-  },
-  {
-    title: '生命游戏：球面拓扑',
-    description: '在球面上用测地距离定义邻域，探索非欧几何曲面上的生命波前如何缠绕、汇聚与传播。',
-    href: 'demo/game-of-life/non-euclidean/index.html',
-    cta: '登上星球 →'
-  },
-  {
-    title: '生命游戏：三角晶格',
-    description: '把生命游戏搬到等边三角晶格，体验更稠密邻域下的波纹、织纹与流体般演化。',
-    href: 'demo/game-of-life/triangular/index.html',
-    cta: '开启演化 →'
-  },
-  {
-    title: '封闭类时曲线实验室',
-    description: '用可视化的时空图演示广义相对论中的封闭类时曲线，透过交互感受时间扭曲。',
+    title: 'Nebula City XR 数字孪生',
+    description: '担任体验负责人，打造跨端沉浸式城市社交，整合 Web、AR 眼镜与 CAVE 互动场景，首月激活率提升 38%。',
     href: 'demo/ctc/index.html',
-    cta: '探索时间循环 →'
+    cta: '查看交互概念 →'
   },
   {
-    title: 'CTC 凸优化实验',
-    description: '在保持因果约束的前提下对封闭类时曲线做凸优化，观察世界线如何趋于平滑且遵守光速边界。',
-    href: 'demo/ctc-optimizer/index.html',
-    cta: '调参收敛 →'
-  },
-  {
-    title: '时间晶体共振舱',
-    description: '调节驱动、对称破缺与耗散，观看时间晶体在离散时间对称下如何自发锁模与周期跳跃。',
+    title: 'Horizon Arena 虚拟演唱会平台',
+    description: '设计并实现实时舞台编排与粉丝互动玩法，将 WebGL / WebGPU 渲染延迟控制在 28ms 内，单场在线突破 120 万。',
     href: 'demo/time-crystal/index.html',
-    cta: '捕捉节拍 →'
+    cta: '体验舞台 →'
   },
   {
-    title: '巨子与微子反应室',
-    description: '构建巨子、微子与中微子的假想模型，通过滑杆观察中微子催化下的能量振荡与相态转化。',
-    href: 'demo/neutrino-catalysis/index.html',
-    cta: '进入实验 →'
-  },
-  {
-    title: '美羽 × 甜甜宇宙 · 梯度下降',
-    description: '把美羽与甜甜的宇宙势能映射成二维场，调节学习率与动量，追踪梯度下降如何滑向共鸣谷地。',
+    title: 'LumenDesk 分布式协作工作台',
+    description: '围绕远距团队搭建多模态协作工具，构建低延迟白板、语义任务流与仪式化提醒，让跨时区交付效率提升 45%。',
     href: 'demo/miu-tiantian-gradient-descent/index.html',
-    cta: '坠入共鸣 →'
+    cta: '浏览原型 →'
   },
   {
-    title: 'B子与P子联动工作室',
-    description: '把两位站娘视作耦合振子，调参观测她们的节奏如何从独立舞动逐渐走向灵感同频。',
+    title: 'Ripple Protocol 控制中心',
+    description: '为 Web3 基础设施打造资产与节点治理面板，负责信息架构、动效系统与 TypeScript 前端，实现 0.5 秒内数据响应。',
+    href: 'demo/blockchan/index.html',
+    cta: '查看仪表盘 →'
+  },
+  {
+    title: 'OmniSpace 创作者工具包',
+    description: '为创作者提供跨宇宙叙事编辑器，集成音视频协作、可视化脚本与实时同步，帮助团队 2 周内完成主题发布。',
     href: 'demo/bchan-pchan-synchrony/index.html',
-    cta: '启动联动 →'
-  },
-  {
-    title: '悠子与冰子共振实验',
-    description: '用双耦合谐振模型描绘两人情绪的能量交换，调节参数让她们逐渐走向同频。',
-    href: 'demo/yuko-bingzi-resonance/index.html',
-    cta: '感受共振 →'
-  },
-  {
-    title: 'Baidu IFE 系列',
-    description: 'IFE 训练营阶段性作品集，涵盖布局、交互与组件练习，是成长路上的重要脚印。',
-    href: 'demo/baidu-ife-task/task_1_06/index.html',
-    cta: '查看练习 →'
+    cta: '进入工具包 →'
   },
   {
     title: '在线简历',
-    description: '完整介绍我的技能栈、经历与项目情况，也是保持自我复盘的重要方式。',
+    description: '更详细的工作经历、技能矩阵与案例拆解，可快速了解我如何帮助团队交付成果。',
     href: 'resume/index.html',
     cta: '阅读简历 →'
   }
@@ -111,90 +39,40 @@ const projects = [
 
 const timeline = [
   {
-    datetime: '2024-07-05',
+    datetime: '2024-07-01',
     label: '2024 · Jul',
-    title: '把自己藏进内在庇护所',
-    link: 'blog/inner-sanctuary.html',
-    summary: '从“先藏起来再理解自己神性”的密令出发，讨论安全感、神话原型与三步练习，让内在庇护与外在行动形成呼吸。'
+    title: 'Nebula City 2.0 正式开放',
+    summary: '完成跨端体验升级，上线 AI 导航与协作空间，核心场景留存率提升 18%，沉浸时长提升 26%。'
   },
   {
-    datetime: '2024-06-25',
+    datetime: '2024-06-16',
     label: '2024 · Jun',
-    title: '实现思念：把远距的心跳编译成可共享的日常',
-    link: 'blog/2024/06/25/shi-nian/index.html',
-    summary: '把思念拆成心跳波形、语素片段与空间截面，设计三段远距仪式与共用工作台，让彼此的等待拥有节奏化的回响。'
+    title: '在 GDC China 分享 XR DesignOps 实践',
+    summary: '受邀发表《让 XR 团队协同有章法》的主题演讲，分享指标驱动、设计系统与跨端交付的落地经验。'
   },
   {
-    datetime: '2024-06-21',
-    label: '2024 · Jun',
-    title: '量子陪伴：把共鸣写进日常系统',
-    link: 'blog/2024/06/21/liang-zi-pei-ban/index.html',
-    summary: '把“量子陪伴”打磨成四段仪式：晨间频率校准、分布式陪伴节点、情绪冷却池与复盘星图，让远距团队也能保持稳定共鸣。'
-  },
-  {
-    datetime: '2024-06-20',
-    label: '2024 · Jun',
-    title: '美羽的狗：星际散步笔记',
-    link: 'blog/2024/06/20/miu-dog/index.html',
-    summary: '记录美羽与犬类伙伴「量子」的陪伴手册：手势语言、星际散步地图与日程中的陪伴仪式，让忙碌的创作者也能与宠物保持共鸣。'
-  },
-  {
-    datetime: '2024-06-19',
-    label: '2024 · Jun',
-    title: '醉生梦死：在迷离中寻找醒着的生长路线',
-    link: 'blog/2024/06/19/zui-sheng-meng-si/index.html',
-    summary: '拆解“醉生梦死”的语源、情绪谱与三组练习，在迷离中重新唤醒感知、叙事与连接。'
-    title: 'world.execute(me)：美羽与甜甜的递归协奏',
-    link: 'blog/2024/06/19/world-execute-me-miyu-tiantian/index.html',
-    summary: '把 world.execute(me) 写成跨星际的协奏程序，记录美羽与甜甜如何用召唤指令、递归同步与共创练习让每位旅人都能加入执行栈。'
-  },
-  {
-    datetime: '2024-06-18',
-    label: '2024 · Jun',
-    title: '悠冰纠缠：美羽x甜甜宇宙的起源',
-    link: 'blog/2024/06/18/youbing-entanglement-miyu-tiantian-origin/index.html',
-    summary: '回溯“悠冰纠缠”的传奇，记录美羽与甜甜如何谱写跨星际协奏协议与实践工具，让神话变成可实践的生成框架。'
-  },
-  {
-    datetime: '2024-06-15',
-    label: '2024 · Jun',
-    title: '对生命游戏进行凸优化',
-    link: 'blog/game-of-life-convex-optimization.html',
-    summary: '把康威生命游戏松弛成凸优化问题，探索变量设计、目标函数与控制策略，让复杂结构的“定制”更有章法。'
-  },
-  {
-    datetime: '2024-06-01',
-    label: '2024 · Jun',
-    title: '万物互联的设计与实现',
-    link: 'blog/internet-of-everything-design.html',
-    summary: '从战略、架构、体验到运营四个篇章，记录打造可信赖 IoE 平台的思考与实践工具。'
-  },
-  {
-    datetime: '2024-05-01',
+    datetime: '2024-05-22',
     label: '2024 · May',
-    title: '理解封闭类时曲线凸优化的本质',
-    link: 'blog/ctc-convex-optimization.html',
-    summary: '用凸优化的语言梳理封闭类时曲线的因果约束、目标函数与数值求解，让“时间循环”有了可计算的解释。'
+    title: 'LumenDesk 获得战略合作',
+    summary: '牵头体验路线与体验指标体系，助力产品与三家全球创新团队达成联合试点，续费率达到 92%。'
   },
   {
-    datetime: '2015-10-20',
-    label: '2015 · Oct 20',
-    title: 'Hello World',
-    link: 'blog/2015/10/20/hello-world/index.html',
-    summary: '搭建博客后的第一篇文章，记录了向开源与分享迈出的第一步。'
+    datetime: '2024-04-08',
+    label: '2024 · Apr',
+    title: '发布《XR 团队体验指标手册》',
+    link: 'blog/internet-of-everything-design.html',
+    summary: '整理沉浸式体验中的业务指标、体验指标与技术指标映射关系，帮助团队从愿景对齐到结果复盘。'
   },
   {
-    datetime: '2015-10-20',
-    label: '2015 · Oct 20',
-    title: '测试页面',
-    link: 'blog/2015/10/20/test/index.html',
-    summary: '尝试新的排版与样式设置，让内容的呈现方式更加灵活。'
+    datetime: '2024-02-28',
+    label: '2024 · Feb',
+    title: '主持 12 场跨时区设计冲刺',
+    summary: '与产品、工程、市场共创，三周内完成沉浸式新人旅程升级，用户激活任务成功率提升 34%。'
   },
   {
-    datetime: '2024',
-    label: '持续更新',
-    title: '更多灵感',
-    summary: '更多关于前端实践、工具笔记与生活观察，正在整理上架，敬请期待。'
+    label: 'Now',
+    title: '开放新的合作机会',
+    summary: '希望与愿景大胆、行动快速的团队合作，共同打造下一代元宇宙与协作体验。'
   }
 ];
 
