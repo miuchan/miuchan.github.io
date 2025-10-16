@@ -1,84 +1,84 @@
 const resources = [
   {
-    title: 'QED 场论实验室',
-    description: '交互式理解量子电动力学：调节能量尺度、虚光子回路与外加场强，观察费曼图中耦合常数与辐射修正的变化。',
+    title: 'Atlas 审批旅程蓝图',
+    description: '风控平台的指标看板、审批旅程与跨团队 OKR 模板，帮助你复制端到端的决策体验。',
     href: 'demo/qed/index.html',
-    cta: '探索 QED →'
-  },
-  {
-    title: 'Nebula City XR 体验知识手册',
-    description: '沉浸式社交平台的指标拆解、旅程地图与无障碍检查清单，适合评估跨端体验上线策略。',
-    href: 'demo/ctc/index.html',
-    cta: '浏览体验地图 →'
-  },
-  {
-    title: 'Horizon Arena 虚拟演唱会蓝图',
-    description: '实时舞台编排与粉丝互动的工程方案，覆盖 WebGL/WebGPU 架构、性能监测与运营脚本。',
-    href: 'demo/time-crystal/index.html',
     cta: '查看蓝图 →'
   },
   {
-    title: 'LumenDesk 分布式协作仪表盘',
-    description: '多模态协作工具的任务流、低延迟白板与仪式化提醒设计，附带组件库与指标看板示例。',
+    title: 'Terrabyte 协作剧本',
+    description: '气候数据团队的多时区协作模型与无障碍设计评估表，可直接嵌入现有流程。',
+    href: 'demo/ctc/index.html',
+    cta: '阅读剧本 →'
+  },
+  {
+    title: 'Campfire 成长循环',
+    description: '创作者社区的增长实验框架与内容运营脚本，适合快速搭建社区增长循环。',
+    href: 'demo/time-crystal/index.html',
+    cta: '解锁循环 →'
+  },
+  {
+    title: 'Design System Starter Kit',
+    description: 'Design Token、组件规范与无障碍检查清单，帮助团队加速设计系统的落地。',
     href: 'demo/miu-tiantian-gradient-descent/index.html',
-    cta: '打开仪表盘 →'
+    cta: '使用工具包 →'
   },
   {
-    title: 'Ripple Protocol 控制中心',
-    description: 'Web3 基础设施治理的可视化策略，包含信息架构、动效系统与 TypeScript 前端最佳实践。',
+    title: 'Workflow Automation 模板',
+    description: '结合 Notion、Linear 与 GitHub 的跨团队节奏，附带仪式脚本与沟通模版。',
     href: 'demo/blockchan/index.html',
-    cta: '阅读控制中心 →'
+    cta: '复制流程 →'
   },
   {
-    title: 'OmniSpace 创作者工具包',
-    description: '跨宇宙叙事编辑器的知识库：音视频协作、可视化脚本与发布流程的模板集合。',
+    title: '设计工程 Demo 集',
+    description: '展示 TypeScript + WebGL 的互动体验原型，可作为设计工程协作的参考。',
     href: 'demo/bchan-pchan-synchrony/index.html',
-    cta: '进入工具包 →'
+    cta: '浏览 Demo →'
   },
   {
     title: '在线简历',
-    description: '更详细的经历、技能矩阵与案例拆解，帮助你验证合作深度与可用时段。',
+    description: '了解更完整的经历、技能矩阵与合作模式，便于确认项目匹配度。',
     href: 'resume/index.html',
-    cta: '阅读简历 →'
+    cta: '查看履历 →'
   }
 ];
 
-const updates = [
+const insights = [
   {
-    datetime: '2024-07-01',
+    datetime: '2024-07-12',
     label: '2024 · Jul',
-    title: 'Nebula City 2.0 发布复盘',
-    summary: '上线 AI 导航与协作空间，沉浸时长 +26%，复盘中附带指标看板模板与旅程优化策略。'
+    title: 'Atlas 审批体验 2.0 发布复盘',
+    summary: '分享指标对齐方法与审批旅程升级细节，附带价值主张画布与成功指标清单。'
   },
   {
-    datetime: '2024-06-16',
+    datetime: '2024-06-21',
     label: '2024 · Jun',
-    title: '在 GDC China 分享 XR DesignOps',
-    summary: '输出沉浸式团队协同的仪式与指标体系，公开分享幻灯与工具包。'
+    title: '在 Product Led Summit 分享设计工程实践',
+    summary: '介绍设计系统与工程协作的接口契约，提供组件治理与验收脚本。'
   },
   {
-    datetime: '2024-05-22',
+    datetime: '2024-05-18',
     label: '2024 · May',
-    title: 'LumenDesk 获得战略合作',
-    summary: '联手三家全球创新团队开展试点，续费率达 92%，沉浸式入门手册升级至 v2.1。'
-  },
-  {
-    datetime: '2024-04-08',
-    label: '2024 · Apr',
-    title: '发布《XR 团队体验指标手册》',
+    title: '发布《气候数据体验的 6 个信息架构要点》',
     link: 'blog/internet-of-everything-design.html',
-    summary: '梳理沉浸式体验中的业务、体验与技术指标映射，附带指标仪表与协作节奏模板。'
+    summary: '涵盖多源数据的 IA 策略、图表可读性与多语言协作基线。'
   },
   {
-    datetime: '2024-02-28',
-    label: '2024 · Feb',
-    title: '主持跨时区设计冲刺 12 场',
-    summary: '三周内完成新人旅程升级，激活任务成功率提升 34%，沉浸式冲刺脚本开放下载。'
+    datetime: '2024-03-30',
+    label: '2024 · Mar',
+    title: 'Campfire 社区增长实验手册 v3.0',
+    summary: '整合增长仪表板、内容节奏与导师体系，帮助社区复制增长循环。'
+  },
+  {
+    datetime: '2024-01-25',
+    label: '2024 · Jan',
+    title: 'DesignOps 工具集开源',
+    summary: '公开设计评审模板、团队仪式脚本与自动化检查工具，便于快速复用。'
   },
   {
     label: 'Now',
-    title: '开放新的合作机会',
-    summary: '寻找勇于实验沉浸式体验与协作工具的团队，让知识库直接作用于下一次发布。'
+    title: '开放新一轮产品共创',
+    summary: '寻找希望加速体验重构与设计工程协作的团队，欢迎预约探索会议。'
   }
 ];
 
@@ -94,7 +94,7 @@ const createResourceCard = ({ title, description, href, cta }) => {
   return link;
 };
 
-const createUpdateItem = ({ datetime, label, title, link, summary }) => {
+const createInsightItem = ({ datetime, label, title, link, summary }) => {
   const item = document.createElement('div');
   item.className = 'timeline-item';
 
@@ -137,12 +137,12 @@ const mountResources = () => {
   container.appendChild(fragment);
 };
 
-const mountUpdates = () => {
-  const container = document.getElementById('update-list');
+const mountInsights = () => {
+  const container = document.getElementById('insight-list');
   if (!container) return;
   const fragment = document.createDocumentFragment();
-  updates.forEach((entry) => {
-    fragment.appendChild(createUpdateItem(entry));
+  insights.forEach((entry) => {
+    fragment.appendChild(createInsightItem(entry));
   });
   container.appendChild(fragment);
 };
@@ -155,5 +155,5 @@ const updateCopyrightYear = () => {
 };
 
 mountResources();
-mountUpdates();
+mountInsights();
 updateCopyrightYear();
