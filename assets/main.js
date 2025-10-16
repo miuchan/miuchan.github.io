@@ -1,5 +1,11 @@
 const projects = [
   {
+    title: '寻子自发对称破缺游戏',
+    description: '通过调节噪声与偏置，体验镜像线索被随机扰动打破的瞬间，在临界点前下达命令找到走失的孩子。',
+    href: 'demo/seek-child-ssb/index.html',
+    cta: '进入游戏 →'
+  },
+  {
     title: 'Blockchan',
     description: '区块链主题的视觉实验，使用组件化方式搭建，尝试用动效呈现信息结构。',
     href: 'demo/blockchan/index.html',
