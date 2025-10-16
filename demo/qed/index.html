@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>量子电动力学 · 场论实验室</title>
+  <meta name="description" content="交互式理解量子电动力学（QED）的电子-电子散射：调节能量、虚光子回路与外加场强，观察耦合常数与辐射修正的变化。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <a class="back-link" href="../../index.html#library">← 返回知识导航</a>
+      <h1>量子电动力学 · 场论实验室</h1>
+      <p>这是一幅可以调参的费曼图：两条电子世界线交换虚光子，背景的网格展示时空，流动的光点象征振幅的传播。通过调节能量尺度、虚光子回路与外加场强，你可以直观感受耦合常数如何运行、辐射修正如何改变散射幅度。</p>
+      <div class="meta">
+        <span class="badge">QED</span>
+        <span class="badge">Feynman Diagram</span>
+        <span class="meta-note">拖动控制器即可观察不同阶次的量子修正。</span>
+      </div>
+    </header>
+
+    <section class="diagram-card">
+      <div class="canvas-wrapper">
+        <canvas id="qed-diagram" width="720" height="480" role="img" aria-label="电子-电子散射的动态费曼图示意图"></canvas>
+      </div>
+      <div class="controls" aria-describedby="control-help">
+        <div class="control">
+          <label for="energy">能量尺度 (GeV)</label>
+          <input id="energy" type="range" min="0.1" max="500" step="0.1" value="45">
+          <span class="value" id="energy-value">45.0</span>
+        </div>
+        <div class="control">
+          <label for="loops">虚光子回路阶数</label>
+          <input id="loops" type="range" min="0" max="3" step="1" value="1">
+          <span class="value" id="loops-value">1</span>
+        </div>
+        <div class="control">
+          <label for="field">外加场强 (a.u.)</label>
+          <input id="field" type="range" min="0" max="1" step="0.01" value="0.35">
+          <span class="value" id="field-value">0.35</span>
+        </div>
+        <p class="control-help" id="control-help">三个控制器分别代表能量尺度 Q、引入的虚光子回路数量以及外加电磁场的强度。</p>
+      </div>
+      <div class="readings">
+        <div class="reading">
+          <span class="label">有效耦合 α(Q)</span>
+          <span class="number"><span id="alpha-reading">0.00730</span></span>
+        </div>
+        <div class="reading">
+          <span class="label">散射幅度</span>
+          <span class="number"><span id="amplitude-reading">0.128</span></span>
+        </div>
+        <div class="reading">
+          <span class="label">辐射修正</span>
+          <span class="number"><span id="correction-reading">14.6%</span></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="explain">
+      <h2>如何阅读这幅图？</h2>
+      <p>左下与右下角的电子向上演化，在中央两处顶点发生散射。波浪线代表交换的虚光子，周围的椭圆提示我们加入了更高阶的回路修正。蓝色的流动光点象征电荷流，黄色脉冲表示电磁场的传播。随着时间推进，振幅在世界线上来回跳动，让静态的费曼图具有“实时”质感。</p>
+      <p>背景网格是简化的时空坐标：横向为空间，纵向为时间。调高能量时，虚光子波动频率会增加；增添回路阶数，则会看到更多的环形轨迹，提示辐射修正的贡献；外加场强改变了顶点周围的光晕与脉冲强度，模拟强场下的耦合增强。</p>
+    </section>
+
+    <section class="insights">
+      <h2>调节参数意味着什么？</h2>
+      <ul>
+        <li><span class="note-title">能量尺度 Q</span> — 决定耦合常数运行的位置。我们使用一阶的 β 函数近似计算 α(Q)，让你看到在高能条件下电荷屏蔽如何减弱。</li>
+        <li><span class="note-title">虚光子回路</span> — 代表把更多的费曼图阶次加入计算，例如真空极化或顶点修正。参数越高，散射幅度中的辐射修正占比越大。</li>
+        <li><span class="note-title">外加场强</span> — 模拟把散射放在强电磁场背景中时的场强重整。它会影响光点的扩散半径，并额外放大有效耦合。</li>
+      </ul>
+    </section>
+
+    <section class="notes">
+      <h2>延伸阅读</h2>
+      <ul>
+        <li><span class="note-title">量子电动力学的运行耦合</span> — 探索 α(Q) 的精确推导与高阶修正。</li>
+        <li><span class="note-title">费曼图的拓扑</span> — 理解不同阶次、不同拓扑结构的图如何对应到实际的计算项。</li>
+        <li><span class="note-title">强场 QED</span> — 进一步研究在超强激光或天体环境下，场强重整和非线性康普顿散射等现象。</li>
+      </ul>
+    </section>
+
+    <footer class="footer">
+      <p>感谢与你一起探索 QED。如果你希望把这样的可视化应用到教学或研究汇报中，欢迎回到 <a href="../../index.html">首页</a> 与我联系。</p>
+    </footer>
+  </main>
+  <script src="qed.js"></script>
+</body>
+</html>
