@@ -1,0 +1,148 @@
+:root {
+  color-scheme: light;
+  --sugar-rose: #ffb3d9;
+  --sugar-peach: #ffd4b2;
+  --sugar-mint: #b2f7ef;
+  --sugar-sky: #d4f1ff;
+  --sugar-cream: #fff8fb;
+  --text-main: #4a2d42;
+  --text-light: rgba(74, 45, 66, 0.75);
+  --button-shadow: rgba(255, 99, 156, 0.35);
+  --grid-line: rgba(255, 255, 255, 0.6);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Nunito", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
+    system-ui, sans-serif;
+  background: linear-gradient(160deg, var(--sugar-rose), var(--sugar-mint));
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem 3rem;
+  color: var(--text-main);
+}
+
+.page {
+  width: min(960px, 100%);
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  border-radius: 32px;
+  padding: 2.5rem clamp(1.5rem, 4vw, 3rem);
+  box-shadow: 0 30px 60px rgba(255, 141, 198, 0.35);
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.hero h1 {
+  font-size: clamp(2.2rem, 4vw, 3rem);
+  margin-bottom: 0.75rem;
+  text-shadow: 0 6px 12px rgba(255, 156, 208, 0.6);
+}
+
+.hero p {
+  margin: 0 auto;
+  max-width: 38em;
+  line-height: 1.8;
+  color: var(--text-light);
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.controls button {
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 999px;
+  background: linear-gradient(120deg, #ff8cc6, #ffc1e3);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 10px 20px var(--button-shadow);
+}
+
+.controls button:hover,
+.controls button:focus-visible {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 16px 24px rgba(255, 99, 156, 0.45);
+}
+
+.controls button:active {
+  transform: translateY(1px) scale(0.99);
+}
+
+.slider {
+  display: grid;
+  grid-template-columns: auto;
+  gap: 0.25rem;
+  padding: 0 0.75rem;
+  color: var(--text-light);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.slider input[type="range"] {
+  accent-color: #ff6fb7;
+}
+
+.board {
+  position: relative;
+  border-radius: 28px;
+  padding: 1.25rem;
+  background: linear-gradient(145deg, var(--sugar-cream), var(--sugar-sky));
+  box-shadow: inset 0 4px 16px rgba(255, 255, 255, 0.5),
+    inset 0 -6px 18px rgba(255, 175, 215, 0.25);
+}
+
+#lifeCanvas {
+  width: min(640px, 100%);
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  border-radius: 18px;
+  box-shadow: 0 12px 24px rgba(255, 118, 178, 0.2);
+}
+
+.status {
+  text-align: center;
+  margin-top: 1.25rem;
+  font-size: 1.05rem;
+  color: var(--text-light);
+}
+
+.hint {
+  text-align: center;
+  margin-top: 0.5rem;
+  font-size: 0.95rem;
+  color: rgba(74, 45, 66, 0.6);
+}
+
+@media (max-width: 720px) {
+  body {
+    padding: 1.5rem 0.5rem 2rem;
+  }
+
+  .page {
+    padding: 1.75rem 1.25rem;
+  }
+
+  .controls button {
+    width: 100%;
+  }
+}

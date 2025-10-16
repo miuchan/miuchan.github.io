@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>甜甜的生命游戏</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="page">
+      <header class="hero">
+        <h1>甜甜的生命游戏</h1>
+        <p>
+          这是一个用糖分填满的康威生命游戏。活细胞像软糖一样跳动，
+          死细胞则化作柔软的棉花糖。调高甜度，世界会被蜜糖粉饰；
+          放慢节奏，静静欣赏糖果生命的旋律。
+        </p>
+      </header>
+
+      <section class="controls" aria-label="甜甜生命控制面板">
+        <button id="toggle" type="button">开始撒糖</button>
+        <button id="step" type="button">跃动一步</button>
+        <button id="random" type="button">糖果随机撒</button>
+        <button id="clear" type="button">清理糖纸</button>
+        <label class="slider">
+          <span>甜度</span>
+          <input
+            id="sweetness"
+            type="range"
+            min="10"
+            max="100"
+            value="65"
+            aria-label="甜度"
+          />
+        </label>
+        <label class="slider">
+          <span>节奏</span>
+          <input
+            id="speed"
+            type="range"
+            min="1"
+            max="90"
+            value="40"
+            aria-label="节奏"
+          />
+        </label>
+      </section>
+
+      <section class="board" aria-live="polite">
+        <canvas
+          id="lifeCanvas"
+          width="640"
+          height="640"
+          role="img"
+          aria-label="甜甜的生命游戏棋盘"
+        ></canvas>
+      </section>
+
+      <p id="status" class="status" aria-live="polite"></p>
+      <p class="hint">在棋盘上点击即可手工摆放糖果图案。</p>
+    </main>
+
+    <script src="sweet-life.js"></script>
+  </body>
+</html>
