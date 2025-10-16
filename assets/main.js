@@ -1,5 +1,11 @@
 const resources = [
   {
+    title: 'QED 场论实验室',
+    description: '交互式理解量子电动力学：调节能量尺度、虚光子回路与外加场强，观察费曼图中耦合常数与辐射修正的变化。',
+    href: 'demo/qed/index.html',
+    cta: '探索 QED →'
+  },
+  {
     title: 'Nebula City XR 体验知识手册',
     description: '沉浸式社交平台的指标拆解、旅程地图与无障碍检查清单，适合评估跨端体验上线策略。',
     href: 'demo/ctc/index.html',
