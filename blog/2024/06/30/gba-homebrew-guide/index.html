@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+
+  <title>GBA 开发入门：用现代工具打造掌上像素游戏 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="拆解从认识硬件、搭建工具链、绘制素材到调试、发布的完整流程，帮助你用 devkitPro 与 mGBA 在家完成第一款 Game Boy Advance 自制游戏。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GBA 开发入门：用现代工具打造掌上像素游戏">
+<meta property="og:url" content="http://miuchan.github.io/2024/06/30/gba-homebrew-guide/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="拆解从认识硬件、搭建工具链、绘制素材到调试、发布的完整流程，帮助你用 devkitPro 与 mGBA 在家完成第一款 Game Boy Advance 自制游戏。">
+<meta property="og:updated_time" content="2024-06-30T00:00:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="GBA 开发入门：用现代工具打造掌上像素游戏">
+<meta name="twitter:description" content="拆解从认识硬件、搭建工具链、绘制素材到调试、发布的完整流程，帮助你用 devkitPro 与 mGBA 在家完成第一款 Game Boy Advance 自制游戏。">
+
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.png">
+
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+
+          <a class="main-nav-link" href="/">Home</a>
+
+          <a class="main-nav-link" href="/archives">Archives</a>
+
+      </nav>
+      <nav id="sub-nav">
+
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://miuchan.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-gba-homebrew-guide" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2024/06/30/gba-homebrew-guide/" class="article-date">
+  <time datetime="2024-06-30T00:00:00.000Z" itemprop="datePublished">2024-06-30</time>
+</a>
+
+  </div>
+  <div class="article-inner">
+
+
+      <header class="article-header">
+
+
+    <h1 class="article-title" itemprop="name">
+      GBA 开发入门：用现代工具打造掌上像素游戏
+    </h1>
+
+
+      </header>
+
+    <div class="article-entry" itemprop="articleBody">
+
+        <p>Game Boy Advance 的 32 位主机架构与掌机体量之间，有一种近乎魔法的恰到好处：你能感受到图形寄存器与 DMA 渠道的硬核力量，也能因为画面分辨率有限而被迫追求极致的像素表达。这篇文章想带你用现代工具完成第一款 GBA 自制游戏——从理解硬件、搭建工具链，到处理图像、音频、输入与调试。</p>
+        <p>整套流程面向“家用开发者”：我们使用 devkitPro 提供的编译环境、tonc 等学习资源，以及 mGBA/VisualBoyAdvance 这样的模拟器；通过开源的图形和音频工具准备素材，再把 ROM 刻录到 flashcart 上实机体验。</p>
+        <h2 id="hardware">1. 先理解这台掌机的硬件节奏</h2>
+        <p>GBA 核心是 ARM7TDMI CPU，主频 16.78 MHz，辅以 96 KB VRAM、32 KB 内存与丰富的 I/O 寄存器。掌握显示模式（Mode 0~5）、背景层、OAM 精灵对象和 DMA 复制方式，是写出丝滑画面的基础。建议先阅读 <em>tonc</em> 或 <em>GBATEK</em> 手册，了解像素是如何进入屏幕的，以及中断、定时器如何控制节奏。</p>
+        <h2 id="toolchain">2. 用 devkitPro/devkitARM 搭建跨平台工具链</h2>
+        <p>访问 devkitPro 官网，按照操作系统选择安装器；在 macOS 和 Linux 上只需执行一段 shell 脚本，Windows 则提供图形安装程序。安装完成后，使用 <code>dkp-pacman -S gba-dev</code> 拉取 devkitARM、libgba、gba-tools 等组件。创建工程目录时，建议直接复制 devkitPro 示例中的 <code>template</code>，它包含 <code>Makefile</code>、链接脚本与最小化的 <code>main.c</code>。</p>
+        <p>为了让编译更顺手，可以在 <code>Makefile</code> 中开启 <code>LTO</code> 与 <code>-Wall</code>，并为资源编译工具（如 grit）设定输出路径；同时把 <code>DEVKITPRO</code>、<code>DEVKITARM</code> 环境变量写入 shell 配置，避免每次启动终端都要手动导出。</p>
+        <h2 id="graphics">3. 规划像素与背景：从草图到 VRAM</h2>
+        <p>GBA 屏幕只有 240x160 像素，因此素材设计要先决定走 16 色还是 256 色的调色板。常见做法是在 Aseprite、Photoshop、LibreSprite 中绘制 PNG，再用 <code>grit</code> 或 <code>nin10kit</code> 转换为 C 语言数组与调色板文件。若采用 tilemap，需要把图块尺寸固定在 8x8 或 16x16，并合理规划背景层，以便让 BG0 用于界面、BG1 呈现主场景、BG2 实现视差。</p>
+        <p>对于动态角色，Sprite/OAM 管理是重点：提前规划好内存中的对象槽位，使用 DMA 复制更新 OAM。可以写一个简单的 <code>sprite_manager.c</code> 包装结构体，负责分配、更新、隐藏精灵，并结合 <code>obj_set_attr</code> 等宏快速写入寄存器。</p>
+        <h2 id="gameplay">4. 写出主循环与输入反馈</h2>
+        <p>GBA 没有操作系统，所有逻辑都围绕主循环展开。一般流程是：等待 VBlank 中断 -> 读取按键寄存器 -> 更新游戏状态 -> 刷新画面。为了避免鬼影，可在 VBlank 内完成画面交换或 DMA 复制。建议封装一个 <code>key_poll()</code> 函数，提供“刚按下”“持续按住”等状态，便于实现菜单与角色动作。</p>
+        <p>如果游戏需要碰撞检测或简单的物理，最好使用定长数组和整数运算；在 16 MHz 的环境里，浮点代价很大。把常用的状态机（如动画帧、敌人 AI）拆成表驱动结构，可以更容易地在 ROM 中复用。</p>
+        <h2 id="audio">5. 声音处理：M4A 引擎或自定义混音</h2>
+        <p>最省心的方式是使用任天堂公开的 M4A 音频引擎：通过 <code>Sappy</code> 或 <code>maxmod</code> 转换 MIDI/采样，导入工程即可播放 BGM 与效果音。如果想完全掌控声道，可以直接写入声音寄存器，使用 DMA 在 VBlank 把采样推入 FIFO。注意控制采样率（常见 16000 Hz）与内存占用，必要时把音效压缩为 ADPCM。</p>
+        <h2 id="debug">6. 调试与测试：模拟器 + 真机</h2>
+        <p>mGBA 提供断点、内存观察、日志输出等功能，适合快速调试；VisualBoyAdvance-M 的实时调色板与 Tile Viewer 也很实用。想在真机上体验，需要购买 EverDrive、EZ-Flash 等 flashcart，把编译好的 <code>.gba</code> ROM 拷入即可。测试时记得在不同硬件上验证音频同步、LCD 亮度以及旧版 GBA/SP 的兼容性。</p>
+        <h2 id="release">7. 发布与持续更新</h2>
+        <p>当核心玩法稳定后，可以为玩家准备 README、按键说明和源码仓库。推荐在 itch.io、romhacking.net 或 GitHub Releases 发布 ROM；若希望接受反馈，不妨在 README 中附上 save 文件以及调试说明。最后，把构建脚本与资产转换流程写成自动化任务，让你可以更放心地在未来迭代关卡或机制。</p>
+        <h2 id="resources">8. 学习资源与社区</h2>
+        <p>除了 tonc 手册、devkitPro 官方文档，也别错过 <em>gba-dev</em> Discord、r/EmulationOnAndroid 等社区；国内可以关注自制掌机论坛和 B 站的像素艺术作者。学习一门老平台的开发不仅是向童年致敬，更是重新拥抱“硬件限制驱动创意”这一朴素而迷人的设计哲学。</p>
+
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://miuchan.github.io/2024/06/30/gba-homebrew-guide/" data-id="post-gba-homebrew-guide" class="article-share-link">Share</a>
+
+
+    </footer>
+  </div>
+
+</article>
+
+    <section id="comments">
+
+
+    </section>
+
+        </section>
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2024 John Doe<br>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+
+      <a href="/" class="mobile-nav-link">Home</a>
+
+      <a href="/archives" class="mobile-nav-link">Archives</a>
+
+</nav>
+  </div>
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/script.js"></script>
+
+
+</body>
+</html>
