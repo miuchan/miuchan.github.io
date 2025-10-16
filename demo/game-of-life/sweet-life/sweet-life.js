@@ -7,6 +7,7 @@
   const clearBtn = document.getElementById("clear");
   const sweetnessSlider = document.getElementById("sweetness");
   const speedSlider = document.getElementById("speed");
+  const presetButtons = Array.from(document.querySelectorAll(".mode-button"));
   const statusEl = document.getElementById("status");
 
   const cellSize = 16;
@@ -40,8 +41,116 @@
   const sliderMax = Number(speedSlider.max);
   let interval = sliderToInterval(Number(speedSlider.value));
 
+  const presets = {
+    pulse: {
+      sweetness: 68,
+      speed: 45,
+      apply: () => {
+        clearGrid(grid);
+        const centerR = rows / 2;
+        const centerC = cols / 2;
+        for (let r = 0; r < rows; r += 1) {
+          for (let c = 0; c < cols; c += 1) {
+            const dist = Math.hypot(r - centerR, c - centerC) / 6.5;
+            const wave = (Math.sin((r - centerR) / 2.4) + Math.cos((c - centerC) / 2.8)) * 0.08;
+            const probability = Math.max(0, 0.55 - dist * 0.22 + wave);
+            grid[r][c] = Math.random() < probability ? 1 : 0;
+          }
+        }
+      },
+    },
+    waves: {
+      sweetness: 58,
+      speed: 32,
+      apply: () => {
+        clearGrid(grid);
+        for (let r = 0; r < rows; r += 1) {
+          const offset = Math.sin(r / 3) * 4;
+          for (let c = 0; c < cols; c += 1) {
+            const wave = Math.sin((c + offset) / 2.3);
+            grid[r][c] = wave > 0.25 && Math.random() > 0.2 ? 1 : 0;
+          }
+        }
+      },
+    },
+    butterfly: {
+      sweetness: 72,
+      speed: 38,
+      apply: () => {
+        clearGrid(grid);
+        const centerR = rows / 2;
+        const centerC = cols / 2;
+        const wingspan = 11;
+        for (let r = -wingspan; r <= wingspan; r += 1) {
+          for (let c = -wingspan; c <= wingspan; c += 1) {
+            const dist = Math.hypot(r * 0.9, c * 1.2);
+            const swirl = Math.sin((r * c) / 18);
+            if (dist < wingspan + swirl * 3) {
+              const leftCol = Math.round(centerC + c - wingspan / 3);
+              const rightCol = Math.round(centerC - c + wingspan / 3);
+              const row = Math.round(centerR + r);
+              if (row >= 0 && row < rows) {
+                if (leftCol >= 0 && leftCol < cols && Math.random() > 0.18) {
+                  grid[row][leftCol] = 1;
+                }
+                if (rightCol >= 0 && rightCol < cols && Math.random() > 0.18) {
+                  grid[row][rightCol] = 1;
+                }
+              }
+            }
+          }
+        }
+
+        // Sprinkle a body in the center.
+        for (let r = -3; r <= 3; r += 1) {
+          for (let c = -2; c <= 2; c += 1) {
+            const rr = centerR + r;
+            const cc = centerC + c;
+            if (rr >= 0 && rr < rows && cc >= 0 && cc < cols) {
+              grid[rr][cc] = 1;
+            }
+          }
+        }
+      },
+    },
+    nebula: {
+      sweetness: 80,
+      speed: 55,
+      apply: () => {
+        clearGrid(grid);
+        const clusters = 9;
+        for (let i = 0; i < clusters; i += 1) {
+          const baseR = Math.floor(Math.random() * rows);
+          const baseC = Math.floor(Math.random() * cols);
+          const radius = Math.random() * 6 + 4;
+          for (let r = -radius * 2; r <= radius * 2; r += 1) {
+            for (let c = -radius * 2; c <= radius * 2; c += 1) {
+              const rr = baseR + r;
+              const cc = baseC + c;
+              if (rr < 0 || rr >= rows || cc < 0 || cc >= cols) continue;
+              const distance = Math.hypot(r, c);
+              const swirl = Math.sin((baseR + baseC + r + c) / 3.5) * 0.2;
+              const prob = Math.max(0, 0.68 - distance / (radius * 1.45) + swirl);
+              if (Math.random() < prob) {
+                grid[rr][cc] = 1;
+              }
+            }
+          }
+        }
+      },
+    },
+  };
+
   drawGrid();
   updateStatus();
+
+  presetButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      presetButtons.forEach((btn) => btn.classList.remove("is-active"));
+      button.classList.add("is-active");
+      applyPreset(button.dataset.preset);
+    });
+  });
 
   toggleBtn.addEventListener("click", () => {
     running ? stop() : start();
@@ -54,11 +163,8 @@
   });
 
   randomBtn.addEventListener("click", () => {
-    if (!running) {
-      sprinkleRandom();
-    } else {
-      sprinkleRandom();
-    }
+    clearPresetHighlight();
+    sprinkleRandom();
   });
 
   clearBtn.addEventListener("click", () => {
@@ -66,14 +172,17 @@
     clearGrid(grid);
     drawGrid();
     updateStatus();
+    clearPresetHighlight();
   });
 
   sweetnessSlider.addEventListener("input", () => {
+    clearPresetHighlight();
     drawGrid();
     updateStatus();
   });
 
   speedSlider.addEventListener("input", () => {
+    clearPresetHighlight();
     interval = sliderToInterval(Number(speedSlider.value));
     updateStatus();
   });
@@ -84,6 +193,7 @@
     paintValue = grid[cell.row][cell.col] ? 0 : 1;
     paintActive = true;
     grid[cell.row][cell.col] = paintValue;
+    clearPresetHighlight();
     canvas.setPointerCapture(event.pointerId);
     drawGrid();
     updateStatus();
@@ -156,6 +266,26 @@
     }
     drawGrid();
     updateStatus();
+  }
+
+  function applyPreset(name, { initial = false } = {}) {
+    const preset = presets[name];
+    if (!preset) return;
+    stop(true);
+    if (typeof preset.sweetness === "number") {
+      sweetnessSlider.value = preset.sweetness;
+    }
+    if (typeof preset.speed === "number") {
+      setSpeed(preset.speed);
+    }
+    preset.apply();
+    drawGrid();
+    updateStatus();
+    if (initial) {
+      presetButtons
+        .filter((button) => button.dataset.preset === name)
+        .forEach((button) => button.classList.add("is-active"));
+    }
   }
 
   function createGrid(r, c, fill) {
@@ -285,6 +415,11 @@
     return maxInterval - (maxInterval - minInterval) * ratio;
   }
 
+  function setSpeed(value) {
+    speedSlider.value = value;
+    interval = sliderToInterval(Number(value));
+  }
+
   function updateStatus() {
     let alive = 0;
     for (let r = 0; r < rows; r += 1) {
@@ -298,4 +433,10 @@
     const mode = running ? "撒糖中" : "糖罐静置";
     statusEl.textContent = `${mode} · 糖果 ${alive} 颗（${density}%） · 甜度 ${sweetness}% · 节奏 ${beats} 次/秒`;
   }
+
+  function clearPresetHighlight() {
+    presetButtons.forEach((btn) => btn.classList.remove("is-active"));
+  }
+
+  applyPreset("pulse", { initial: true });
 })();

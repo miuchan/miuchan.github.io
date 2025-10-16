@@ -11,19 +11,44 @@
       <header class="hero">
         <h1>甜甜的生命游戏</h1>
         <p>
-          这是一个用糖分填满的康威生命游戏。活细胞像软糖一样跳动，
+          这是一个糖分涌动的康威生命游戏。活细胞像软糖一样跳动，
           死细胞则化作柔软的棉花糖。调高甜度，世界会被蜜糖粉饰；
           放慢节奏，静静欣赏糖果生命的旋律。
         </p>
       </header>
 
       <section class="controls" aria-label="甜甜生命控制面板">
-        <button id="toggle" type="button">开始撒糖</button>
-        <button id="step" type="button">跃动一步</button>
-        <button id="random" type="button">糖果随机撒</button>
-        <button id="clear" type="button">清理糖纸</button>
-        <label class="slider">
-          <span>甜度</span>
+        <div class="mode-switch" role="group" aria-label="糖晶演化主题">
+          <button type="button" class="mode-button is-active" data-preset="pulse">
+            脉冲熵场
+          </button>
+          <button type="button" class="mode-button" data-preset="waves">
+            黏性波浪
+          </button>
+          <button type="button" class="mode-button" data-preset="butterfly">
+            糖晶蝴蝶
+          </button>
+          <button type="button" class="mode-button" data-preset="nebula">
+            蜜雾星群
+          </button>
+        </div>
+
+        <div class="slider-deck" aria-label="节奏控制">
+          <span class="slider-label">静默</span>
+          <input
+            id="speed"
+            class="timeline"
+            type="range"
+            min="1"
+            max="90"
+            value="40"
+            aria-label="节奏"
+          />
+          <span class="slider-label">节律</span>
+        </div>
+
+        <div class="sweetness-deck" aria-label="甜度控制">
+          <span class="slider-label">轻盈</span>
           <input
             id="sweetness"
             type="range"
@@ -32,18 +57,15 @@
             value="65"
             aria-label="甜度"
           />
-        </label>
-        <label class="slider">
-          <span>节奏</span>
-          <input
-            id="speed"
-            type="range"
-            min="1"
-            max="90"
-            value="40"
-            aria-label="节奏"
-          />
-        </label>
+          <span class="slider-label">蜜腻</span>
+        </div>
+
+        <div class="actions" aria-label="播放与编辑">
+          <button id="toggle" type="button" class="primary">开始撒糖</button>
+          <button id="step" type="button" class="ghost">跃动一步</button>
+          <button id="random" type="button" class="ghost">随机撒糖</button>
+          <button id="clear" type="button" class="ghost">清理糖纸</button>
+        </div>
       </section>
 
       <section class="board" aria-live="polite">
