@@ -505,6 +505,107 @@ p {
   color: var(--accent);
 }
 
+.experience-timeline {
+  display: grid;
+  gap: 32px;
+}
+
+.experience-item {
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: calc(var(--radius) + 6px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 22px 46px rgba(60, 77, 255, 0.16);
+  padding: 32px clamp(24px, 4vw, 42px);
+  display: grid;
+  gap: 18px;
+}
+
+.experience-item header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: baseline;
+}
+
+.experience-item h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: var(--text);
+}
+
+.experience-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent-strong);
+}
+
+.experience-summary {
+  margin: 0;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.experience-points {
+  margin: 0;
+  padding-left: 20px;
+  display: grid;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.experience-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tag {
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(60, 77, 255, 0.12);
+  color: var(--accent-strong);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.skills-grid {
+  display: grid;
+  gap: 22px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.skills-card {
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: var(--radius);
+  border: 1px solid rgba(255, 255, 255, 0.78);
+  box-shadow: 0 20px 42px rgba(60, 77, 255, 0.14);
+  padding: 28px 24px;
+  display: grid;
+  gap: 12px;
+}
+
+.skills-card h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--text);
+}
+
+.skills-card ul {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.8;
+}
+
 .timeline {
   position: relative;
   display: grid;
@@ -659,6 +760,10 @@ footer {
   .about-grid {
     grid-template-columns: 1fr;
   }
+
+  .experience-item {
+    padding: 28px 24px;
+  }
 }
 
 @media (max-width: 640px) {
@@ -697,6 +802,15 @@ footer {
 
   .timeline-item::before {
     left: -28px;
+  }
+
+  .experience-item header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .experience-meta {
+    letter-spacing: 0.08em;
   }
 
   .contact-card {
