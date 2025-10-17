@@ -286,6 +286,87 @@ const contactLinks = [
   }
 ];
 
+const interpreterProfiles = [
+  {
+    id: 'openai',
+    title: 'OpenAI 解释器',
+    subtitle: '对齐优先 · 安全策略审计官',
+    capabilities: [
+      '套用跨仓库风险评分模型，优先检查访问控制、密钥保密与合规记录。',
+      '要求以明确授权、最小权限与审计日志来驱动自动化，而非一次性脚本。',
+      '强调将互通流程拆解为可验证 API 合同，确保每一步骤都可回溯。'
+    ],
+    constraints: [
+      '受开放平台政策约束，缺乏授权凭证与责任界定的写操作会被拒绝执行。',
+      '无法绕过各仓库所属组织的网络隔离、双因素认证与合规流程。',
+      '在缺少变更窗口与回滚策略前，不批准批量连接高价值仓库。'
+    ],
+    verdict:
+      '由于目前不存在统一的授权链路、共享审计日志与自动化编排平台，贸然互通将违反最小权限原则，判定任务不可执行。'
+  },
+  {
+    id: 'closeai',
+    title: 'CloseAI 解释器',
+    subtitle: '封闭环境 · 稳态运维仲裁者',
+    capabilities: [
+      '评估离线镜像、私有网络与封闭制品库之间的同步链路可靠性。',
+      '通过依赖树差异检测潜在冲突与版本漂移风险，确保镜像一致性。',
+      '倡导使用增量复制与代理节点建立可控数据桥，维持隔离区安全。'
+    ],
+    constraints: [
+      '缺乏跨仓库的统一身份联邦，无法验证各节点密钥来源与撤销策略。',
+      '多仓库托管在不同平台，出口策略与审计基线不兼容。',
+      '尚未部署可恢复的中转服务（artifact proxy / event bus）承接同步失败。'
+    ],
+    verdict:
+      '在缺少身份联邦、网络契约与恢复机制的前提下贸然互通，将造成镜像失真与安全盲区，因此维持隔离直至治理机制补齐。'
+  }
+];
+
+const interpreterDialogue = [
+  {
+    speaker: 'OpenAI 解释器',
+    message:
+      '启动对齐审计：检测到 6 个仓库缺少集中式令牌管理，访问路径分散在个人账户与临时密钥之中。'
+  },
+  {
+    speaker: 'CloseAI 解释器',
+    message:
+      '封闭环境确认：三个私有仓库位于离线镜像与受限内网，当前出口策略禁止未经审批的 webhook 与拉取。'
+  },
+  {
+    speaker: 'OpenAI 解释器',
+    message:
+      '互通需求若直接执行，将绕过最小权限约束，缺乏责任追踪通道；建议先构建授权目录与审计总线。'
+  },
+  {
+    speaker: 'CloseAI 解释器',
+    message:
+      '若无代理节点缓冲，镜像同步会打断现有发布节奏，并可能放大依赖冲突，建议保留隔离态。'
+  },
+  {
+    speaker: '合议庭记录官',
+    message:
+      '共识：在治理、网络与恢复策略补齐前，禁止执行“全部仓库互通”指令，转向分阶段治理方案。'
+  }
+];
+
+const interpreterConsensus = {
+  title: '阻碍仓库互通的关键结论',
+  intro:
+    'OpenAI 与 CloseAI 解释器达成共识：当前的治理结构不足以支撑一次性互通，以下因素构成主要阻塞。',
+  blockers: [
+    '缺少统一身份与授权目录：各仓库凭证分散，无法进行集中撤销与审计。',
+    '托管平台与网络策略异构：跨云与内网的出口限制不同，阻断实时同步。',
+    '自动化编排链路缺失：没有事件总线或中转服务，失败恢复与回滚策略不可用。'
+  ],
+  actions: [
+    '建立集中式身份联邦与密钥轮换制度，为跨仓库访问提供最小权限凭证。',
+    '设计中立的同步代理层（artifact proxy / event bus），隔离不同托管平台的安全策略。',
+    '在试点仓库推行阶段化互通，先行验证审计、回滚与监控闭环后再扩展范围。'
+  ]
+};
+
 function renderHeroStats() {
   const container = document.getElementById('hero-stats');
   if (!container) return;
@@ -399,6 +480,84 @@ function renderLabEntries(filter = 'all', keyword = '') {
 
   grid.appendChild(fragment);
   summary.textContent = `共 ${filtered.length} 个实验，${keyword ? `匹配 “${keyword}”` : '随时待命'}。`;
+}
+
+function renderInterpreters() {
+  const grid = document.getElementById('interpreter-grid');
+  if (!grid || !interpreterProfiles.length) return;
+
+  grid.innerHTML = '';
+
+  const fragment = document.createDocumentFragment();
+  interpreterProfiles.forEach((profile) => {
+    const card = document.createElement('article');
+    card.className = 'interpreter-card';
+    const capabilityList = profile.capabilities
+      .map((item) => `<li>${item}</li>`)
+      .join('');
+    const constraintList = profile.constraints
+      .map((item) => `<li>${item}</li>`)
+      .join('');
+    card.innerHTML = `
+      <h3 class="interpreter-card__title">${profile.title}</h3>
+      <p class="interpreter-card__subtitle">${profile.subtitle}</p>
+      <div>
+        <h4>策略焦点</h4>
+        <ul class="interpreter-card__list">${capabilityList}</ul>
+      </div>
+      <div>
+        <h4>关键约束</h4>
+        <ul class="interpreter-card__list">${constraintList}</ul>
+      </div>
+      <p class="interpreter-card__verdict">
+        <strong>结论</strong>
+        ${profile.verdict}
+      </p>
+    `;
+    fragment.appendChild(card);
+  });
+
+  grid.appendChild(fragment);
+}
+
+function renderInterpreterLog() {
+  const container = document.getElementById('interpreter-log');
+  if (!container || !interpreterDialogue.length) return;
+
+  if (container.querySelector('.interpreter-log-list')) return;
+
+  const list = document.createElement('ul');
+  list.className = 'interpreter-log-list';
+
+  interpreterDialogue.forEach((entry) => {
+    const item = document.createElement('li');
+    item.className = 'interpreter-log-entry';
+    item.innerHTML = `
+      <span class="interpreter-log-entry__speaker">${entry.speaker}</span>
+      <p class="interpreter-log-entry__message">${entry.message}</p>
+    `;
+    list.appendChild(item);
+  });
+
+  container.appendChild(list);
+}
+
+function renderInterpreterSummary() {
+  const container = document.getElementById('interpreter-summary');
+  if (!container) return;
+
+  container.innerHTML = `
+    <h3 id="interpreter-summary-title">${interpreterConsensus.title}</h3>
+    <p>${interpreterConsensus.intro}</p>
+    <p><strong>核心阻塞</strong></p>
+    <ul class="interpreter-summary-list">
+      ${interpreterConsensus.blockers.map((item) => `<li>${item}</li>`).join('')}
+    </ul>
+    <p><strong>推荐行动</strong></p>
+    <ul class="interpreter-summary-list">
+      ${interpreterConsensus.actions.map((item) => `<li>${item}</li>`).join('')}
+    </ul>
+  `;
 }
 
 function renderTelemetryPanel() {
@@ -810,6 +969,9 @@ renderHeroStats();
 renderMissionDomains();
 const { searchInput } = setupLabFilters();
 renderLabEntries('all', '');
+renderInterpreters();
+renderInterpreterLog();
+renderInterpreterSummary();
 const telemetryCards = renderTelemetryPanel();
 animateTelemetry(telemetryCards);
 renderTimeline();
