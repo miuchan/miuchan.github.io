@@ -2,7 +2,7 @@ import { featuredAlliances } from './friends-data.js';
 
 const counts = {
   demos: 21,
-  research: 3,
+  research: 4,
   blogs: 59,
   resume: 1
 };
@@ -144,6 +144,15 @@ const labEntries = [
     type: 'research',
     tags: ['热管理', '多物理场'],
     keywords: ['thermal resonance', 'acoustic coupling', 'heat recovery']
+  },
+  {
+    title: '微观激励桥实验室',
+    description:
+      '建立跨社区的激励桥梁，将贡献事件、声誉权重与结算桥接入统一协议，保障公共项目资金透明高效流动。',
+    href: 'docs/micro-incentive-bridge-lab.md',
+    type: 'research',
+    tags: ['激励设计', '公共项目'],
+    keywords: ['micro incentive', 'public goods', 'governance']
   },
   {
     title: '全屋智能无线充电实验舱',
