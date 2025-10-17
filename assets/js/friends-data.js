@@ -12,6 +12,14 @@ export const friendNetwork = {
         'TCDW 在独立写作与设计实验之间穿梭，把对知识网络的观察整理成开放档案，与 Earth Online 的体验方法论彼此呼应。',
       tags: ['独立创作', '写作实验', '知识网络']
     }
+export const friendNetwork = [
+  {
+    name: '吐槽大王部落格',
+    url: 'https://www.tcdw.net/',
+    description: '正在学习接受不完美的世界！',
+    note:
+      'TCDW 在独立写作与设计实验之间穿梭，把对知识网络的观察整理成开放档案，与 Earth Online 的体验方法论彼此呼应。',
+    tags: ['独立创作', '写作实验', '知识网络']
   },
   clusters: [
     {
