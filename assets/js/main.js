@@ -2,7 +2,7 @@ import { featuredAlliances } from './friends-data.js';
 
 const counts = {
   demos: 21,
-  research: 1,
+  research: 2,
   blogs: 59,
   resume: 1
 };
@@ -135,6 +135,15 @@ const labEntries = [
     type: 'ops',
     tags: ['协作', '可持续'],
     keywords: ['climate', 'collaboration']
+  },
+  {
+    title: '全屋智能无线充电实验舱',
+    description:
+      '构建多房间谐振线圈阵列与自适应调度算法，实现移动设备与机器人随行供电的能源网络。',
+    href: 'docs/whole-home-wireless-charging-lab.md',
+    type: 'research',
+    tags: ['无线供能', '智能家居'],
+    keywords: ['wireless power', 'smart home']
   },
   {
     title: '计算奇点 470 年上界证明',
