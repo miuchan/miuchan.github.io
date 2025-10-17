@@ -1,5 +1,11 @@
 const resources = [
   {
+    title: '分支预测策略实验室',
+    description: '比较静态、局部与 gshare 预测器的命中率，观察误判冲刷成本与别名对性能的影响。',
+    href: 'demo/branch-prediction/index.html',
+    cta: '体验预测器 →'
+  },
+  {
     title: 'Atlas 审批旅程蓝图',
     description: '风控平台的指标看板、审批旅程与跨团队 OKR 模板，帮助你复制端到端的决策体验。',
     href: 'demo/qed/index.html',

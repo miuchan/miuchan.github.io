@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>分支预测策略实验室</title>
+  <meta name="description" content="通过交互式轨迹与统计面板体验分支预测：比较静态策略、一位/二位饱和计数器与 gshare，在不同程序模式下观察命中率与流水线冲刷成本。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <a class="back-link" href="../../index.html#knowledge">← 返回知识库</a>
+      <h1>分支预测策略实验室</h1>
+      <p>
+        让分支轨迹在画布上徐徐展开，依次投喂多种预测器：静态永远跳转、回退不跳 (BTFNT)、一位与二位饱和计数器、以及拥有全局历史的 gshare。
+        观察命中率、误判冲刷的周期损耗，以及不同程序模式下各策略的优劣势。
+      </p>
+      <div class="meta">
+        <span class="badge">Microarchitecture</span>
+        <span class="badge">Branch Predictor</span>
+        <span class="meta-note">误判冲刷成本默认 12 周期，可在控制面板自定义。</span>
+      </div>
+    </header>
+
+    <section class="playground">
+      <div class="visual">
+        <canvas id="prediction-canvas" width="880" height="420" role="img" aria-label="分支轨迹、预测结果与命中情况"></canvas>
+        <div class="readout" aria-live="polite">
+          <div>
+            <span class="label">准确率</span>
+            <span id="accuracy" class="value">—</span>
+          </div>
+          <div>
+            <span class="label">误判</span>
+            <span id="mispredict" class="value">0</span>
+          </div>
+          <div>
+            <span class="label">滚动命中率</span>
+            <span id="window-accuracy" class="value">—</span>
+          </div>
+          <div>
+            <span class="label">冲刷成本</span>
+            <span id="penalty" class="value">0</span>
+          </div>
+          <div>
+            <span class="label">进度</span>
+            <span id="progress" class="value">0 / 0</span>
+          </div>
+        </div>
+      </div>
+
+      <aside class="panel" aria-labelledby="controls-title">
+        <h2 id="controls-title">分支轨迹与预测器</h2>
+        <div class="control">
+          <label for="trace">程序模式</label>
+          <select id="trace">
+            <option value="loop">热循环：回跳为主</option>
+            <option value="alternating">交替条件：Taken/Not 交错</option>
+            <option value="correlated">相关分支：互相依赖</option>
+            <option value="random">随机扰动：不可预测</option>
+          </select>
+        </div>
+        <div class="control">
+          <label for="predictor">预测策略</label>
+          <select id="predictor">
+            <option value="alwaysTaken">静态：永远预测跳转</option>
+            <option value="alwaysNot">静态：永远预测不跳</option>
+            <option value="btfnt">静态：回退跳转，前进不跳 (BTFNT)</option>
+            <option value="oneBit">一位局部分支表</option>
+            <option value="twoBit">二位饱和计数器</option>
+            <option value="gshare">gshare（全局历史 + 2-bit 计数器）</option>
+          </select>
+        </div>
+        <div class="control" id="history-control">
+          <label for="history">gshare 历史长度 <span id="history-value">8</span></label>
+          <input type="range" id="history" min="2" max="12" step="1" value="8">
+        </div>
+        <div class="control">
+          <label for="table-size">局部表项数 <span id="table-size-value">256</span></label>
+          <input type="range" id="table-size" min="16" max="512" step="16" value="256">
+          <small>适用于一位、二位和 gshare。表项越少越容易发生别名。</small>
+        </div>
+        <div class="control">
+          <label for="penalty-input">误判冲刷周期 <span id="penalty-value">12</span></label>
+          <input type="range" id="penalty-input" min="4" max="30" step="1" value="12">
+        </div>
+        <div class="actions">
+          <button id="run">开始播放</button>
+          <button id="step" class="secondary">单步执行</button>
+          <button id="reset" class="secondary">重新生成轨迹</button>
+        </div>
+        <div class="hint" id="predictor-hint">选择策略查看说明。</div>
+      </aside>
+    </section>
+
+    <section class="analysis" aria-labelledby="analysis-title">
+      <h2 id="analysis-title">分支表现概览</h2>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">分支地址</th>
+              <th scope="col">类别</th>
+              <th scope="col">采样</th>
+              <th scope="col">误判</th>
+              <th scope="col">命中率</th>
+            </tr>
+          </thead>
+          <tbody id="branch-table">
+            <tr>
+              <td colspan="5">等待执行……</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="analysis-note">统计基于当前运行的前缀；结束后可重新生成轨迹以比较不同策略。</p>
+    </section>
+
+    <section class="explain">
+      <h2>如何理解这些预测器</h2>
+      <p>
+        静态策略依赖编译器或硬件启发：永远跳转、永远不跳或依据回退/前进来判断。它们无需状态，却无法适应实际数据分布。
+        一位局部表把每个分支的最近一次结果记在单比特上；而二位饱和计数器用“强/弱”四态抵御偶发颠簸，循环场景下更稳健。
+      </p>
+      <p>
+        gshare 将全局历史寄存器与分支地址异或索引表项，既保持局部性，又捕捉跨分支的相关模式（例如 if/else 互斥）。
+        当表项不足或历史长度不匹配时，不同分支会互相干扰，命中率随之下降。通过调节表项数与历史长度，可以亲自体会 alias 与 overfitting 的平衡。
+      </p>
+    </section>
+
+    <section class="notes">
+      <h2>探索建议</h2>
+      <ul>
+        <li>在“热循环”上比较一位与二位预测器，体会饱和计数器对尾程 not taken 的恢复能力。</li>
+        <li>切换到“相关分支”，调高历史长度，观察 gshare 如何捕捉互斥关系。</li>
+        <li>将表项数调小至 32，再运行“随机扰动”，感受 aliasing 对局部预测器的影响。</li>
+      </ul>
+    </section>
+
+    <footer class="footer">
+      <p>灵感来自经典流水线微架构教材：亲手调参与可视化，比纸面示意更能理解分支预测的取舍。</p>
+    </footer>
+  </main>
+  <script src="predictor.js"></script>
+</body>
+</html>
