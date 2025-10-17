@@ -129,6 +129,15 @@ const timeline = [
 
 const writingHighlights = [
   {
+    title: '《为什么要整理房间：一种风水学研究》',
+    description:
+      '将风水气场建模与环境心理学结合，提出“场域-路径-仪式”整理框架，让居家空间支持专注与身心节律。',
+    link: {
+      href: '/blog/2024/07/15/why-organize-room-fengshui-research/',
+      label: 'Read the feng shui study →'
+    }
+  },
+  {
     title: '《突破工作记忆的限制》',
     description:
       '构建多通道记忆编排、情境缓存与认知外骨骼，让高负荷任务依然保持清晰节奏与可恢复的上下文。',
