@@ -6,6 +6,7 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 .env*
-# Aya CLI artifacts
+# Aya CLI artifacts (legacy)
 tools/aya/aya-cli-*-all.jar
-tools/aya/aya
+# Python artifacts
+__pycache__/
