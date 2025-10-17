@@ -1,53 +1,30 @@
-# Aman Sharma · Experience Systems
+# Experience Systems Atlas
 
-This repository contains the source for Aman Sharma's portfolio and knowledge hub, now powered by a Next.js application. The project also hosts the research showcase for Zhang Teslendia and a collection of interactive demos and documents served as static assets.
+miuchan.github.io 现已重构为零依赖的静态站点，使用原生 HTML、CSS 与 JavaScript
+展示整个代码库的结构、知识资产与交互 Demo。仓库持续托管全部历史资源，包括研究文档、交互原型、博客长文与履历材料。
 
-## Getting started
+## 快速预览
 
-```bash
-npm install
-npm run dev
-```
+- `index.html`：站点入口，聚合仓库概览、知识流、资源索引与协作工具。
+- `assets/css/styles.css`：设计系统与响应式布局定义，确保高对比度与可访问性。
+- `assets/js/main.js`：以数据驱动方式渲染全部卡片、过滤器与表达式解释器。
+- `docs/`：可引用的研究文稿，目前包含《计算奇点 470 年上界证明》。
+- `public/demo/`：20 个跨学科交互 Demo，覆盖 CPU 架构、可视化、组织运营等主题。
+- `public/blog/`：59 篇 HTML 长文与档案索引，保留历史主题与专题样式。
+- `public/resume/`：在线履历及配套静态资源，支持合作前的角色匹配与沟通。
 
-The development server runs on [http://localhost:3000](http://localhost:3000). The main landing page lives at `/` and the research showcase is available at `/blog`.
+## 本地预览
 
-To build the production bundle run:
+由于站点完全静态，可直接在浏览器打开 `index.html`，或使用任意 HTTP
+服务器（如 `python -m http.server`）托管根目录以验证相对路径。
 
-```bash
-npm run build
-npm start
-```
+## 维护指南
 
-## Project structure
+1. **新增资源**：更新 `assets/js/main.js` 中的 `artifactEntries` 列表，确保搜索索引与过滤器同步。
+2. **研究文稿**：将 Markdown 或 HTML 文档置于 `docs/` 或 `public/blog/`，并在附录或档案索引中登记。
+3. **样式扩展**：复用 `styles.css` 中的色彩、阴影与圆角变量，保持体验一致。
+4. **历史兼容**：`public/` 下的路径保持不变，以保证既有外部链接可用。
 
-- `app/` – Next.js App Router pages and route-specific styles.
-  - `page.jsx` – main portfolio experience rebuilt with React components.
-  - `blog/` – research showcase route with dedicated layout and styling.
-- `public/` – static assets that Next.js serves verbatim, including legacy demos, resume, and detailed blog posts.
-- `next.config.mjs` – Next.js configuration.
-- `package.json` – project metadata and scripts.
+## 许可证
 
-## Static assets
-
-The previous standalone HTML, CSS, and JavaScript files are now located under `public/`. Any existing links to demos or documents (for example `/demo/...` or `/resume/index.html`) continue to work as before.
-
-## Scripts
-
-- `npm run dev` – start the development server.
-- `npm run build` – generate an optimized production build.
-- `npm start` – run the built application.
-
-## On-demand expression interpreter
-
-The app exposes a lightweight interpreter that can evaluate arithmetic expressions straight from the URL. Requesting
-`/interpreter/<expression>` responds with a JSON payload containing the evaluated result. Because the expression lives in the
-path, remember to URL-encode special characters such as `+` or spaces. For example:
-
-```
-/interpreter/2*5    -> { "result": 10 }
-/interpreter/1%2B2  -> { "result": 3 }
-```
-
-Supported operators include addition (`+`), subtraction (`-`), multiplication (`*`), division (`/`), and parentheses.
-
-Feel free to adapt the content and data inside `app/page.jsx` or `app/blog/page.jsx` to keep the site up to date.
+本仓库以 MIT 许可发布。欢迎 fork、复用或将内容嵌入共创项目。

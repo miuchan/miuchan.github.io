@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Experience Systems · Repository Atlas</title>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="inner">
+        <div class="brand">
+          <span class="brand__title">Experience Systems Atlas</span>
+          <span class="brand__subtitle">miuchan.github.io · 全量知识图谱</span>
+        </div>
+        <nav class="site-nav" aria-label="页面导航">
+          <a href="#overview">概览</a>
+          <a href="#repository-map">代码结构</a>
+          <a href="#knowledge-streams">知识流</a>
+          <a href="#artifact-browser">资源索引</a>
+          <a href="#toolkit">工具</a>
+          <a href="#appendix">附录</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section id="hero" class="hero">
+        <div class="inner">
+          <div class="hero__content">
+            <h1>面向跨学科专家的 Experience Systems 全景地图</h1>
+            <p>
+              这个静态站点用原生 HTML、CSS 与 JavaScript
+              重构了原先的 Next.js 作品集，聚合了代码库中的应用架构、交互 Demo、研究文稿与履历资料。无论你来自策略、设计工程还是计算科学领域，都可以在此快速定位与自身相关的知识资产。
+            </p>
+            <div class="hero__meta" id="hero-meta" aria-live="polite"></div>
+          </div>
+          <aside class="hero__highlights" aria-label="关键模块亮点">
+            <article class="highlight-card">
+              <h2>代码库使命</h2>
+              <p>
+                将策略洞察、体验系统与设计工程实践整合为一套可复用的知识与原型集合，为共创团队建立共享语境。
+              </p>
+            </article>
+            <article class="highlight-card">
+              <h2>重构动机</h2>
+              <p>
+                保留所有静态资产与研究文档，同时以零框架的技术栈呈现完整结构，让专家可以直接审视与引用。
+              </p>
+            </article>
+            <article class="highlight-card">
+              <h2>快速入口</h2>
+              <ul class="link-list">
+                <li><a href="#artifact-browser">浏览 80+ 静态资源</a></li>
+                <li><a href="public/resume/index.html">查看在线简历</a></li>
+                <li><a href="public/demo/branch-prediction/index.html">分支预测实验室</a></li>
+                <li><a href="docs/computational-singularity-proof.md">计算奇点证明</a></li>
+              </ul>
+            </article>
+          </aside>
+        </div>
+      </section>
+
+      <section id="overview" class="section">
+        <div class="inner">
+          <header class="section__header">
+            <h2>仓库概览</h2>
+            <p>四大结构域组织知识、资产与实验，支持多角色协作。</p>
+          </header>
+          <div class="grid" id="overview-grid" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section id="repository-map" class="section section--alt">
+        <div class="inner">
+          <header class="section__header">
+            <h2>代码结构与责任边界</h2>
+            <p>
+              交互式总览帮助你理解每个目录的职责、关键文件与协同角色。点击卡片可展开更多细节。
+            </p>
+          </header>
+          <div class="repository-map" id="repository-map-grid" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section id="knowledge-streams" class="section">
+        <div class="inner">
+          <header class="section__header">
+            <h2>知识流与合作情境</h2>
+            <p>
+              针对不同专家领域整理的焦点议题、关键文档与推荐切入点，帮助跨职能团队快速对齐。
+            </p>
+          </header>
+          <div class="knowledge-streams" id="knowledge-streams-grid" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section id="artifact-browser" class="section section--alt">
+        <div class="inner">
+          <header class="section__header">
+            <h2>资源索引</h2>
+            <p>
+              搜索或筛选以探索全部静态资产：交互 Demo、研究文章、履历与设计系统工具。
+            </p>
+          </header>
+          <div class="browser-controls" role="search">
+            <label for="artifact-search" class="visually-hidden">搜索资源</label>
+            <input
+              id="artifact-search"
+              type="search"
+              placeholder="输入关键词（例如 WebGL、DesignOps、气候数据）"
+              aria-describedby="artifact-summary"
+            />
+            <div class="filter-group" id="artifact-filters" role="group" aria-label="资源类型过滤"></div>
+          </div>
+          <p id="artifact-summary" class="browser-summary"></p>
+          <div class="artifact-list" id="artifact-list" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section id="toolkit" class="section">
+        <div class="inner">
+          <header class="section__header">
+            <h2>工具与快速实验</h2>
+            <p>
+              轻量工具区复刻了仓库中常用的表达式求值器，并给出协作节奏的基线指标。
+            </p>
+          </header>
+          <div class="toolkit">
+            <div class="tool-card">
+              <h3>表达式解释器</h3>
+              <p>
+                输入仅包含数字、加减乘除与括号的算式，即可在浏览器中计算结果。
+              </p>
+              <form id="interpreter-form" class="interpreter" novalidate>
+                <label class="visually-hidden" for="interpreter-input">输入表达式</label>
+                <input
+                  id="interpreter-input"
+                  name="expression"
+                  type="text"
+                  placeholder="例如：(2 + 5) * 3 / 1.5"
+                  autocomplete="off"
+                  required
+                />
+                <button type="submit">计算</button>
+              </form>
+              <output id="interpreter-output" aria-live="polite"></output>
+            </div>
+            <div class="tool-card">
+              <h3>协作节奏基线</h3>
+              <ul class="metrics" id="metrics-list"></ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="appendix" class="section section--alt">
+        <div class="inner">
+          <header class="section__header">
+            <h2>附录：研究与维护协议</h2>
+            <p>
+              便于治理的协议摘要、版本演化记录与后续扩展建议。
+            </p>
+          </header>
+          <div class="appendix" id="appendix-content" aria-live="polite"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="inner">
+        <p>© 2024 Aman Sharma · Experience Systems</p>
+        <p class="footer-note">
+          本站点采用 MIT 许可下的开源仓库内容，欢迎 fork、引用或在共创项目中嵌入。
+        </p>
+      </div>
+    </footer>
+
+    <script type="module" src="assets/js/main.js"></script>
+  </body>
+</html>
