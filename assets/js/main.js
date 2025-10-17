@@ -250,7 +250,7 @@ const contactLinks = [
   }
 ];
 
-const featuredAlliances = friendNetwork.slice(0, 3);
+const featuredAlliances = friendNetwork;
 
 function renderHeroStats() {
   const container = document.getElementById('hero-stats');
