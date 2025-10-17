@@ -1,805 +1,750 @@
 const counts = {
   demos: 20,
-  blogPosts: 59,
-  researchDocs: 1,
-  resumeAssets: 1,
-  totalArtifacts: 20 + 59 + 1 + 1
+  research: 1,
+  blogs: 59,
+  resume: 1
 };
 
-const heroMeta = [
+counts.total = counts.demos + counts.research + counts.blogs + counts.resume;
+
+const heroStats = [
   {
-    label: '静态资产总量',
-    value: `${counts.totalArtifacts}+`,
-    description: '覆盖交互原型、研究文章、履历与协作模板的完整集合。'
+    label: '运行资产',
+    value: `${counts.total}+`,
+    description: '交互原型、研究、长文与协作模板组成的地球体验矩阵。'
   },
   {
-    label: '交互 Demo',
-    value: counts.demos,
-    description: 'WebGL、数据可视化与流程建模示例，为设计工程协作提供参考。'
+    label: '实时实验',
+    value: `${counts.demos}`,
+    description: 'WebGL 仿真、协作工作流与体验系统实验，可即刻上线验证。'
   },
   {
-    label: '研究长文',
-    value: counts.blogPosts,
-    description: '策略、算法与体验系统文章，可直接引用于跨部门评审。'
+    label: '知识流',
+    value: `${counts.blogs + counts.research}`,
+    description: '策略长文与数学证明共同支持的故事线与治理协议。'
   }
 ];
 
-const overviewDomains = [
+const missionDomains = [
   {
-    eyebrow: 'Core Platform',
-    title: '静态知识主站',
-    description:
-      'index.html 与 assets/ 组成的零框架站点，负责全局导航、语义布局与数据驱动的动态生成。',
-    stats: [
-      { label: '页面', value: '1 个入口' },
-      { label: '模块', value: '6 大展区' },
-      { label: '技术栈', value: '原生 HTML · CSS · JS' }
-    ]
+    title: '生态奇点治理',
+    narrative:
+      '构建全球生态复原的策略界面，联结数据、行为与政策，驱动真实世界的系统性修复。',
+    protocols: ['气候数据编排', '影响力建模', '跨域协作网络']
   },
   {
-    eyebrow: 'Research Layer',
-    title: '研究与证明库',
-    description:
-      'docs/ 下存放了计算奇点等数学推演，提供策略评估的严谨依据，并与博客长文交叉引用。',
-    stats: [
-      { label: 'Markdown', value: `${counts.researchDocs} 篇核心证明` },
-      { label: '引用规范', value: 'APA / DOI 链接' }
-    ]
+    title: '体验系统操作台',
+    narrative:
+      '把复杂的人机协作流程拆解为可执行模组，为团队提供统一的体验设计与验证协议。',
+    protocols: ['DesignOps', '实时度量', '策略原型']
   },
   {
-    eyebrow: 'Prototype Layer',
-    title: '交互原型走廊',
-    description:
-      'public/demo/ 收录 20 个面向算法、体验与运营协作的可执行 Demo，涵盖仿真、可视化与流程脚本。',
-    stats: [
-      { label: 'Demo 数量', value: `${counts.demos} 个` },
-      { label: '涉及领域', value: 'CPU 架构 · WebGL · 运营流程' }
-    ]
+    title: '认知接口升级',
+    narrative:
+      '借助沉浸式界面与多感官互动，探索地球体验的全新感知方式，放大人类与 AI 的协作潜力。',
+    protocols: ['WebGL 引擎', '声音与粒子系统', '叙事可视化']
   },
   {
-    eyebrow: 'Ops & Talent',
-    title: '履历与治理资产',
-    description:
-      'public/resume/ 与 blog/Friends 目录整合人才画像、合作模式与伙伴网络，支撑项目准备阶段。',
-    stats: [
-      { label: '履历版本', value: `${counts.resumeAssets} 套` },
-      { label: '伙伴链接', value: '10+ 行业伙伴' }
-    ]
+    title: '星际级伙伴网络',
+    narrative:
+      '让跨学科伙伴快速找到协作坐标系，以标准化协议对接履历、节奏与资源。',
+    protocols: ['履历网络', '共创节奏', '学习路径']
   }
 ];
 
-const repositoryMap = [
-  {
-    path: 'index.html',
-    title: '知识图谱入口',
-    tags: ['layout', 'meta', 'accessibility'],
-    description:
-      '定义语义结构、导航与交互分区，是站点的编排中枢，协调下游数据渲染脚本。',
-    highlights: {
-      focus: ['主导航语义化标签', 'ARIA 描述与实时更新区域', '自适应网格布局'],
-      consumers: ['前端开发', '体验设计', '信息架构'],
-      actions: [
-        '集成新的展区时，扩展 <main> 内的 section 并在导航中登记。',
-        '维持无障碍属性，确保动态内容具备 aria-live。'
-      ]
-    }
-  },
-  {
-    path: 'assets/css/styles.css',
-    title: '体验系统样式层',
-    tags: ['design system', 'theming'],
-    description:
-      '集中定义色彩、阴影与响应式网格，提供高对比度的夜间观测体验，并对可读性进行强化。',
-    highlights: {
-      focus: ['CSS 自定义属性', '卡片式布局', '响应式断点'],
-      consumers: ['设计工程', '可视化专家'],
-      actions: [
-        '新增组件前，优先复用变量与阴影令主题保持一致。',
-        '移动端布局需在 900px 以下断点进行验证。'
-      ]
-    }
-  },
-  {
-    path: 'assets/js/main.js',
-    title: '数据驱动呈现层',
-    tags: ['vanilla js', 'data viz', 'state'],
-    description:
-      '聚合目录元数据、生成卡片、驱动搜索过滤与表达式解释器，实现零依赖的交互体验。',
-    highlights: {
-      focus: ['数据常量映射仓库结构', '无框架组件化渲染', '过滤与统计逻辑'],
-      consumers: ['前端开发', '架构师'],
-      actions: [
-        '引入新资源时，更新 artifacts 数组以保持索引准确。',
-        '保持输入校验，防止解释器执行非预期表达式。'
-      ]
-    }
-  },
-  {
-    path: 'docs/',
-    title: '研究文档集',
-    tags: ['research', 'math'],
-    description:
-      '以 Markdown 形式记录可引用的研究成果，当前聚焦计算奇点的上界证明，可扩展更多论文。',
-    highlights: {
-      focus: ['历史基线数据', '增长率推导', '物理极限引用'],
-      consumers: ['研究科学家', '战略顾问'],
-      actions: [
-        '新增文档请在附录的版本历史中登记。',
-        '确保引用格式包含 doi 或出版信息。'
-      ]
-    }
-  },
-  {
-    path: 'public/demo/',
-    title: '交互实验矩阵',
-    tags: ['prototype', 'visualization'],
-    description:
-      '面向算法验证、体验评估与增长运营的原型集合，提供即点即用的 Web 实验。',
-    highlights: {
-      focus: ['CPU 预测模型', '多主体协作流程', '可持续体验模拟'],
-      consumers: ['数据科学', '产品设计', '运营策略'],
-      actions: [
-        'Demo 目录保持 index.html 与资源同级，便于 GitHub Pages 直接引用。',
-        '如需添加依赖，请使用原生 API 或将打包结果直接放入目录。'
-      ]
-    }
-  },
-  {
-    path: 'public/blog/',
-    title: '知识档案馆',
-    tags: ['longform', 'content strategy'],
-    description:
-      '整合 2015 与 2024 年的长文，包括体验系统方法论、Convex 优化与合作网络的记录。',
-    highlights: {
-      focus: ['IA 策略', '算法洞察', '社区运营'],
-      consumers: ['内容策略', '创新顾问', '教育团队'],
-      actions: [
-        '新增文章时更新 archives/index.html，保证时间线可追溯。',
-        '维持 CSS 与 assets 目录的共享设计风格。'
-      ]
-    }
-  },
-  {
-    path: 'public/resume/',
-    title: '履历与合作模板',
-    tags: ['talent', 'ops'],
-    description:
-      '包含在线履历与静态资源，为合作前的角色匹配、技能矩阵与沟通节奏提供现成材料。',
-    highlights: {
-      focus: ['合作模式说明', '技能矩阵', '可下载版本'],
-      consumers: ['人力合作伙伴', '项目发起人'],
-      actions: [
-        '履历更新后同步调整链接以保持历史版本可访问。'
-      ]
-    }
-  }
-];
-
-const knowledgeStreams = [
-  {
-    title: '策略与体验系统重构',
-    focus: ['审批旅程', '设计系统', '增长实验'],
-    description:
-      '适合产品策略与体验负责人，快速浏览 Atlas 审批蓝图、DesignOps 工具与社区增长脚本。',
-    links: [
-      { label: 'Atlas 审批旅程蓝图', href: 'public/demo/qed/index.html' },
-      { label: 'Design System Starter Kit', href: 'public/demo/miu-tiantian-gradient-descent/index.html' },
-      { label: 'Campfire 社区增长手册', href: 'public/demo/time-crystal/index.html' }
-    ]
-  },
-  {
-    title: '算法与工程验证',
-    focus: ['CPU 分支预测', '复杂系统仿真', 'WebGL'],
-    description:
-      '面向数据科学家与工程师，集合分支预测实验室、Lorenz 系列仿真与羽光不动点递归研究。',
-    links: [
-      { label: '分支预测策略实验室', href: 'public/demo/branch-prediction/index.html' },
-      { label: 'Lorenz Convex 可视化', href: 'public/demo/lorenz-convex/index.html' },
-      { label: '羽光不动点递归梯度下降', href: 'public/demo/featherlight-fixed-point-recursion/index.html' }
-    ]
-  },
-  {
-    title: '研究叙事与知识沉淀',
-    focus: ['计算奇点', '物联网体验', '封闭类时曲线'],
-    description:
-      '帮助研究顾问梳理关键长文与证明，支撑战略推演与技术决策审查。',
-    links: [
-      { label: '计算奇点 470 年上界证明', href: 'docs/computational-singularity-proof.md' },
-      { label: '万物互联体验架构', href: 'public/blog/internet-of-everything-design.html' },
-      { label: '封闭类时曲线与凸优化', href: 'public/blog/ctc-convex-optimization.html' }
-    ]
-  },
-  {
-    title: '人才协作与组织运营',
-    focus: ['角色对齐', '合作网络', '学习路径'],
-    description:
-      '提供共创团队的招募、伙伴网络与学习计划，支持项目落地阶段的组织准备。',
-    links: [
-      { label: '在线履历与合作模式', href: 'public/resume/index.html' },
-      { label: 'Friends 合作网络', href: 'public/blog/Friends/index.html' },
-      { label: 'Inner Sanctuary 学习路径', href: 'public/blog/inner-sanctuary.html' }
-    ]
-  }
-];
-
-const artifactFilters = [
+const labFilters = [
   { id: 'all', label: '全部' },
-  { id: 'demo', label: '交互 Demo' },
+  { id: 'demo', label: '交互实验' },
   { id: 'research', label: '研究文档' },
-  { id: 'blog', label: '博客长文' },
-  { id: 'resume', label: '履历 / 网络' }
+  { id: 'ops', label: '协作运营' },
+  { id: 'story', label: '叙事长文' }
 ];
 
-const artifactEntries = [
-  // Demo entries
+const labEntries = [
   {
     title: '分支预测策略实验室',
     description: '比较静态、局部与 gshare 预测器命中率，评估误判冲刷成本与别名影响。',
     href: 'public/demo/branch-prediction/index.html',
     type: 'demo',
-    meta: ['CPU 架构', '性能分析'],
+    tags: ['CPU 架构', '性能分析'],
     keywords: ['branch prediction', 'microarchitecture', 'pipeline']
-  },
-  {
-    title: 'Atlas 审批旅程蓝图',
-    description: '风控审批流程的指标体系、仪表盘与跨团队 OKR 模板。',
-    href: 'public/demo/qed/index.html',
-    type: 'demo',
-    meta: ['风控', '流程设计'],
-    keywords: ['approval', 'operations', 'dashboard']
-  },
-  {
-    title: 'Terrabyte 协作剧本',
-    description: '气候数据团队的多时区协作模型与无障碍设计评估表。',
-    href: 'public/demo/ctc/index.html',
-    type: 'demo',
-    meta: ['协作', '可持续性'],
-    keywords: ['climate', 'collaboration', 'accessibility']
-  },
-  {
-    title: 'Campfire 成长循环',
-    description: '创作者社区的增长实验框架与内容运营脚本。',
-    href: 'public/demo/time-crystal/index.html',
-    type: 'demo',
-    meta: ['社区运营', '增长'],
-    keywords: ['community', 'growth']
-  },
-  {
-    title: 'Design System Starter Kit',
-    description: 'Design Token、组件规范与无障碍检查清单，帮助团队落地设计系统。',
-    href: 'public/demo/miu-tiantian-gradient-descent/index.html',
-    type: 'demo',
-    meta: ['DesignOps', '组件库'],
-    keywords: ['design system', 'tokens', 'accessibility']
-  },
-  {
-    title: 'Workflow Automation 模板',
-    description: 'Notion、Linear 与 GitHub 的跨团队节奏与仪式脚本。',
-    href: 'public/demo/blockchan/index.html',
-    type: 'demo',
-    meta: ['自动化', '团队运营'],
-    keywords: ['automation', 'workflow']
-  },
-  {
-    title: '设计工程 Demo 集',
-    description: 'TypeScript + WebGL 的互动体验原型集合，演示设计工程协作的边界。',
-    href: 'public/demo/bchan-pchan-synchrony/index.html',
-    type: 'demo',
-    meta: ['WebGL', '设计工程'],
-    keywords: ['webgl', 'prototype']
-  },
-  {
-    title: '羽光不动点一致性递归梯度下降',
-    description: '探索羽光-情绪-拓扑映射固定点求解的可视化实验。',
-    href: 'public/demo/featherlight-fixed-point-recursion/index.html',
-    type: 'demo',
-    meta: ['动力系统', '可视化'],
-    keywords: ['fixed point', 'gradient descent']
   },
   {
     title: 'Lorenz Convex 视界',
     description: 'Lorenz 系统的凸优化映射可视化，展示混沌与可控性的张力。',
     href: 'public/demo/lorenz-convex/index.html',
     type: 'demo',
-    meta: ['混沌系统', '优化'],
+    tags: ['混沌系统', '优化'],
     keywords: ['lorenz', 'convex']
   },
   {
-    title: 'Yuko · 冰子共鸣实验',
-    description: '声音与粒子系统的交互实验，探索情感与物理刺激的耦合。',
-    href: 'public/demo/yuko-bingzi-resonance/index.html',
+    title: '羽光不动点递归实验',
+    description: '探索羽光-情绪-拓扑映射固定点求解的可视化实验，呈现多主体协同的动态。',
+    href: 'public/demo/featherlight-fixed-point-recursion/index.html',
     type: 'demo',
-    meta: ['声音设计', '粒子系统'],
-    keywords: ['sound', 'particle']
+    tags: ['动力系统', '可视化'],
+    keywords: ['fixed point', 'gradient descent']
   },
   {
-    title: 'Ambient Sketch',
-    description: '围绕环境感知与光影动态的视觉草图。',
-    href: 'public/demo/ambient-sketch/index.html',
-    type: 'demo',
-    meta: ['感官体验'],
-    keywords: ['ambient', 'visual']
+    title: 'Design System Starter Kit',
+    description: 'Design Token、组件规范与无障碍检查清单，帮助团队落地设计系统。',
+    href: 'public/demo/miu-tiantian-gradient-descent/index.html',
+    type: 'ops',
+    tags: ['DesignOps', '组件库'],
+    keywords: ['design system', 'tokens', 'accessibility']
   },
   {
-    title: '百度 IFE 任务集',
-    description: '面向前端学习的交互式作业集合，涵盖布局、动画与数据绑定。',
-    href: 'public/demo/baidu-ife-task/index.html',
-    type: 'demo',
-    meta: ['前端训练'],
-    keywords: ['frontend', 'exercise']
+    title: 'Workflow Automation 模板',
+    description: 'Notion、Linear 与 GitHub 的跨团队节奏与仪式脚本，支持异步协作。',
+    href: 'public/demo/blockchan/index.html',
+    type: 'ops',
+    tags: ['自动化', '团队运营'],
+    keywords: ['automation', 'workflow']
   },
   {
-    title: 'Canvas Playground',
-    description: 'HTML Canvas 动画与绘制实验集合。',
-    href: 'public/demo/canvas-demo/index.html',
-    type: 'demo',
-    meta: ['Canvas', '可视化'],
-    keywords: ['canvas', 'animation']
+    title: 'Campfire 成长循环',
+    description: '创作者社区的增长实验框架与内容运营脚本，驱动持续共鸣。',
+    href: 'public/demo/time-crystal/index.html',
+    type: 'ops',
+    tags: ['社区运营', '增长'],
+    keywords: ['community', 'growth']
   },
   {
-    title: 'CTC Optimizer',
-    description: '封闭类时曲线优化器的参数探索工具。',
-    href: 'public/demo/ctc-optimizer/index.html',
-    type: 'demo',
-    meta: ['优化器', '时空'],
-    keywords: ['ctc', 'optimizer']
+    title: 'Atlas 审批旅程蓝图',
+    description: '风控审批流程的指标体系、仪表盘与跨团队 OKR 模板，助力策略决策。',
+    href: 'public/demo/qed/index.html',
+    type: 'ops',
+    tags: ['风控', '流程设计'],
+    keywords: ['approval', 'operations', 'dashboard']
   },
   {
-    title: 'Neutrino Catalysis Lab',
-    description: '模拟中微子催化反应的交互式可视化实验。',
-    href: 'public/demo/neutrino-catalysis/index.html',
-    type: 'demo',
-    meta: ['物理仿真'],
-    keywords: ['neutrino', 'simulation']
+    title: 'Terrabyte 协作剧本',
+    description: '气候数据团队的多时区协作模型与无障碍设计评估表。',
+    href: 'public/demo/ctc/index.html',
+    type: 'ops',
+    tags: ['协作', '可持续'],
+    keywords: ['climate', 'collaboration']
   },
-  {
-    title: 'Singularity Life',
-    description: '探索奇点生命体在多维空间中的演化脚本。',
-    href: 'public/demo/singularity-life/index.html',
-    type: 'demo',
-    meta: ['奇点研究'],
-    keywords: ['singularity', 'life']
-  },
-  {
-    title: 'Qianli · 冰封战术图',
-    description: '多角色任务协作的旅程图，用于危机响应演练。',
-    href: 'public/demo/qianli-bingfeng/index.html',
-    type: 'demo',
-    meta: ['危机响应', '旅程图'],
-    keywords: ['journey', 'operations']
-  },
-  {
-    title: 'Seek Child SSB',
-    description: '以互动小说形式呈现的情感推演与决策树实验。',
-    href: 'public/demo/seek-child-ssb/index.html',
-    type: 'demo',
-    meta: ['叙事设计'],
-    keywords: ['story', 'decision tree']
-  },
-  {
-    title: 'AGI / ASI Reaction Chamber',
-    description: '模拟 AGI 与 ASI 交互的反应室模型，分析安全边界。',
-    href: 'public/demo/agi-asi-reaction-chamber/index.html',
-    type: 'demo',
-    meta: ['AI 安全'],
-    keywords: ['agi', 'asi', 'safety']
-  },
-  {
-    title: 'Game of Life · Convex',
-    description: '将康威生命游戏嵌入凸优化框架的实验。',
-    href: 'public/demo/game-of-life/index.html',
-    type: 'demo',
-    meta: ['元胞自动机'],
-    keywords: ['game of life', 'convex']
-  },
-  {
-    title: 'Bchan · Pchan Synchrony',
-    description: '双通道节奏协作演示，展示实时同步机制。',
-    href: 'public/demo/bchan-pchan-synchrony/index.html',
-    type: 'demo',
-    meta: ['同步', '协作'],
-    keywords: ['synchrony', 'collaboration']
-  },
-  // Research & blog entries
   {
     title: '计算奇点 470 年上界证明',
-    description: '通过历史算力与物理极限推导出计算奇点不会超过 470 年的严格上界。',
+    description: '以数学推导与历史数据结合的研究，阐释计算奇点的可能轨迹与边界。',
     href: 'docs/computational-singularity-proof.md',
     type: 'research',
-    meta: ['数学证明', '未来学'],
+    tags: ['数学', '未来学'],
     keywords: ['singularity', 'proof']
   },
   {
-    title: '万物互联的设计与实现',
-    description: '系统梳理 IoE 体验的设计方法、技术栈与运营策略。',
+    title: '万物互联体验架构',
+    description: '讲述物联网体验的叙事框架与生态系统设计路径。',
     href: 'public/blog/internet-of-everything-design.html',
-    type: 'blog',
-    meta: ['IoE', '体验设计'],
-    keywords: ['iot', 'experience']
+    type: 'story',
+    tags: ['体验叙事', 'IoT'],
+    keywords: ['narrative', 'iot']
   },
   {
-    title: '封闭类时曲线的凸优化视角',
-    description: '从凸优化角度理解 CTC 结构与可计算性，探讨目标函数与因果约束。',
+    title: '封闭类时曲线与凸优化',
+    description: '将物理学与优化算法交汇的长文，探索时间与策略的交织。',
     href: 'public/blog/ctc-convex-optimization.html',
-    type: 'blog',
-    meta: ['时空物理', '优化'],
-    keywords: ['ctc', 'optimization']
+    type: 'story',
+    tags: ['物理', '优化'],
+    keywords: ['ctc', 'convex']
   },
   {
-    title: 'Inner Sanctuary 学习路径',
-    description: '构建跨学科学习的仪式与实践路径，保持创造力与专注力。',
-    href: 'public/blog/inner-sanctuary.html',
-    type: 'blog',
-    meta: ['学习体系'],
-    keywords: ['learning', 'ritual']
-  },
-  {
-    title: 'Game of Life 的凸优化解释',
-    description: '以可视化长文阐释如何将生命游戏映射为凸优化问题。',
-    href: 'public/blog/game-of-life-convex-optimization.html',
-    type: 'blog',
-    meta: ['算法', '可视化'],
-    keywords: ['game of life', 'convex']
-  },
-  {
-    title: 'Friends · 合作网络',
-    description: '记录长期合作伙伴与贡献者，便于快速对接专家资源。',
+    title: 'Friends 合作网络',
+    description: '记录长期共创伙伴的角色、节奏与跨界联系。',
     href: 'public/blog/Friends/index.html',
-    type: 'resume',
-    meta: ['合作网络'],
-    keywords: ['network', 'partners']
+    type: 'ops',
+    tags: ['伙伴网络', '组织运营'],
+    keywords: ['network', 'community']
   },
   {
-    title: '在线履历',
-    description: '展示经历、技能矩阵与合作模式，支持项目前期评估。',
+    title: '在线履历与合作模式',
+    description: '以空间化信息架构呈现个人履历、技能矩阵与合作指南。',
     href: 'public/resume/index.html',
-    type: 'resume',
-    meta: ['履历', '合作模式'],
-    keywords: ['resume', 'profile']
+    type: 'ops',
+    tags: ['履历', '协作'],
+    keywords: ['resume', 'collaboration']
+  }
+];
+
+const telemetryStreams = [
+  {
+    label: '资产光谱',
+    base: counts.total,
+    unit: '项',
+    description: '以知识、原型与运营资产汇聚出的实验能量。'
   },
   {
-    title: '档案索引（Archives）',
-    description: '以时间线形式整理全部 59 篇博客文章，可用于快速查找主题。',
-    href: 'public/blog/archives/index.html',
-    type: 'blog',
-    meta: ['时间线'],
-    keywords: ['archives', 'timeline']
+    label: '协作频率',
+    base: 128,
+    unit: 'Hz',
+    description: '跨时区团队的同步/异步协作节奏。'
   },
   {
-    title: '博客首页',
-    description: '汇总全部文章、专题与导航，是长文阅读的统一入口。',
+    label: '系统稳定性',
+    base: 99.2,
+    unit: '%',
+    description: '资产可用性与实验舱体运行的综合指标。'
+  },
+  {
+    label: '灵感流量',
+    base: 42,
+    unit: 'lumen',
+    description: '来自社区与伙伴网络的实时反馈脉冲。'
+  }
+];
+
+const timelineEntries = [
+  {
+    year: '2015',
+    title: '体验系统雏形',
+    description: '第一批体验系统研究与设计工程原型诞生，为后续的星球实验埋下伏笔。',
+    tags: ['DesignOps', '原型']
+  },
+  {
+    year: '2019',
+    title: '跨学科协同升级',
+    description: '将策略、数据科学与体验工程的流程脚本整合成可复用的模板。',
+    tags: ['协作', '模板']
+  },
+  {
+    year: '2022',
+    title: 'WebGL 星球引擎',
+    description: '构建多感官交互的星球界面，为地球体验实验室搭建视觉主脑。',
+    tags: ['WebGL', '交互']
+  },
+  {
+    year: '2024',
+    title: 'Earth Online 体验实验室',
+    description: '重构整个站点为地球 Online 操作系统，联动所有研究、原型与伙伴网络。',
+    tags: ['重构', '系统']
+  }
+];
+
+const contactLinks = [
+  {
+    title: '星际履历网络',
+    description: '探索履历、技能矩阵与合作协议，确定你的对接轨道。',
+    href: 'public/resume/index.html',
+    cta: '进入履历站'
+  },
+  {
+    title: '体验实验矩阵',
+    description: '在交互 Demo 与策略模板中穿梭，找到灵感的源头。',
+    href: '#labs',
+    cta: '浏览实验'
+  },
+  {
+    title: '研究与长文档案',
+    description: '阅读深度研究与叙事长文，理解 Earth Online 的方法论。',
     href: 'public/blog/index.html',
-    type: 'blog',
-    meta: ['目录'],
-    keywords: ['blog', 'index']
+    cta: '进入档案馆'
   }
 ];
 
-const collaborationMetrics = [
-  {
-    title: '跨团队 OKR 节奏',
-    value: '6 周',
-    description: '建议以 6 周为一个节拍迭代审批旅程、增长实验与设计系统更新。'
-  },
-  {
-    title: 'Demo 更新频率',
-    value: '每季度 ≥2',
-    description: '保持交互原型的季度刷新，确保研究洞察与工程能力同步。'
-  },
-  {
-    title: '知识库审阅',
-    value: '双月',
-    description: '邀请领域专家每两个月审阅文档与博客，维持论证的前沿性。'
-  }
-];
+function renderHeroStats() {
+  const container = document.getElementById('hero-stats');
+  if (!container) return;
 
-const appendixSections = [
-  {
-    title: '版本演化摘要',
-    body: `2024 年完成从 Next.js 向原生技术栈的迁移：删除 app/ 目录、构建 index.html 为核心入口，并以 assets/ 中的 CSS 与 JS 驱动全部交互。所有历史 Demo 与博客继续保留在 public/ 下，确保链接兼容。`
-  },
-  {
-    title: '维护原则',
-    body: '1) 新资源需在 artifacts 数据源登记并提供关键词；2) 任何研究文档需包含引用来源；3) UI 扩展需复用现有设计变量保持一致性。'
-  },
-  {
-    title: '扩展建议',
-    body: '引入自动化脚本定期统计 Demo 与文章数据，或接入 JSON 数据源以便未来集成 headless CMS，同时可新增多语言支持以覆盖更多协作伙伴。'
-  }
-];
-
-function createElement(tag, options = {}) {
-  const el = document.createElement(tag);
-  if (options.className) {
-    el.className = options.className;
-  }
-  if (options.text) {
-    el.textContent = options.text;
-  }
-  if (options.html) {
-    el.innerHTML = options.html;
-  }
-  if (options.attrs) {
-    Object.entries(options.attrs).forEach(([key, value]) => {
-      if (value !== undefined && value !== null) {
-        el.setAttribute(key, value);
-      }
-    });
-  }
-  return el;
-}
-
-function renderHeroMeta() {
-  const container = document.getElementById('hero-meta');
-  heroMeta.forEach((item) => {
-    const card = createElement('div', { className: 'meta-card' });
-    const label = createElement('span', { className: 'card__eyebrow', text: item.label });
-    const value = createElement('strong', { text: item.value });
-    const desc = createElement('p', { className: 'card__description', text: item.description });
-    card.append(label, value, desc);
-    container.append(card);
+  const fragment = document.createDocumentFragment();
+  heroStats.forEach((stat) => {
+    const card = document.createElement('article');
+    card.className = 'stat-card';
+    card.innerHTML = `
+      <strong>${stat.value}</strong>
+      <h3>${stat.label}</h3>
+      <p>${stat.description}</p>
+    `;
+    fragment.appendChild(card);
   });
+
+  container.appendChild(fragment);
 }
 
-function renderOverview() {
-  const grid = document.getElementById('overview-grid');
-  overviewDomains.forEach((domain) => {
-    const card = createElement('article', { className: 'card' });
-    card.append(
-      createElement('span', { className: 'card__eyebrow', text: domain.eyebrow }),
-      createElement('h3', { className: 'card__title', text: domain.title }),
-      createElement('p', { className: 'card__description', text: domain.description })
-    );
-    const stats = createElement('div', { className: 'card__stats' });
-    domain.stats.forEach((stat) => {
-      const statEl = createElement('div', { className: 'stat' });
-      statEl.append(
-        createElement('strong', { text: stat.value }),
-        createElement('span', { text: stat.label })
+function renderMissionDomains() {
+  const grid = document.getElementById('mission-grid');
+  if (!grid) return;
+
+  const fragment = document.createDocumentFragment();
+  missionDomains.forEach((mission) => {
+    const card = document.createElement('article');
+    card.className = 'mission-card';
+    const list = mission.protocols
+      .map((item) => `<li>${item}</li>`)
+      .join('');
+    card.innerHTML = `
+      <h3>${mission.title}</h3>
+      <p>${mission.narrative}</p>
+      <ul>${list}</ul>
+    `;
+    fragment.appendChild(card);
+  });
+
+  grid.appendChild(fragment);
+}
+
+function setupLabFilters() {
+  const filterContainer = document.getElementById('lab-filters');
+  if (!filterContainer) return { active: 'all' };
+
+  let activeFilter = 'all';
+
+  labFilters.forEach((filter) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'filter-chip';
+    button.textContent = filter.label;
+    button.setAttribute('data-filter', filter.id);
+    button.setAttribute('aria-pressed', String(filter.id === activeFilter));
+    button.addEventListener('click', () => {
+      activeFilter = filter.id;
+      const chips = filterContainer.querySelectorAll('.filter-chip');
+      chips.forEach((chip) =>
+        chip.setAttribute('aria-pressed', String(chip === button))
       );
-      stats.append(statEl);
+      renderLabEntries(activeFilter, searchInput.value.trim());
     });
-    card.append(stats);
-    grid.append(card);
+    filterContainer.appendChild(button);
   });
+
+  const searchInput = document.getElementById('lab-search');
+  if (searchInput) {
+    searchInput.addEventListener('input', (event) => {
+      renderLabEntries(activeFilter, event.target.value.trim());
+    });
+  }
+
+  return { active: activeFilter, searchInput };
 }
 
-function renderRepositoryMap() {
-  const grid = document.getElementById('repository-map-grid');
-  repositoryMap.forEach((section) => {
-    const card = createElement('article', { className: 'repo-card', attrs: { 'aria-expanded': 'false' } });
-    const header = createElement('div', { className: 'repo-card__header' });
-    header.append(
-      createElement('h3', { text: section.title }),
-      createElement('span', { className: 'repo-card__path', text: section.path })
-    );
-    card.append(header);
+function renderLabEntries(filter = 'all', keyword = '') {
+  const grid = document.getElementById('lab-grid');
+  const summary = document.getElementById('lab-summary');
+  if (!grid || !summary) return;
 
-    const tags = createElement('div', { className: 'repo-card__tags' });
-    section.tags.forEach((tag) => tags.append(createElement('span', { className: 'tag', text: tag })));
-    card.append(tags);
-
-    card.append(createElement('p', { className: 'repo-card__description', text: section.description }));
-
-    const toggle = createElement('button', { text: '展开细节', attrs: { type: 'button' } });
-    const body = createElement('div', { className: 'repo-card__body' });
-
-    const details = createElement('div', { className: 'repo-card__details' });
-    details.append(createElement('h4', { text: '关注要点' }));
-    const focusList = createElement('ul');
-    section.highlights.focus.forEach((item) => focusList.append(createElement('li', { text: item })));
-    details.append(focusList);
-
-    details.append(createElement('h4', { text: '协作角色' }));
-    const consumerList = createElement('ul');
-    section.highlights.consumers.forEach((item) => consumerList.append(createElement('li', { text: item })));
-    details.append(consumerList);
-
-    details.append(createElement('h4', { text: '推荐行动' }));
-    const actionList = createElement('ul');
-    section.highlights.actions.forEach((item) => actionList.append(createElement('li', { text: item })));
-    details.append(actionList);
-
-    body.append(details);
-    card.append(toggle, body);
-
-    toggle.addEventListener('click', () => {
-      const expanded = card.getAttribute('aria-expanded') === 'true';
-      card.setAttribute('aria-expanded', String(!expanded));
-      toggle.textContent = expanded ? '展开细节' : '收起细节';
-    });
-
-    grid.append(card);
+  const lowerKeyword = keyword.toLowerCase();
+  const filtered = labEntries.filter((entry) => {
+    const matchesFilter = filter === 'all' || entry.type === filter;
+    const matchesKeyword = !lowerKeyword
+      ? true
+      : [entry.title, entry.description, ...(entry.keywords || [])]
+          .join(' ')
+          .toLowerCase()
+          .includes(lowerKeyword);
+    return matchesFilter && matchesKeyword;
   });
+
+  grid.innerHTML = '';
+
+  const fragment = document.createDocumentFragment();
+  filtered.forEach((entry) => {
+    const card = document.createElement('article');
+    card.className = 'lab-card';
+    const tags = (entry.tags || []).map((tag) => `<li>${tag}</li>`).join('');
+    card.innerHTML = `
+      <h3>${entry.title}</h3>
+      <p>${entry.description}</p>
+      <ul>${tags}</ul>
+      <a href="${entry.href}">
+        即刻进入
+        <span>↗</span>
+      </a>
+    `;
+    fragment.appendChild(card);
+  });
+
+  grid.appendChild(fragment);
+  summary.textContent = `共 ${filtered.length} 个实验，${keyword ? `匹配 “${keyword}”` : '随时待命'}。`;
 }
 
-function renderKnowledgeStreams() {
-  const grid = document.getElementById('knowledge-streams-grid');
-  knowledgeStreams.forEach((stream) => {
-    const card = createElement('article', { className: 'stream-card' });
-    card.append(createElement('h3', { text: stream.title }));
+function renderTelemetryPanel() {
+  const container = document.getElementById('telemetry-panel');
+  if (!container) return [];
 
-    const focus = createElement('div', { className: 'stream-card__focus' });
-    stream.focus.forEach((item) => focus.append(createElement('span', { className: 'tag', text: item })));
-    card.append(focus);
+  const fragment = document.createDocumentFragment();
+  const nodes = [];
 
-    card.append(createElement('p', { className: 'card__description', text: stream.description }));
-
-    const list = createElement('ul', { className: 'stream-card__links' });
-    stream.links.forEach((link) => {
-      const item = createElement('li');
-      const anchor = createElement('a', { text: link.label, attrs: { href: link.href } });
-      anchor.setAttribute('target', '_blank');
-      anchor.setAttribute('rel', 'noopener');
-      item.append(anchor);
-      list.append(item);
-    });
-    card.append(list);
-    grid.append(card);
+  telemetryStreams.forEach((stream) => {
+    const card = document.createElement('article');
+    card.className = 'telemetry-card';
+    card.innerHTML = `
+      <h3>${stream.label}</h3>
+      <strong>0${stream.unit ? `<span>${stream.unit}</span>` : ''}</strong>
+      <p>${stream.description}</p>
+    `;
+    fragment.appendChild(card);
+    nodes.push({ node: card, stream });
   });
+
+  container.appendChild(fragment);
+  return nodes;
 }
 
-function renderFilters() {
-  const container = document.getElementById('artifact-filters');
-  artifactFilters.forEach((filter) => {
-    const button = createElement('button', {
-      className: 'filter-chip',
-      text: filter.label,
-      attrs: {
-        type: 'button',
-        'data-filter': filter.id,
-        'aria-pressed': filter.id === 'all' ? 'true' : 'false'
+function animateTelemetry(cards) {
+  if (!cards.length) return;
+
+  function update(time) {
+    const t = time * 0.001;
+    cards.forEach(({ node, stream }, index) => {
+      const strong = node.querySelector('strong');
+      if (!strong) return;
+      const variation = Math.sin(t * (0.4 + index * 0.15) + index) * 0.8;
+      let value = stream.base + variation * (stream.base * 0.03 + index * 1.2);
+      if (stream.unit === '%') {
+        value = Math.min(100, Math.max(92, value));
+        strong.textContent = `${value.toFixed(2)}${stream.unit}`;
+      } else if (stream.unit === 'Hz') {
+        strong.textContent = `${Math.round(value)}${stream.unit}`;
+      } else if (stream.unit === 'lumen') {
+        strong.textContent = `${value.toFixed(1)} ${stream.unit}`;
+      } else {
+        strong.textContent = `${Math.round(value)}${stream.unit}`;
       }
     });
-    container.append(button);
+
+    requestAnimationFrame(update);
+  }
+
+  requestAnimationFrame(update);
+}
+
+function renderTimeline() {
+  const container = document.getElementById('timeline-stream');
+  if (!container) return;
+
+  const fragment = document.createDocumentFragment();
+  timelineEntries.forEach((entry) => {
+    const item = document.createElement('article');
+    item.className = 'timeline-item';
+    item.setAttribute('data-year', entry.year);
+    const tags = (entry.tags || []).map((tag) => `<li>${tag}</li>`).join('');
+    item.innerHTML = `
+      <h3>${entry.title}</h3>
+      <p>${entry.description}</p>
+      <ul>${tags}</ul>
+    `;
+    fragment.appendChild(item);
   });
+
+  container.appendChild(fragment);
 }
 
-function normalize(str) {
-  return str
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '');
-}
+function renderContact() {
+  const container = document.getElementById('contact-links');
+  if (!container) return;
 
-function filterArtifacts(activeFilter, query) {
-  const normalizedQuery = normalize(query.trim());
-  return artifactEntries.filter((entry) => {
-    const typeMatch = activeFilter === 'all' || entry.type === activeFilter;
-    if (!typeMatch) {
-      return false;
-    }
-    if (!normalizedQuery) {
-      return true;
-    }
-    const haystack = [entry.title, entry.description, ...(entry.meta || []), ...(entry.keywords || [])]
-      .filter(Boolean)
-      .map(normalize)
-      .join(' ');
-    return haystack.includes(normalizedQuery);
+  const fragment = document.createDocumentFragment();
+  contactLinks.forEach((link) => {
+    const card = document.createElement('article');
+    card.className = 'contact-card';
+    card.innerHTML = `
+      <h3>${link.title}</h3>
+      <p>${link.description}</p>
+      <a href="${link.href}">${link.cta}</a>
+    `;
+    fragment.appendChild(card);
   });
+
+  container.appendChild(fragment);
 }
 
-function renderArtifacts(activeFilter = 'all', query = '') {
-  const list = document.getElementById('artifact-list');
-  list.innerHTML = '';
-  const results = filterArtifacts(activeFilter, query);
+function initEarthScene() {
+  const canvas = document.getElementById('earth-canvas');
+  if (!canvas) return;
 
-  const summary = document.getElementById('artifact-summary');
-  summary.textContent = `共检索到 ${results.length} 条资源（总库 ${artifactEntries.length} 项）。`;
-
-  if (results.length === 0) {
-    list.append(createElement('p', { text: '没有匹配的资源，请尝试其他关键字或切换筛选。' }));
+  const gl = canvas.getContext('webgl');
+  if (!gl) {
+    canvas.remove();
     return;
   }
 
-  results.forEach((entry) => {
-    const card = createElement('article', { className: 'artifact-card' });
-    card.append(createElement('h3', { text: entry.title }));
-    if (entry.meta?.length) {
-      const meta = createElement('div', { className: 'artifact-card__meta' });
-      entry.meta.forEach((item) => meta.append(createElement('span', { text: item })));
-      card.append(meta);
+  const vertexSource = `
+    attribute vec3 position;
+    attribute vec3 normal;
+    uniform mat4 uModelMatrix;
+    uniform mat4 uProjectionMatrix;
+    varying vec3 vNormal;
+    varying vec3 vPosition;
+    void main() {
+      vec4 worldPosition = uModelMatrix * vec4(position, 1.0);
+      vPosition = worldPosition.xyz;
+      vNormal = mat3(uModelMatrix) * normal;
+      gl_Position = uProjectionMatrix * worldPosition;
     }
-    card.append(createElement('p', { text: entry.description }));
-    const cta = createElement('a', {
-      className: 'artifact-card__cta',
-      text: '访问资源',
-      attrs: { href: entry.href, target: '_blank', rel: 'noopener' }
-    });
-    card.append(cta);
-    list.append(card);
-  });
-}
+  `;
 
-function setupArtifactInteractions() {
-  const search = document.getElementById('artifact-search');
-  const filterButtons = Array.from(document.querySelectorAll('.filter-chip'));
-  let activeFilter = 'all';
+  const fragmentSource = `
+    precision mediump float;
+    varying vec3 vNormal;
+    varying vec3 vPosition;
+    uniform float uTime;
+    uniform vec3 uLightDirection;
 
-  const update = () => {
-    renderArtifacts(activeFilter, search.value || '');
-  };
-
-  filterButtons.forEach((button) => {
-    button.addEventListener('click', () => {
-      activeFilter = button.dataset.filter;
-      filterButtons.forEach((btn) => btn.setAttribute('aria-pressed', btn === button ? 'true' : 'false'));
-      update();
-    });
-  });
-
-  search.addEventListener('input', () => {
-    window.requestAnimationFrame(update);
-  });
-
-  update();
-}
-
-function setupInterpreter() {
-  const form = document.getElementById('interpreter-form');
-  const input = document.getElementById('interpreter-input');
-  const output = document.getElementById('interpreter-output');
-
-  const allowedPattern = /^[\d+\-*/().\s]+$/;
-
-  form.addEventListener('submit', (event) => {
-    event.preventDefault();
-    const expression = input.value.trim();
-    if (!expression) {
-      output.textContent = '请输入需要计算的表达式。';
-      return;
-    }
-    if (!allowedPattern.test(expression)) {
-      output.textContent = '仅支持数字与 + - * / () 运算符。';
-      return;
+    vec3 palette(float t) {
+      vec3 a = vec3(0.0, 0.1, 0.25);
+      vec3 b = vec3(0.0, 0.5, 0.8);
+      vec3 c = vec3(0.15, 0.2, 0.25);
+      vec3 d = vec3(0.05, 0.3, 0.45);
+      return a + b * t + c * sin(6.28318 * (t + 0.25)) + d * sin(6.28318 * (t + 0.45));
     }
 
-    try {
-      // eslint-disable-next-line no-new-func
-      const result = Function(`"use strict"; return (${expression});`)();
-      if (Number.isFinite(result)) {
-        output.textContent = `结果：${result}`;
-      } else {
-        output.textContent = '无法计算：结果不是有限数值。';
+    void main() {
+      vec3 normal = normalize(vNormal);
+      vec3 lightDir = normalize(uLightDirection);
+      float diffuse = max(dot(normal, lightDir), 0.0);
+      float night = smoothstep(0.1, -0.2, diffuse);
+      float glow = pow(max(0.0, 1.0 - abs(normal.y)), 6.0);
+      float auroraBand = smoothstep(0.2, 0.8, 1.0 - abs(normal.y));
+      float aurora = auroraBand * (0.45 + 0.25 * sin(uTime * 0.8 + vPosition.x * 3.2 + vPosition.y * 1.6));
+      float ocean = diffuse * 0.85 + 0.15;
+      vec3 color = palette(ocean);
+      color += vec3(0.0, 0.08, 0.18) * night;
+      color += vec3(0.0, 0.35, 0.6) * glow;
+      color += vec3(0.1, 0.8, 1.2) * aurora;
+      gl_FragColor = vec4(color, 1.0);
+    }
+  `;
+
+  function compileShader(type, source) {
+    const shader = gl.createShader(type);
+    gl.shaderSource(shader, source);
+    gl.compileShader(shader);
+    if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+      console.error(gl.getShaderInfoLog(shader));
+      gl.deleteShader(shader);
+      return null;
+    }
+    return shader;
+  }
+
+  function createProgram(vsSource, fsSource) {
+    const vertexShader = compileShader(gl.VERTEX_SHADER, vsSource);
+    const fragmentShader = compileShader(gl.FRAGMENT_SHADER, fsSource);
+    if (!vertexShader || !fragmentShader) return null;
+    const program = gl.createProgram();
+    gl.attachShader(program, vertexShader);
+    gl.attachShader(program, fragmentShader);
+    gl.linkProgram(program);
+    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+      console.error(gl.getProgramInfoLog(program));
+      return null;
+    }
+    return program;
+  }
+
+  const program = createProgram(vertexSource, fragmentSource);
+  if (!program) return;
+
+  gl.useProgram(program);
+
+  function createSphere(latitudeBands = 64, longitudeBands = 128) {
+    const positions = [];
+    const normals = [];
+    const indices = [];
+
+    for (let latNumber = 0; latNumber <= latitudeBands; latNumber++) {
+      const theta = (latNumber * Math.PI) / latitudeBands;
+      const sinTheta = Math.sin(theta);
+      const cosTheta = Math.cos(theta);
+
+      for (let longNumber = 0; longNumber <= longitudeBands; longNumber++) {
+        const phi = (longNumber * 2 * Math.PI) / longitudeBands;
+        const sinPhi = Math.sin(phi);
+        const cosPhi = Math.cos(phi);
+
+        const x = cosPhi * sinTheta;
+        const y = cosTheta;
+        const z = sinPhi * sinTheta;
+
+        normals.push(x, y, z);
+        positions.push(x, y, z);
       }
-    } catch (error) {
-      output.textContent = `无法计算：${error.message}`;
     }
-  });
+
+    for (let latNumber = 0; latNumber < latitudeBands; latNumber++) {
+      for (let longNumber = 0; longNumber < longitudeBands; longNumber++) {
+        const first = latNumber * (longitudeBands + 1) + longNumber;
+        const second = first + longitudeBands + 1;
+        indices.push(first, second, first + 1);
+        indices.push(second, second + 1, first + 1);
+      }
+    }
+
+    return {
+      positions: new Float32Array(positions),
+      normals: new Float32Array(normals),
+      indices: new Uint16Array(indices)
+    };
+  }
+
+  const sphere = createSphere();
+
+  const positionBuffer = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+  gl.bufferData(gl.ARRAY_BUFFER, sphere.positions, gl.STATIC_DRAW);
+
+  const normalBuffer = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, normalBuffer);
+  gl.bufferData(gl.ARRAY_BUFFER, sphere.normals, gl.STATIC_DRAW);
+
+  const indexBuffer = gl.createBuffer();
+  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
+  gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, sphere.indices, gl.STATIC_DRAW);
+
+  const positionLocation = gl.getAttribLocation(program, 'position');
+  gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+  gl.enableVertexAttribArray(positionLocation);
+  gl.vertexAttribPointer(positionLocation, 3, gl.FLOAT, false, 0, 0);
+
+  const normalLocation = gl.getAttribLocation(program, 'normal');
+  gl.bindBuffer(gl.ARRAY_BUFFER, normalBuffer);
+  gl.enableVertexAttribArray(normalLocation);
+  gl.vertexAttribPointer(normalLocation, 3, gl.FLOAT, false, 0, 0);
+
+  const uModelMatrix = gl.getUniformLocation(program, 'uModelMatrix');
+  const uProjectionMatrix = gl.getUniformLocation(program, 'uProjectionMatrix');
+  const uTime = gl.getUniformLocation(program, 'uTime');
+  const uLightDirection = gl.getUniformLocation(program, 'uLightDirection');
+
+  gl.enable(gl.DEPTH_TEST);
+
+  function perspectiveMatrix(fovy, aspect, near, far) {
+    const f = 1.0 / Math.tan(fovy / 2);
+    const rangeInv = 1 / (near - far);
+
+    const matrix = new Float32Array(16);
+    matrix[0] = f / aspect;
+    matrix[1] = 0;
+    matrix[2] = 0;
+    matrix[3] = 0;
+
+    matrix[4] = 0;
+    matrix[5] = f;
+    matrix[6] = 0;
+    matrix[7] = 0;
+
+    matrix[8] = 0;
+    matrix[9] = 0;
+    matrix[10] = (far + near) * rangeInv;
+    matrix[11] = -1;
+
+    matrix[12] = 0;
+    matrix[13] = 0;
+    matrix[14] = 2 * far * near * rangeInv;
+    matrix[15] = 0;
+
+    return matrix;
+  }
+
+  function identity() {
+    const out = new Float32Array(16);
+    out[0] = out[5] = out[10] = out[15] = 1;
+    return out;
+  }
+
+  function multiply(a, b) {
+    const out = new Float32Array(16);
+    for (let i = 0; i < 4; i++) {
+      for (let j = 0; j < 4; j++) {
+        out[i * 4 + j] =
+          a[i * 4 + 0] * b[0 * 4 + j] +
+          a[i * 4 + 1] * b[1 * 4 + j] +
+          a[i * 4 + 2] * b[2 * 4 + j] +
+          a[i * 4 + 3] * b[3 * 4 + j];
+      }
+    }
+    return out;
+  }
+
+  function translate(matrix, v) {
+    const out = identity();
+    out[12] = v[0];
+    out[13] = v[1];
+    out[14] = v[2];
+    return multiply(matrix, out);
+  }
+
+  function rotateX(matrix, rad) {
+    const c = Math.cos(rad);
+    const s = Math.sin(rad);
+    const rotation = identity();
+    rotation[5] = c;
+    rotation[6] = s;
+    rotation[9] = -s;
+    rotation[10] = c;
+    return multiply(matrix, rotation);
+  }
+
+  function rotateY(matrix, rad) {
+    const c = Math.cos(rad);
+    const s = Math.sin(rad);
+    const rotation = identity();
+    rotation[0] = c;
+    rotation[2] = -s;
+    rotation[8] = s;
+    rotation[10] = c;
+    return multiply(matrix, rotation);
+  }
+
+  function resizeCanvas() {
+    const dpr = window.devicePixelRatio || 1;
+    const { width, height } = canvas.getBoundingClientRect();
+    const displayWidth = Math.round(width * dpr);
+    const displayHeight = Math.round(height * dpr);
+    if (canvas.width !== displayWidth || canvas.height !== displayHeight) {
+      canvas.width = displayWidth;
+      canvas.height = displayHeight;
+    }
+    gl.viewport(0, 0, canvas.width, canvas.height);
+  }
+
+  function normalize(vec3) {
+    const length = Math.hypot(vec3[0], vec3[1], vec3[2]) || 1;
+    return [vec3[0] / length, vec3[1] / length, vec3[2] / length];
+  }
+
+  function render(time) {
+    const seconds = time * 0.001;
+    resizeCanvas();
+    gl.clearColor(0.01, 0.03, 0.12, 1);
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+    const aspect = canvas.width / canvas.height;
+    const projection = perspectiveMatrix((45 * Math.PI) / 180, aspect, 0.1, 100);
+
+    let model = identity();
+    model = rotateY(model, seconds * 0.08);
+    model = rotateX(model, 0.4 + Math.sin(seconds * 0.25) * 0.08);
+    model = translate(model, [0, 0, -3.4]);
+
+    const lightDirection = normalize([
+      Math.cos(seconds * 0.4) * 0.6,
+      0.6,
+      Math.sin(seconds * 0.4) * 0.8
+    ]);
+
+    gl.uniformMatrix4fv(uModelMatrix, false, model);
+    gl.uniformMatrix4fv(uProjectionMatrix, false, projection);
+    gl.uniform1f(uTime, seconds);
+    gl.uniform3fv(uLightDirection, lightDirection);
+
+    gl.drawElements(gl.TRIANGLES, sphere.indices.length, gl.UNSIGNED_SHORT, 0);
+    requestAnimationFrame(render);
+  }
+
+  requestAnimationFrame(render);
 }
 
-function renderMetrics() {
-  const list = document.getElementById('metrics-list');
-  collaborationMetrics.forEach((metric) => {
-    const item = createElement('li');
-    item.append(createElement('strong', { text: metric.value }));
-    item.append(createElement('span', { text: metric.title }));
-    item.append(createElement('p', { className: 'card__description', text: metric.description }));
-    list.append(item);
-  });
-}
+renderHeroStats();
+renderMissionDomains();
+const { searchInput } = setupLabFilters();
+renderLabEntries('all', '');
+const telemetryCards = renderTelemetryPanel();
+animateTelemetry(telemetryCards);
+renderTimeline();
+renderContact();
+initEarthScene();
 
-function renderAppendix() {
-  const container = document.getElementById('appendix-content');
-  appendixSections.forEach((section) => {
-    const block = createElement('section', { className: 'appendix-section' });
-    block.append(createElement('h3', { text: section.title }));
-    block.append(createElement('p', { text: section.body }));
-    container.append(block);
-  });
+if (searchInput) {
+  searchInput.dispatchEvent(new Event('input'));
 }
-
-function init() {
-  renderHeroMeta();
-  renderOverview();
-  renderRepositoryMap();
-  renderKnowledgeStreams();
-  renderFilters();
-  setupArtifactInteractions();
-  setupInterpreter();
-  renderMetrics();
-  renderAppendix();
-}
-
-document.addEventListener('DOMContentLoaded', init);
