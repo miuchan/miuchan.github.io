@@ -14,7 +14,9 @@
     stepSize: document.getElementById('step-size'),
     run: document.getElementById('run'),
     step: document.getElementById('step'),
-    reset: document.getElementById('reset')
+    reset: document.getElementById('reset'),
+    scanFixedPoint: document.getElementById('scan-fixed-point'),
+    fixedPointStatus: document.getElementById('fixed-point-status')
   };
 
   const config = {
@@ -23,6 +25,85 @@
     batchSteps: 4,
     maxIterations: 2400
   };
+
+  const searchSettings = {
+    learningRate: { min: 0.06, max: 0.36, step: 0.04 },
+    momentum: { min: 0.0, max: 0.9, step: 0.15 },
+    coherence: { min: 0.0, max: 0.24, step: 0.04 },
+    iterations: 180,
+    warmup: 60
+  };
+
+  function buildRange({ min, max, step }) {
+    const values = [];
+    for (let value = min; value <= max + 1e-8; value += step) {
+      values.push(Number(value.toFixed(2)));
+    }
+    return values;
+  }
+
+  function clampPoint(point, world) {
+    const marginX = (world.right - world.left) * 0.02;
+    const marginY = (world.top - world.bottom) * 0.02;
+    point.x = Math.min(world.right - marginX, Math.max(world.left + marginX, point.x));
+    point.y = Math.min(world.top - marginY, Math.max(world.bottom + marginY, point.y));
+  }
+
+  function createDeterministicRandom(seed) {
+    let state = Math.floor(seed) % 2147483647;
+    if (state <= 0) {
+      state += 2147483646;
+    }
+    return function () {
+      state = (state * 16807) % 2147483647;
+      return (state - 1) / 2147483646;
+    };
+  }
+
+  function combinationSeed(base, parameters) {
+    const lr = Math.round(parameters.learningRate * 100);
+    const momentum = Math.round(parameters.momentum * 100);
+    const coherence = Math.round(parameters.coherence * 100);
+    return base + lr * 97 + momentum * 193 + coherence * 389;
+  }
+
+  function evaluateCombination(field, world, start, parameters, options) {
+    const random = createDeterministicRandom(options.seed);
+    const position = { x: start.x, y: start.y };
+    const velocity = { x: 0, y: 0 };
+    let accumulated = 0;
+    let samples = 0;
+    let energy = field.evaluate(position.x, position.y).value;
+
+    for (let i = 0; i < options.iterations; i += 1) {
+      const { gx, gy } = field.evaluate(position.x, position.y);
+      const noiseScale = parameters.coherence * Math.sqrt(parameters.learningRate);
+      const noiseX = (random() * 2 - 1) * noiseScale;
+      const noiseY = (random() * 2 - 1) * noiseScale;
+
+      velocity.x = parameters.momentum * velocity.x - parameters.learningRate * gx + noiseX;
+      velocity.y = parameters.momentum * velocity.y - parameters.learningRate * gy + noiseY;
+
+      position.x += velocity.x;
+      position.y += velocity.y;
+      clampPoint(position, world);
+
+      const { value } = field.evaluate(position.x, position.y);
+      energy = value;
+
+      if (i >= options.warmup) {
+        accumulated += Math.hypot(velocity.x, velocity.y);
+        samples += 1;
+      }
+    }
+
+    const averageStep = samples > 0 ? accumulated / samples : 0;
+    return {
+      averageStep,
+      energy,
+      position: { x: position.x, y: position.y }
+    };
+  }
 
   class PotentialField {
     constructor() {
@@ -347,6 +428,15 @@
   const simulation = new GradientDescent(field, config.world, config);
   const renderer = new UniverseRenderer(ctx, canvas, config.world, surface);
   const panel = new ControlPanel(DOM);
+
+  function ensureValue(values, value) {
+    const rounded = Number(value.toFixed(2));
+    if (!values.some((candidate) => Math.abs(candidate - rounded) < 1e-6)) {
+      values.push(rounded);
+      values.sort((a, b) => a - b);
+    }
+  }
+
   function updateRunLabel(running) {
     const isRunning = typeof running === 'boolean' ? running : runner.running;
     DOM.run.textContent = isRunning
@@ -383,6 +473,98 @@
   DOM.reset.addEventListener('click', () => {
     runner.stop();
     resetSimulation();
+  });
+
+  DOM.scanFixedPoint.addEventListener('click', () => {
+    runner.stop();
+    updateRunLabel(false);
+    DOM.fixedPointStatus.textContent = '正在探索学习率、动量与协同噪声的平衡……';
+
+    const startPoint = simulation.state.iterations > 0
+      ? { x: simulation.state.position.x, y: simulation.state.position.y }
+      : { x: simulation.state.start.x, y: simulation.state.start.y };
+    const baselineParameters = panel.getParameters();
+    const baseSeed = Math.floor((startPoint.x + 5) * 7919 + (startPoint.y + 5) * 1543) + 17;
+
+    const learningRates = buildRange(searchSettings.learningRate);
+    const momenta = buildRange(searchSettings.momentum);
+    const coherences = buildRange(searchSettings.coherence);
+
+    ensureValue(learningRates, baselineParameters.learningRate);
+    ensureValue(momenta, baselineParameters.momentum);
+    ensureValue(coherences, baselineParameters.coherence);
+
+    const searchOptions = {
+      iterations: searchSettings.iterations,
+      warmup: searchSettings.warmup
+    };
+
+    window.setTimeout(() => {
+      const baselineResult = evaluateCombination(
+        field,
+        config.world,
+        startPoint,
+        baselineParameters,
+        {
+          ...searchOptions,
+          seed: combinationSeed(baseSeed, baselineParameters)
+        }
+      );
+
+      let best = null;
+
+      for (const lr of learningRates) {
+        for (const momentum of momenta) {
+          for (const coherence of coherences) {
+            const parameters = { learningRate: lr, momentum, coherence };
+            const result = evaluateCombination(
+              field,
+              config.world,
+              startPoint,
+              parameters,
+              {
+                ...searchOptions,
+                seed: combinationSeed(baseSeed, parameters)
+              }
+            );
+
+            if (!best ||
+              result.averageStep < best.averageStep - 1e-4 ||
+              (Math.abs(result.averageStep - best.averageStep) <= 1e-4 && result.energy < best.energy - 1e-4)) {
+              best = {
+                ...parameters,
+                ...result
+              };
+            }
+          }
+        }
+      }
+
+      let selection;
+      const improvement = best
+        ? baselineResult.averageStep - best.averageStep
+        : 0;
+
+      if (!best || improvement <= 1e-3) {
+        selection = { ...baselineParameters, ...baselineResult, baseline: true };
+      } else {
+        selection = { ...best, baseline: false };
+      }
+
+      DOM.learningRate.value = selection.learningRate.toFixed(2);
+      DOM.momentum.value = selection.momentum.toFixed(2);
+      DOM.coherence.value = selection.coherence.toFixed(2);
+      panel.updateSliders();
+
+      if (selection.baseline) {
+        DOM.fixedPointStatus.textContent = `当前组合已近似不动点：学习率 ${selection.learningRate.toFixed(2)}、动量 ${selection.momentum.toFixed(2)}、协同噪声 ${selection.coherence.toFixed(2)}，平均步长约 ${selection.averageStep.toFixed(3)}，势能 ${selection.energy.toFixed(3)}。`;
+      } else {
+        const delta = Math.max(improvement, 0);
+        DOM.fixedPointStatus.textContent = `找到更稳态的组合：学习率 ${selection.learningRate.toFixed(2)}、动量 ${selection.momentum.toFixed(2)}、协同噪声 ${selection.coherence.toFixed(2)}，平均步长 ${selection.averageStep.toFixed(3)}，较当前减少 ${delta.toFixed(3)}，势能 ${selection.energy.toFixed(3)}。`;
+      }
+
+      renderer.draw(simulation.state);
+    }, 30);
   });
 
   panel.bindSliderUpdates();
