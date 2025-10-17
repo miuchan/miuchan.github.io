@@ -1,3 +1,5 @@
+import { friendNetwork } from './friends-data.js';
+
 const counts = {
   demos: 20,
   research: 1,
@@ -239,8 +241,16 @@ const contactLinks = [
     description: '阅读深度研究与叙事长文，理解 Earth Online 的方法论。',
     href: 'public/blog/index.html',
     cta: '进入档案馆'
+  },
+  {
+    title: '友链星港',
+    description: '结识与 Earth Online 同频的伙伴网络，建立新的共创航线。',
+    href: 'friends/index.html',
+    cta: '拜访友链'
   }
 ];
+
+const featuredAlliances = friendNetwork.slice(0, 3);
 
 function renderHeroStats() {
   const container = document.getElementById('hero-stats');
@@ -424,6 +434,33 @@ function renderTimeline() {
       <ul>${tags}</ul>
     `;
     fragment.appendChild(item);
+  });
+
+  container.appendChild(fragment);
+}
+
+function renderAlliances() {
+  const container = document.getElementById('alliance-grid');
+  if (!container) return;
+
+  const fragment = document.createDocumentFragment();
+  featuredAlliances.forEach((alliance) => {
+    const card = document.createElement('article');
+    card.className = 'alliance-card';
+    const tags = (alliance.tags || [])
+      .map((tag) => `<li>${tag}</li>`)
+      .join('');
+    card.innerHTML = `
+      <h3>${alliance.name}</h3>
+      <p>${alliance.description}</p>
+      ${alliance.note ? `<p class="alliance-card__note">${alliance.note}</p>` : ''}
+      <ul>${tags}</ul>
+      <a href="${alliance.url}" target="_blank" rel="noopener noreferrer">
+        访问主页
+        <span aria-hidden="true">↗</span>
+      </a>
+    `;
+    fragment.appendChild(card);
   });
 
   container.appendChild(fragment);
@@ -742,6 +779,7 @@ renderLabEntries('all', '');
 const telemetryCards = renderTelemetryPanel();
 animateTelemetry(telemetryCards);
 renderTimeline();
+renderAlliances();
 renderContact();
 initEarthScene();
 
