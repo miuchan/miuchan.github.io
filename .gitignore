@@ -6,3 +6,6 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 .env*
+# Aya CLI artifacts
+tools/aya/aya-cli-*-all.jar
+tools/aya/aya
