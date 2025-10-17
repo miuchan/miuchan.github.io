@@ -16,7 +16,8 @@
     step: document.getElementById('step'),
     reset: document.getElementById('reset'),
     scanFixedPoint: document.getElementById('scan-fixed-point'),
-    fixedPointStatus: document.getElementById('fixed-point-status')
+    fixedPointStatus: document.getElementById('fixed-point-status'),
+    fixedPointMaxStatus: document.getElementById('fixed-point-max-status')
   };
 
   const config = {
@@ -31,7 +32,9 @@
     momentum: { min: 0.0, max: 0.9, step: 0.15 },
     coherence: { min: 0.0, max: 0.24, step: 0.04 },
     iterations: 180,
-    warmup: 60
+    warmup: 60,
+    stabilityThreshold: 0.045,
+    stabilityConsecutive: 6
   };
 
   function buildRange({ min, max, step }) {
@@ -68,14 +71,22 @@
   }
 
   function evaluateCombination(field, world, start, parameters, options) {
+    const {
+      iterations,
+      warmup,
+      stabilityThreshold = 0.045,
+      stabilityConsecutive = 6
+    } = options;
     const random = createDeterministicRandom(options.seed);
     const position = { x: start.x, y: start.y };
     const velocity = { x: 0, y: 0 };
     let accumulated = 0;
     let samples = 0;
     let energy = field.evaluate(position.x, position.y).value;
+    let stabilizedIteration = null;
+    let consecutiveStable = 0;
 
-    for (let i = 0; i < options.iterations; i += 1) {
+    for (let i = 0; i < iterations; i += 1) {
       const { gx, gy } = field.evaluate(position.x, position.y);
       const noiseScale = parameters.coherence * Math.sqrt(parameters.learningRate);
       const noiseX = (random() * 2 - 1) * noiseScale;
@@ -90,19 +101,50 @@
 
       const { value } = field.evaluate(position.x, position.y);
       energy = value;
+      const stepMagnitude = Math.hypot(velocity.x, velocity.y);
 
-      if (i >= options.warmup) {
-        accumulated += Math.hypot(velocity.x, velocity.y);
+      if (i >= warmup) {
+        accumulated += stepMagnitude;
         samples += 1;
+        if (stepMagnitude < stabilityThreshold) {
+          consecutiveStable += 1;
+          if (consecutiveStable >= stabilityConsecutive && stabilizedIteration === null) {
+            stabilizedIteration = i + 1;
+          }
+        } else {
+          consecutiveStable = 0;
+        }
       }
     }
 
     const averageStep = samples > 0 ? accumulated / samples : 0;
+    const finalStep = Math.hypot(velocity.x, velocity.y);
     return {
       averageStep,
       energy,
-      position: { x: position.x, y: position.y }
+      position: { x: position.x, y: position.y },
+      stabilizedIteration,
+      finalStep
     };
+  }
+
+  function compareGreatestFixedPoint(a, b) {
+    const epsilon = 1e-4;
+    if (a.energy > b.energy + epsilon) return 1;
+    if (a.energy < b.energy - epsilon) return -1;
+
+    const aIterations = a.stabilizedIteration ?? -Infinity;
+    const bIterations = b.stabilizedIteration ?? -Infinity;
+    if (aIterations > bIterations) return 1;
+    if (aIterations < bIterations) return -1;
+
+    if (a.averageStep > b.averageStep + epsilon) return 1;
+    if (a.averageStep < b.averageStep - epsilon) return -1;
+
+    if (a.finalStep > b.finalStep + epsilon) return 1;
+    if (a.finalStep < b.finalStep - epsilon) return -1;
+
+    return 0;
   }
 
   class PotentialField {
@@ -455,6 +497,7 @@
     panel.updateReadout(simulation.state, 0);
     renderer.draw(simulation.state);
     updateRunLabel(false);
+    DOM.fixedPointMaxStatus.textContent = '最大不动点尚未计算。';
   }
 
   DOM.run.addEventListener('click', () => {
@@ -479,6 +522,7 @@
     runner.stop();
     updateRunLabel(false);
     DOM.fixedPointStatus.textContent = '正在探索学习率、动量与协同噪声的平衡……';
+    DOM.fixedPointMaxStatus.textContent = '最大不动点计算中……';
 
     const startPoint = simulation.state.iterations > 0
       ? { x: simulation.state.position.x, y: simulation.state.position.y }
@@ -496,7 +540,9 @@
 
     const searchOptions = {
       iterations: searchSettings.iterations,
-      warmup: searchSettings.warmup
+      warmup: searchSettings.warmup,
+      stabilityThreshold: searchSettings.stabilityThreshold,
+      stabilityConsecutive: searchSettings.stabilityConsecutive
     };
 
     window.setTimeout(() => {
@@ -512,6 +558,7 @@
       );
 
       let best = null;
+      let greatestFixed = null;
 
       for (const lr of learningRates) {
         for (const momentum of momenta) {
@@ -535,6 +582,16 @@
                 ...parameters,
                 ...result
               };
+            }
+
+            if (result.stabilizedIteration !== null) {
+              const candidate = {
+                ...parameters,
+                ...result
+              };
+              if (!greatestFixed || compareGreatestFixedPoint(candidate, greatestFixed) > 0) {
+                greatestFixed = candidate;
+              }
             }
           }
         }
@@ -561,6 +618,15 @@
       } else {
         const delta = Math.max(improvement, 0);
         DOM.fixedPointStatus.textContent = `找到更稳态的组合：学习率 ${selection.learningRate.toFixed(2)}、动量 ${selection.momentum.toFixed(2)}、协同噪声 ${selection.coherence.toFixed(2)}，平均步长 ${selection.averageStep.toFixed(3)}，较当前减少 ${delta.toFixed(3)}，势能 ${selection.energy.toFixed(3)}。`;
+      }
+
+      if (greatestFixed) {
+        const iterationText = greatestFixed.stabilizedIteration !== null
+          ? `${greatestFixed.stabilizedIteration}`
+          : '—';
+        DOM.fixedPointMaxStatus.textContent = `最大不动点：学习率 ${greatestFixed.learningRate.toFixed(2)}、动量 ${greatestFixed.momentum.toFixed(2)}、协同噪声 ${greatestFixed.coherence.toFixed(2)}，稳定迭代 ${iterationText}，平均步长 ${greatestFixed.averageStep.toFixed(3)}，势能 ${greatestFixed.energy.toFixed(3)}，终端步长 ${greatestFixed.finalStep.toFixed(3)}。`;
+      } else {
+        DOM.fixedPointMaxStatus.textContent = '在给定的稳定阈值下未找到最大不动点组合。';
       }
 
       renderer.draw(simulation.state);
