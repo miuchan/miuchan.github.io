@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>智能驾驶实验舱 · Earth Online</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="page-header">
+      <h1>智能驾驶实验舱</h1>
+      <p>
+        通过可视化模拟展示自动驾驶系统的感知、规划与执行回路。
+        观察车辆如何依据传感器读数、轨迹预测与安全阈值作出瞬时决策。
+      </p>
+    </header>
+
+    <main class="layout">
+      <section class="simulator">
+        <div class="canvas-wrapper">
+          <canvas id="drivingCanvas" width="900" height="520" aria-label="智能驾驶模拟画布"></canvas>
+        </div>
+        <div class="control-panel" aria-labelledby="controls-title">
+          <h2 id="controls-title">驾驶策略控制</h2>
+          <div class="control-group">
+            <label for="modeSelect">运行模式</label>
+            <select id="modeSelect">
+              <option value="cruise">巡航保持</option>
+              <option value="safety">安全优先</option>
+              <option value="attack">高速探索</option>
+            </select>
+          </div>
+          <div class="control-group">
+            <label for="speedSlider">目标速度 <span id="speedValue">18</span> m/s</label>
+            <input type="range" id="speedSlider" min="6" max="28" step="1" value="18" />
+          </div>
+          <div class="control-group toggles">
+            <label>
+              <input type="checkbox" id="showSensors" checked /> 显示传感器射线
+            </label>
+            <label>
+              <input type="checkbox" id="showWaypoints" checked /> 显示规划路径
+            </label>
+          </div>
+          <p class="hint">
+            在不同模式间切换，观察驾驶舱对障碍、弯道与目标速度的响应差异。
+          </p>
+        </div>
+      </section>
+
+      <section class="telemetry" aria-labelledby="telemetry-title">
+        <h2 id="telemetry-title">实时遥测</h2>
+        <div class="telemetry-grid" id="telemetryGrid" role="list"></div>
+      </section>
+
+      <section class="explain" aria-labelledby="explain-title">
+        <h2 id="explain-title">实验架构</h2>
+        <div class="columns">
+          <article>
+            <h3>传感器融合</h3>
+            <p>
+              车辆前方、左前与右前的激光雷达模拟测距将不断更新，与静态道路模型对齐，生成
+              360° 危险度评估。安全优先模式将传感器权重放大，以降低碰撞概率。
+            </p>
+          </article>
+          <article>
+            <h3>行为规划</h3>
+            <p>
+              航迹规划基于分段样条形成的参考路径，使用比例-微分控制追踪下一目标节点。
+              模式切换将调整允许的偏差、加速度与角速度阈值，影响车辆对弯道的处理方式。
+            </p>
+          </article>
+          <article>
+            <h3>舱内决策指标</h3>
+            <p>
+              遥测面板实时呈现速度、转向角与碰撞风险评分。当风险超过 0.7 时，系统会强制
+              降速并在画布上高亮危险区域，模拟安全驾驶的强制干预流程。
+            </p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="page-footer">
+      <p>Earth Online · 自动驾驶实验接口原型</p>
+    </footer>
+
+    <script src="app.js" type="module"></script>
+  </body>
+</html>

@@ -1,7 +1,7 @@
 import { featuredAlliances } from './friends-data.js';
 
 const counts = {
-  demos: 20,
+  demos: 21,
   research: 1,
   blogs: 59,
   resume: 1
@@ -63,6 +63,15 @@ const labFilters = [
 ];
 
 const labEntries = [
+  {
+    title: '智能驾驶实验舱',
+    description:
+      '模拟自动驾驶的传感器融合、行为规划与风险控制回路，观察不同策略对速度与安全的平衡。',
+    href: 'public/demo/intelligent-driving-lab/index.html',
+    type: 'demo',
+    tags: ['自动驾驶', '控制系统'],
+    keywords: ['autonomous driving', 'simulation', 'telemetry']
+  },
   {
     title: '分支预测策略实验室',
     description: '比较静态、局部与 gshare 预测器命中率，评估误判冲刷成本与别名影响。',
