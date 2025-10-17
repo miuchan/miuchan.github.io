@@ -18,6 +18,16 @@ miuchan.github.io 现已重构为零依赖的静态站点，使用原生 HTML、
 由于站点完全静态，可直接在浏览器打开 `index.html`，或使用任意 HTTP
 服务器（如 `python -m http.server`）托管根目录以验证相对路径。
 
+## Aya 形式化验证工具链
+
+仓库内引入了 Aya CLI，支持对 `.aya` 文件进行编译与定理检查：
+
+1. 确保系统安装 JDK 17+。
+2. 运行 `scripts/install_aya.sh` 下载 Aya CLI 并生成 `tools/aya/aya` 可执行文件。
+3. 执行 `scripts/run_aya.sh` 逐个编译 `formal/` 目录下的 `.aya` 文件。
+
+GitHub Actions 工作流会在推送和 Pull Request 时自动运行上述脚本，确保形式化资产持续通过编译。
+
 ## 维护指南
 
 1. **新增资源**：更新 `assets/js/main.js` 中的 `artifactEntries` 列表，确保搜索索引与过滤器同步。
