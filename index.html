@@ -3,182 +3,135 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Experience Systems · Repository Atlas</title>
-    <link rel="stylesheet" href="assets/css/styles.css" />
+    <title>Earth Online · 体验实验室</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="assets/css/styles.css" />
   </head>
   <body>
     <header class="site-header">
-      <div class="inner">
-        <div class="brand">
-          <span class="brand__title">Experience Systems Atlas</span>
-          <span class="brand__subtitle">miuchan.github.io · 全量知识图谱</span>
+      <div class="inner header__inner">
+        <div class="brand" aria-label="Earth Online 实验室标识">
+          <span class="brand__title">Earth Online</span>
+          <span class="brand__subtitle">体验实验室 · Planetary Experience Lab</span>
         </div>
-        <nav class="site-nav" aria-label="页面导航">
-          <a href="#overview">概览</a>
-          <a href="#repository-map">代码结构</a>
-          <a href="#knowledge-streams">知识流</a>
-          <a href="#artifact-browser">资源索引</a>
-          <a href="#toolkit">工具</a>
-          <a href="#appendix">附录</a>
+        <nav class="site-nav" aria-label="主导航">
+          <a href="#hero">开场</a>
+          <a href="#mission">使命域</a>
+          <a href="#labs">实验矩阵</a>
+          <a href="#telemetry">实时遥测</a>
+          <a href="#timeline">地球更新史</a>
+          <a href="#contact">联络站</a>
         </nav>
       </div>
     </header>
 
     <main>
-      <section id="hero" class="hero">
-        <div class="inner">
-          <div class="hero__content">
-            <h1>面向跨学科专家的 Experience Systems 全景地图</h1>
-            <p>
-              这个静态站点用原生 HTML、CSS 与 JavaScript
-              重构了原先的 Next.js 作品集，聚合了代码库中的应用架构、交互 Demo、研究文稿与履历资料。无论你来自策略、设计工程还是计算科学领域，都可以在此快速定位与自身相关的知识资产。
-            </p>
-            <div class="hero__meta" id="hero-meta" aria-live="polite"></div>
+      <section id="hero" class="hero" aria-labelledby="hero-title">
+        <canvas id="earth-canvas" aria-hidden="true"></canvas>
+        <div class="hero__overlay">
+          <div class="inner hero__content">
+            <div class="hero__text">
+              <p class="hero__eyebrow">Planetary Experience Interface</p>
+              <h1 id="hero-title">将你的主页重构为地球 Online 体验实验室</h1>
+              <p class="hero__description">
+                这是一座实时进化的地球体验操作系统：我们以 WebGL 星球引擎、时序故事矩阵与协作协议，将所有研究、原型与伙伴网络汇聚于一个全新的空间界面，邀请你随时登舰探索。
+              </p>
+              <div class="hero__cta" role="group" aria-label="快速入口">
+                <a class="button" href="#labs">进入实验矩阵</a>
+                <a class="button button--ghost" href="public/resume/index.html">查看履历网络</a>
+              </div>
+            </div>
+            <div class="hero__stats" id="hero-stats" aria-live="polite"></div>
           </div>
-          <aside class="hero__highlights" aria-label="关键模块亮点">
-            <article class="highlight-card">
-              <h2>代码库使命</h2>
-              <p>
-                将策略洞察、体验系统与设计工程实践整合为一套可复用的知识与原型集合，为共创团队建立共享语境。
-              </p>
-            </article>
-            <article class="highlight-card">
-              <h2>重构动机</h2>
-              <p>
-                保留所有静态资产与研究文档，同时以零框架的技术栈呈现完整结构，让专家可以直接审视与引用。
-              </p>
-            </article>
-            <article class="highlight-card">
-              <h2>快速入口</h2>
-              <ul class="link-list">
-                <li><a href="#artifact-browser">浏览 80+ 静态资源</a></li>
-                <li><a href="public/resume/index.html">查看在线简历</a></li>
-                <li><a href="public/demo/branch-prediction/index.html">分支预测实验室</a></li>
-                <li><a href="docs/computational-singularity-proof.md">计算奇点证明</a></li>
-              </ul>
-            </article>
-          </aside>
         </div>
       </section>
 
-      <section id="overview" class="section">
+      <section id="mission" class="section" aria-labelledby="mission-title">
         <div class="inner">
           <header class="section__header">
-            <h2>仓库概览</h2>
-            <p>四大结构域组织知识、资产与实验，支持多角色协作。</p>
-          </header>
-          <div class="grid" id="overview-grid" aria-live="polite"></div>
-        </div>
-      </section>
-
-      <section id="repository-map" class="section section--alt">
-        <div class="inner">
-          <header class="section__header">
-            <h2>代码结构与责任边界</h2>
+            <p class="section__eyebrow">Mission Quadrants</p>
+            <h2 id="mission-title">四大任务域，重塑地球体验</h2>
             <p>
-              交互式总览帮助你理解每个目录的职责、关键文件与协同角色。点击卡片可展开更多细节。
+              Earth Online 把复杂的地球议题拆分为可执行的任务域——从生态治理到认知接口，以实验驱动的方式为专家团队提供共同语言。
             </p>
           </header>
-          <div class="repository-map" id="repository-map-grid" aria-live="polite"></div>
+          <div class="grid" id="mission-grid" aria-live="polite"></div>
         </div>
       </section>
 
-      <section id="knowledge-streams" class="section">
+      <section id="labs" class="section section--alt" aria-labelledby="labs-title">
         <div class="inner">
           <header class="section__header">
-            <h2>知识流与合作情境</h2>
+            <p class="section__eyebrow">Immersive Lab Matrix</p>
+            <h2 id="labs-title">实验矩阵：穿梭于 360° 地球体验</h2>
             <p>
-              针对不同专家领域整理的焦点议题、关键文档与推荐切入点，帮助跨职能团队快速对齐。
+              每个实验都链接到真实的 Demo、研究或运营资产。点开任意模块即可即刻进入交互式场景，或通过顶部筛选快速定位你的兴趣领域。
             </p>
           </header>
-          <div class="knowledge-streams" id="knowledge-streams-grid" aria-live="polite"></div>
-        </div>
-      </section>
-
-      <section id="artifact-browser" class="section section--alt">
-        <div class="inner">
-          <header class="section__header">
-            <h2>资源索引</h2>
-            <p>
-              搜索或筛选以探索全部静态资产：交互 Demo、研究文章、履历与设计系统工具。
-            </p>
-          </header>
-          <div class="browser-controls" role="search">
-            <label for="artifact-search" class="visually-hidden">搜索资源</label>
+          <div class="lab-controls" role="search">
+            <label class="visually-hidden" for="lab-search">搜索实验</label>
             <input
-              id="artifact-search"
+              id="lab-search"
               type="search"
-              placeholder="输入关键词（例如 WebGL、DesignOps、气候数据）"
-              aria-describedby="artifact-summary"
+              placeholder="输入关键词（例如 WebGL、气候、协作）"
+              aria-describedby="lab-summary"
             />
-            <div class="filter-group" id="artifact-filters" role="group" aria-label="资源类型过滤"></div>
+            <div class="filter-group" id="lab-filters" role="group" aria-label="实验过滤"></div>
           </div>
-          <p id="artifact-summary" class="browser-summary"></p>
-          <div class="artifact-list" id="artifact-list" aria-live="polite"></div>
+          <p id="lab-summary" class="browser-summary"></p>
+          <div class="lab-grid" id="lab-grid" aria-live="polite"></div>
         </div>
       </section>
 
-      <section id="toolkit" class="section">
+      <section id="telemetry" class="section" aria-labelledby="telemetry-title">
         <div class="inner">
           <header class="section__header">
-            <h2>工具与快速实验</h2>
+            <p class="section__eyebrow">Live Telemetry</p>
+            <h2 id="telemetry-title">实时遥测：地球 Online 的运行指标</h2>
             <p>
-              轻量工具区复刻了仓库中常用的表达式求值器，并给出协作节奏的基线指标。
+              我们监控体验实验室的能量流、协作频率与系统稳定性。数据基于真实资产数量与动态模拟，让你看到平台的持续跃迁。
             </p>
           </header>
-          <div class="toolkit">
-            <div class="tool-card">
-              <h3>表达式解释器</h3>
-              <p>
-                输入仅包含数字、加减乘除与括号的算式，即可在浏览器中计算结果。
-              </p>
-              <form id="interpreter-form" class="interpreter" novalidate>
-                <label class="visually-hidden" for="interpreter-input">输入表达式</label>
-                <input
-                  id="interpreter-input"
-                  name="expression"
-                  type="text"
-                  placeholder="例如：(2 + 5) * 3 / 1.5"
-                  autocomplete="off"
-                  required
-                />
-                <button type="submit">计算</button>
-              </form>
-              <output id="interpreter-output" aria-live="polite"></output>
-            </div>
-            <div class="tool-card">
-              <h3>协作节奏基线</h3>
-              <ul class="metrics" id="metrics-list"></ul>
-            </div>
-          </div>
+          <div class="telemetry" id="telemetry-panel" aria-live="polite"></div>
         </div>
       </section>
 
-      <section id="appendix" class="section section--alt">
+      <section id="timeline" class="section section--alt" aria-labelledby="timeline-title">
         <div class="inner">
           <header class="section__header">
-            <h2>附录：研究与维护协议</h2>
+            <p class="section__eyebrow">Evolution Timeline</p>
+            <h2 id="timeline-title">地球 Online 演进时间线</h2>
             <p>
-              便于治理的协议摘要、版本演化记录与后续扩展建议。
+              自首个原型诞生以来，我们不断吸收来自代码、研究与社区的能量。时间线记录关键跃迁，帮助你了解实验室的起源与未来方向。
             </p>
           </header>
-          <div class="appendix" id="appendix-content" aria-live="polite"></div>
+          <div class="timeline" id="timeline-stream" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section id="contact" class="section" aria-labelledby="contact-title">
+        <div class="inner">
+          <header class="section__header">
+            <p class="section__eyebrow">Docking Station</p>
+            <h2 id="contact-title">准备好与 Earth Online 对接吗？</h2>
+            <p>
+              无论你来自设计工程、系统科学还是生态治理，我们都期待与你共创新的地球体验模式。以下资源帮助你快速与实验室建立连接。
+            </p>
+          </header>
+          <div class="contact" id="contact-links" aria-live="polite"></div>
         </div>
       </section>
     </main>
 
     <footer class="site-footer">
       <div class="inner">
-        <p>© 2024 Aman Sharma · Experience Systems</p>
-        <p class="footer-note">
-          本站点采用 MIT 许可下的开源仓库内容，欢迎 fork、引用或在共创项目中嵌入。
-        </p>
+        <p>© 2024 Earth Online Experience Lab · Powered by Aman Sharma</p>
+        <p class="footer-note">欢迎 fork、引用或将实验室成果嵌入你的宇宙级项目。</p>
       </div>
     </footer>
 
