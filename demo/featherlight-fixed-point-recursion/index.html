@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>羽光不动点一致性递归梯度下降</title>
+  <meta name="description" content="通过羽光-情绪-拓扑三态映射的模拟，体验不动点一致性递归梯度下降：调节递归深度、羽光回响与阻尼，观察轨迹如何收敛到甜度固定点。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <a class="back-link" href="../../index.html#knowledge">← 返回知识库</a>
+      <h1>羽光不动点一致性递归梯度下降</h1>
+      <p>
+        把“羽光—情绪—拓扑”状态映射压缩为二维羽光势域，并构建 <strong>不动点一致性递归梯度下降</strong>。
+        你可以调节递归深度、羽光回响系数与阻尼，体会多步一致性校正如何让轨迹轻盈地靠近甜度固定点。
+      </p>
+      <div class="meta">
+        <span class="badge">Fixed-point</span>
+        <span class="badge">Recursive Gradient</span>
+        <span class="meta-note">场景取自甜甜美羽宇宙，背景热度表示不动点残差。</span>
+      </div>
+    </header>
+
+    <section class="playground">
+      <div class="visual">
+        <canvas id="feather-canvas" width="720" height="480" role="img" aria-label="羽光势域与递归梯度下降轨迹"></canvas>
+        <div class="readout" aria-live="polite">
+          <div>
+            <span class="label">甜度残差</span>
+            <span id="residual" class="value">0.000</span>
+          </div>
+          <div>
+            <span class="label">迭代</span>
+            <span id="iterations" class="value">0</span>
+          </div>
+          <div>
+            <span class="label">羽光步幅</span>
+            <span id="step" class="value">0.00</span>
+          </div>
+          <div>
+            <span class="label">一致性偏差</span>
+            <span id="consistency" class="value">0.000</span>
+          </div>
+        </div>
+      </div>
+
+      <aside class="panel" aria-labelledby="control-title">
+        <h2 id="control-title">递归参数</h2>
+        <div class="control">
+          <label for="learning-rate">羽光学习率 <span id="learning-rate-value">0.16</span></label>
+          <input type="range" id="learning-rate" min="0.04" max="0.35" step="0.01" value="0.16">
+        </div>
+        <div class="control">
+          <label for="damping">甜度阻尼 <span id="damping-value">0.35</span></label>
+          <input type="range" id="damping" min="0" max="0.8" step="0.05" value="0.35">
+        </div>
+        <div class="control">
+          <label for="depth">递归深度 <span id="depth-value">2</span></label>
+          <input type="range" id="depth" min="0" max="4" step="1" value="2">
+          <small>更高的深度表示更多层羽光回响，用于对齐不动点的一致性。</small>
+        </div>
+        <div class="control">
+          <label for="echo">羽光回响 <span id="echo-value">0.45</span></label>
+          <input type="range" id="echo" min="0" max="0.8" step="0.05" value="0.45">
+        </div>
+        <div class="control">
+          <label for="lookahead">回响视距 <span id="lookahead-value">0.60</span></label>
+          <input type="range" id="lookahead" min="0.3" max="0.9" step="0.05" value="0.60">
+        </div>
+        <div class="actions">
+          <button id="run">启动羽光下降</button>
+          <button id="single-step" class="secondary">单步推演</button>
+          <button id="reset" class="secondary">重新点亮</button>
+        </div>
+        <dl class="legend" aria-label="图例">
+          <div>
+            <dt>粉橙</dt>
+            <dd>残差较高区域，表示羽光与情绪尚未契合。</dd>
+          </div>
+          <div>
+            <dt>青蓝</dt>
+            <dd>残差较低，甜度固定点的羽光盆地。</dd>
+          </div>
+          <div>
+            <dt>白色轨迹</dt>
+            <dd>递归梯度下降历程。</dd>
+          </div>
+        </dl>
+      </aside>
+    </section>
+
+    <section class="explain">
+      <h2>递归梯度下降的羽光诠释</h2>
+      <p>
+        映射 <em>F</em> 把羽光谱与情绪回声折叠到同一平面，我们寻找满足 <em>F(U) = U</em> 的甜度不动点。
+        递归梯度下降通过多层回响构建一致性校正：每一次递归都在未来的位置估计新的梯度，并以羽光回响系数将其混合，
+        使得轨迹既具备前瞻，也保持轻盈。
+      </p>
+      <p>
+        甜度阻尼模拟社群互助机制，抑制过度振荡；回响视距控制递归步的衰减，避免过深递归造成的数值不稳。
+        在恰当的组合下，轨迹会呈现螺旋式贴近固定点的羽光花纹。
+      </p>
+    </section>
+
+    <section class="notes">
+      <h2>探索提示</h2>
+      <ul>
+        <li>把递归深度调到 4，并略微降低学习率，可以观察多层回响带来的平滑收敛。</li>
+        <li>当羽光回响接近 0 时，算法退化为普通带阻尼的梯度下降。</li>
+        <li>提高阻尼与回响视距，可模拟社群对甜度扰动的缓释过程。</li>
+      </ul>
+    </section>
+
+    <footer class="footer">
+      <p>灵感来自甜甜美羽宇宙的共鸣研究：在羽光的回声中维持不动点的一致性。</p>
+    </footer>
+  </main>
+  <script src="recursive.js"></script>
+</body>
+</html>

@@ -24,6 +24,12 @@ const resources = [
     cta: '使用工具包 →'
   },
   {
+    title: '羽光不动点一致性递归梯度下降',
+    description: '可视化羽光-情绪-拓扑映射的固定点求解，体验递归梯度下降的多层回响。',
+    href: 'demo/featherlight-fixed-point-recursion/index.html',
+    cta: '体验羽光回响 →'
+  },
+  {
     title: 'Workflow Automation 模板',
     description: '结合 Notion、Linear 与 GitHub 的跨团队节奏，附带仪式脚本与沟通模版。',
     href: 'demo/blockchan/index.html',
