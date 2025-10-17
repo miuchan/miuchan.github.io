@@ -7,5 +7,59 @@ export const friendNetwork = [
     note:
       '他们以克制的界面呈现结构化的创作档案，并开放与更多研究者、设计师与伙伴的长期协作。',
     tags: ['数字体验', '写作实验', '知识网络']
+  },
+  {
+    name: 'Ink & Switch · 独立研究实验室',
+    url: 'https://www.inkandswitch.com/',
+    description:
+      'Ink & Switch 专注于创造者工具与知识工作流的未来界面，通过跨学科原型验证人机协作的新范式。',
+    note:
+      '他们将研究报告、原型与设计理念全部公开，帮助我们在构建地球 Online 的工具链时保持前沿灵感。',
+    tags: ['研究工具', '独立实验', '开源原型']
+  },
+  {
+    name: 'Are.na · 共创知识航道',
+    url: 'https://www.are.na/',
+    description:
+      'Are.na 是一个为研究者与创作者打造的知识积木网络，支持以图块、链接与文本拼接跨学科的灵感路径。',
+    note:
+      '他们开放式的组织方式，让我们在策展体验资产时可以直接嵌套来自全球伙伴的语义地图。',
+    tags: ['知识网络', '协作策展', '语义图谱']
+  },
+  {
+    name: 'The Pudding · 数据叙事实验室',
+    url: 'https://pudding.cool/',
+    description:
+      'The Pudding 通过互动可视化讲述社会与文化议题，以数据故事呈现复杂系统的结构与情感。',
+    note:
+      '他们的长文互动体验为 Earth Online 的叙事界面提供了大量灵感与交互模式。',
+    tags: ['数据叙事', '信息设计', '交互长文']
+  },
+  {
+    name: 'flomo · 流动笔记社区',
+    url: 'https://flomoapp.com/',
+    description:
+      'flomo 聚焦轻量且高频的卡片笔记，让创作者快速捕捉灵感并通过标签结构化整理。',
+    note:
+      '他们的社群常态化分享工作流，为我们设计知识采集与整理协议提供了实战参考。',
+    tags: ['个人知识', '卡片笔记', '工作流']
+  },
+  {
+    name: 'memos · 开源碎片记录',
+    url: 'https://usememos.com/',
+    description:
+      'memos 是一款开源的碎片记录系统，支持自托管、API 扩展与多平台同步，帮助团队构建知识中枢。',
+    note:
+      '他们的开源生态让我们能快速对接实验室内部的知识栈，建立高度可定制的记忆体。',
+    tags: ['开源', '自托管', '知识栈']
+  },
+  {
+    name: 'Hyperlink Academy · 网络学习社',
+    url: 'https://hyperlink.academy/',
+    description:
+      'Hyperlink Academy 致力于构建协作式的学习空间，鼓励小组以项目驱动方式共创知识资产。',
+    note:
+      '他们对学习体验的编排方法帮助我们在 Earth Online 内设计多主体的成长旅程。',
+    tags: ['协作学习', '学习设计', '社区运营']
   }
 ];
