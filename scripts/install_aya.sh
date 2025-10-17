@@ -25,11 +25,22 @@ fi
 mkdir -p "$AYA_DIR"
 
 if [[ ! -f "$AYA_JAR" ]]; then
-  echo "Downloading Aya CLI $AYA_VERSION from $AYA_URL..."
-  if ! curl "${CURL_OPTS[@]}" "$AYA_URL" -o "$AYA_JAR"; then
-    echo "Failed to download Aya CLI from $AYA_URL" >&2
-    echo "You can set AYA_BASE_URL to a mirror before running this script." >&2
-    exit 1
+  if [[ -n "${AYA_JAR_SOURCE:-}" ]]; then
+    if [[ -f "$AYA_JAR_SOURCE" ]]; then
+      echo "Copying Aya CLI $AYA_VERSION from $AYA_JAR_SOURCE..."
+      cp "$AYA_JAR_SOURCE" "$AYA_JAR"
+    else
+      echo "AYA_JAR_SOURCE is set to '$AYA_JAR_SOURCE' but the file does not exist." >&2
+      exit 1
+    fi
+  else
+    echo "Downloading Aya CLI $AYA_VERSION from $AYA_URL..."
+    if ! curl "${CURL_OPTS[@]}" "$AYA_URL" -o "$AYA_JAR"; then
+      echo "Failed to download Aya CLI from $AYA_URL" >&2
+      echo "You can set AYA_BASE_URL to a mirror before running this script." >&2
+      echo "If you have already downloaded the JAR manually, set AYA_JAR_SOURCE to its path." >&2
+      exit 1
+    fi
   fi
 else
   echo "Aya CLI $AYA_VERSION already present at $AYA_JAR"

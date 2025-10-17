@@ -23,7 +23,7 @@ miuchan.github.io 现已重构为零依赖的静态站点，使用原生 HTML、
 仓库内引入了 Aya CLI，支持对 `.aya` 文件进行编译与定理检查：
 
 1. 确保系统安装 JDK 21+。
-2. 运行 `scripts/install_aya.sh` 下载 Aya CLI 并生成 `tools/aya/aya` 可执行文件。
+2. 运行 `scripts/install_aya.sh` 下载 Aya CLI 并生成 `tools/aya/aya` 可执行文件；若已在外部获取 JAR，可通过环境变量 `AYA_JAR_SOURCE` 指定本地路径以跳过下载。
 3. 执行 `scripts/run_aya.sh` 逐个编译 `formal/` 目录下的 `.aya` 文件。
 
 GitHub Actions 工作流会在推送和 Pull Request 时自动运行上述脚本，确保形式化资产持续通过编译。
