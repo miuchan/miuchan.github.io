@@ -23,10 +23,11 @@ miuchan.github.io 现已重构为零依赖的静态站点，使用原生 HTML、
 仓库内自带纯 Python 实现的 Aya Engine，用于对 `.aya` 文件执行结构校验：
 
 1. 确保系统提供 Python 3.10+。
-2. 执行 `scripts/run_aya.sh` 逐个编译 `formal/` 目录下的 `.aya` 文件。
+2. 执行 `scripts/run_aya.sh` 自动发现并编译 `formal/` 目录下的全部 `.aya` 文件。
 3. 或直接运行 `python3 -m tools.aya compile formal/HelloAya.aya` 验证单个文件。
 
-GitHub Actions 工作流会在推送和 Pull Request 时自动运行上述脚本，确保形式化资产持续通过编译。
+GitHub Actions 工作流会在推送和 Pull Request 时自动安装 Python 3.11 并调用同一脚本，
+使用内置的 Aya Engine 校验形式化资产，确保持续集成流程稳定。
 
 ## 维护指南
 
