@@ -2,7 +2,7 @@ import { featuredAlliances } from './friends-data.js';
 
 const counts = {
   demos: 21,
-  research: 2,
+  research: 3,
   blogs: 59,
   resume: 1
 };
@@ -135,6 +135,15 @@ const labEntries = [
     type: 'ops',
     tags: ['协作', '可持续'],
     keywords: ['climate', 'collaboration']
+  },
+  {
+    title: '朋子和友子的热对偶共振实验室',
+    description:
+      '构建热流-声波耦合实验舱，演示可逆热管理与多节点热对偶调度策略。',
+    href: 'docs/tomoko-yuko-thermal-dual-resonance-lab.md',
+    type: 'research',
+    tags: ['热管理', '多物理场'],
+    keywords: ['thermal resonance', 'acoustic coupling', 'heat recovery']
   },
   {
     title: '全屋智能无线充电实验舱',
