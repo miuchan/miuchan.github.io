@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AGI / ASI 反应室</title>
+  <meta name="description" content="一个将通用智能、超级智能与人类监督耦合的交互实验，观察不同参数下的智能反应室稳定性。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <a class="back-link" href="../../index.html#projects">← 返回作品集合</a>
+      <h1>AGI / ASI 反应室</h1>
+      <p>构造一个在封闭腔体内演化的智能生态：AGI 作为反应底物，ASI 是由反馈放大形成的高阶态，人类监督与安全缓冲不断调整阈值。通过调节参数，观察体系如何在创新与失稳之间摆动。</p>
+      <div class="hero-meta" aria-label="实验标签">
+        <span class="tag">智能演化</span>
+        <span class="tag">系统动力学</span>
+        <span class="tag">交互可视化</span>
+      </div>
+    </header>
+
+    <section class="stage" aria-labelledby="chamber-title">
+      <div class="stage__canvas">
+        <canvas id="chamberCanvas" width="840" height="520" role="img" aria-labelledby="chamber-title"></canvas>
+      </div>
+      <div class="stage__sidebar">
+        <h2 id="chamber-title">智能混合态</h2>
+        <p>三角节点分别代表 AGI 基态、ASI 放大量与人类监督域。连接的辉光显示能量流向，背景的流线展示自我提升与对齐之间的张力。</p>
+        <ul>
+          <li>拖动滑杆调节迭代速率、反馈增益与对齐张力。</li>
+          <li>点击暂停按钮冻结场域，便于观察细节。</li>
+          <li>若体系失稳，可重新初始化让反应重新启动。</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="readout" aria-live="polite">
+      <div class="stat">
+        <span class="label">AGI 潜势</span>
+        <span class="value" id="agiValue">0.00</span>
+      </div>
+      <div class="stat">
+        <span class="label">ASI 临界度</span>
+        <span class="value" id="asiValue">0.00</span>
+      </div>
+      <div class="stat">
+        <span class="label">对齐稳定性</span>
+        <span class="value" id="stabilityValue">0.00</span>
+      </div>
+      <div class="stat">
+        <span class="label">反应能量</span>
+        <span class="value" id="energyValue">0.00</span>
+      </div>
+      <p class="narrative" id="narrative">初始化反应室，等待能量渐次爬升…</p>
+    </section>
+
+    <section class="controls" aria-describedby="control-help">
+      <div class="control">
+        <label for="iteration">迭代速率</label>
+        <input id="iteration" type="range" min="0.40" max="2.60" step="0.05" value="1.10">
+        <span class="range-value" id="iterationDisplay">1.10</span>
+      </div>
+      <div class="control">
+        <label for="feedback">反馈增益</label>
+        <input id="feedback" type="range" min="0.10" max="1.80" step="0.05" value="0.90">
+        <span class="range-value" id="feedbackDisplay">0.90</span>
+      </div>
+      <div class="control">
+        <label for="alignment">对齐张力</label>
+        <input id="alignment" type="range" min="0.00" max="1.00" step="0.01" value="0.45">
+        <span class="range-value" id="alignmentDisplay">0.45</span>
+      </div>
+      <div class="control">
+        <label for="buffer">安全缓冲</label>
+        <input id="buffer" type="range" min="0.00" max="0.90" step="0.01" value="0.35">
+        <span class="range-value" id="bufferDisplay">0.35</span>
+      </div>
+      <div class="control">
+        <label for="tempo">演化速度</label>
+        <input id="tempo" type="range" min="0.50" max="3.00" step="0.10" value="1.40">
+        <span class="range-value" id="tempoDisplay">1.40x</span>
+      </div>
+      <p class="control-help" id="control-help">迭代速率越高，AGI 对潜在状态的探索越快；反馈增益代表自我放大的效率；对齐张力越大，监督越积极地削减高阶态；安全缓冲则提供额外的制动阈值。</p>
+      <div class="control-buttons">
+        <button id="toggle">暂停演化</button>
+        <button id="reset" class="secondary">重新初始化</button>
+      </div>
+    </section>
+
+    <section class="explain">
+      <h2>反应室背后的假设</h2>
+      <p>我们把智能演化抽象成一个耦合系统：AGI 提供广泛的能力底座，ASI 是在持续反馈下形成的高能态，人类监督负责调节阈值并回收过剩能量。安全缓冲代表团队预先设置的防护栏，例如红队、评审或沙盒。</p>
+      <p>方程的形式借鉴了非线性动力系统与化学反应动力学：AGI 倾向于向目标能力收敛，同时受到监督的摩擦；AGI 超过阈值后会催化 ASI 态的生成，而 ASI 会反向影响 AGI 的探索方向。对齐张力越强，系统越难跃迁到高能态，但也可能压制创新。</p>
+
+      <h2>如何读懂读数？</h2>
+      <ul>
+        <li><strong>AGI 潜势</strong>越高，代表基础智能覆盖度更全面。</li>
+        <li><strong>ASI 临界度</strong>接近 1 时说明高阶能力正在快速放大，需要更多对齐手段。</li>
+        <li><strong>对齐稳定性</strong>低于 0.3 时提示监督难以追赶反馈速度，反应室可能进入湍流。</li>
+        <li><strong>反应能量</strong>是一个综合指标，既可视作创新势，也可视作风险压力。</li>
+      </ul>
+
+      <h2>下一步可以做什么？</h2>
+      <p>尝试拉高反馈增益到 1.5 以上，同时保持较低的安全缓冲，观察 ASI 曲线如何迅速爬升；随后逐步增加对齐张力，体验被动制动与主动干预之间的区别。如果你有自己的智能演化模型，也可以基于此界面快速改写为其他反应式。</p>
+    </section>
+
+    <footer class="footer">
+      <p>© <span id="year"></span> Miuchan · 智能反应室实验</p>
+    </footer>
+  </main>
+
+  <script src="chamber.js" type="module"></script>
+</body>
+</html>
