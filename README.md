@@ -37,4 +37,17 @@ The previous standalone HTML, CSS, and JavaScript files are now located under `p
 - `npm run build` – generate an optimized production build.
 - `npm start` – run the built application.
 
+## On-demand expression interpreter
+
+The app exposes a lightweight interpreter that can evaluate arithmetic expressions straight from the URL. Requesting
+`/interpreter/<expression>` responds with a JSON payload containing the evaluated result. Because the expression lives in the
+path, remember to URL-encode special characters such as `+` or spaces. For example:
+
+```
+/interpreter/2*5    -> { "result": 10 }
+/interpreter/1%2B2  -> { "result": 3 }
+```
+
+Supported operators include addition (`+`), subtraction (`-`), multiplication (`*`), division (`/`), and parentheses.
+
 Feel free to adapt the content and data inside `app/page.jsx` or `app/blog/page.jsx` to keep the site up to date.
