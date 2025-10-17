@@ -1,4 +1,4 @@
-import { friendNetwork } from './friends-data.js';
+import { featuredAlliances } from './friends-data.js';
 
 const counts = {
   demos: 20,
@@ -249,8 +249,6 @@ const contactLinks = [
     cta: '拜访友链'
   }
 ];
-
-const featuredAlliances = friendNetwork;
 
 function renderHeroStats() {
   const container = document.getElementById('hero-stats');
