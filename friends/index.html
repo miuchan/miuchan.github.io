@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>友链星港 · Earth Online 体验实验室</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="inner header__inner">
+        <div class="brand" aria-label="Earth Online 实验室标识">
+          <span class="brand__title">Earth Online</span>
+          <span class="brand__subtitle">体验实验室 · Planetary Experience Lab</span>
+        </div>
+        <nav class="site-nav" aria-label="主导航">
+          <a href="../index.html#hero">主页</a>
+          <a href="../index.html#labs">实验矩阵</a>
+          <a href="../index.html#alliances">友链星港</a>
+          <a href="../index.html#contact">联络站</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="subpage-hero" aria-labelledby="friends-title">
+        <div class="inner subpage-hero__inner">
+          <div class="subpage-hero__content">
+            <p class="section__eyebrow">Alliance Network</p>
+            <h1 id="friends-title">友链星港</h1>
+            <p class="subpage-hero__lead">
+              Earth Online 的伙伴网络不断扩张。我们在这里记录每一位与我们共同探索体验与知识边界的朋友，方便你快速建立链接并开启合作。
+            </p>
+            <div class="subpage-hero__actions" role="group" aria-label="友链操作">
+              <a class="button" href="../index.html#contact">申请交换友链</a>
+              <a class="button button--ghost" href="../index.html">返回主站</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section--alt" aria-label="友链列表">
+        <div class="inner">
+          <div class="alliance-grid" id="friend-grid" aria-live="polite"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="inner">
+        <p>© 2024 Earth Online Experience Lab · Powered by Aman Sharma</p>
+        <p class="footer-note">欢迎 fork、引用或将实验室成果嵌入你的宇宙级项目。</p>
+      </div>
+    </footer>
+
+    <script type="module" src="../assets/js/friends-page.js"></script>
+  </body>
+</html>
