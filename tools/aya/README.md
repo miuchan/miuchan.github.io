@@ -1,9 +1,10 @@
-# Aya CLI Wrapper Assets
+# Aya Engine
 
-运行 `scripts/install_aya.sh` 将会：
+`tools/aya/` 目录包含一个纯 Python 实现的 Aya Engine：
 
-1. 下载指定版本的 `aya-cli-<version>-all.jar` 到当前目录。
-2. 创建一个可执行的 `aya` 脚本，用于调用该 JAR。
+- `engine.py`：核心解析与结构校验逻辑。
+- `__main__.py`：命令行入口，可通过 `python -m tools.aya` 调用。
+- `aya`：兼容旧工作流的可执行包装脚本。
 
-由于体积较大，这些文件已在 `.gitignore` 中忽略。若需要清理，可安全删除
-整个 `tools/aya/` 目录并重新执行安装脚本。
+该实现会对 `.aya` 文件执行基础语法与缩进检查，保证仓库中的形式化资产在
+本地开发与 CI 环境均可快速验证，无需下载 Java JAR 文件。
