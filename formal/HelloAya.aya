@@ -5,8 +5,9 @@ open import data.eq
 
 // Example theorem: addition is commutative for natural numbers.
 def plus-comm (a b : Nat) : Eq Nat (plus a b) (plus b a) =>
-  Nat.rec (Eq Nat (plus zero b) (plus b zero))
-    (refl (plus b zero))
+  Nat.rec (\k => Eq Nat (plus k b) (plus b k))
+    (refl b)
     (\k ih =>
-      transport (\x => Eq Nat (succ x) (succ (plus b k))) ih)
+      transport (\x => Eq Nat (succ (plus k b)) (succ x)) ih
+        (refl (succ (plus k b))))
     a
