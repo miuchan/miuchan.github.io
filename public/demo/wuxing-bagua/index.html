@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <title>五行八卦动力图谱</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700&family=Noto+Sans+SC:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        color-scheme: light dark;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Noto Sans SC", system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+        line-height: 1.7;
+        background: radial-gradient(circle at top, #0f172a 0%, #020617 55%, #000 100%);
+        color: #e2e8f0;
+        min-height: 100vh;
+      }
+
+      header {
+        padding: 3rem 1.5rem 2rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      header::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at top, rgba(56, 189, 248, 0.25), transparent 55%);
+        z-index: -1;
+      }
+
+      header h1 {
+        margin: 0;
+        font-family: "Noto Serif SC", "Noto Sans SC", serif;
+        font-size: clamp(2.1rem, 4vw, 2.9rem);
+        letter-spacing: 0.08em;
+        text-shadow: 0 16px 45px rgba(14, 116, 144, 0.45);
+      }
+
+      header p {
+        margin: 1rem auto 0;
+        max-width: 780px;
+        font-size: clamp(1rem, 2.1vw, 1.18rem);
+        opacity: 0.85;
+      }
+
+      main {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 0 1.5rem 4rem;
+      }
+
+      section {
+        margin-bottom: 2.75rem;
+        padding: 1.75rem;
+        border-radius: 22px;
+        background: rgba(15, 23, 42, 0.82);
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        box-shadow: 0 24px 60px rgba(2, 6, 23, 0.6);
+        backdrop-filter: blur(12px);
+      }
+
+      section h2 {
+        margin-top: 0;
+        font-family: "Noto Serif SC", "Noto Sans SC", serif;
+        font-size: clamp(1.6rem, 3.2vw, 1.95rem);
+        letter-spacing: 0.06em;
+        color: #38bdf8;
+      }
+
+      .diagram-layout {
+        display: grid;
+        grid-template-columns: minmax(260px, 1.1fr) minmax(240px, 0.9fr);
+        gap: 2rem;
+        align-items: center;
+      }
+
+      .diagram-wrapper {
+        position: relative;
+        width: min(100%, 520px);
+        margin: 0 auto;
+      }
+
+      svg {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      .diagram-caption {
+        margin-top: 1rem;
+        font-size: 0.95rem;
+        color: rgba(226, 232, 240, 0.7);
+        text-align: center;
+      }
+
+      #element-info {
+        background: rgba(2, 6, 23, 0.7);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        border-radius: 18px;
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        box-shadow: inset 0 0 0 1px rgba(8, 47, 73, 0.35);
+      }
+
+      #element-info h3 {
+        margin: 0;
+        font-family: "Noto Serif SC", "Noto Sans SC", serif;
+        font-size: 1.45rem;
+        letter-spacing: 0.08em;
+        color: #f8fafc;
+      }
+
+      #element-info dl {
+        margin: 0;
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 0.35rem 1rem;
+        font-size: 0.98rem;
+      }
+
+      #element-info dt {
+        opacity: 0.6;
+        font-weight: 500;
+      }
+
+      #element-info dd {
+        margin: 0;
+      }
+
+      .trigram-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1.25rem;
+      }
+
+      .trigram-card {
+        border-radius: 18px;
+        background: rgba(15, 23, 42, 0.85);
+        border: 1px solid rgba(148, 163, 184, 0.25);
+        padding: 1.25rem;
+        transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .trigram-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at top right, rgba(56, 189, 248, 0.12), transparent 65%);
+        opacity: 0;
+        transition: opacity 0.2s ease;
+      }
+
+      .trigram-card h3 {
+        margin: 0 0 0.35rem;
+        font-family: "Noto Serif SC", serif;
+        letter-spacing: 0.1em;
+        font-size: 1.25rem;
+      }
+
+      .trigram-card p {
+        margin: 0.35rem 0 0;
+        font-size: 0.95rem;
+        color: rgba(226, 232, 240, 0.8);
+      }
+
+      .trigram-card .meta {
+        margin-top: 0.65rem;
+        font-size: 0.85rem;
+        color: rgba(148, 163, 184, 0.8);
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+
+      .trigram-card.highlight {
+        border-color: rgba(56, 189, 248, 0.65);
+        transform: translateY(-4px);
+        box-shadow: 0 18px 32px rgba(56, 189, 248, 0.25);
+      }
+
+      .trigram-card.highlight::after {
+        opacity: 1;
+      }
+
+      .legend-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1.5rem;
+      }
+
+      .legend-item {
+        padding: 1.25rem;
+        border-radius: 16px;
+        background: rgba(2, 6, 23, 0.75);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+      }
+
+      .legend-item h3 {
+        margin: 0 0 0.5rem;
+        font-size: 1.1rem;
+        color: #f1f5f9;
+      }
+
+      footer {
+        padding: 2.5rem 1.5rem 3rem;
+        text-align: center;
+        color: rgba(148, 163, 184, 0.75);
+        font-size: 0.9rem;
+      }
+
+      .element-node text {
+        font-family: "Noto Serif SC", serif;
+        font-size: 1.1rem;
+        letter-spacing: 0.08em;
+        fill: #0f172a;
+        pointer-events: none;
+      }
+
+      .element-node circle {
+        fill: rgba(226, 232, 240, 0.95);
+        stroke: rgba(56, 189, 248, 0.35);
+        stroke-width: 2;
+        transition: transform 0.2s ease, filter 0.2s ease, stroke 0.2s ease;
+      }
+
+      .element-node.active circle {
+        stroke: rgba(250, 204, 21, 0.8);
+        filter: drop-shadow(0 0 12px rgba(250, 204, 21, 0.5));
+      }
+
+      .element-node circle:hover {
+        filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.6));
+      }
+
+      .sheng-line {
+        stroke: rgba(125, 211, 252, 0.5);
+        stroke-width: 2.2;
+        fill: none;
+        marker-end: url(#arrow-sheng);
+        transition: stroke 0.2s ease, stroke-width 0.2s ease, opacity 0.2s ease;
+        opacity: 0.7;
+      }
+
+      .sheng-line.active {
+        stroke: rgba(56, 189, 248, 0.9);
+        stroke-width: 3.4;
+        opacity: 1;
+      }
+
+      .ke-line {
+        stroke: rgba(248, 113, 113, 0.4);
+        stroke-width: 1.8;
+        stroke-dasharray: 6 6;
+        marker-end: url(#arrow-ke);
+        transition: stroke 0.2s ease, stroke-width 0.2s ease, opacity 0.2s ease;
+        opacity: 0.55;
+      }
+
+      .ke-line.active {
+        stroke: rgba(248, 113, 113, 0.85);
+        stroke-width: 2.6;
+        opacity: 0.95;
+      }
+
+      .trigram-label {
+        font-family: "Noto Serif SC", serif;
+        font-size: 1rem;
+        letter-spacing: 0.08em;
+        fill: rgba(226, 232, 240, 0.92);
+        text-anchor: middle;
+      }
+
+      .trigram-label tspan {
+        font-family: "Noto Sans SC";
+        font-size: 0.7rem;
+        letter-spacing: 0.02em;
+        fill: rgba(148, 163, 184, 0.85);
+      }
+
+      @media (max-width: 960px) {
+        .diagram-layout {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 600px) {
+        section {
+          padding: 1.35rem;
+        }
+
+        header {
+          padding-top: 2.5rem;
+          padding-bottom: 1.5rem;
+        }
+
+        #element-info dl {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>五行八卦动力图谱</h1>
+      <p>
+        通过统一的几何坐标，将五行的生克循环与八卦的方位属性映射为一个可交互的知识场。
+        鼠标悬浮或点击任意元素，观察与之呼应的卦象、季节、气象与治理策略，理解东方系统论的联动结构。
+      </p>
+    </header>
+    <main>
+      <section>
+        <h2>五行循环与卦象映射</h2>
+        <div class="diagram-layout">
+          <div class="diagram-wrapper">
+            <svg id="bagua-diagram" viewBox="0 0 520 520" role="img" aria-labelledby="diagram-title">
+              <title id="diagram-title">五行与八卦的几何映射</title>
+              <defs>
+                <radialGradient id="background-glow" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="rgba(14,116,144,0.25)" />
+                  <stop offset="55%" stop-color="rgba(15,23,42,0.0)" />
+                </radialGradient>
+                <marker
+                  id="arrow-sheng"
+                  markerWidth="10"
+                  markerHeight="10"
+                  refX="6"
+                  refY="3"
+                  orient="auto"
+                >
+                  <path d="M0,0 L6,3 L0,6" fill="rgba(56,189,248,0.85)" />
+                </marker>
+                <marker
+                  id="arrow-ke"
+                  markerWidth="10"
+                  markerHeight="10"
+                  refX="6"
+                  refY="3"
+                  orient="auto"
+                >
+                  <path d="M0,0 L6,3 L0,6" fill="rgba(248,113,113,0.85)" />
+                </marker>
+              </defs>
+              <circle cx="260" cy="260" r="240" fill="url(#background-glow)" />
+            </svg>
+            <p class="diagram-caption">
+              蓝色实线表示相生循环，红色虚线表示相克制衡；外圈八卦与内圈五行通过方位与气候相互映射。
+            </p>
+          </div>
+          <aside id="element-info" aria-live="polite"></aside>
+        </div>
+      </section>
+      <section>
+        <h2>八卦图谱：气候、方位与策略</h2>
+        <div id="trigram-grid" class="trigram-grid"></div>
+      </section>
+      <section>
+        <h2>理解东方系统论的三条线索</h2>
+        <div class="legend-list">
+          <div class="legend-item">
+            <h3>能量流动：生生不息</h3>
+            <p>
+              相生循环强调元素间的能量传递：木生火、火生土、土生金、金生水、水生木。
+              这是资源扩张与增长策略的底层逻辑。
+            </p>
+          </div>
+          <div class="legend-item">
+            <h3>风险约束：以克制衡</h3>
+            <p>
+              相克循环体现制衡机制：木克土、土克水、水克火、火克金、金克木。
+              在治理模型中对应风险管理、反馈回路与阈值控制。
+            </p>
+          </div>
+          <div class="legend-item">
+            <h3>八卦叙事：从方位到协作</h3>
+            <p>
+              八卦串联了气候、方位、家庭角色与现代治理隐喻，例如坎卦代表险阻与防御系统，离卦象征洞察与视觉计算。
+              这些比喻帮助我们在复杂系统中寻找可执行的策略锚点。
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>由 Aya Experience Lab 构建 · 数据驱动的东方系统论交互实验</footer>
+    <script type="module">
+      const svg = document.getElementById('bagua-diagram');
+      const infoPanel = document.getElementById('element-info');
+      const trigramGrid = document.getElementById('trigram-grid');
+
+      const wuXing = [
+        {
+          id: 'wood',
+          name: '木',
+          color: '#22c55e',
+          pinyin: 'Mù',
+          direction: '东方',
+          season: '春',
+          climate: '风',
+          organs: '肝 · 胆',
+          virtues: '生发、扩张、柔韧',
+          trigrams: ['震', '巽']
+        },
+        {
+          id: 'fire',
+          name: '火',
+          color: '#f97316',
+          pinyin: 'Huǒ',
+          direction: '南方',
+          season: '夏',
+          climate: '炎',
+          organs: '心 · 小肠',
+          virtues: '洞察、外放、炽热',
+          trigrams: ['离']
+        },
+        {
+          id: 'earth',
+          name: '土',
+          color: '#facc15',
+          pinyin: 'Tǔ',
+          direction: '中央 · 西南 · 东北',
+          season: '长夏 / 季末',
+          climate: '湿',
+          organs: '脾 · 胃',
+          virtues: '承载、调和、信任',
+          trigrams: ['坤', '艮']
+        },
+        {
+          id: 'metal',
+          name: '金',
+          color: '#f4f4f5',
+          pinyin: 'Jīn',
+          direction: '西方',
+          season: '秋',
+          climate: '燥',
+          organs: '肺 · 大肠',
+          virtues: '收敛、决断、肃正',
+          trigrams: ['乾', '兑']
+        },
+        {
+          id: 'water',
+          name: '水',
+          color: '#38bdf8',
+          pinyin: 'Shuǐ',
+          direction: '北方',
+          season: '冬',
+          climate: '寒',
+          organs: '肾 · 膀胱',
+          virtues: '渗透、韧性、潜藏',
+          trigrams: ['坎']
+        }
+      ];
+
+      const generateMap = {
+        wood: 'fire',
+        fire: 'earth',
+        earth: 'metal',
+        metal: 'water',
+        water: 'wood'
+      };
+
+      const controlMap = {
+        wood: 'earth',
+        earth: 'water',
+        water: 'fire',
+        fire: 'metal',
+        metal: 'wood'
+      };
+
+      const trigramData = [
+        {
+          name: '坎',
+          pinyin: 'Kǎn',
+          element: 'water',
+          image: '☵',
+          direction: '北',
+          quality: '险 · 流动',
+          governance: '安全防御 · 弹性网络'
+        },
+        {
+          name: '艮',
+          pinyin: 'Gèn',
+          element: 'earth',
+          image: '☶',
+          direction: '东北',
+          quality: '止 · 蓄势',
+          governance: '边界管理 · 可靠部署'
+        },
+        {
+          name: '震',
+          pinyin: 'Zhèn',
+          element: 'wood',
+          image: '☳',
+          direction: '东',
+          quality: '动 · 觉醒',
+          governance: '创新启动 · 风险唤醒'
+        },
+        {
+          name: '巽',
+          pinyin: 'Xùn',
+          element: 'wood',
+          image: '☴',
+          direction: '东南',
+          quality: '入 · 渗透',
+          governance: '渗透扩散 · 共识传播'
+        },
+        {
+          name: '离',
+          pinyin: 'Lí',
+          element: 'fire',
+          image: '☲',
+          direction: '南',
+          quality: '明 · 可视',
+          governance: '洞察分析 · 视觉系统'
+        },
+        {
+          name: '坤',
+          pinyin: 'Kūn',
+          element: 'earth',
+          image: '☷',
+          direction: '西南',
+          quality: '顺 · 承载',
+          governance: '运营调度 · 土地治理'
+        },
+        {
+          name: '兑',
+          pinyin: 'Duì',
+          element: 'metal',
+          image: '☱',
+          direction: '西',
+          quality: '悦 · 开放',
+          governance: '对话协商 · 资源分配'
+        },
+        {
+          name: '乾',
+          pinyin: 'Qián',
+          element: 'metal',
+          image: '☰',
+          direction: '西北',
+          quality: '健 · 创造',
+          governance: '战略统筹 · 开放标准'
+        }
+      ];
+
+      const center = 260;
+      const innerRadius = 150;
+      const outerRadius = 220;
+
+      const elementNodes = new Map();
+      const shengLines = [];
+      const keLines = [];
+
+      const polarPoint = (angle, radius) => {
+        return {
+          x: center + Math.cos(angle) * radius,
+          y: center + Math.sin(angle) * radius
+        };
+      };
+
+      wuXing.forEach((element, index) => {
+        const angle = (Math.PI * 2 * index) / wuXing.length - Math.PI / 2;
+        const { x, y } = polarPoint(angle, innerRadius);
+
+        const group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        group.setAttribute('class', 'element-node');
+        group.dataset.id = element.id;
+        group.setAttribute('tabindex', '0');
+        group.setAttribute('role', 'button');
+        group.setAttribute('aria-label', `${element.name}行，点击查看细节`);
+
+        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        circle.setAttribute('cx', x);
+        circle.setAttribute('cy', y);
+        circle.setAttribute('r', 36);
+        circle.setAttribute('fill', element.color);
+
+        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        text.setAttribute('x', x);
+        text.setAttribute('y', y + 6);
+        text.setAttribute('text-anchor', 'middle');
+        text.textContent = element.name;
+
+        group.appendChild(circle);
+        group.appendChild(text);
+        svg.appendChild(group);
+
+        elementNodes.set(element.id, { group, x, y, angle });
+      });
+
+      // Draw generating cycle
+      wuXing.forEach((element) => {
+        const targetId = generateMap[element.id];
+        const fromNode = elementNodes.get(element.id);
+        const toNode = elementNodes.get(targetId);
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        const midAngle = (fromNode.angle + toNode.angle) / 2;
+        const arcRadius = innerRadius + 28;
+        const midPoint = polarPoint(midAngle, arcRadius);
+        const pathData = `M ${fromNode.x} ${fromNode.y} Q ${midPoint.x} ${midPoint.y} ${toNode.x} ${toNode.y}`;
+        line.setAttribute('d', pathData);
+        line.setAttribute('class', 'sheng-line');
+        line.dataset.from = element.id;
+        line.dataset.to = targetId;
+        svg.insertBefore(line, svg.querySelector('circle'));
+        shengLines.push(line);
+      });
+
+      // Draw controlling cycle
+      wuXing.forEach((element) => {
+        const targetId = controlMap[element.id];
+        const fromNode = elementNodes.get(element.id);
+        const toNode = elementNodes.get(targetId);
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        const angleDelta = (toNode.angle - fromNode.angle) / 2;
+        const controlRadius = innerRadius - 35;
+        const midPoint = polarPoint(fromNode.angle + angleDelta, controlRadius);
+        const pathData = `M ${fromNode.x} ${fromNode.y} Q ${midPoint.x} ${midPoint.y} ${toNode.x} ${toNode.y}`;
+        line.setAttribute('d', pathData);
+        line.setAttribute('class', 'ke-line');
+        line.dataset.from = element.id;
+        line.dataset.to = targetId;
+        svg.insertBefore(line, svg.querySelector('circle'));
+        keLines.push(line);
+      });
+
+      // Draw trigram labels
+      trigramData.forEach((trigram, index) => {
+        const angle = (Math.PI * 2 * index) / trigramData.length - Math.PI / 2;
+        const { x, y } = polarPoint(angle, outerRadius);
+        const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        label.setAttribute('class', 'trigram-label');
+        label.setAttribute('x', x);
+        label.setAttribute('y', y);
+        label.innerHTML = `${trigram.image} ${trigram.name}<tspan x="${x}" dy="1.2em">${trigram.direction} · ${trigram.quality}</tspan>`;
+        label.dataset.element = trigram.element;
+        svg.appendChild(label);
+      });
+
+      const renderInfo = (element) => {
+        const generates = wuXing.find((item) => item.id === generateMap[element.id]);
+        const generatedBy = wuXing.find((item) => generateMap[item.id] === element.id);
+        const controls = wuXing.find((item) => item.id === controlMap[element.id]);
+        const controlledBy = wuXing.find((item) => controlMap[item.id] === element.id);
+
+        infoPanel.innerHTML = `
+          <h3>${element.name}行 · ${element.pinyin}</h3>
+          <dl>
+            <dt>方位</dt><dd>${element.direction}</dd>
+            <dt>季节 / 气候</dt><dd>${element.season} · ${element.climate}</dd>
+            <dt>身体对应</dt><dd>${element.organs}</dd>
+            <dt>德性特质</dt><dd>${element.virtues}</dd>
+            <dt>相生</dt><dd>${element.name}生${generates.name} · 受${generatedBy.name}滋养</dd>
+            <dt>相克</dt><dd>${element.name}克${controls.name} · 受${controlledBy.name}制衡</dd>
+            <dt>对应卦象</dt><dd>${element.trigrams.join('、')}</dd>
+          </dl>
+        `;
+      };
+
+      const updateActiveState = (elementId) => {
+        elementNodes.forEach(({ group }) => {
+          group.classList.toggle('active', group.dataset.id === elementId);
+        });
+
+        shengLines.forEach((line) => {
+          line.classList.toggle('active', line.dataset.from === elementId);
+        });
+
+        keLines.forEach((line) => {
+          line.classList.toggle('active', line.dataset.from === elementId);
+        });
+
+        const activeElement = wuXing.find((item) => item.id === elementId);
+        renderInfo(activeElement);
+
+        document.querySelectorAll('.trigram-card').forEach((card) => {
+          card.classList.toggle('highlight', card.dataset.element === elementId);
+        });
+
+        document.querySelectorAll('.trigram-label').forEach((label) => {
+          label.setAttribute('fill', label.dataset.element === elementId ? '#f8fafc' : 'rgba(226,232,240,0.75)');
+        });
+      };
+
+      // Render trigram cards
+      trigramData.forEach((trigram) => {
+        const card = document.createElement('article');
+        card.className = 'trigram-card';
+        card.dataset.element = trigram.element;
+        card.innerHTML = `
+          <h3>${trigram.name} · ${trigram.image}</h3>
+          <p>${trigram.quality} —— ${trigram.governance}</p>
+          <div class="meta">
+            <span>拼音：${trigram.pinyin}</span>
+            <span>方位：${trigram.direction}</span>
+            <span>对应五行：${wuXing.find((item) => item.id === trigram.element).name}</span>
+          </div>
+        `;
+        card.addEventListener('mouseenter', () => updateActiveState(trigram.element));
+        card.addEventListener('focus', () => updateActiveState(trigram.element));
+        card.setAttribute('tabindex', '0');
+        trigramGrid.appendChild(card);
+      });
+
+      elementNodes.forEach(({ group }, elementId) => {
+        const activate = () => updateActiveState(elementId);
+        group.addEventListener('mouseenter', activate);
+        group.addEventListener('focus', activate);
+        group.addEventListener('click', activate);
+        group.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            activate();
+          }
+        });
+      });
+
+      // Default state
+      updateActiveState('wood');
+    </script>
+  </body>
+</html>
