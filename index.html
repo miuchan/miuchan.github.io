@@ -34,6 +34,18 @@
         ></nav>
         <div class="header__actions">
           <button
+            class="header__action"
+            id="command-toggle"
+            type="button"
+            aria-haspopup="dialog"
+            aria-expanded="false"
+            aria-controls="command-palette"
+            data-i18n="nav.commandLabel"
+            data-i18n-attr="aria-label:nav.commandLabel"
+          >
+            导航矩阵
+          </button>
+          <button
             class="language-toggle"
             id="language-toggle"
             type="button"
@@ -67,6 +79,48 @@
                 <a class="button button--ghost" href="public/resume/index.html" data-i18n="hero.secondaryCta"
                   >查看履历网络</a
                 >
+              </div>
+              <div
+                class="hero__control"
+                id="hero-control"
+                role="region"
+                aria-live="polite"
+                data-i18n-attr="aria-label:hero.controlAria"
+              >
+                <div class="hero__control-slider">
+                  <label for="hero-rotation" data-role="rotation-label" data-i18n="hero.rotationLabel"
+                    >星球自转速度</label
+                  >
+                  <div class="hero__control-track">
+                    <input
+                      type="range"
+                      id="hero-rotation"
+                      min="0"
+                      max="160"
+                      step="5"
+                      value="80"
+                      aria-describedby="rotation-speed-display"
+                    />
+                    <span class="hero__slider-value" id="rotation-speed-display">80%</span>
+                  </div>
+                  <p class="hero__control-hint" data-role="rotation-hint" data-i18n="hero.rotationHint">
+                    拖动调节星球自转与视角。
+                  </p>
+                </div>
+                <div class="hero__control-actions">
+                  <button
+                    class="button button--ghost"
+                    type="button"
+                    id="telemetry-pulse"
+                    data-role="pulse-button"
+                    data-i18n="hero.pulseButton"
+                  >
+                    激活遥测脉冲
+                  </button>
+                  <p class="hero__control-hint" data-role="pulse-hint" data-i18n="hero.pulseHint">
+                    随机增强信号，观察指标变化。
+                  </p>
+                </div>
               </div>
             </div>
             <div class="hero__stats" id="hero-stats" aria-live="polite" role="list"></div>
@@ -232,6 +286,38 @@
         <p class="footer-note" data-i18n="footer.note">欢迎 fork、引用或将实验室成果嵌入你的宇宙级项目。</p>
       </div>
     </footer>
+
+    <div class="command-palette" id="command-palette" role="dialog" aria-modal="true" aria-hidden="true">
+      <div class="command-palette__backdrop" tabindex="-1"></div>
+      <div class="command-palette__panel" role="document">
+        <header class="command-palette__header">
+          <div>
+            <h2 id="command-palette-title" data-i18n="commandPalette.title">导航矩阵</h2>
+            <p id="command-palette-description" data-i18n="commandPalette.subtitle">
+              搜索信息架构、体验簇或信号节点。
+            </p>
+          </div>
+          <span class="command-palette__hint" id="command-palette-hint" data-i18n="commandPalette.keyboardHint"
+            >快捷键：Ctrl/⌘ + K</span
+          >
+        </header>
+        <div class="command-palette__search">
+          <label class="visually-hidden" for="command-search" data-i18n="commandPalette.searchLabel">搜索</label>
+          <input
+            id="command-search"
+            type="search"
+            autocomplete="off"
+            spellcheck="false"
+            placeholder="输入关键词或使用 Ctrl + K"
+            data-i18n-attr="placeholder:commandPalette.searchPlaceholder"
+          />
+        </div>
+        <div class="command-palette__body" id="command-results" role="listbox" aria-labelledby="command-palette-title"></div>
+        <p class="command-palette__empty" id="command-empty" hidden data-i18n="commandPalette.noResults">
+          没有匹配项，换个关键词试试。
+        </p>
+      </div>
+    </div>
 
     <script type="module" src="assets/js/main.js"></script>
   </body>
