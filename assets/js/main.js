@@ -9,6 +9,15 @@ const counts = {
 
 counts.total = counts.demos + counts.research + counts.blogs + counts.resume;
 
+const allianceCounts = {
+  zh: Array.isArray(friendContent.zh?.featuredAlliances)
+    ? friendContent.zh.featuredAlliances.length
+    : 0,
+  en: Array.isArray(friendContent.en?.featuredAlliances)
+    ? friendContent.en.featuredAlliances.length
+    : 0
+};
+
 const translations = {
   zh: {
     documentTitle: 'Earth Online · 体验实验室',
@@ -27,6 +36,31 @@ const translations = {
     brand: {
       subtitle: '体验实验室 · Planetary Experience Lab',
       ariaLabel: 'Earth Online 实验室标识'
+    },
+    header: {
+      statusAria: '地球 Online 当前指标',
+      metrics: [
+        {
+          label: '资产矩阵',
+          value: `${counts.total}+`,
+          hint: `原型 ${counts.demos} · 研究 ${counts.research} · 长文 ${counts.blogs} · 履历 ${counts.resume}`
+        },
+        {
+          label: '实验舱段',
+          value: `${counts.demos}`,
+          hint: '实时上线的 WebGL · 协作实验'
+        },
+        {
+          label: '知识推演',
+          value: `${counts.blogs + counts.research}`,
+          hint: `研究 ${counts.research} · 长文 ${counts.blogs}`
+        },
+        {
+          label: '联盟节点',
+          value: `${allianceCounts.zh}`,
+          hint: '精选伙伴网络'
+        }
+      ]
     },
     nav: {
       hero: '开场',
@@ -73,17 +107,31 @@ const translations = {
         {
           label: '星球资产',
           value: `${counts.total}+`,
-          description: '交互原型、研究、长文与协作剧本组成的地球体验曲面。'
+          description: '交互原型、研究、长文与协作剧本组成的地球体验曲面。',
+          meta: [
+            `原型 ${counts.demos}`,
+            `研究 ${counts.research}`,
+            `长文 ${counts.blogs}`,
+            `履历 ${counts.resume}`
+          ]
         },
         {
           label: '实时实验舱',
           value: `${counts.demos}`,
-          description: 'WebGL 仿真、协作工作流与体验系统实验，即刻上线验证。'
+          description: 'WebGL 仿真、协作工作流与体验系统实验，即刻上线验证。',
+          meta: ['WebGL 引擎', '协作剧本', '体验系统']
         },
         {
           label: '知识流',
           value: `${counts.blogs + counts.research}`,
-          description: '策略长文与数学证明共同支撑的叙事与治理协议。'
+          description: '策略长文与数学证明共同支撑的叙事与治理协议。',
+          meta: [`研究 ${counts.research}`, `长文 ${counts.blogs}`]
+        },
+        {
+          label: '联盟星港',
+          value: `${allianceCounts.zh}`,
+          description: '跨学科伙伴共振形成的协作星港网络。',
+          meta: ['精选伙伴', '共创航线']
         }
       ]
     },
@@ -555,6 +603,31 @@ const translations = {
       subtitle: 'Planetary Experience Lab',
       ariaLabel: 'Earth Online lab mark'
     },
+    header: {
+      statusAria: 'Earth Online live indicators',
+      metrics: [
+        {
+          label: 'Asset matrix',
+          value: `${counts.total}+`,
+          hint: `Prototypes ${counts.demos} · Research ${counts.research} · Essays ${counts.blogs} · Resume ${counts.resume}`
+        },
+        {
+          label: 'Active lab pods',
+          value: `${counts.demos}`,
+          hint: 'WebGL simulations · Collaboration ops · Experience systems'
+        },
+        {
+          label: 'Knowledge flow',
+          value: `${counts.blogs + counts.research}`,
+          hint: `Research ${counts.research} · Essays ${counts.blogs}`
+        },
+        {
+          label: 'Alliance nodes',
+          value: `${allianceCounts.en}`,
+          hint: 'Featured partners in resonance'
+        }
+      ]
+    },
     nav: {
       hero: 'Launch',
       architecture: 'Recursive IA',
@@ -600,17 +673,31 @@ const translations = {
         {
           label: 'Planetary assets',
           value: `${counts.total}+`,
-          description: 'Interactive prototypes, research, longform essays, and collaboration playbooks form the Earth Online field.'
+          description: 'Interactive prototypes, research, longform essays, and collaboration playbooks form the Earth Online field.',
+          meta: [
+            `Prototypes ${counts.demos}`,
+            `Research ${counts.research}`,
+            `Essays ${counts.blogs}`,
+            `Resume ${counts.resume}`
+          ]
         },
         {
           label: 'Live lab pods',
           value: `${counts.demos}`,
-          description: 'WebGL simulations, collaboration workflows, and experience systems ready for instant validation.'
+          description: 'WebGL simulations, collaboration workflows, and experience systems ready for instant validation.',
+          meta: ['WebGL engine', 'Collab workflows', 'Experience OS']
         },
         {
           label: 'Knowledge flow',
           value: `${counts.blogs + counts.research}`,
-          description: 'Narratives backed by strategy essays and mathematical proofs keep story and governance aligned.'
+          description: 'Narratives backed by strategy essays and mathematical proofs keep story and governance aligned.',
+          meta: [`Research ${counts.research}`, `Essays ${counts.blogs}`]
+        },
+        {
+          label: 'Alliance harbor',
+          value: `${allianceCounts.en}`,
+          description: 'A resonance network of multidisciplinary partners opening collaboration routes.',
+          meta: ['Featured partners', 'Co-creation routes']
         }
       ]
     },
@@ -1337,20 +1424,64 @@ function updateLanguageToggle(lang) {
   button.setAttribute('aria-label', languageSection.toggleLabel || meta.toggleLabel);
 }
 
+function renderHeaderStatus(lang) {
+  const header = translations[lang]?.header;
+  const container = document.getElementById('header-status');
+  if (!container) return;
+  container.innerHTML = '';
+
+  const metrics = Array.isArray(header?.metrics) ? header.metrics : [];
+  if (!metrics.length) {
+    container.hidden = true;
+    return;
+  }
+
+  container.hidden = false;
+  container.setAttribute('role', 'list');
+
+  const fragment = document.createDocumentFragment();
+  metrics.forEach((metric) => {
+    if (!metric || !metric.label || !metric.value) return;
+    const pill = document.createElement('div');
+    pill.className = 'status-pill';
+    pill.setAttribute('role', 'listitem');
+    const hint = metric.hint ? `<span class="status-pill__hint">${metric.hint}</span>` : '';
+    pill.innerHTML = `
+      <span class="status-pill__value">${metric.value}</span>
+      <div class="status-pill__meta">
+        <span class="status-pill__label">${metric.label}</span>
+        ${hint}
+      </div>
+    `;
+    fragment.appendChild(pill);
+  });
+
+  container.appendChild(fragment);
+}
+
 function renderHeroStats(lang) {
   const stats = translations[lang].hero.stats;
   const container = document.getElementById('hero-stats');
   if (!container) return;
   container.innerHTML = '';
+  container.setAttribute('role', 'list');
 
   const fragment = document.createDocumentFragment();
   stats.forEach((stat) => {
     const card = document.createElement('article');
     card.className = 'stat-card';
+    card.setAttribute('role', 'listitem');
+    const metaItems = Array.isArray(stat.meta) ? stat.meta.filter(Boolean) : [];
+    const metaList = metaItems.length
+      ? `<ul class="stat-card__meta" role="list">${metaItems
+          .map((item) => `<li role="listitem">${item}</li>`)
+          .join('')}</ul>`
+      : '';
     card.innerHTML = `
       <strong>${stat.value}</strong>
       <h3>${stat.label}</h3>
       <p>${stat.description}</p>
+      ${metaList}
     `;
     fragment.appendChild(card);
   });
@@ -1728,6 +1859,7 @@ function applyLanguage(lang) {
   updateInformationArchitecture(lang);
   updateStaticText(lang);
   updateLanguageToggle(lang);
+  renderHeaderStatus(lang);
   renderHeroStats(lang);
   renderStackLayers(lang);
   setupDeckSection(lang);
