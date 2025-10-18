@@ -2,7 +2,7 @@ import { featuredAlliances } from './friends-data.js';
 
 const counts = {
   demos: 21,
-  research: 4,
+  research: 5,
   blogs: 59,
   resume: 1
 };
@@ -162,6 +162,15 @@ const labEntries = [
     type: 'research',
     tags: ['无线供能', '智能家居'],
     keywords: ['wireless power', 'smart home']
+  },
+  {
+    title: '珂朵莉·凤凰院凶真时间同调实验室',
+    description:
+      '融合记忆花庭与世界线跳跃模型，研发跨时间线的体验安全协议与共鸣写作工具链。',
+    href: 'docs/chtholly-hououin-temporal-synchrony-lab.md',
+    type: 'research',
+    tags: ['时间工程', '记忆系统'],
+    keywords: ['temporal synchrony', 'memory resonance', 'world line']
   },
   {
     title: '计算奇点 470 年上界证明',
