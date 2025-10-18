@@ -30,13 +30,36 @@ const translations = {
     },
     nav: {
       hero: '开场',
+      architecture: '递归信息场',
       stack: '星球栈图',
       decks: '体验簇阵',
       council: 'AI 议会',
       signals: '信号中枢',
       alliances: '联盟星港',
       dock: '联络站',
-      ariaLabel: '主导航'
+      ariaLabel: '信息架构导航',
+      hierarchy: [
+        { id: 'hero', index: '0', label: '轨道入口' },
+        {
+          id: 'architecture',
+          index: '1',
+          label: '递归信息场',
+          children: [
+            {
+              id: 'stack',
+              index: '1.1',
+              label: '星球栈图',
+              children: [
+                { id: 'council', index: '1.1.1', label: 'AI 议会' },
+                { id: 'signals', index: '1.1.2', label: '信号中枢' }
+              ]
+            },
+            { id: 'decks', index: '1.2', label: '体验簇阵' }
+          ]
+        },
+        { id: 'alliances', index: '2', label: '联盟星港' },
+        { id: 'dock', index: '3', label: '联络站' }
+      ]
     },
     hero: {
       eyebrow: 'Planetary Experience Interface',
@@ -63,6 +86,12 @@ const translations = {
           description: '策略长文与数学证明共同支撑的叙事与治理协议。'
         }
       ]
+    },
+    architecture: {
+      eyebrow: 'Recursive Gradient Descent',
+      title: '递归梯度下降信息架构',
+      intro:
+        '我们把整个 UI 看作需要不断收敛的目标函数：每一次信息下潜都重新分配权重，压缩噪声、放大关键变量，让协作者以最短路径抵达所需的上下文与行动入口。'
     },
     stack: {
       eyebrow: 'Planetary Stack',
@@ -519,13 +548,36 @@ const translations = {
     },
     nav: {
       hero: 'Launch',
+      architecture: 'Recursive IA',
       stack: 'Planetary Stack',
       decks: 'Experience Decks',
       council: 'AI Council',
       signals: 'Signal Hub',
       alliances: 'Alliance Harbor',
       dock: 'Dock',
-      ariaLabel: 'Primary navigation'
+      ariaLabel: 'Information architecture navigation',
+      hierarchy: [
+        { id: 'hero', index: '0', label: 'Launch bay' },
+        {
+          id: 'architecture',
+          index: '1',
+          label: 'Recursive information field',
+          children: [
+            {
+              id: 'stack',
+              index: '1.1',
+              label: 'Planetary stack map',
+              children: [
+                { id: 'council', index: '1.1.1', label: 'Interpreter council' },
+                { id: 'signals', index: '1.1.2', label: 'Signal hub' }
+              ]
+            },
+            { id: 'decks', index: '1.2', label: 'Experience decks' }
+          ]
+        },
+        { id: 'alliances', index: '2', label: 'Alliance harbor' },
+        { id: 'dock', index: '3', label: 'Docking station' }
+      ]
     },
     hero: {
       eyebrow: 'Planetary Experience Interface',
@@ -552,6 +604,12 @@ const translations = {
           description: 'Narratives backed by strategy essays and mathematical proofs keep story and governance aligned.'
         }
       ]
+    },
+    architecture: {
+      eyebrow: 'Recursive Gradient Descent',
+      title: 'Recursive gradient descent information architecture',
+      intro:
+        'We treat the interface as a function we minimise: every recursive descent re-weights the signals, reduces noise, and amplifies decisive variables so visitors land on the right context and action gateway instantly.'
     },
     stack: {
       eyebrow: 'Planetary Stack',
@@ -1034,6 +1092,190 @@ const state = {
   deckKeyword: ''
 };
 
+let navObserver = null;
+
+function traverseHierarchy(nodes, callback, depth = 0) {
+  if (!Array.isArray(nodes)) return;
+  nodes.forEach((node) => {
+    if (!node || typeof node !== 'object') return;
+    callback(node, depth);
+    if (Array.isArray(node.children) && node.children.length) {
+      traverseHierarchy(node.children, callback, depth + 1);
+    }
+  });
+}
+
+function assignInformationDepth(hierarchy) {
+  const visited = new Set();
+
+  traverseHierarchy(hierarchy, (node, depth) => {
+    const element = document.getElementById(node.id);
+    if (!element) return;
+    element.setAttribute('data-ia-depth', String(depth));
+    if (node.index) {
+      element.setAttribute('data-ia-index', node.index);
+    } else {
+      element.removeAttribute('data-ia-index');
+    }
+    visited.add(element);
+  });
+
+  document.querySelectorAll('[data-ia-depth]').forEach((element) => {
+    if (!visited.has(element)) {
+      element.removeAttribute('data-ia-depth');
+    }
+  });
+
+  document.querySelectorAll('[data-ia-index]').forEach((element) => {
+    if (!visited.has(element)) {
+      element.removeAttribute('data-ia-index');
+    }
+  });
+}
+
+function createNavList(items, lang, depth = 0, navDictionary = translations[lang]?.nav || {}) {
+  const list = document.createElement('ol');
+  list.className = depth === 0 ? 'nav-tree' : 'nav-tree__children';
+
+  items.forEach((item) => {
+    if (!item || typeof item !== 'object') return;
+    const li = document.createElement('li');
+    li.className = 'nav-tree__item';
+    li.dataset.depth = String(depth);
+
+    const anchor = document.createElement('a');
+    anchor.className = 'nav-tree__label';
+    anchor.href = `#${item.id}`;
+
+    if (item.index) {
+      const badge = document.createElement('span');
+      badge.className = 'nav-tree__index';
+      badge.textContent = item.index;
+      anchor.appendChild(badge);
+    }
+
+    const label = document.createElement('span');
+    label.className = 'nav-tree__text';
+    const fallback = resolveTranslation(navDictionary, item.id) || item.id;
+    label.textContent = item.label || fallback;
+    anchor.appendChild(label);
+
+    li.appendChild(anchor);
+
+    if (Array.isArray(item.children) && item.children.length) {
+      li.appendChild(createNavList(item.children, lang, depth + 1, navDictionary));
+    }
+
+    list.appendChild(li);
+  });
+
+  return list;
+}
+
+function buildNavigationTree(navDefinition, lang) {
+  const navRoot = document.getElementById('site-nav');
+  if (!navRoot) return;
+
+  navRoot.innerHTML = '';
+  if (navDefinition?.ariaLabel) {
+    navRoot.setAttribute('aria-label', navDefinition.ariaLabel);
+  }
+
+  const hierarchy = Array.isArray(navDefinition?.hierarchy) ? navDefinition.hierarchy : [];
+  navRoot.classList.toggle('site-nav--tree', hierarchy.length > 0);
+  if (!hierarchy.length) return;
+
+  const tree = createNavList(hierarchy, lang, 0);
+  navRoot.appendChild(tree);
+}
+
+function activateNavigationObserver() {
+  if (navObserver) {
+    navObserver.disconnect();
+  }
+
+  const anchors = Array.from(document.querySelectorAll('.nav-tree__label'));
+  if (!anchors.length) return;
+
+  if (typeof IntersectionObserver === 'undefined') {
+    anchors[0].classList.add('is-active');
+    return;
+  }
+
+  const anchorMap = new Map();
+  anchors.forEach((anchor) => {
+    const href = anchor.getAttribute('href');
+    if (!href || !href.startsWith('#')) return;
+    const id = href.slice(1);
+    const section = document.getElementById(id);
+    if (section) {
+      anchorMap.set(id, anchor);
+    }
+  });
+
+  if (!anchorMap.size) return;
+
+  const visible = new Map();
+
+  navObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        const id = entry.target.id;
+        if (!anchorMap.has(id)) return;
+        if (entry.isIntersecting) {
+          visible.set(id, entry.intersectionRatio);
+        } else {
+          visible.delete(id);
+        }
+      });
+
+      anchors.forEach((anchor) => anchor.classList.remove('is-active'));
+
+      let activeId = null;
+      let maxRatio = 0;
+      visible.forEach((ratio, id) => {
+        if (ratio > maxRatio) {
+          activeId = id;
+          maxRatio = ratio;
+        }
+      });
+
+      if (!activeId) {
+        const firstAnchor = anchors[0];
+        if (firstAnchor) {
+          firstAnchor.classList.add('is-active');
+        }
+        return;
+      }
+
+      const activeAnchor = anchorMap.get(activeId);
+      if (activeAnchor) {
+        activeAnchor.classList.add('is-active');
+      }
+    },
+    {
+      rootMargin: '-40% 0px -45% 0px',
+      threshold: [0.1, 0.25, 0.45, 0.65]
+    }
+  );
+
+  anchorMap.forEach((anchor, id) => {
+    const section = document.getElementById(id);
+    if (section) {
+      navObserver.observe(section);
+    }
+  });
+}
+
+function updateInformationArchitecture(lang) {
+  const navDefinition = translations[lang]?.nav;
+  if (!navDefinition) return;
+  const hierarchy = Array.isArray(navDefinition.hierarchy) ? navDefinition.hierarchy : [];
+  assignInformationDepth(hierarchy);
+  buildNavigationTree(navDefinition, lang);
+  activateNavigationObserver();
+}
+
 function updateDocumentMeta(lang) {
   const meta = translations[lang].meta;
   document.documentElement.lang = meta.htmlLang;
@@ -1465,6 +1707,7 @@ function applyLanguage(lang) {
   }
 
   updateDocumentMeta(lang);
+  updateInformationArchitecture(lang);
   updateStaticText(lang);
   updateLanguageToggle(lang);
   renderHeroStats(lang);

@@ -21,17 +21,10 @@
         </div>
         <nav
           class="site-nav"
+          id="site-nav"
           aria-label="主导航"
           data-i18n-attr="aria-label:nav.ariaLabel"
-        >
-          <a href="#hero" data-i18n="nav.hero">开场</a>
-          <a href="#stack" data-i18n="nav.stack">星球栈图</a>
-          <a href="#decks" data-i18n="nav.decks">体验簇阵</a>
-          <a href="#council" data-i18n="nav.council">AI 议会</a>
-          <a href="#signals" data-i18n="nav.signals">信号中枢</a>
-          <a href="#alliances" data-i18n="nav.alliances">联盟星港</a>
-          <a href="#dock" data-i18n="nav.dock">联络站</a>
-        </nav>
+        ></nav>
         <div class="header__actions">
           <button
             class="language-toggle"
@@ -74,109 +67,126 @@
         </div>
       </section>
 
-      <section id="stack" class="section" aria-labelledby="stack-title">
-        <div class="inner">
-          <header class="section__header">
-            <p class="section__eyebrow" data-i18n="stack.eyebrow">Planetary Stack</p>
-            <h2 id="stack-title" data-i18n="stack.title">地球 Online 星球栈图</h2>
-            <p data-i18n="stack.intro">
-              我们将地球 Online 抽象为三层协同的星球栈：从数据地幔到体验轨道与联盟星网，凸优化每一次信息流动，让协作决策拥有最短路径。
-            </p>
-          </header>
-          <div class="grid" id="stack-grid" aria-live="polite"></div>
-        </div>
-      </section>
-
-      <section id="decks" class="section section--alt" aria-labelledby="decks-title">
-        <div class="inner">
-          <header class="section__header">
-            <p class="section__eyebrow" data-i18n="decks.eyebrow">Experience Decks</p>
-            <h2 id="decks-title" data-i18n="decks.title">体验簇阵：以任务域凸优化的实验卡组</h2>
-            <p data-i18n="decks.intro">
-              每一张卡片都对应一条可执行的地球体验航线。通过聚类筛选与语义搜索，快速定位与你的任务最匹配的实验资产。
-            </p>
-          </header>
-          <div class="lab-controls" role="search">
-            <label class="visually-hidden" for="deck-search" data-i18n="decks.searchLabel">搜索实验</label>
-            <input
-              id="deck-search"
-              type="search"
-              placeholder="输入关键词（例如 WebGL、气候、协作）"
-              data-i18n-attr="placeholder:decks.searchPlaceholder"
-              aria-describedby="deck-summary"
-            />
-            <div
-              class="filter-group"
-              id="deck-filters"
-              role="group"
-              aria-label="实验过滤"
-              data-i18n-attr="aria-label:decks.filterAria"
-            ></div>
-          </div>
-          <p id="deck-summary" class="browser-summary"></p>
-          <div class="deck-grid" id="deck-grid" aria-live="polite"></div>
-        </div>
-      </section>
-
       <section
-        id="council"
-        class="section"
-        aria-labelledby="council-title"
+        id="architecture"
+        class="section ia-surface"
+        aria-labelledby="architecture-title"
       >
         <div class="inner">
           <header class="section__header">
-            <p class="section__eyebrow" data-i18n="council.eyebrow">Interpreter Council</p>
-            <h2 id="council-title" data-i18n="council.title">地球 Online AI 议会协同推演</h2>
-            <p data-i18n="council.intro">
-              三层星球栈的决策权交由两位解释器共同审议：他们在对齐目标、策略模型与安全约束之间寻找最优凸组合，为地球 Online 的操作守则提供依据。
+            <p class="section__eyebrow" data-i18n="architecture.eyebrow">Recursive Gradient Descent</p>
+            <h2 id="architecture-title" data-i18n="architecture.title">递归梯度下降信息架构</h2>
+            <p data-i18n="architecture.intro">
+              我们将整个体验界面视作需要不断收敛的目标函数：每一次信息下潜都重新分配权重，让使用者以最短路径抵达决策所需的上下文与行动入口。
             </p>
           </header>
-          <div class="interpreter-layout">
-            <div
-              class="interpreter-grid"
-              id="council-grid"
-              aria-live="polite"
-              aria-label="解释器画像"
-            ></div>
-            <div class="interpreter-panel">
-              <div class="interpreter-log" id="council-log" aria-live="polite">
-                <h3 id="council-log-title" data-i18n="council.logTitle">联合推理执行轨迹</h3>
+          <div class="ia-branch">
+            <section id="stack" class="section ia-surface ia-surface--nested" aria-labelledby="stack-title">
+              <div class="inner">
+                <header class="section__header">
+                  <p class="section__eyebrow" data-i18n="stack.eyebrow">Planetary Stack</p>
+                  <h2 id="stack-title" data-i18n="stack.title">地球 Online 星球栈图</h2>
+                  <p data-i18n="stack.intro">
+                    我们将地球 Online 抽象为三层协同的星球栈：从数据地幔到体验轨道与联盟星网，凸优化每一次信息流动，让协作决策拥有最短路径。
+                  </p>
+                </header>
+                <div class="grid" id="stack-grid" aria-live="polite"></div>
               </div>
-              <div
-                class="interpreter-summary"
-                id="council-summary"
-                aria-live="polite"
-                aria-labelledby="council-summary-title"
-              ></div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section id="signals" class="section" aria-labelledby="signals-title">
-        <div class="inner">
-          <header class="section__header">
-            <p class="section__eyebrow" data-i18n="signals.eyebrow">Signal Hub</p>
-            <h2 id="signals-title" data-i18n="signals.title">信号中枢：实时指标与演进年表</h2>
-            <p data-i18n="signals.intro">
-              星球栈的运行态势通过遥测与时间线同步呈现。凸优化的指标体系帮助你即时捕捉能量流向与关键跃迁。
-            </p>
-          </header>
-          <div class="signals-grid">
-            <section class="signals-panel" aria-labelledby="signal-telemetry-title">
-              <h3 id="signal-telemetry-title" data-i18n="signals.telemetry.title">实时遥测阵列</h3>
-              <p data-i18n="signals.telemetry.intro">我们监控资产谱系、协作频率与稳定性，以动态凸组合展现地球 Online 的运行脉冲。</p>
-              <div class="telemetry" id="signal-telemetry" aria-live="polite"></div>
+              <div class="ia-branch ia-branch--nested">
+                <section
+                  id="council"
+                  class="section ia-surface ia-surface--nested"
+                  aria-labelledby="council-title"
+                >
+                  <div class="inner">
+                    <header class="section__header">
+                      <p class="section__eyebrow" data-i18n="council.eyebrow">Interpreter Council</p>
+                      <h2 id="council-title" data-i18n="council.title">地球 Online AI 议会协同推演</h2>
+                      <p data-i18n="council.intro">
+                        三层星球栈的决策权交由两位解释器共同审议：他们在对齐目标、策略模型与安全约束之间寻找最优凸组合，为地球 Online 的操作守则提供依据。
+                      </p>
+                    </header>
+                    <div class="interpreter-layout">
+                      <div
+                        class="interpreter-grid"
+                        id="council-grid"
+                        aria-live="polite"
+                        aria-label="解释器画像"
+                      ></div>
+                      <div class="interpreter-panel">
+                        <div class="interpreter-log" id="council-log" aria-live="polite">
+                          <h3 id="council-log-title" data-i18n="council.logTitle">联合推理执行轨迹</h3>
+                        </div>
+                        <div
+                          class="interpreter-summary"
+                          id="council-summary"
+                          aria-live="polite"
+                          aria-labelledby="council-summary-title"
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+                <section id="signals" class="section ia-surface ia-surface--nested" aria-labelledby="signals-title">
+                  <div class="inner">
+                    <header class="section__header">
+                      <p class="section__eyebrow" data-i18n="signals.eyebrow">Signal Hub</p>
+                      <h2 id="signals-title" data-i18n="signals.title">信号中枢：实时指标与演进年表</h2>
+                      <p data-i18n="signals.intro">
+                        星球栈的运行态势通过遥测与时间线同步呈现。凸优化的指标体系帮助你即时捕捉能量流向与关键跃迁。
+                      </p>
+                    </header>
+                    <div class="signals-grid">
+                      <section class="signals-panel" aria-labelledby="signal-telemetry-title">
+                        <h3 id="signal-telemetry-title" data-i18n="signals.telemetry.title">实时遥测阵列</h3>
+                        <p data-i18n="signals.telemetry.intro">我们监控资产谱系、协作频率与稳定性，以动态凸组合展现地球 Online 的运行脉冲。</p>
+                        <div class="telemetry" id="signal-telemetry" aria-live="polite"></div>
+                      </section>
+                      <section class="signals-panel" aria-labelledby="chronicle-title">
+                        <h3 id="chronicle-title" data-i18n="signals.chronicle.title">地球 Online 年表</h3>
+                        <p data-i18n="signals.chronicle.intro">关键节点构成星球栈的演进轨道，帮助你从起源到未来规划快速建立坐标。</p>
+                        <div class="timeline" id="chronicle-stream" aria-live="polite"></div>
+                      </section>
+                    </div>
+                  </div>
+                </section>
+              </div>
             </section>
-            <section class="signals-panel" aria-labelledby="chronicle-title">
-              <h3 id="chronicle-title" data-i18n="signals.chronicle.title">地球 Online 年表</h3>
-              <p data-i18n="signals.chronicle.intro">关键节点构成星球栈的演进轨道，帮助你从起源到未来规划快速建立坐标。</p>
-              <div class="timeline" id="chronicle-stream" aria-live="polite"></div>
+            <section id="decks" class="section ia-surface ia-surface--nested" aria-labelledby="decks-title">
+              <div class="inner">
+                <header class="section__header">
+                  <p class="section__eyebrow" data-i18n="decks.eyebrow">Experience Decks</p>
+                  <h2 id="decks-title" data-i18n="decks.title">体验簇阵：以任务域凸优化的实验卡组</h2>
+                  <p data-i18n="decks.intro">
+                    每一张卡片都对应一条可执行的地球体验航线。通过聚类筛选与语义搜索，快速定位与你的任务最匹配的实验资产。
+                  </p>
+                </header>
+                <div class="lab-controls" role="search">
+                  <label class="visually-hidden" for="deck-search" data-i18n="decks.searchLabel">搜索实验</label>
+                  <input
+                    id="deck-search"
+                    type="search"
+                    placeholder="输入关键词（例如 WebGL、气候、协作）"
+                    data-i18n-attr="placeholder:decks.searchPlaceholder"
+                    aria-describedby="deck-summary"
+                  />
+                  <div
+                    class="filter-group"
+                    id="deck-filters"
+                    role="group"
+                    aria-label="实验过滤"
+                    data-i18n-attr="aria-label:decks.filterAria"
+                  ></div>
+                </div>
+                <p id="deck-summary" class="browser-summary"></p>
+                <div class="deck-grid" id="deck-grid" aria-live="polite"></div>
+              </div>
             </section>
           </div>
         </div>
       </section>
 
-      <section id="alliances" class="section" aria-labelledby="alliances-title">
+      <section id="alliances" class="section ia-surface" aria-labelledby="alliances-title">
         <div class="inner">
           <header class="section__header">
             <p class="section__eyebrow" data-i18n="alliances.eyebrow">Alliance Network</p>
@@ -195,7 +205,7 @@
         </div>
       </section>
 
-      <section id="dock" class="section" aria-labelledby="dock-title">
+      <section id="dock" class="section ia-surface" aria-labelledby="dock-title">
         <div class="inner">
           <header class="section__header">
             <p class="section__eyebrow" data-i18n="dock.eyebrow">Docking Station</p>
