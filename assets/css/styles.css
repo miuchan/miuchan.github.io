@@ -117,6 +117,33 @@ a:focus {
   background: rgba(0, 245, 255, 0.08);
 }
 
+.header__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.language-toggle {
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 245, 255, 0.35);
+  background: rgba(0, 245, 255, 0.08);
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+}
+
+.language-toggle:hover,
+.language-toggle:focus {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px rgba(0, 245, 255, 0.24);
+  background: rgba(0, 245, 255, 0.18);
+}
+
 .hero {
   position: relative;
   min-height: clamp(32rem, 80vh, 46rem);

@@ -15,16 +15,31 @@
   <body>
     <header class="site-header">
       <div class="inner header__inner">
-        <div class="brand" aria-label="Earth Online 实验室标识">
+        <div class="brand" aria-label="Earth Online 实验室标识" data-i18n-attr="aria-label:brand.ariaLabel">
           <span class="brand__title">Earth Online</span>
-          <span class="brand__subtitle">体验实验室 · Planetary Experience Lab</span>
+          <span class="brand__subtitle" data-i18n="brand.subtitle">体验实验室 · Planetary Experience Lab</span>
         </div>
-        <nav class="site-nav" aria-label="主导航">
-          <a href="../index.html#hero">主页</a>
-          <a href="../index.html#labs">实验矩阵</a>
-          <a href="../index.html#alliances">友链星港</a>
-          <a href="../index.html#contact">联络站</a>
+        <nav
+          class="site-nav"
+          aria-label="主导航"
+          data-i18n-attr="aria-label:nav.ariaLabel"
+        >
+          <a href="../index.html#hero" data-i18n="nav.home">主页</a>
+          <a href="../index.html#labs" data-i18n="nav.labs">实验矩阵</a>
+          <a href="../index.html#alliances" data-i18n="nav.alliances">友链星港</a>
+          <a href="../index.html#contact" data-i18n="nav.contact">联络站</a>
         </nav>
+        <div class="header__actions">
+          <button
+            class="language-toggle"
+            id="friends-language-toggle"
+            type="button"
+            aria-label="切换语言"
+            data-i18n-attr="aria-label:language.toggleLabel"
+          >
+            EN
+          </button>
+        </div>
       </div>
     </header>
 
@@ -32,20 +47,29 @@
       <section class="subpage-hero" aria-labelledby="friends-title">
         <div class="inner subpage-hero__inner">
           <div class="subpage-hero__content">
-            <p class="section__eyebrow">Alliance Network</p>
-            <h1 id="friends-title">友链星港</h1>
-            <p class="subpage-hero__lead">
+            <p class="section__eyebrow" data-i18n="hero.eyebrow">Alliance Network</p>
+            <h1 id="friends-title" data-i18n="hero.title">友链星港</h1>
+            <p class="subpage-hero__lead" data-i18n="hero.lead">
               Earth Online 的伙伴网络不断扩张。我们在这里记录每一位与我们共同探索体验与知识边界的朋友，方便你快速建立链接并开启合作。
             </p>
-            <div class="subpage-hero__actions" role="group" aria-label="友链操作">
-              <a class="button" href="../index.html#contact">申请交换友链</a>
-              <a class="button button--ghost" href="../index.html">返回主站</a>
+            <div
+              class="subpage-hero__actions"
+              role="group"
+              aria-label="友链操作"
+              data-i18n-attr="aria-label:hero.actionsAria"
+            >
+              <a class="button" href="../index.html#contact" data-i18n="hero.primaryCta">申请交换友链</a>
+              <a class="button button--ghost" href="../index.html" data-i18n="hero.secondaryCta">返回主站</a>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="section section--alt" aria-label="友链列表">
+      <section
+        class="section section--alt"
+        aria-label="友链列表"
+        data-i18n-attr="aria-label:network.ariaLabel"
+      >
         <div class="inner">
           <div class="friend-network" id="friend-grid" aria-live="polite"></div>
         </div>
@@ -54,8 +78,8 @@
 
     <footer class="site-footer">
       <div class="inner">
-        <p>© 2024 Earth Online Experience Lab · Powered by Aman Sharma</p>
-        <p class="footer-note">欢迎 fork、引用或将实验室成果嵌入你的宇宙级项目。</p>
+        <p data-i18n="footer.credit">© 2024 Earth Online Experience Lab · Powered by Aman Sharma</p>
+        <p class="footer-note" data-i18n="footer.note">欢迎 fork、引用或将实验室成果嵌入你的宇宙级项目。</p>
       </div>
     </footer>
 
