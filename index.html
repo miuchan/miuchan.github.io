@@ -25,13 +25,12 @@
           data-i18n-attr="aria-label:nav.ariaLabel"
         >
           <a href="#hero" data-i18n="nav.hero">开场</a>
-          <a href="#mission" data-i18n="nav.mission">使命域</a>
-          <a href="#labs" data-i18n="nav.labs">实验矩阵</a>
-          <a href="#interpreters" data-i18n="nav.interpreters">AI 解释器</a>
-          <a href="#telemetry" data-i18n="nav.telemetry">实时遥测</a>
-          <a href="#timeline" data-i18n="nav.timeline">地球更新史</a>
-          <a href="#alliances" data-i18n="nav.alliances">友链星港</a>
-          <a href="#contact" data-i18n="nav.contact">联络站</a>
+          <a href="#stack" data-i18n="nav.stack">星球栈图</a>
+          <a href="#decks" data-i18n="nav.decks">体验簇阵</a>
+          <a href="#council" data-i18n="nav.council">AI 议会</a>
+          <a href="#signals" data-i18n="nav.signals">信号中枢</a>
+          <a href="#alliances" data-i18n="nav.alliances">联盟星港</a>
+          <a href="#dock" data-i18n="nav.dock">联络站</a>
         </nav>
         <div class="header__actions">
           <button
@@ -64,7 +63,7 @@
                 aria-label="快速入口"
                 data-i18n-attr="aria-label:hero.ctaAria"
               >
-                <a class="button" href="#labs" data-i18n="hero.primaryCta">进入实验矩阵</a>
+                <a class="button" href="#decks" data-i18n="hero.primaryCta">进入体验簇阵</a>
                 <a class="button button--ghost" href="public/resume/index.html" data-i18n="hero.secondaryCta"
                   >查看履历网络</a
                 >
@@ -75,109 +74,105 @@
         </div>
       </section>
 
-      <section id="mission" class="section" aria-labelledby="mission-title">
+      <section id="stack" class="section" aria-labelledby="stack-title">
         <div class="inner">
           <header class="section__header">
-            <p class="section__eyebrow" data-i18n="mission.eyebrow">Mission Quadrants</p>
-            <h2 id="mission-title" data-i18n="mission.title">四大任务域，重塑地球体验</h2>
-            <p data-i18n="mission.intro">
-              Earth Online 把复杂的地球议题拆分为可执行的任务域——从生态治理到认知接口，以实验驱动的方式为专家团队提供共同语言。
+            <p class="section__eyebrow" data-i18n="stack.eyebrow">Planetary Stack</p>
+            <h2 id="stack-title" data-i18n="stack.title">地球 Online 星球栈图</h2>
+            <p data-i18n="stack.intro">
+              我们将地球 Online 抽象为三层协同的星球栈：从数据地幔到体验轨道与联盟星网，凸优化每一次信息流动，让协作决策拥有最短路径。
             </p>
           </header>
-          <div class="grid" id="mission-grid" aria-live="polite"></div>
+          <div class="grid" id="stack-grid" aria-live="polite"></div>
         </div>
       </section>
 
-      <section id="labs" class="section section--alt" aria-labelledby="labs-title">
+      <section id="decks" class="section section--alt" aria-labelledby="decks-title">
         <div class="inner">
           <header class="section__header">
-            <p class="section__eyebrow" data-i18n="labs.eyebrow">Immersive Lab Matrix</p>
-            <h2 id="labs-title" data-i18n="labs.title">实验矩阵：穿梭于 360° 地球体验</h2>
-            <p data-i18n="labs.intro">
-              每个实验都链接到真实的 Demo、研究或运营资产。点开任意模块即可即刻进入交互式场景，或通过顶部筛选快速定位你的兴趣领域。
+            <p class="section__eyebrow" data-i18n="decks.eyebrow">Experience Decks</p>
+            <h2 id="decks-title" data-i18n="decks.title">体验簇阵：以任务域凸优化的实验卡组</h2>
+            <p data-i18n="decks.intro">
+              每一张卡片都对应一条可执行的地球体验航线。通过聚类筛选与语义搜索，快速定位与你的任务最匹配的实验资产。
             </p>
           </header>
           <div class="lab-controls" role="search">
-            <label class="visually-hidden" for="lab-search" data-i18n="labs.searchLabel">搜索实验</label>
+            <label class="visually-hidden" for="deck-search" data-i18n="decks.searchLabel">搜索实验</label>
             <input
-              id="lab-search"
+              id="deck-search"
               type="search"
               placeholder="输入关键词（例如 WebGL、气候、协作）"
-              data-i18n-attr="placeholder:labs.searchPlaceholder"
-              aria-describedby="lab-summary"
+              data-i18n-attr="placeholder:decks.searchPlaceholder"
+              aria-describedby="deck-summary"
             />
             <div
               class="filter-group"
-              id="lab-filters"
+              id="deck-filters"
               role="group"
               aria-label="实验过滤"
-              data-i18n-attr="aria-label:labs.filterAria"
+              data-i18n-attr="aria-label:decks.filterAria"
             ></div>
           </div>
-          <p id="lab-summary" class="browser-summary"></p>
-          <div class="lab-grid" id="lab-grid" aria-live="polite"></div>
+          <p id="deck-summary" class="browser-summary"></p>
+          <div class="deck-grid" id="deck-grid" aria-live="polite"></div>
         </div>
       </section>
 
       <section
-        id="interpreters"
+        id="council"
         class="section"
-        aria-labelledby="interpreters-title"
+        aria-labelledby="council-title"
       >
         <div class="inner">
           <header class="section__header">
-            <p class="section__eyebrow" data-i18n="interpreters.eyebrow">Interpreter Duo</p>
-            <h2 id="interpreters-title" data-i18n="interpreters.title">OpenAI × CloseAI 解释器联合审议</h2>
-            <p data-i18n="interpreters.intro">
-              两位解释器将以各自的对齐目标、策略模型与约束清单对同一问题进行推理：为什么当前无法让你的所有代码仓库安全互通。
-              结论由合议庭记录，并生成后续行动建议。
+            <p class="section__eyebrow" data-i18n="council.eyebrow">Interpreter Council</p>
+            <h2 id="council-title" data-i18n="council.title">地球 Online AI 议会协同推演</h2>
+            <p data-i18n="council.intro">
+              三层星球栈的决策权交由两位解释器共同审议：他们在对齐目标、策略模型与安全约束之间寻找最优凸组合，为地球 Online 的操作守则提供依据。
             </p>
           </header>
           <div class="interpreter-layout">
             <div
               class="interpreter-grid"
-              id="interpreter-grid"
+              id="council-grid"
               aria-live="polite"
               aria-label="解释器画像"
             ></div>
             <div class="interpreter-panel">
-              <div class="interpreter-log" id="interpreter-log" aria-live="polite">
-                <h3 id="interpreter-log-title" data-i18n="interpreters.logTitle">联合推理执行轨迹</h3>
+              <div class="interpreter-log" id="council-log" aria-live="polite">
+                <h3 id="council-log-title" data-i18n="council.logTitle">联合推理执行轨迹</h3>
               </div>
               <div
                 class="interpreter-summary"
-                id="interpreter-summary"
+                id="council-summary"
                 aria-live="polite"
-                aria-labelledby="interpreter-summary-title"
+                aria-labelledby="council-summary-title"
               ></div>
             </div>
           </div>
         </div>
       </section>
-
-      <section id="telemetry" class="section" aria-labelledby="telemetry-title">
+      <section id="signals" class="section" aria-labelledby="signals-title">
         <div class="inner">
           <header class="section__header">
-            <p class="section__eyebrow" data-i18n="telemetry.eyebrow">Live Telemetry</p>
-            <h2 id="telemetry-title" data-i18n="telemetry.title">实时遥测：地球 Online 的运行指标</h2>
-            <p data-i18n="telemetry.intro">
-              我们监控体验实验室的能量流、协作频率与系统稳定性。数据基于真实资产数量与动态模拟，让你看到平台的持续跃迁。
+            <p class="section__eyebrow" data-i18n="signals.eyebrow">Signal Hub</p>
+            <h2 id="signals-title" data-i18n="signals.title">信号中枢：实时指标与演进年表</h2>
+            <p data-i18n="signals.intro">
+              星球栈的运行态势通过遥测与时间线同步呈现。凸优化的指标体系帮助你即时捕捉能量流向与关键跃迁。
             </p>
           </header>
-          <div class="telemetry" id="telemetry-panel" aria-live="polite"></div>
-        </div>
-      </section>
-
-      <section id="timeline" class="section section--alt" aria-labelledby="timeline-title">
-        <div class="inner">
-          <header class="section__header">
-            <p class="section__eyebrow" data-i18n="timeline.eyebrow">Evolution Timeline</p>
-            <h2 id="timeline-title" data-i18n="timeline.title">地球 Online 演进时间线</h2>
-            <p data-i18n="timeline.intro">
-              自首个原型诞生以来，我们不断吸收来自代码、研究与社区的能量。时间线记录关键跃迁，帮助你了解实验室的起源与未来方向。
-            </p>
-          </header>
-          <div class="timeline" id="timeline-stream" aria-live="polite"></div>
+          <div class="signals-grid">
+            <section class="signals-panel" aria-labelledby="signal-telemetry-title">
+              <h3 id="signal-telemetry-title" data-i18n="signals.telemetry.title">实时遥测阵列</h3>
+              <p data-i18n="signals.telemetry.intro">我们监控资产谱系、协作频率与稳定性，以动态凸组合展现地球 Online 的运行脉冲。</p>
+              <div class="telemetry" id="signal-telemetry" aria-live="polite"></div>
+            </section>
+            <section class="signals-panel" aria-labelledby="chronicle-title">
+              <h3 id="chronicle-title" data-i18n="signals.chronicle.title">地球 Online 年表</h3>
+              <p data-i18n="signals.chronicle.intro">关键节点构成星球栈的演进轨道，帮助你从起源到未来规划快速建立坐标。</p>
+              <div class="timeline" id="chronicle-stream" aria-live="polite"></div>
+            </section>
+          </div>
         </div>
       </section>
 
@@ -185,9 +180,9 @@
         <div class="inner">
           <header class="section__header">
             <p class="section__eyebrow" data-i18n="alliances.eyebrow">Alliance Network</p>
-            <h2 id="alliances-title" data-i18n="alliances.title">友链星港：与我们同频的体验实验室</h2>
+            <h2 id="alliances-title" data-i18n="alliances.title">联盟星港：与我们同频的体验实验室</h2>
             <p data-i18n="alliances.intro">
-              这里记录着与 Earth Online 长期共振的创作者与研究者。他们在各自的宇宙里推进设计、技术与叙事的边界，欢迎登舰拜访。
+              星港记录着与 Earth Online 共振的伙伴，他们在不同宇宙推进设计、技术与叙事的边界，欢迎沿航线拜访。
             </p>
           </header>
           <div class="alliance-grid" id="alliance-grid" aria-live="polite"></div>
@@ -200,16 +195,16 @@
         </div>
       </section>
 
-      <section id="contact" class="section" aria-labelledby="contact-title">
+      <section id="dock" class="section" aria-labelledby="dock-title">
         <div class="inner">
           <header class="section__header">
-            <p class="section__eyebrow" data-i18n="contact.eyebrow">Docking Station</p>
-            <h2 id="contact-title" data-i18n="contact.title">准备好与 Earth Online 对接吗？</h2>
-            <p data-i18n="contact.intro">
-              无论你来自设计工程、系统科学还是生态治理，我们都期待与你共创新的地球体验模式。以下资源帮助你快速与实验室建立连接。
+            <p class="section__eyebrow" data-i18n="dock.eyebrow">Docking Station</p>
+            <h2 id="dock-title" data-i18n="dock.title">准备好与 Earth Online 对接吗？</h2>
+            <p data-i18n="dock.intro">
+              无论你来自设计工程、系统科学还是生态治理，我们都期待与你共创新的地球体验模式。以下资源帮助你快速建立凸优化的协作通道。
             </p>
           </header>
-          <div class="contact" id="contact-links" aria-live="polite"></div>
+          <div class="contact" id="dock-links" aria-live="polite"></div>
         </div>
       </section>
     </main>
