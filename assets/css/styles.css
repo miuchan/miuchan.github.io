@@ -510,15 +510,43 @@ a:focus {
   color: var(--text-muted);
 }
 
-.grid,
-.lab-grid {
+.grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 1.6rem;
 }
 
-.mission-card,
-.lab-card {
+.deck-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+}
+
+.deck-cluster {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+.deck-cluster__intro h3 {
+  margin: 0;
+  font-family: 'Space Grotesk', system-ui;
+  font-size: 1.5rem;
+}
+
+.deck-cluster__intro p {
+  margin: 0.5rem 0 0;
+  color: var(--text-muted);
+}
+
+.deck-cluster__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.6rem;
+}
+
+.stack-card,
+.deck-card {
   position: relative;
   padding: 1.6rem;
   border-radius: var(--radius-lg);
@@ -529,8 +557,8 @@ a:focus {
   transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
 }
 
-.mission-card::after,
-.lab-card::after {
+.stack-card::after,
+.deck-card::after {
   content: '';
   position: absolute;
   inset: -30% 30% 60% -30%;
@@ -539,33 +567,33 @@ a:focus {
   transition: opacity var(--transition), transform var(--transition);
 }
 
-.mission-card:hover,
-.lab-card:hover {
+.stack-card:hover,
+.deck-card:hover {
   transform: translateY(-6px);
   border-color: rgba(0, 245, 255, 0.35);
   box-shadow: 0 40px 100px rgba(0, 12, 45, 0.55);
 }
 
-.mission-card:hover::after,
-.lab-card:hover::after {
+.stack-card:hover::after,
+.deck-card:hover::after {
   opacity: 1;
   transform: translate3d(0, -6%, 0);
 }
 
-.mission-card h3,
-.lab-card h3 {
+.stack-card h3,
+.deck-card h3 {
   margin-top: 0;
   font-family: 'Space Grotesk', system-ui;
   font-size: 1.3rem;
 }
 
-.mission-card p,
-.lab-card p {
+.stack-card p,
+.deck-card p {
   color: var(--text-muted);
 }
 
-.mission-card ul,
-.lab-card ul {
+.stack-card ul,
+.deck-card ul {
   list-style: none;
   padding: 0;
   margin: 1rem 0 0;
@@ -574,8 +602,8 @@ a:focus {
   gap: 0.6rem;
 }
 
-.mission-card li,
-.lab-card li,
+.stack-card li,
+.deck-card li,
 .telemetry li {
   background: rgba(0, 245, 255, 0.08);
   border-radius: 999px;
@@ -586,7 +614,7 @@ a:focus {
   color: var(--accent);
 }
 
-.lab-card a {
+.deck-card a {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
@@ -596,7 +624,7 @@ a:focus {
   letter-spacing: 0.06em;
 }
 
-.lab-card a span {
+.deck-card a span {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -614,7 +642,7 @@ a:focus {
   margin-bottom: 1.5rem;
 }
 
-#lab-search {
+#deck-search {
   flex: 1 1 240px;
   background: rgba(1, 4, 16, 0.75);
   border: 1px solid rgba(0, 245, 255, 0.22);
@@ -624,7 +652,7 @@ a:focus {
   font-size: 0.92rem;
 }
 
-#lab-search::placeholder {
+#deck-search::placeholder {
   color: rgba(180, 205, 240, 0.45);
 }
 
@@ -657,6 +685,33 @@ a:focus {
 .browser-summary {
   color: var(--text-muted);
   margin-bottom: 2rem;
+}
+
+.signals-grid {
+  display: grid;
+  gap: 1.8rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.signals-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.8rem;
+  border-radius: var(--radius-lg);
+  background: var(--surface-strong);
+  border: 1px solid rgba(0, 245, 255, 0.16);
+  box-shadow: var(--shadow);
+}
+
+.signals-panel h3 {
+  margin: 0;
+  font-family: 'Space Grotesk', system-ui;
+}
+
+.signals-panel p {
+  margin: 0;
+  color: var(--text-muted);
 }
 
 .telemetry {

@@ -30,91 +30,119 @@ const translations = {
     },
     nav: {
       hero: '开场',
-      mission: '使命域',
-      labs: '实验矩阵',
-      interpreters: 'AI 解释器',
-      telemetry: '实时遥测',
-      timeline: '地球更新史',
-      alliances: '友链星港',
-      contact: '联络站',
+      stack: '星球栈图',
+      decks: '体验簇阵',
+      council: 'AI 议会',
+      signals: '信号中枢',
+      alliances: '联盟星港',
+      dock: '联络站',
       ariaLabel: '主导航'
     },
     hero: {
       eyebrow: 'Planetary Experience Interface',
-      title: '将你的主页重构为地球 Online 体验实验室',
+      title: '地球 Online：行星级体验操作室',
       description:
-        '这是一座实时进化的地球体验操作系统：我们以 WebGL 星球引擎、时序故事矩阵与协作协议，将所有研究、原型与伙伴网络汇聚于一个全新的空间界面，邀请你随时登舰探索。',
-      primaryCta: '进入实验矩阵',
+        '以 WebGL 星球引擎、凸优化信息架构与联盟星网，将研究、原型与协议压缩进一个实时进化的空间界面，邀请你随时登舰探索。',
+      primaryCta: '进入体验簇阵',
       secondaryCta: '查看履历网络',
       ctaAria: '快速入口',
       stats: [
         {
-          label: '运行资产',
+          label: '星球资产',
           value: `${counts.total}+`,
-          description: '交互原型、研究、长文与协作模板组成的地球体验矩阵。'
+          description: '交互原型、研究、长文与协作剧本组成的地球体验曲面。'
         },
         {
-          label: '实时实验',
+          label: '实时实验舱',
           value: `${counts.demos}`,
-          description: 'WebGL 仿真、协作工作流与体验系统实验，可即刻上线验证。'
+          description: 'WebGL 仿真、协作工作流与体验系统实验，即刻上线验证。'
         },
         {
           label: '知识流',
           value: `${counts.blogs + counts.research}`,
-          description: '策略长文与数学证明共同支持的故事线与治理协议。'
+          description: '策略长文与数学证明共同支撑的叙事与治理协议。'
         }
       ]
     },
-    mission: {
-      eyebrow: 'Mission Quadrants',
-      title: '四大任务域，重塑地球体验',
+    stack: {
+      eyebrow: 'Planetary Stack',
+      title: '地球 Online 星球栈图',
       intro:
-        'Earth Online 把复杂的地球议题拆分为可执行的任务域——从生态治理到认知接口，以实验驱动的方式为专家团队提供共同语言。',
-      domains: [
+        '我们将地球 Online 抽象为协同优化的三层星球栈：在数据、体验与联盟之间建立最短路径，让复杂问题获得可执行的凸解。',
+      layers: [
         {
-          title: '生态奇点治理',
+          title: '数据地幔 · 信号治理层',
           narrative:
-            '构建全球生态复原的策略界面，联结数据、行为与政策，驱动真实世界的系统性修复。',
-          protocols: ['气候数据编排', '影响力建模', '跨域协作网络']
+            '汇聚实时遥测、风险模型与策略指标，构建可靠的地球底图，为所有实验提供可追踪的能量基线。',
+          protocols: ['遥测数据湖', '风险凸包建模', '治理仪表']
         },
         {
-          title: '体验系统操作台',
+          title: '体验轨道 · 交互编排层',
           narrative:
-            '把复杂的人机协作流程拆解为可执行模组，为团队提供统一的体验设计与验证协议。',
-          protocols: ['DesignOps', '实时度量', '策略原型']
+            '将原型、场景与工作流映射成体验舱段，以凸优化的流程拆解复杂协作，保障每一次迭代可测、可回滚。',
+          protocols: ['DesignOps', '策略原型库', '体验度量']
         },
         {
-          title: '认知接口升级',
+          title: '认知界面 · 感知放大层',
           narrative:
-            '借助沉浸式界面与多感官互动，探索地球体验的全新感知方式，放大人类与 AI 的协作潜力。',
-          protocols: ['WebGL 引擎', '声音与粒子系统', '叙事可视化']
+            '通过多模态界面与叙事可视化，让人类与 AI 在共同的感知坐标系下推演未来，降低理解成本。',
+          protocols: ['WebGL 星球引擎', '声音/粒子系统', '叙事拓扑']
         },
         {
-          title: '星际级伙伴网络',
+          title: '联盟星网 · 共振协同层',
           narrative:
-            '让跨学科伙伴快速找到协作坐标系，以标准化协议对接履历、节奏与资源。',
-          protocols: ['履历网络', '共创节奏', '学习路径']
+            '构建跨学科伙伴的协作协议，为履历、节奏与资源提供快速对接的星际路由。',
+          protocols: ['履历网络', '共创节奏脚本', '伙伴路由图']
         }
       ]
     },
-    labs: {
-      eyebrow: 'Immersive Lab Matrix',
-      title: '实验矩阵：穿梭于 360° 地球体验',
+    decks: {
+      eyebrow: 'Experience Decks',
+      title: '体验簇阵：以任务域凸优化的实验卡组',
       intro:
-        '每个实验都链接到真实的 Demo、研究或运营资产。点开任意模块即可即刻进入交互式场景，或通过顶部筛选快速定位你的兴趣领域。',
-      searchLabel: '搜索实验',
+        '每一张卡片都对应一条可执行的地球体验航线。通过聚类筛选与语义搜索，快速定位与你的任务最匹配的实验资产。',
+      searchLabel: '搜索体验簇',
       searchPlaceholder: '输入关键词（例如 WebGL、气候、协作）',
-      filterAria: '实验过滤',
+      filterAria: '体验簇过滤',
       cta: '即刻进入',
-      summary(count, keyword) {
-        return `共 ${count} 个实验，${keyword ? `匹配 “${keyword}”` : '随时待命'}。`;
+      summary(count, keyword, filterLabel) {
+        const keywordText = keyword ? `匹配 “${keyword}”` : '等待召唤';
+        return `共 ${count} 张卡片，${filterLabel} · ${keywordText}。`;
       },
       filters: [
-        { id: 'all', label: '全部' },
-        { id: 'demo', label: '交互实验' },
-        { id: 'research', label: '研究文档' },
-        { id: 'ops', label: '协作运营' },
-        { id: 'story', label: '叙事长文' }
+        { id: 'all', label: '全部轨道' },
+        { id: 'simulation', label: '星球仿真' },
+        { id: 'operations', label: '协作运营' },
+        { id: 'research', label: '研究推演' },
+        { id: 'narrative', label: '叙事档案' }
+      ],
+      clusterMap: {
+        demo: 'simulation',
+        ops: 'operations',
+        research: 'research',
+        story: 'narrative'
+      },
+      clusters: [
+        {
+          id: 'simulation',
+          title: '星球仿真甲板',
+          description: '实时交互的 WebGL 实验与控制系统演练，帮助你在行星尺度验证策略。'
+        },
+        {
+          id: 'operations',
+          title: '协作运营舱段',
+          description: '跨团队节奏、设计系统与治理流程的模板集，支撑长期的多主体协作。'
+        },
+        {
+          id: 'research',
+          title: '研究推演实验室',
+          description: '以数学与工程推导支撑的研究档案，为战略决策提供可验证的依据。'
+        },
+        {
+          id: 'narrative',
+          title: '叙事档案库',
+          description: '讲述方法论、故事线与文化原型的长文，构成地球 Online 的精神内核。'
+        }
       ],
       entries: [
         {
@@ -275,11 +303,11 @@ const translations = {
         }
       ]
     },
-    interpreters: {
-      eyebrow: 'Interpreter Duo',
-      title: 'OpenAI × CloseAI 解释器联合审议',
+    council: {
+      eyebrow: 'Interpreter Council',
+      title: '地球 Online AI 议会协同推演',
       intro:
-        '两位解释器将以各自的对齐目标、策略模型与约束清单对同一问题进行推理：为什么当前无法让你的所有代码仓库安全互通。结论由合议庭记录，并生成后续行动建议。',
+        '两位解释器以星球栈的不同对齐目标切换策略模型，在安全约束内寻找凸组合解。当前议题：为何暂无法让你的代码仓库安全互通。结论由议会记录并生成后续行动建议。',
       logTitle: '联合推理执行轨迹',
       profiles: [
         {
@@ -339,15 +367,15 @@ const translations = {
             '若无代理节点缓冲，镜像同步会打断现有发布节奏，并可能放大依赖冲突，建议保留隔离态。'
         },
         {
-          speaker: '合议庭记录官',
+          speaker: '议会记录官',
           message:
             '共识：在治理、网络与恢复策略补齐前，禁止执行“全部仓库互通”指令，转向分阶段治理方案。'
         }
       ],
       consensus: {
-        title: '阻碍仓库互通的关键结论',
+        title: '议会判定的关键阻塞',
         intro:
-          'OpenAI 与 CloseAI 解释器达成共识：当前的治理结构不足以支撑一次性互通，以下因素构成主要阻塞。',
+          'OpenAI 与 CloseAI 解释器在议会中达成共识：当前的治理结构不足以支撑一次性互通，以下因素构成主要阻塞。',
         blockers: [
           '缺少统一身份与授权目录：各仓库凭证分散，无法进行集中撤销与审计。',
           '托管平台与网络策略异构：跨云与内网的出口限制不同，阻断实时同步。',
@@ -360,49 +388,50 @@ const translations = {
         ]
       }
     },
-    telemetry: {
-      eyebrow: 'Live Telemetry',
-      title: '实时遥测：地球 Online 的运行指标',
+    signals: {
+      eyebrow: 'Signal Hub',
+      title: '信号中枢：实时指标与演进年表',
       intro:
-        '我们监控体验实验室的能量流、协作频率与系统稳定性。数据基于真实资产数量与动态模拟，让你看到平台的持续跃迁。',
-      streams: [
-        {
-          label: '资产光谱',
-          base: counts.total,
-          unit: '项',
-          description: '以知识、原型与运营资产汇聚出的实验能量。'
-        },
-        {
-          label: '协作频率',
-          base: 128,
-          unit: 'Hz',
-          description: '跨时区团队的同步/异步协作节奏。'
-        },
-        {
-          label: '系统稳定性',
-          base: 99.2,
-          unit: '%',
-          description: '资产可用性与实验舱体运行的综合指标。'
-        },
-        {
-          label: '灵感流量',
-          base: 42,
-          unit: 'lumen',
-          description: '来自社区与伙伴网络的实时反馈脉冲。'
-        }
-      ]
-    },
-    timeline: {
-      eyebrow: 'Evolution Timeline',
-      title: '地球 Online 演进时间线',
-      intro:
-        '自首个原型诞生以来，我们不断吸收来自代码、研究与社区的能量。时间线记录关键跃迁，帮助你了解实验室的起源与未来方向。',
-      entries: [
-        {
-          year: '2015',
-          title: '体验系统雏形',
-          description: '第一批体验系统研究与设计工程原型诞生，为后续的星球实验埋下伏笔。',
-          tags: ['DesignOps', '原型']
+        '星球栈的运行态势通过遥测与时间线同步呈现。凸优化的指标体系帮助你即时捕捉能量流向与关键跃迁。',
+      telemetry: {
+        title: '实时遥测阵列',
+        intro: '我们监控资产谱系、协作频率与稳定性，以动态凸组合展现地球 Online 的运行脉冲。',
+        streams: [
+          {
+            label: '资产光谱',
+            base: counts.total,
+            unit: '项',
+            description: '以知识、原型与运营资产汇聚出的实验能量。'
+          },
+          {
+            label: '协作频率',
+            base: 128,
+            unit: 'Hz',
+            description: '跨时区团队的同步/异步协作节奏。'
+          },
+          {
+            label: '系统稳定性',
+            base: 99.2,
+            unit: '%',
+            description: '资产可用性与实验舱体运行的综合指标。'
+          },
+          {
+            label: '灵感流量',
+            base: 42,
+            unit: 'lumen',
+            description: '来自社区与伙伴网络的实时反馈脉冲。'
+          }
+        ]
+      },
+      chronicle: {
+        title: '地球 Online 年表',
+        intro: '关键节点构成星球栈的演进轨道，帮助你从起源到未来规划快速建立坐标。',
+        entries: [
+          {
+            year: '2015',
+            title: '体验系统雏形',
+            description: '第一批体验系统研究与设计工程原型诞生，为后续的星球实验埋下伏笔。',
+            tags: ['DesignOps', '原型']
         },
         {
           year: '2019',
@@ -416,27 +445,28 @@ const translations = {
           description: '构建多感官交互的星球界面，为地球体验实验室搭建视觉主脑。',
           tags: ['WebGL', '交互']
         },
-        {
-          year: '2024',
-          title: 'Earth Online 体验实验室',
-          description: '重构整个站点为地球 Online 操作系统，联动所有研究、原型与伙伴网络。',
-          tags: ['重构', '系统']
-        }
-      ]
+          {
+            year: '2024',
+            title: 'Earth Online 体验实验室',
+            description: '重构整个站点为地球 Online 操作系统，联动所有研究、原型与伙伴网络。',
+            tags: ['重构', '系统']
+          }
+        ]
+      }
     },
     alliances: {
       eyebrow: 'Alliance Network',
-      title: '友链星港：与我们同频的体验实验室',
+      title: '联盟星港：与我们同频的体验实验室',
       intro:
-        '这里记录着与 Earth Online 长期共振的创作者与研究者。他们在各自的宇宙里推进设计、技术与叙事的边界，欢迎登舰拜访。',
+        '星港记录着与 Earth Online 长期共振的创作者与研究者。他们在各自的宇宙推进设计、技术与叙事的边界，欢迎沿航线拜访。',
       cta: '进入完整友链档案',
       visitCta: '访问主页'
     },
-    contact: {
+    dock: {
       eyebrow: 'Docking Station',
       title: '准备好与 Earth Online 对接吗？',
       intro:
-        '无论你来自设计工程、系统科学还是生态治理，我们都期待与你共创新的地球体验模式。以下资源帮助你快速与实验室建立连接。',
+        '无论你来自设计工程、系统科学还是生态治理，我们都期待与你共创新的地球体验模式。以下资源帮助你快速建立凸优化的协作通道。',
       links: [
         {
           title: '星际履历网络',
@@ -445,10 +475,10 @@ const translations = {
           cta: '进入履历站'
         },
         {
-          title: '体验实验矩阵',
-          description: '在交互 Demo 与策略模板中穿梭，找到灵感的源头。',
-          href: '#labs',
-          cta: '浏览实验'
+          title: '体验簇阵导航',
+          description: '在交互实验与协作模板中穿梭，定位与你的任务同频的卡片。',
+          href: '#decks',
+          cta: '浏览簇阵'
         },
         {
           title: '研究与长文档案',
@@ -457,7 +487,7 @@ const translations = {
           cta: '进入档案馆'
         },
         {
-          title: '友链星港',
+          title: '联盟星港',
           description: '结识与 Earth Online 同频的伙伴网络，建立新的共创航线。',
           href: 'friends/index.html',
           cta: '拜访友链'
@@ -489,91 +519,119 @@ const translations = {
     },
     nav: {
       hero: 'Launch',
-      mission: 'Mission Quadrants',
-      labs: 'Lab Matrix',
-      interpreters: 'AI Interpreters',
-      telemetry: 'Live Telemetry',
-      timeline: 'Earth Updates',
+      stack: 'Planetary Stack',
+      decks: 'Experience Decks',
+      council: 'AI Council',
+      signals: 'Signal Hub',
       alliances: 'Alliance Harbor',
-      contact: 'Contact',
+      dock: 'Dock',
       ariaLabel: 'Primary navigation'
     },
     hero: {
       eyebrow: 'Planetary Experience Interface',
-      title: 'Rebuild your homepage into the Earth Online Experience Lab',
+      title: 'Earth Online: planetary experience console',
       description:
-        'A continuously evolving planetary operating system: WebGL engines, temporal story matrices, and collaboration protocols unite every research asset, prototype, and ally into a new spatial interface ready for exploration.',
-      primaryCta: 'Enter the lab matrix',
+        'A continuously evolving operating room for Earth: WebGL engines, convex information architecture, and alliance networks compress research, prototypes, and protocols into a navigable spatial console.',
+      primaryCta: 'Enter the experience decks',
       secondaryCta: 'View resume network',
       ctaAria: 'Quick access',
       stats: [
         {
-          label: 'Active assets',
+          label: 'Planetary assets',
           value: `${counts.total}+`,
-          description: 'Interactive prototypes, research, longform essays, and collaboration playbooks form the Earth Online matrix.'
+          description: 'Interactive prototypes, research, longform essays, and collaboration playbooks form the Earth Online field.'
         },
         {
-          label: 'Live experiments',
+          label: 'Live lab pods',
           value: `${counts.demos}`,
-          description: 'WebGL simulations, collaboration workflows, and experience systems ready to validate instantly.'
+          description: 'WebGL simulations, collaboration workflows, and experience systems ready for instant validation.'
         },
         {
           label: 'Knowledge flow',
           value: `${counts.blogs + counts.research}`,
-          description: 'Narratives backed by strategy essays and mathematical proofs keep the story and governance aligned.'
+          description: 'Narratives backed by strategy essays and mathematical proofs keep story and governance aligned.'
         }
       ]
     },
-    mission: {
-      eyebrow: 'Mission Quadrants',
-      title: 'Four domains to reimagine planetary experience',
+    stack: {
+      eyebrow: 'Planetary Stack',
+      title: 'The Earth Online planetary stack',
       intro:
-        'Earth Online decomposes complex planetary challenges into executable mission domains—from ecological governance to cognitive interfaces—giving expert teams a shared language grounded in experimentation.',
-      domains: [
+        'We model Earth Online as a convex, collaborative planetary stack that links data, experience, and alliances. Each layer optimizes the path from signal to action.',
+      layers: [
         {
-          title: 'Ecological Singularity Governance',
+          title: 'Signal mantle · Governance layer',
           narrative:
-            'Build strategic interfaces for planetary restoration, connecting data, behavior, and policy to drive systemic repair.',
-          protocols: ['Climate data orchestration', 'Impact modeling', 'Cross-domain collaboration']
+            'Aggregate real-time telemetry, risk models, and policy baselines to form a traceable foundation for every experiment.',
+          protocols: ['Telemetry lake', 'Convex risk modeling', 'Governance dashboards']
         },
         {
-          title: 'Experience Systems Console',
+          title: 'Experience orbit · Orchestration layer',
           narrative:
-            'Break down intricate human–AI workflows into modules so teams share a unified design and validation protocol.',
-          protocols: ['DesignOps', 'Real-time metrics', 'Strategic prototyping']
+            'Map prototypes, scenarios, and workflows into modular lab pods so complex collaboration stays measurable and reversible.',
+          protocols: ['DesignOps', 'Strategic prototype library', 'Experience metrics']
         },
         {
-          title: 'Cognitive Interface Upgrades',
+          title: 'Cognitive interface · Perception layer',
           narrative:
-            'Use immersive interfaces and multisensory interaction to explore new perceptions of Earth and amplify human–AI synergy.',
-          protocols: ['WebGL engines', 'Sound & particle systems', 'Narrative visualization']
+            'Pair multisensory interfaces with narrative visualization to align humans and AI in a shared perceptual frame.',
+          protocols: ['WebGL planetary engine', 'Sound & particle systems', 'Narrative topology']
         },
         {
-          title: 'Interstellar Partner Network',
+          title: 'Alliance mesh · Co-creation layer',
           narrative:
-            'Help interdisciplinary partners locate collaboration coordinates fast with standardized resumes, cadences, and resource protocols.',
-          protocols: ['Resume network', 'Co-creation cadence', 'Learning pathways']
+            'Provide partners with interoperable resumes, cadences, and resource protocols to open new collaboration routes fast.',
+          protocols: ['Resume network', 'Co-creation cadence scripts', 'Partner routing map']
         }
       ]
     },
-    labs: {
-      eyebrow: 'Immersive Lab Matrix',
-      title: 'Lab matrix: traverse 360° Earth experiences',
+    decks: {
+      eyebrow: 'Experience Decks',
+      title: 'Experience decks: convex clusters for planetary missions',
       intro:
-        'Every lab links to a real demo, research note, or operational asset. Dive into an interactive scene instantly or filter by tags to pinpoint what you need.',
-      searchLabel: 'Search labs',
+        'Each card unlocks a runnable planetary route. Cluster filters and semantic search help you jump straight to the assets aligned with your mission.',
+      searchLabel: 'Search decks',
       searchPlaceholder: 'Type a keyword (e.g. WebGL, climate, collaboration)',
-      filterAria: 'Lab filters',
+      filterAria: 'Deck filters',
       cta: 'Launch now',
-      summary(count, keyword) {
-        return `${count} ${count === 1 ? 'lab' : 'labs'} ${keyword ? `matching "${keyword}"` : 'ready for exploration'}.`;
+      summary(count, keyword, filterLabel) {
+        const keywordText = keyword ? `matching "${keyword}"` : 'standing by';
+        return `${count} ${count === 1 ? 'card' : 'cards'} · ${filterLabel} · ${keywordText}.`;
       },
       filters: [
-        { id: 'all', label: 'All' },
-        { id: 'demo', label: 'Interactive demos' },
-        { id: 'research', label: 'Research notes' },
-        { id: 'ops', label: 'Operations' },
-        { id: 'story', label: 'Narratives' }
+        { id: 'all', label: 'All tracks' },
+        { id: 'simulation', label: 'Planetary simulations' },
+        { id: 'operations', label: 'Collaboration ops' },
+        { id: 'research', label: 'Research labs' },
+        { id: 'narrative', label: 'Narrative archives' }
+      ],
+      clusterMap: {
+        demo: 'simulation',
+        ops: 'operations',
+        research: 'research',
+        story: 'narrative'
+      },
+      clusters: [
+        {
+          id: 'simulation',
+          title: 'Planetary simulation deck',
+          description: 'Interactive WebGL experiments and control rehearsals to validate strategies at planetary scale.'
+        },
+        {
+          id: 'operations',
+          title: 'Collaboration ops bay',
+          description: 'Design systems, cadence scripts, and governance playbooks that sustain multi-team collaboration.'
+        },
+        {
+          id: 'research',
+          title: 'Research inference lab',
+          description: 'Mathematical and engineering research dossiers offering verifiable evidence for strategic choices.'
+        },
+        {
+          id: 'narrative',
+          title: 'Narrative archive stack',
+          description: 'Longform stories capturing methods, mythologies, and cultural primitives behind Earth Online.'
+        }
       ],
       entries: [
         {
@@ -740,11 +798,11 @@ const translations = {
         }
       ]
     },
-    interpreters: {
-      eyebrow: 'Interpreter Duo',
-      title: 'OpenAI × CloseAI joint deliberation',
+    council: {
+      eyebrow: 'Interpreter Council',
+      title: 'Earth Online AI council co-reasoning',
       intro:
-        'Two interpreters apply their respective alignment goals, strategy models, and constraints to the same challenge: why your repositories cannot yet interconnect safely. Their consensus records follow-up actions.',
+        'Two interpreters search for a convex combination of strategies within safety constraints, tackling the question: why can’t your repositories interconnect safely yet? The council records consensus and next moves.',
       logTitle: 'Joint reasoning transcript',
       profiles: [
         {
@@ -804,13 +862,13 @@ const translations = {
             'Without proxy buffers, mirror sync would disrupt release cadence and amplify dependency conflicts. Isolation should hold.'
         },
         {
-          speaker: 'Tribunal Recorder',
+          speaker: 'Council recorder',
           message:
             'Consensus: pause the “connect all repositories” directive until governance, networking, and recovery strategies are complete. Shift to phased remediation.'
         }
       ],
       consensus: {
-        title: 'Key blockers preventing repository interconnection',
+        title: 'Council findings on the blockers',
         intro:
           'Both interpreters agree the current governance stack cannot support an all-at-once merge. These are the major obstacles.',
         blockers: [
@@ -825,49 +883,50 @@ const translations = {
         ]
       }
     },
-    telemetry: {
-      eyebrow: 'Live Telemetry',
-      title: 'Real-time telemetry of Earth Online',
+    signals: {
+      eyebrow: 'Signal Hub',
+      title: 'Signal hub: live metrics and evolution log',
       intro:
-        'We monitor energy flow, collaboration cadence, and system stability. Metrics combine live asset counts with simulation data to show continuous motion.',
-      streams: [
-        {
-          label: 'Asset spectrum',
-          base: counts.total,
-          unit: 'items',
-          description: 'The cumulative energy from knowledge, prototypes, and operational assets.'
-        },
-        {
-          label: 'Collaboration frequency',
-          base: 128,
-          unit: 'Hz',
-          description: 'The sync/async rhythm of our distributed teams.'
-        },
-        {
-          label: 'System stability',
-          base: 99.2,
-          unit: '%',
-          description: 'Availability across assets and lab modules.'
-        },
-        {
-          label: 'Inspiration flux',
-          base: 42,
-          unit: 'lumen',
-          description: 'Real-time pulses from the community and partner network.'
-        }
-      ]
-    },
-    timeline: {
-      eyebrow: 'Evolution Timeline',
-      title: 'Earth Online evolution log',
-      intro:
-        'Since the first prototype we have absorbed energy from code, research, and community. The timeline marks pivotal leaps that define our trajectory.',
-      entries: [
-        {
-          year: '2015',
-          title: 'Experience system prototypes',
-          description:
-            'Early research and engineering prototypes for experience systems laid the groundwork for planetary experiments.',
+        'The planetary stack broadcasts its pulse through telemetry and timelines. Optimized metrics keep you aligned with shifting energy and pivotal transitions.',
+      telemetry: {
+        title: 'Real-time telemetry array',
+        intro: 'We monitor asset spectra, collaboration cadence, and stability to reveal the live rhythm of Earth Online.',
+        streams: [
+          {
+            label: 'Asset spectrum',
+            base: counts.total,
+            unit: 'items',
+            description: 'The cumulative energy from knowledge, prototypes, and operational assets.'
+          },
+          {
+            label: 'Collaboration frequency',
+            base: 128,
+            unit: 'Hz',
+            description: 'The sync/async rhythm of our distributed teams.'
+          },
+          {
+            label: 'System stability',
+            base: 99.2,
+            unit: '%',
+            description: 'Availability across assets and lab modules.'
+          },
+          {
+            label: 'Inspiration flux',
+            base: 42,
+            unit: 'lumen',
+            description: 'Real-time pulses from the community and partner network.'
+          }
+        ]
+      },
+      chronicle: {
+        title: 'Earth Online evolution log',
+        intro: 'Key jumps chart the orbit from origin to future plans so you can orient instantly.',
+        entries: [
+          {
+            year: '2015',
+            title: 'Experience system prototypes',
+            description:
+              'Early research and engineering prototypes for experience systems laid the groundwork for planetary experiments.',
           tags: ['DesignOps', 'Prototypes']
         },
         {
@@ -884,28 +943,29 @@ const translations = {
             'A multisensory planetary interface became the visual cortex of the Experience Lab.',
           tags: ['WebGL', 'Interaction']
         },
-        {
-          year: '2024',
-          title: 'Earth Online Experience Lab',
-          description:
-            'The entire site reassembled into an Earth Online OS, syncing research, prototypes, and partner constellations.',
-          tags: ['Rebuild', 'System']
-        }
-      ]
+          {
+            year: '2024',
+            title: 'Earth Online Experience Lab',
+            description:
+              'The entire site reassembled into an Earth Online OS, syncing research, prototypes, and partner constellations.',
+            tags: ['Rebuild', 'System']
+          }
+        ]
+      }
     },
     alliances: {
       eyebrow: 'Alliance Network',
-      title: 'Alliance harbor: labs in resonance with us',
+      title: 'Alliance harbor: experience labs in resonance',
       intro:
-        'Meet creators and researchers who orbit Earth Online. They push the boundaries of design, technology, and narrative—step aboard and say hello.',
+        'Meet creators and researchers orbiting Earth Online. They stretch design, technology, and narrative in their universes—plot a course and say hello.',
       cta: 'View full alliance index',
       visitCta: 'Visit site'
     },
-    contact: {
+    dock: {
       eyebrow: 'Docking Station',
       title: 'Ready to dock with Earth Online?',
       intro:
-        'From design engineering to systems science and ecological governance, we are eager to co-create new planetary experiences. These resources help you plug in fast.',
+        'Whether you work in design engineering, systems science, or ecological governance, we want to co-create new planetary experiences. These links open convex collaboration routes fast.',
       links: [
         {
           title: 'Interstellar resume network',
@@ -914,13 +974,13 @@ const translations = {
           cta: 'Enter the resume hub'
         },
         {
-          title: 'Experience lab matrix',
-          description: 'Traverse interactive demos and operational templates to spark new ideas.',
-          href: '#labs',
-          cta: 'Browse labs'
+          title: 'Experience deck navigator',
+          description: 'Traverse interactive experiments and operational templates to pinpoint the right card.',
+          href: '#decks',
+          cta: 'Browse decks'
         },
         {
-          title: 'Research & longform archive',
+          title: 'Research & narrative archive',
           description: 'Read deep research and narratives to understand Earth Online methodologies.',
           href: 'public/blog/index.html',
           cta: 'Enter the archive'
@@ -942,8 +1002,8 @@ const translations = {
 translations.zh.alliances.items = friendContent.zh.featuredAlliances;
 translations.en.alliances.items = friendContent.en.featuredAlliances;
 
-translations.en.labs.entries.forEach((entry, index) => {
-  const zhKeywords = translations.zh.labs.entries[index].keywords || [];
+translations.en.decks.entries.forEach((entry, index) => {
+  const zhKeywords = translations.zh.decks.entries[index].keywords || [];
   entry.keywords = Array.from(new Set([...(entry.keywords || []), ...zhKeywords]));
 });
 
@@ -970,8 +1030,8 @@ function determineLanguage() {
 
 const state = {
   language: determineLanguage(),
-  labFilter: 'all',
-  labKeyword: ''
+  deckFilter: 'all',
+  deckKeyword: ''
 };
 
 function updateDocumentMeta(lang) {
@@ -1038,20 +1098,20 @@ function renderHeroStats(lang) {
   container.appendChild(fragment);
 }
 
-function renderMissionDomains(lang) {
-  const domains = translations[lang].mission.domains;
-  const grid = document.getElementById('mission-grid');
+function renderStackLayers(lang) {
+  const layers = translations[lang].stack.layers;
+  const grid = document.getElementById('stack-grid');
   if (!grid) return;
   grid.innerHTML = '';
 
   const fragment = document.createDocumentFragment();
-  domains.forEach((mission) => {
+  layers.forEach((layer) => {
     const card = document.createElement('article');
-    card.className = 'mission-card';
-    const list = mission.protocols.map((item) => `<li>${item}</li>`).join('');
+    card.className = 'stack-card';
+    const list = layer.protocols.map((item) => `<li>${item}</li>`).join('');
     card.innerHTML = `
-      <h3>${mission.title}</h3>
-      <p>${mission.narrative}</p>
+      <h3>${layer.title}</h3>
+      <p>${layer.narrative}</p>
       <ul>${list}</ul>
     `;
     fragment.appendChild(card);
@@ -1060,59 +1120,80 @@ function renderMissionDomains(lang) {
   grid.appendChild(fragment);
 }
 
-function setupLabSection(lang) {
-  const labs = translations[lang].labs;
-  const filterContainer = document.getElementById('lab-filters');
-  const searchInput = document.getElementById('lab-search');
+function setupDeckSection(lang) {
+  const decks = translations[lang].decks;
+  const filterContainer = document.getElementById('deck-filters');
+  const searchInput = document.getElementById('deck-search');
 
   if (filterContainer) {
     filterContainer.innerHTML = '';
-    labs.filters.forEach((filter) => {
+    decks.filters.forEach((filter) => {
       const button = document.createElement('button');
       button.type = 'button';
       button.className = 'filter-chip';
       button.textContent = filter.label;
       button.dataset.filter = filter.id;
-      button.setAttribute('aria-pressed', String(filter.id === state.labFilter));
+      button.setAttribute('aria-pressed', String(filter.id === state.deckFilter));
       button.addEventListener('click', () => {
-        state.labFilter = filter.id;
+        state.deckFilter = filter.id;
         filterContainer
           .querySelectorAll('.filter-chip')
           .forEach((chip) => chip.setAttribute('aria-pressed', String(chip === button)));
-        renderLabEntries(lang);
+        renderDeckEntries(lang);
       });
       filterContainer.appendChild(button);
     });
-    filterContainer.setAttribute('aria-label', labs.filterAria);
+    filterContainer.setAttribute('aria-label', decks.filterAria);
   }
 
   if (searchInput) {
-    searchInput.placeholder = labs.searchPlaceholder;
-    searchInput.value = state.labKeyword;
-    searchInput.setAttribute('aria-label', labs.searchLabel);
+    searchInput.placeholder = decks.searchPlaceholder;
+    searchInput.value = state.deckKeyword;
+    searchInput.setAttribute('aria-label', decks.searchLabel);
     searchInput.oninput = (event) => {
-      state.labKeyword = event.target.value.trim();
-      renderLabEntries(lang);
+      state.deckKeyword = event.target.value.trim();
+      renderDeckEntries(lang);
     };
   }
 
-  renderLabEntries(lang);
+  renderDeckEntries(lang);
 }
 
-function renderLabEntries(lang) {
-  const labs = translations[lang].labs;
-  const grid = document.getElementById('lab-grid');
-  const summary = document.getElementById('lab-summary');
+function renderDeckEntries(lang) {
+  const decks = translations[lang].decks;
+  const grid = document.getElementById('deck-grid');
+  const summary = document.getElementById('deck-summary');
   if (!grid || !summary) return;
 
-  const keyword = state.labKeyword.toLowerCase();
-  const filtered = labs.entries.filter((entry, index) => {
-    const matchesFilter = state.labFilter === 'all' || entry.type === state.labFilter;
+  const keyword = state.deckKeyword.toLowerCase();
+  const filterLabel =
+    decks.filters.find((filter) => filter.id === state.deckFilter)?.label || decks.filters[0].label;
+  const clusterMap = decks.clusterMap || {};
+
+  const decoratedEntries = decks.entries.map((entry, index) => ({
+    ...entry,
+    __index: index,
+    clusterId: clusterMap[entry.type] || 'operations'
+  }));
+
+  const filtered = decoratedEntries.filter((entry) => {
+    const matchesFilter = state.deckFilter === 'all' || entry.clusterId === state.deckFilter;
     if (!matchesFilter) return false;
     if (!keyword) return true;
-    const baseKeywords = translations.zh.labs.entries[index].keywords || [];
+    const counterpartKeywords =
+      lang === 'zh'
+        ? translations.en.decks.entries[entry.__index].keywords || []
+        : translations.zh.decks.entries[entry.__index].keywords || [];
     const localizedKeywords = entry.keywords || [];
-    const haystack = [entry.title, entry.description, ...localizedKeywords, ...baseKeywords]
+    const clusterMeta = decks.clusters.find((cluster) => cluster.id === entry.clusterId);
+    const haystack = [
+      entry.title,
+      entry.description,
+      clusterMeta?.title || '',
+      clusterMeta?.description || '',
+      ...localizedKeywords,
+      ...counterpartKeywords
+    ]
       .join(' ')
       .toLowerCase();
     return haystack.includes(keyword);
@@ -1121,32 +1202,54 @@ function renderLabEntries(lang) {
   grid.innerHTML = '';
 
   const fragment = document.createDocumentFragment();
-  filtered.forEach((entry) => {
-    const card = document.createElement('article');
-    card.className = 'lab-card';
-    const tags = (entry.tags || []).map((tag) => `<li>${tag}</li>`).join('');
-    card.innerHTML = `
-      <h3>${entry.title}</h3>
-      <p>${entry.description}</p>
-      <ul>${tags}</ul>
-      <a href="${entry.href}">
-        ${labs.cta}
-        <span>↗</span>
-      </a>
+  decks.clusters.forEach((cluster) => {
+    const clusterEntries = filtered.filter((entry) => entry.clusterId === cluster.id);
+    if (!clusterEntries.length) return;
+
+    const clusterSection = document.createElement('section');
+    clusterSection.className = 'deck-cluster';
+
+    const clusterIntro = document.createElement('div');
+    clusterIntro.className = 'deck-cluster__intro';
+    clusterIntro.innerHTML = `
+      <h3>${cluster.title}</h3>
+      <p>${cluster.description}</p>
     `;
-    fragment.appendChild(card);
+    clusterSection.appendChild(clusterIntro);
+
+    const cardsWrapper = document.createElement('div');
+    cardsWrapper.className = 'deck-cluster__grid';
+
+    clusterEntries.forEach((entry) => {
+      const card = document.createElement('article');
+      card.className = 'deck-card';
+      const tags = (entry.tags || []).map((tag) => `<li>${tag}</li>`).join('');
+      card.innerHTML = `
+        <h3>${entry.title}</h3>
+        <p>${entry.description}</p>
+        <ul>${tags}</ul>
+        <a href="${entry.href}">
+          ${decks.cta}
+          <span>↗</span>
+        </a>
+      `;
+      cardsWrapper.appendChild(card);
+    });
+
+    clusterSection.appendChild(cardsWrapper);
+    fragment.appendChild(clusterSection);
   });
 
   grid.appendChild(fragment);
-  summary.textContent = labs.summary(filtered.length, state.labKeyword);
+  summary.textContent = decks.summary(filtered.length, state.deckKeyword, filterLabel);
 }
-function renderInterpreters(lang) {
-  const interpreters = translations[lang].interpreters;
-  const grid = document.getElementById('interpreter-grid');
+function renderCouncil(lang) {
+  const council = translations[lang].council;
+  const grid = document.getElementById('council-grid');
   if (grid) {
     grid.innerHTML = '';
     const fragment = document.createDocumentFragment();
-    interpreters.profiles.forEach((profile) => {
+    council.profiles.forEach((profile) => {
       const card = document.createElement('article');
       card.className = 'interpreter-card';
       const capabilityList = profile.capabilities.map((item) => `<li>${item}</li>`).join('');
@@ -1172,12 +1275,12 @@ function renderInterpreters(lang) {
     grid.appendChild(fragment);
   }
 
-  const logContainer = document.getElementById('interpreter-log');
+  const logContainer = document.getElementById('council-log');
   if (logContainer) {
     logContainer.querySelectorAll('.interpreter-log-list').forEach((node) => node.remove());
     const list = document.createElement('ul');
     list.className = 'interpreter-log-list';
-    interpreters.log.forEach((entry) => {
+    council.log.forEach((entry) => {
       const item = document.createElement('li');
       item.className = 'interpreter-log-entry';
       item.innerHTML = `
@@ -1189,11 +1292,11 @@ function renderInterpreters(lang) {
     logContainer.appendChild(list);
   }
 
-  const summaryContainer = document.getElementById('interpreter-summary');
+  const summaryContainer = document.getElementById('council-summary');
   if (summaryContainer) {
-    const consensus = interpreters.consensus;
+    const consensus = council.consensus;
     summaryContainer.innerHTML = `
-      <h3 id="interpreter-summary-title">${consensus.title}</h3>
+      <h3 id="council-summary-title">${consensus.title}</h3>
       <p>${consensus.intro}</p>
       <p><strong>${lang === 'zh' ? '核心阻塞' : 'Core blockers'}</strong></p>
       <ul class="interpreter-summary-list">
@@ -1210,9 +1313,9 @@ function renderInterpreters(lang) {
 let telemetryCards = [];
 let telemetryFrameId = null;
 
-function renderTelemetryPanel(lang) {
-  const telemetry = translations[lang].telemetry;
-  const container = document.getElementById('telemetry-panel');
+function renderTelemetryStreams(lang) {
+  const telemetry = translations[lang].signals.telemetry;
+  const container = document.getElementById('signal-telemetry');
   if (!container) return;
   container.innerHTML = '';
 
@@ -1266,14 +1369,14 @@ function animateTelemetry() {
   telemetryFrameId = requestAnimationFrame(update);
 }
 
-function renderTimeline(lang) {
-  const timeline = translations[lang].timeline;
-  const container = document.getElementById('timeline-stream');
+function renderChronicle(lang) {
+  const chronicle = translations[lang].signals.chronicle;
+  const container = document.getElementById('chronicle-stream');
   if (!container) return;
   container.innerHTML = '';
 
   const fragment = document.createDocumentFragment();
-  timeline.entries.forEach((entry) => {
+  chronicle.entries.forEach((entry) => {
     const item = document.createElement('article');
     item.className = 'timeline-item';
     item.setAttribute('data-year', entry.year);
@@ -1316,20 +1419,20 @@ function renderAlliances(lang) {
   container.appendChild(fragment);
 }
 
-function renderContact(lang) {
-  const contact = translations[lang].contact;
-  const container = document.getElementById('contact-links');
+function renderDock(lang) {
+  const dock = translations[lang].dock;
+  const container = document.getElementById('dock-links');
   if (!container) return;
   container.innerHTML = '';
 
   const fragment = document.createDocumentFragment();
-  contact.links.forEach((link) => {
+  dock.links.forEach((link) => {
     const card = document.createElement('article');
     card.className = 'contact-card';
     card.innerHTML = `
       <h3>${link.title}</h3>
       <p>${link.description}</p>
-      <a href="${link.href}">${link.cta}</a>
+      <a href="${link.href}">${link.cta} <span aria-hidden="true">↗</span></a>
     `;
     fragment.appendChild(card);
   });
@@ -1365,13 +1468,13 @@ function applyLanguage(lang) {
   updateStaticText(lang);
   updateLanguageToggle(lang);
   renderHeroStats(lang);
-  renderMissionDomains(lang);
-  setupLabSection(lang);
-  renderInterpreters(lang);
-  renderTelemetryPanel(lang);
-  renderTimeline(lang);
+  renderStackLayers(lang);
+  setupDeckSection(lang);
+  renderCouncil(lang);
+  renderTelemetryStreams(lang);
+  renderChronicle(lang);
   renderAlliances(lang);
-  renderContact(lang);
+  renderDock(lang);
 }
 
 function initialize() {
