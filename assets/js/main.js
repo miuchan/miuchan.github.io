@@ -1,7 +1,7 @@
 import { friendContent } from './friends-data.js';
 
 const counts = {
-  demos: 21,
+  demos: 22,
   research: 6,
   blogs: 59,
   resume: 1
@@ -278,6 +278,15 @@ const translations = {
             '探索羽光-情绪-拓扑映射固定点求解的可视化实验，呈现多主体协同的动态。',
           tags: ['动力系统', '可视化'],
           keywords: ['fixed point', 'gradient descent', '动力系统']
+        },
+        {
+          type: 'demo',
+          href: 'public/demo/wuxing-bagua/index.html',
+          title: '五行八卦动力图谱',
+          description:
+            '以几何交互方式展示五行相生相克与八卦方位的映射关系，理解东方系统论的能量流与治理模型。',
+          tags: ['系统论', '可视化'],
+          keywords: ['五行', '八卦', 'wuxing', 'bagua', 'systems theory']
         },
         {
           type: 'ops',
@@ -862,6 +871,15 @@ const translations = {
             'Explore a visual experiment of featherlight–emotion–topology mappings to reveal multi-agent coordination dynamics.',
           tags: ['Dynamical Systems', 'Visualization'],
           keywords: ['fixed point', 'gradient descent', '动力系统']
+        },
+        {
+          type: 'demo',
+          href: 'public/demo/wuxing-bagua/index.html',
+          title: 'Wu Xing & Bagua Dynamics',
+          description:
+            'Interactively map the generating and controlling cycles of the Five Elements with the directional qualities of the Eight Trigrams.',
+          tags: ['Systems Theory', 'Visualization'],
+          keywords: ['五行', '八卦', 'wuxing', 'bagua', 'systems']
         },
         {
           type: 'ops',
