@@ -71,6 +71,7 @@ const translations = {
       signals: '信号中枢',
       alliances: '联盟星港',
       dock: '联络站',
+      commandLabel: '导航矩阵',
       ariaLabel: '信息架构导航',
       hierarchy: [
         { id: 'hero', index: '0', label: '轨道入口' },
@@ -94,6 +95,17 @@ const translations = {
         { id: 'alliances', index: '2', label: '联盟星港' },
         { id: 'dock', index: '3', label: '联络站' }
       ]
+    },
+    commandPalette: {
+      title: '导航矩阵',
+      subtitle: '搜索信息架构、体验簇或信号节点。',
+      searchLabel: '搜索',
+      searchPlaceholder: '输入关键词或使用 Ctrl + K',
+      sectionGroup: '信息架构',
+      deckGroup: '体验簇阵',
+      signalGroup: '信号年表',
+      keyboardHint: '快捷键：Ctrl/⌘ + K',
+      noResults: '没有匹配项，换个关键词试试。'
     },
     hero: {
       eyebrow: 'Planetary Experience Interface',
@@ -133,7 +145,12 @@ const translations = {
           description: '跨学科伙伴共振形成的协作星港网络。',
           meta: ['精选伙伴', '共创航线']
         }
-      ]
+      ],
+      controlAria: '星球自转与信号调谐面板',
+      rotationLabel: '星球自转速度',
+      rotationHint: '拖动调节星球自转与视角。',
+      pulseButton: '激活遥测脉冲',
+      pulseHint: '随机增强信号，观察指标变化。'
     },
     architecture: {
       eyebrow: 'Recursive Gradient Descent',
@@ -637,6 +654,7 @@ const translations = {
       signals: 'Signal Hub',
       alliances: 'Alliance Harbor',
       dock: 'Dock',
+      commandLabel: 'Command Matrix',
       ariaLabel: 'Information architecture navigation',
       hierarchy: [
         { id: 'hero', index: '0', label: 'Launch bay' },
@@ -660,6 +678,17 @@ const translations = {
         { id: 'alliances', index: '2', label: 'Alliance harbor' },
         { id: 'dock', index: '3', label: 'Docking station' }
       ]
+    },
+    commandPalette: {
+      title: 'Command matrix',
+      subtitle: 'Search the information architecture, experience decks, or signal timeline.',
+      searchLabel: 'Search',
+      searchPlaceholder: 'Type a keyword or press Ctrl + K',
+      sectionGroup: 'Information architecture',
+      deckGroup: 'Experience decks',
+      signalGroup: 'Signal timeline',
+      keyboardHint: 'Shortcut: Ctrl/⌘ + K',
+      noResults: 'No matches yet—try another keyword.'
     },
     hero: {
       eyebrow: 'Planetary Experience Interface',
@@ -699,7 +728,12 @@ const translations = {
           description: 'A resonance network of multidisciplinary partners opening collaboration routes.',
           meta: ['Featured partners', 'Co-creation routes']
         }
-      ]
+      ],
+      controlAria: 'Planet rotation and signal tuning console',
+      rotationLabel: 'Planet rotation speed',
+      rotationHint: 'Drag to re-time the orbital rotation and tilt the view.',
+      pulseButton: 'Trigger telemetry pulse',
+      pulseHint: 'Inject a playful burst to the metrics and watch them react.'
     },
     architecture: {
       eyebrow: 'Recursive Gradient Descent',
@@ -1197,6 +1231,25 @@ const state = {
   deckKeyword: ''
 };
 
+const interactiveState = {
+  rotationSliderValue: 80,
+  telemetryPulse: null,
+  commandPaletteOpen: false,
+  commandPaletteReturnFocus: null
+};
+
+const commandPaletteState = {
+  keyword: '',
+  groups: [],
+  focusables: []
+};
+
+const earthSceneControls = {
+  setRotationSpeed: () => {},
+  setPointerTilt: () => {},
+  pulseWobble: () => {}
+};
+
 let navObserver = null;
 
 function traverseHierarchy(nodes, callback, depth = 0) {
@@ -1236,6 +1289,14 @@ function assignInformationDepth(hierarchy) {
       element.removeAttribute('data-ia-index');
     }
   });
+}
+
+function escapeSelector(value) {
+  if (!value) return '';
+  if (typeof CSS !== 'undefined' && typeof CSS.escape === 'function') {
+    return CSS.escape(value);
+  }
+  return String(value).replace(/[^a-zA-Z0-9_\-]/g, (char) => `\\${char}`);
 }
 
 function createNavList(items, lang, depth = 0, navDictionary = translations[lang]?.nav || {}) {
@@ -1489,6 +1550,68 @@ function renderHeroStats(lang) {
   container.appendChild(fragment);
 }
 
+function renderHeroControls(lang) {
+  const heroConfig = translations[lang]?.hero;
+  const control = document.getElementById('hero-control');
+  if (!heroConfig || !control) return;
+
+  if (heroConfig.controlAria) {
+    control.setAttribute('aria-label', heroConfig.controlAria);
+  }
+
+  const label = control.querySelector('[data-role="rotation-label"]');
+  if (label) {
+    label.textContent = heroConfig.rotationLabel;
+  }
+
+  const rotationHint = control.querySelector('[data-role="rotation-hint"]');
+  if (rotationHint) {
+    rotationHint.textContent = heroConfig.rotationHint;
+  }
+
+  const pulseButton = control.querySelector('[data-role="pulse-button"]');
+  if (pulseButton) {
+    pulseButton.textContent = heroConfig.pulseButton;
+  }
+
+  const pulseHint = control.querySelector('[data-role="pulse-hint"]');
+  if (pulseHint) {
+    pulseHint.textContent = heroConfig.pulseHint;
+  }
+
+  const slider = document.getElementById('hero-rotation');
+  const display = document.getElementById('rotation-speed-display');
+  if (slider && display) {
+    const updateRotation = (rawValue) => {
+      const value = Number(rawValue);
+      if (Number.isNaN(value)) return;
+      interactiveState.rotationSliderValue = value;
+      display.textContent = `${value}%`;
+      slider.setAttribute('aria-valuenow', String(value));
+      earthSceneControls.setRotationSpeed(value);
+    };
+
+    slider.value = String(interactiveState.rotationSliderValue);
+    slider.setAttribute('aria-valuemin', slider.min);
+    slider.setAttribute('aria-valuemax', slider.max);
+    updateRotation(slider.value);
+    if (!slider.dataset.bound) {
+      slider.dataset.bound = 'true';
+      const handleInput = (event) => updateRotation(event.target.value);
+      slider.addEventListener('input', handleInput);
+      slider.addEventListener('change', handleInput);
+    }
+  }
+
+  if (pulseButton && !pulseButton.dataset.bound) {
+    pulseButton.dataset.bound = 'true';
+    pulseButton.addEventListener('click', () => {
+      triggerTelemetryPulse();
+      earthSceneControls.pulseWobble();
+    });
+  }
+}
+
 function renderStackLayers(lang) {
   const layers = translations[lang].stack.layers;
   const grid = document.getElementById('stack-grid');
@@ -1614,6 +1737,7 @@ function renderDeckEntries(lang) {
     clusterEntries.forEach((entry) => {
       const card = document.createElement('article');
       card.className = 'deck-card';
+      card.dataset.entryId = entry.href;
       const tags = (entry.tags || []).map((tag) => `<li>${tag}</li>`).join('');
       card.innerHTML = `
         <h3>${entry.title}</h3>
@@ -1737,11 +1861,31 @@ function animateTelemetry() {
 
   const update = (time) => {
     const t = time * 0.001;
+    const now = performance.now();
+    let pulseStrength = 0;
+    const pulse = interactiveState.telemetryPulse;
+    if (pulse) {
+      const elapsed = now - pulse.start;
+      if (elapsed >= pulse.duration) {
+        interactiveState.telemetryPulse = null;
+      } else {
+        const progress = elapsed / pulse.duration;
+        pulseStrength = Math.sin(progress * Math.PI) * pulse.intensity;
+      }
+    }
+
     telemetryCards.forEach(({ node, stream }, index) => {
       const strong = node.querySelector('strong');
       if (!strong) return;
       const variation = Math.sin(t * (0.4 + index * 0.15) + index) * 0.8;
-      let value = stream.base + variation * (stream.base * 0.03 + index * 1.2);
+      const pulseWave = pulseStrength
+        ? Math.sin(t * (1.2 + index * 0.35) + index) * pulseStrength
+        : 0;
+      let value =
+        stream.base +
+        variation * (stream.base * 0.03 + index * 1.2) +
+        pulseStrength * (stream.base * 0.08 + index * 2.4) +
+        pulseWave * 2.5;
       if (stream.unit === '%') {
         value = Math.min(100, Math.max(92, value));
         strong.textContent = `${value.toFixed(2)}${stream.unit}`;
@@ -1751,6 +1895,11 @@ function animateTelemetry() {
         strong.textContent = `${value.toFixed(1)} ${stream.unit}`;
       } else {
         strong.textContent = `${Math.round(value)}${stream.unit}`;
+      }
+      if (pulseStrength > 0.05) {
+        node.classList.add('telemetry-card--pulse');
+      } else {
+        node.classList.remove('telemetry-card--pulse');
       }
     });
 
@@ -1830,21 +1979,436 @@ function renderDock(lang) {
 
   container.appendChild(fragment);
 }
-      Math.cos(seconds * 0.4) * 0.6,
-      0.6,
-      Math.sin(seconds * 0.4) * 0.8
-    ]);
 
-    gl.uniformMatrix4fv(uModelMatrix, false, model);
-    gl.uniformMatrix4fv(uProjectionMatrix, false, projection);
-    gl.uniform1f(uTime, seconds);
-    gl.uniform3fv(uLightDirection, lightDirection);
+function buildCommandPaletteGroups(lang) {
+  const dictionary = translations[lang];
+  if (!dictionary) return [];
 
-    gl.drawElements(gl.TRIANGLES, sphere.indices.length, gl.UNSIGNED_SHORT, 0);
-    requestAnimationFrame(render);
+  const groups = [];
+  const commandDictionary = dictionary.commandPalette || {};
+
+  const navItems = [];
+  const hierarchy = Array.isArray(dictionary.nav?.hierarchy) ? dictionary.nav.hierarchy : [];
+  const walkNav = (nodes, depth = 0, ancestors = []) => {
+    nodes.forEach((node) => {
+      if (!node || typeof node !== 'object') return;
+      const chain = [...ancestors, node.label].filter(Boolean);
+      const label = node.index ? `${node.index} · ${node.label}` : node.label;
+      navItems.push({
+        id: `section-${node.id}`,
+        label,
+        description: depth > 0 ? chain.slice(0, -1).join(' / ') : dictionary.nav?.ariaLabel || '',
+        action: 'scroll',
+        target: node.id,
+        keywords: [node.id, node.label, node.index, ...chain]
+          .filter(Boolean)
+          .join(' ')
+          .toLowerCase()
+      });
+      if (Array.isArray(node.children) && node.children.length) {
+        walkNav(node.children, depth + 1, chain);
+      }
+    });
+  };
+  walkNav(hierarchy);
+  if (navItems.length) {
+    groups.push({ id: 'sections', label: commandDictionary.sectionGroup || 'Sections', items: navItems });
   }
 
-  requestAnimationFrame(render);
+  const deckEntries = Array.isArray(dictionary.decks?.entries) ? dictionary.decks.entries : [];
+  const deckItems = deckEntries.map((entry) => ({
+    id: entry.href,
+    label: entry.title,
+    description: entry.description,
+    action: 'deck',
+    target: entry.href,
+    keywords: [entry.title, entry.description, ...(entry.tags || []), ...(entry.keywords || [])]
+      .filter(Boolean)
+      .join(' ')
+      .toLowerCase()
+  }));
+  if (deckItems.length) {
+    groups.push({ id: 'decks', label: commandDictionary.deckGroup || 'Decks', items: deckItems });
+  }
+
+  const chronicleEntries = Array.isArray(dictionary.signals?.chronicle?.entries)
+    ? dictionary.signals.chronicle.entries
+    : [];
+  const timelineItems = chronicleEntries.map((entry) => ({
+    id: `timeline-${entry.year}`,
+    label: `${entry.year} · ${entry.title}`,
+    description: entry.description,
+    action: 'timeline',
+    target: entry.year,
+    keywords: [entry.title, entry.description, entry.year, ...(entry.tags || [])]
+      .filter(Boolean)
+      .join(' ')
+      .toLowerCase()
+  }));
+  if (timelineItems.length) {
+    groups.push({ id: 'timeline', label: commandDictionary.signalGroup || 'Timeline', items: timelineItems });
+  }
+
+  return groups;
+}
+
+function setupCommandPalette(lang) {
+  const palette = document.getElementById('command-palette');
+  if (!palette) return;
+  const dictionary = translations[lang]?.commandPalette;
+  if (!dictionary) return;
+
+  commandPaletteState.groups = buildCommandPaletteGroups(lang);
+  commandPaletteState.keyword = '';
+
+  const search = document.getElementById('command-search');
+  if (search) {
+    search.value = '';
+    search.setAttribute('aria-label', dictionary.searchLabel);
+    if (!search.dataset.bound) {
+      search.dataset.bound = 'true';
+      search.addEventListener('input', (event) => {
+        commandPaletteState.keyword = event.target.value;
+        updateCommandPaletteResults();
+      });
+      search.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowDown') {
+          event.preventDefault();
+          focusFirstCommandItem();
+        } else if (event.key === 'Enter') {
+          event.preventDefault();
+          const first = document.querySelector('#command-results .command-item');
+          if (first) {
+            first.click();
+          }
+        }
+      });
+    }
+  }
+
+  const empty = document.getElementById('command-empty');
+  if (empty) {
+    empty.textContent = dictionary.noResults;
+  }
+
+  updateCommandPaletteResults(lang);
+}
+
+function updateCommandPaletteResults(lang = state.language) {
+  const results = document.getElementById('command-results');
+  const empty = document.getElementById('command-empty');
+  if (!results || !empty) return;
+
+  results.innerHTML = '';
+  const keyword = commandPaletteState.keyword.trim().toLowerCase();
+  let total = 0;
+
+  commandPaletteState.groups.forEach((group) => {
+    if (!group || !Array.isArray(group.items) || !group.items.length) return;
+    const matches = group.items.filter((item) => {
+      if (!keyword) return true;
+      return item.keywords.includes(keyword);
+    });
+
+    if (!matches.length) return;
+    total += matches.length;
+
+    const groupSection = document.createElement('section');
+    groupSection.className = 'command-group';
+    const heading = document.createElement('h3');
+    heading.textContent = group.label;
+    groupSection.appendChild(heading);
+
+    const list = document.createElement('ul');
+    list.className = 'command-group__list';
+    matches.forEach((item) => {
+      const listItem = document.createElement('li');
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'command-item';
+      button.setAttribute('role', 'option');
+      button.innerHTML = `
+        <span class="command-item__title">${item.label}</span>
+        ${item.description ? `<span class="command-item__description">${item.description}</span>` : ''}
+      `;
+      button.addEventListener('click', () => handleCommandSelection(item));
+      button.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowDown') {
+          event.preventDefault();
+          focusSiblingCommandItem(button, 1);
+        } else if (event.key === 'ArrowUp') {
+          event.preventDefault();
+          focusSiblingCommandItem(button, -1);
+        } else if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          button.click();
+        }
+      });
+      listItem.appendChild(button);
+      list.appendChild(listItem);
+    });
+
+    groupSection.appendChild(list);
+    results.appendChild(groupSection);
+  });
+
+  empty.hidden = total > 0;
+  refreshCommandPaletteFocusables();
+}
+
+function focusFirstCommandItem() {
+  const first = document.querySelector('#command-results .command-item');
+  if (first) {
+    first.focus();
+  }
+}
+
+function focusSiblingCommandItem(current, direction) {
+  const items = Array.from(document.querySelectorAll('#command-results .command-item'));
+  const index = items.indexOf(current);
+  if (index === -1) return;
+  const nextIndex = index + direction;
+  if (nextIndex < 0) {
+    const search = document.getElementById('command-search');
+    if (search) search.focus();
+    return;
+  }
+  if (nextIndex >= items.length) return;
+  items[nextIndex].focus();
+}
+
+function refreshCommandPaletteFocusables() {
+  const palette = document.getElementById('command-palette');
+  if (!palette) return;
+  const panel = palette.querySelector('.command-palette__panel');
+  if (!panel) return;
+
+  const selectors = [
+    'input:not([disabled])',
+    'button:not([disabled])',
+    'a[href]',
+    'textarea:not([disabled])',
+    'select:not([disabled])',
+    '[tabindex]:not([tabindex="-1"])'
+  ];
+
+  const focusables = Array.from(panel.querySelectorAll(selectors.join(','))).filter((element) => {
+    if (element.hasAttribute('aria-hidden') && element.getAttribute('aria-hidden') === 'true') {
+      return false;
+    }
+    if (element.closest('[hidden]')) return false;
+    if (typeof element.offsetParent === 'undefined') return true;
+    return element.offsetParent !== null;
+  });
+
+  commandPaletteState.focusables = focusables;
+}
+
+function handleCommandPaletteTabLoop(event) {
+  if (!interactiveState.commandPaletteOpen || event.key !== 'Tab') return;
+
+  if (!commandPaletteState.focusables.length) {
+    refreshCommandPaletteFocusables();
+  }
+
+  const focusables = commandPaletteState.focusables;
+  if (!focusables.length) return;
+
+  const currentIndex = focusables.indexOf(document.activeElement);
+  const lastIndex = focusables.length - 1;
+
+  if (event.shiftKey) {
+    if (currentIndex <= 0) {
+      event.preventDefault();
+      focusables[lastIndex].focus();
+    }
+  } else if (currentIndex === -1 || currentIndex >= lastIndex) {
+    event.preventDefault();
+    focusables[0].focus();
+  }
+}
+
+function openCommandPalette() {
+  const palette = document.getElementById('command-palette');
+  if (!palette || interactiveState.commandPaletteOpen) return;
+  interactiveState.commandPaletteOpen = true;
+  interactiveState.commandPaletteReturnFocus = document.activeElement;
+  palette.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('command-open');
+  const toggle = document.getElementById('command-toggle');
+  if (toggle) {
+    toggle.setAttribute('aria-expanded', 'true');
+  }
+  updateCommandPaletteResults();
+  const search = document.getElementById('command-search');
+  if (search) {
+    search.value = commandPaletteState.keyword;
+    requestAnimationFrame(() => {
+      search.focus();
+      search.select();
+    });
+  }
+  refreshCommandPaletteFocusables();
+}
+
+function closeCommandPalette({ restoreFocus = true } = {}) {
+  const palette = document.getElementById('command-palette');
+  if (!palette || !interactiveState.commandPaletteOpen) return;
+  interactiveState.commandPaletteOpen = false;
+  palette.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('command-open');
+  const toggle = document.getElementById('command-toggle');
+  if (toggle) {
+    toggle.setAttribute('aria-expanded', 'false');
+  }
+  const search = document.getElementById('command-search');
+  if (search) {
+    search.value = '';
+  }
+  if (restoreFocus) {
+    const focusTarget = interactiveState.commandPaletteReturnFocus;
+    if (focusTarget && typeof focusTarget.focus === 'function') {
+      focusTarget.focus();
+    } else if (toggle) {
+      toggle.focus();
+    }
+  }
+  interactiveState.commandPaletteReturnFocus = null;
+  commandPaletteState.focusables = [];
+}
+
+function handleCommandSelection(item) {
+  if (!item) return;
+  closeCommandPalette({ restoreFocus: false });
+
+  if (item.action === 'scroll') {
+    const target = document.getElementById(item.target);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      flashHighlight(target);
+    }
+  } else if (item.action === 'deck') {
+    focusDeckEntry(item.target);
+  } else if (item.action === 'timeline') {
+    const signalsSection = document.getElementById('signals');
+    if (signalsSection) {
+      signalsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    highlightChronicle(item.target);
+  }
+}
+
+function flashHighlight(element, className = 'focus-highlight', duration = 1600) {
+  if (!element) return;
+  element.classList.add(className);
+  window.setTimeout(() => {
+    element.classList.remove(className);
+  }, duration);
+}
+
+function focusDeckEntry(entryId) {
+  if (!entryId) return;
+  const selector = `.deck-card[data-entry-id="${escapeSelector(entryId)}"]`;
+  const card = document.querySelector(selector);
+  if (!card) return;
+  card.classList.add('deck-card--active');
+  card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  window.setTimeout(() => {
+    card.classList.remove('deck-card--active');
+  }, 1800);
+  const link = card.querySelector('a');
+  if (link) {
+    link.focus({ preventScroll: true });
+  }
+}
+
+function highlightChronicle(year) {
+  if (!year) return;
+  const selector = `.timeline [data-year="${escapeSelector(year)}"]`;
+  const item = document.querySelector(selector);
+  if (!item) return;
+  item.classList.add('timeline-item--active');
+  item.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  window.setTimeout(() => {
+    item.classList.remove('timeline-item--active');
+  }, 2000);
+}
+
+function triggerTelemetryPulse() {
+  const duration = 4200;
+  interactiveState.telemetryPulse = {
+    start: performance.now(),
+    duration,
+    intensity: 1 + Math.random() * 0.6
+  };
+  const panel = document.getElementById('signal-telemetry');
+  if (panel) {
+    panel.classList.add('telemetry--pulsing');
+    window.setTimeout(() => {
+      panel.classList.remove('telemetry--pulsing');
+    }, duration);
+  }
+}
+
+function bindHeroPointer() {
+  const hero = document.getElementById('hero');
+  if (!hero || hero.dataset.pointerBound === 'true') return;
+  hero.dataset.pointerBound = 'true';
+
+  const updatePointer = (event) => {
+    const rect = hero.getBoundingClientRect();
+    if (!rect.width || !rect.height) return;
+    const x = (event.clientX - rect.left) / rect.width - 0.5;
+    const y = (event.clientY - rect.top) / rect.height - 0.5;
+    earthSceneControls.setPointerTilt(x * 2, -y * 2);
+  };
+
+  hero.addEventListener('pointermove', updatePointer);
+  hero.addEventListener('pointerleave', () => {
+    earthSceneControls.setPointerTilt(0, 0);
+  });
+}
+
+let commandPaletteEventsBound = false;
+
+function bindCommandPaletteEvents() {
+  if (commandPaletteEventsBound) return;
+  commandPaletteEventsBound = true;
+
+  const toggle = document.getElementById('command-toggle');
+  if (toggle) {
+    toggle.addEventListener('click', () => {
+      if (interactiveState.commandPaletteOpen) {
+        closeCommandPalette();
+      } else {
+        openCommandPalette();
+      }
+    });
+  }
+
+  const palette = document.getElementById('command-palette');
+  if (palette) {
+    palette.addEventListener('click', (event) => {
+      if (event.target.classList.contains('command-palette__backdrop')) {
+        closeCommandPalette();
+      }
+    });
+    palette.addEventListener('keydown', handleCommandPaletteTabLoop, true);
+  }
+
+  document.addEventListener('keydown', (event) => {
+    if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
+      event.preventDefault();
+      if (interactiveState.commandPaletteOpen) {
+        closeCommandPalette();
+      } else {
+        openCommandPalette();
+      }
+    } else if (event.key === 'Escape' && interactiveState.commandPaletteOpen) {
+      event.preventDefault();
+      closeCommandPalette();
+    }
+  });
 }
 
 function applyLanguage(lang) {
@@ -1861,6 +2425,7 @@ function applyLanguage(lang) {
   updateLanguageToggle(lang);
   renderHeaderStatus(lang);
   renderHeroStats(lang);
+  renderHeroControls(lang);
   renderStackLayers(lang);
   setupDeckSection(lang);
   renderCouncil(lang);
@@ -1868,11 +2433,14 @@ function applyLanguage(lang) {
   renderChronicle(lang);
   renderAlliances(lang);
   renderDock(lang);
+  setupCommandPalette(lang);
 }
 
 function initialize() {
   applyLanguage(state.language);
   initEarthScene();
+  bindHeroPointer();
+  bindCommandPaletteEvents();
 
   const toggle = document.getElementById('language-toggle');
   if (toggle) {
@@ -1884,11 +2452,12 @@ function initialize() {
 }
 
 initialize();
+
 function initEarthScene() {
   const canvas = document.getElementById('earth-canvas');
   if (!canvas) return;
 
-  const gl = canvas.getContext('webgl');
+  const gl = canvas.getContext('webgl', { antialias: true, alpha: true });
   if (!gl) {
     canvas.remove();
     return;
@@ -2139,19 +2708,85 @@ function initEarthScene() {
     return [vec3[0] / length, vec3[1] / length, vec3[2] / length];
   }
 
+  const control = {
+    angle: 0,
+    rotationSpeed: 0.08,
+    targetRotationSpeed: 0.08,
+    pointerTiltX: 0,
+    pointerTiltY: 0,
+    targetPointerTiltX: 0,
+    targetPointerTiltY: 0,
+    wobble: 0.08,
+    targetWobble: 0.08,
+    wobbleTimeout: null
+  };
+
+  earthSceneControls.setRotationSpeed = (value) => {
+    const numeric = Number(value);
+    if (Number.isNaN(numeric)) return;
+    const clamped = Math.max(0, Math.min(160, numeric));
+    const base = 0.02;
+    const range = 0.24;
+    control.targetRotationSpeed = base + (clamped / 160) * range;
+  };
+
+  earthSceneControls.setPointerTilt = (x = 0, y = 0) => {
+    const clamp = (val, max) => Math.max(-max, Math.min(max, val));
+    control.targetPointerTiltX = clamp(x, 0.6);
+    control.targetPointerTiltY = clamp(y, 0.5);
+  };
+
+  earthSceneControls.pulseWobble = () => {
+    control.targetWobble = 0.18;
+    if (control.wobbleTimeout) {
+      clearTimeout(control.wobbleTimeout);
+    }
+    control.wobbleTimeout = setTimeout(() => {
+      control.targetWobble = 0.08;
+    }, 1400);
+  };
+
+  earthSceneControls.setRotationSpeed(interactiveState.rotationSliderValue);
+
+  let lastTime = 0;
+
   function render(time) {
     const seconds = time * 0.001;
+    const delta = lastTime ? (time - lastTime) * 0.001 : 0;
+    lastTime = time;
+
     resizeCanvas();
     gl.clearColor(0.01, 0.03, 0.12, 1);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+    control.rotationSpeed += (control.targetRotationSpeed - control.rotationSpeed) * 0.08;
+    control.pointerTiltX += (control.targetPointerTiltX - control.pointerTiltX) * 0.12;
+    control.pointerTiltY += (control.targetPointerTiltY - control.pointerTiltY) * 0.12;
+    control.wobble += (control.targetWobble - control.wobble) * 0.1;
+    control.angle += control.rotationSpeed * delta;
 
     const aspect = canvas.width / canvas.height;
     const projection = perspectiveMatrix((45 * Math.PI) / 180, aspect, 0.1, 100);
 
     let model = identity();
-    model = rotateY(model, seconds * 0.08);
-    model = rotateX(model, 0.4 + Math.sin(seconds * 0.25) * 0.08);
+    model = rotateY(model, control.angle + control.pointerTiltX * 0.5);
+    model = rotateX(model, 0.4 + Math.sin(seconds * 0.4) * control.wobble + control.pointerTiltY * 0.45);
     model = translate(model, [0, 0, -3.4]);
 
     const lightDirection = normalize([
-      Math.cos(seconds * 0.4) * 0.6,
+      Math.cos(seconds * 0.35) * 0.6,
+      0.6,
+      Math.sin(seconds * 0.35) * 0.8
+    ]);
+
+    gl.uniformMatrix4fv(uModelMatrix, false, model);
+    gl.uniformMatrix4fv(uProjectionMatrix, false, projection);
+    gl.uniform1f(uTime, seconds);
+    gl.uniform3fv(uLightDirection, lightDirection);
+
+    gl.drawElements(gl.TRIANGLES, sphere.indices.length, gl.UNSIGNED_SHORT, 0);
+    requestAnimationFrame(render);
+  }
+
+  requestAnimationFrame(render);
+}
