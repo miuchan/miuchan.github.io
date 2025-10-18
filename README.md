@@ -25,6 +25,7 @@ miuchan.github.io 现已重构为零依赖的静态站点，使用原生 HTML、
 1. 确保系统提供 Python 3.10+。
 2. 执行 `scripts/run_aya.sh` 自动发现并编译 `formal/` 目录下的全部 `.aya` 文件。
 3. 或直接运行 `python3 -m tools.aya compile formal/HelloAya.aya` 验证单个文件。
+4. 需要在其他仓库或 CI 环境复用时，可通过 `pip install aya-engine` 获取同款命令行工具。
 
 GitHub Actions 工作流会在推送和 Pull Request 时自动安装 Python 3.11 并调用同一脚本，
 使用内置的 Aya Engine 校验形式化资产，确保持续集成流程稳定。
