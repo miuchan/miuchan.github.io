@@ -2,7 +2,7 @@ import { friendContent } from './friends-data.js';
 
 const counts = {
   demos: 21,
-  research: 5,
+  research: 6,
   blogs: 59,
   resume: 1
 };
@@ -260,6 +260,15 @@ const translations = {
             '融合记忆花庭与世界线跳跃模型，研发跨时间线的体验安全协议与共鸣写作工具链。',
           tags: ['时间工程', '记忆系统'],
           keywords: ['temporal synchrony', 'memory resonance', 'world line', '时间']
+        },
+        {
+          type: 'research',
+          href: 'docs/originlab-origin-suite-analysis.md',
+          title: 'OriginLab Origin/OriginPro 产品评估',
+          description:
+            '整理 OriginLab 官网信息，解析面向科研与工程的数据分析与绘图软件的功能亮点、适配场景与选型要点。',
+          tags: ['工具评估', '数据分析'],
+          keywords: ['OriginLab', 'OriginPro', 'data analysis', '科研软件']
         },
         {
           type: 'research',
@@ -753,6 +762,15 @@ const translations = {
             'Combine memory gardens with world-line jumps to craft cross-timeline safety protocols and resonant writing tools.',
           tags: ['Temporal Engineering', 'Memory Systems'],
           keywords: ['temporal synchrony', 'memory resonance', 'world line', '时间']
+        },
+        {
+          type: 'research',
+          href: 'docs/originlab-origin-suite-analysis.md',
+          title: 'OriginLab Origin / OriginPro Assessment',
+          description:
+            "Synthesizes OriginLab's official materials to surface positioning, capabilities, fit, and evaluation considerations for the scientific analytics suite.",
+          tags: ['Tool Review', 'Data Analysis'],
+          keywords: ['OriginLab', 'OriginPro', 'data analysis', '科研软件']
         },
         {
           type: 'research',
