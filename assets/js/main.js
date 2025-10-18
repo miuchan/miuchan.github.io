@@ -2,7 +2,7 @@ import { friendContent } from './friends-data.js';
 
 const counts = {
   demos: 22,
-  research: 6,
+  research: 7,
   blogs: 59,
   resume: 1
 };
@@ -327,6 +327,15 @@ const translations = {
           description: '气候数据团队的多时区协作模型与无障碍设计评估表。',
           tags: ['协作', '可持续'],
           keywords: ['climate', 'collaboration', 'sustainability', '协作']
+        },
+        {
+          type: 'research',
+          href: 'docs/pinduoduo-distributed-automata-dynamics-center.md',
+          title: '拼多多分布式自动机动力系统研究中心',
+          description:
+            '筹建覆盖供应链、物流、金融与产业带协同的分布式自动机研究枢纽，让需求信号驱动绿色履约与策略迭代。',
+          tags: ['自动机', '供应链'],
+          keywords: ['pinduoduo', 'distributed automata', 'supply chain', '动力系统']
         },
         {
           type: 'research',
@@ -923,6 +932,15 @@ const translations = {
           description: 'A multi-timezone collaboration model and accessibility evaluation for climate data teams.',
           tags: ['Collaboration', 'Sustainability'],
           keywords: ['climate', 'collaboration', 'sustainability', '协作']
+        },
+        {
+          type: 'research',
+          href: 'docs/pinduoduo-distributed-automata-dynamics-center.md',
+          title: 'Pinduoduo Distributed Automata Dynamics Center',
+          description:
+            'Blueprint a distributed automata research hub that links supply chain, logistics, finance, and industrial clusters for greener fulfillment cycles.',
+          tags: ['Automata', 'Supply Chain'],
+          keywords: ['pinduoduo', 'distributed automata', 'supply chain', '动力系统']
         },
         {
           type: 'research',
