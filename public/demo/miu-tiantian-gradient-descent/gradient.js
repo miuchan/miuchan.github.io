@@ -351,14 +351,24 @@
 
       if (state.path.length > 1) {
         ctx.lineWidth = 2;
+        ctx.lineJoin = 'round';
+        ctx.lineCap = 'round';
         ctx.strokeStyle = 'rgba(255, 255, 255, 0.75)';
         ctx.beginPath();
         const first = state.path[0];
         ctx.moveTo(this.toCanvasX(first.x), this.toCanvasY(first.y));
-        for (let i = 1; i < state.path.length; i += 1) {
-          const point = state.path[i];
-          ctx.lineTo(this.toCanvasX(point.x), this.toCanvasY(point.y));
+        for (let i = 1; i < state.path.length - 1; i += 1) {
+          const current = state.path[i];
+          const next = state.path[i + 1];
+          const controlX = this.toCanvasX(current.x);
+          const controlY = this.toCanvasY(current.y);
+          const endX = (controlX + this.toCanvasX(next.x)) / 2;
+          const endY = (controlY + this.toCanvasY(next.y)) / 2;
+          ctx.quadraticCurveTo(controlX, controlY, endX, endY);
         }
+
+        const last = state.path[state.path.length - 1];
+        ctx.lineTo(this.toCanvasX(last.x), this.toCanvasY(last.y));
         ctx.stroke();
       }
 
