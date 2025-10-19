@@ -330,7 +330,7 @@ const translations = {
         },
         {
           type: 'research',
-          href: 'docs/pinduoduo-distributed-automata-dynamics-center.md',
+          href: 'docs/research.html?doc=pinduoduo-distributed-automata-dynamics-center',
           title: '拼多多分布式自动机动力系统研究中心',
           description:
             '筹建覆盖供应链、物流、金融与产业带协同的分布式自动机研究枢纽，让需求信号驱动绿色履约与策略迭代。',
@@ -339,7 +339,7 @@ const translations = {
         },
         {
           type: 'research',
-          href: 'docs/tomoko-yuko-thermal-dual-resonance-lab.md',
+          href: 'docs/research.html?doc=tomoko-yuko-thermal-dual-resonance-lab',
           title: '朋子和友子的热对偶共振实验室',
           description:
             '构建热流-声波耦合实验舱，演示可逆热管理与多节点热对偶调度策略。',
@@ -348,7 +348,7 @@ const translations = {
         },
         {
           type: 'research',
-          href: 'docs/v-d-thermal-dual-ssb-lab.md',
+          href: 'docs/research.html?doc=v-d-thermal-dual-ssb-lab',
           title: 'v 子与 d 子的热对偶自发对称破缺计划',
           description:
             '实现热对偶约束下的 v/d 子场耦合实验，解析噪声触发的自发对称破缺与谱系拓扑。',
@@ -357,7 +357,7 @@ const translations = {
         },
         {
           type: 'research',
-          href: 'docs/micro-incentive-bridge-lab.md',
+          href: 'docs/research.html?doc=micro-incentive-bridge-lab',
           title: '微观激励桥实验室',
           description:
             '建立跨社区的激励桥梁，将贡献事件、声誉权重与结算桥接入统一协议，保障公共项目资金透明高效流动。',
@@ -366,7 +366,7 @@ const translations = {
         },
         {
           type: 'research',
-          href: 'docs/whole-home-wireless-charging-lab.md',
+          href: 'docs/research.html?doc=whole-home-wireless-charging-lab',
           title: '全屋智能无线充电实验舱',
           description:
             '构建多房间谐振线圈阵列与自适应调度算法，实现移动设备与机器人随行供电的能源网络。',
@@ -375,7 +375,7 @@ const translations = {
         },
         {
           type: 'research',
-          href: 'docs/chtholly-hououin-temporal-synchrony-lab.md',
+          href: 'docs/research.html?doc=chtholly-hououin-temporal-synchrony-lab',
           title: '珂朵莉·凤凰院凶真时间同调实验室',
           description:
             '融合记忆花庭与世界线跳跃模型，研发跨时间线的体验安全协议与共鸣写作工具链。',
@@ -384,7 +384,7 @@ const translations = {
         },
         {
           type: 'research',
-          href: 'docs/originlab-origin-suite-analysis.md',
+          href: 'docs/research.html?doc=originlab-origin-suite-analysis',
           title: 'OriginLab Origin/OriginPro 产品评估',
           description:
             '整理 OriginLab 官网信息，解析面向科研与工程的数据分析与绘图软件的功能亮点、适配场景与选型要点。',
@@ -393,7 +393,7 @@ const translations = {
         },
         {
           type: 'research',
-          href: 'docs/computational-singularity-proof.md',
+          href: 'docs/research.html?doc=computational-singularity-proof',
           title: '计算奇点 470 年上界证明',
           description: '以数学推导与历史数据结合的研究，阐释计算奇点的可能轨迹与边界。',
           tags: ['数学', '未来学'],
@@ -401,7 +401,7 @@ const translations = {
         },
         {
           type: 'research',
-          href: 'docs/earth-online-iteration-2025.md',
+          href: 'docs/research.html?doc=earth-online-iteration-2025',
           title: 'Earth Online 自治航道蓝图',
           description:
             '总结 2025 年的行星实验迭代：如何在多主体协作、遥测治理与体验系统之间建立自治航道。',
@@ -959,7 +959,7 @@ const translations = {
         },
         {
           type: 'research',
-          href: 'docs/pinduoduo-distributed-automata-dynamics-center.md',
+          href: 'docs/research.html?doc=pinduoduo-distributed-automata-dynamics-center',
           title: 'Pinduoduo Distributed Automata Dynamics Center',
           description:
             'Blueprint a distributed automata research hub that links supply chain, logistics, finance, and industrial clusters for greener fulfillment cycles.',
@@ -968,7 +968,7 @@ const translations = {
         },
         {
           type: 'research',
-          href: 'docs/tomoko-yuko-thermal-dual-resonance-lab.md',
+          href: 'docs/research.html?doc=tomoko-yuko-thermal-dual-resonance-lab',
           title: 'Tomoko & Yuko Thermal Dual Resonance Lab',
           description:
             'Prototype a heat-flow and acoustic coupling chamber to demonstrate reversible thermal management strategies.',
@@ -977,7 +977,7 @@ const translations = {
         },
         {
           type: 'research',
-          href: 'docs/v-d-thermal-dual-ssb-lab.md',
+          href: 'docs/research.html?doc=v-d-thermal-dual-ssb-lab',
           title: 'Thermal Dual SSB Lab for v & d Quanta',
           description:
             'Implement a thermally dual-coupled v/d mode platform to observe noise-driven spontaneous symmetry breaking and spectral topology.',
@@ -986,7 +986,7 @@ const translations = {
         },
         {
           type: 'research',
-          href: 'docs/micro-incentive-bridge-lab.md',
+          href: 'docs/research.html?doc=micro-incentive-bridge-lab',
           title: 'Micro Incentive Bridge Lab',
           description:
             'Design incentive bridges that link contributions, reputation weights, and settlement rails for public projects.',
@@ -995,7 +995,7 @@ const translations = {
         },
         {
           type: 'research',
-          href: 'docs/whole-home-wireless-charging-lab.md',
+          href: 'docs/research.html?doc=whole-home-wireless-charging-lab',
           title: 'Whole-home Wireless Charging Lab',
           description:
             'Build resonant coil arrays and adaptive scheduling to power devices and robots throughout a home.',
@@ -1004,7 +1004,7 @@ const translations = {
         },
         {
           type: 'research',
-          href: 'docs/chtholly-hououin-temporal-synchrony-lab.md',
+          href: 'docs/research.html?doc=chtholly-hououin-temporal-synchrony-lab',
           title: 'Chtholly × Hououin Temporal Synchrony Lab',
           description:
             'Combine memory gardens with world-line jumps to craft cross-timeline safety protocols and resonant writing tools.',
@@ -1013,7 +1013,7 @@ const translations = {
         },
         {
           type: 'research',
-          href: 'docs/originlab-origin-suite-analysis.md',
+          href: 'docs/research.html?doc=originlab-origin-suite-analysis',
           title: 'OriginLab Origin / OriginPro Assessment',
           description:
             "Synthesizes OriginLab's official materials to surface positioning, capabilities, fit, and evaluation considerations for the scientific analytics suite.",
@@ -1022,7 +1022,7 @@ const translations = {
         },
         {
           type: 'research',
-          href: 'docs/computational-singularity-proof.md',
+          href: 'docs/research.html?doc=computational-singularity-proof',
           title: '470-year Computational Singularity Bound',
           description:
             'A hybrid of mathematical derivation and historical data projecting the trajectory and limits of the computational singularity.',
@@ -1031,7 +1031,7 @@ const translations = {
         },
         {
           type: 'research',
-          href: 'docs/earth-online-iteration-2025.md',
+          href: 'docs/research.html?doc=earth-online-iteration-2025',
           title: 'Earth Online Autonomous Corridor Blueprint',
           description:
             'Captures the 2025 iteration of the planetary lab—linking telemetry governance, multi-agent coordination, and experience systems into an autonomous corridor.',

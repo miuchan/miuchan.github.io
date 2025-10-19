@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Earth Online 研究文稿</title>
+    <meta name="description" content="Earth Online 研究图书馆，收录跨学科研究论文与实验室蓝图。" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/styles.css" />
+  </head>
+  <body class="document-body">
+    <header class="document-header" role="banner">
+      <div class="inner document-header__inner">
+        <a class="document-header__back" href="../index.html">← 返回 Earth Online</a>
+        <div class="document-header__meta">
+          <p class="document-header__eyebrow">Research Library</p>
+          <h1 id="document-title">加载中…</h1>
+        </div>
+      </div>
+    </header>
+    <main class="document-main" role="main">
+      <div class="inner document-layout">
+        <article class="document-article">
+          <section class="document-abstract" id="document-abstract"></section>
+          <div class="document-body-content" id="document-content" aria-live="polite"></div>
+        </article>
+        <aside class="document-sidebar" aria-label="研究论文索引">
+          <h2>研究索引</h2>
+          <p class="document-sidebar__hint">
+            浏览全部研究论文与实验室蓝图，或在主站体验簇中筛选其它资产。
+          </p>
+          <ul class="document-sidebar__list" id="document-sidebar-list"></ul>
+        </aside>
+      </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script type="module" src="../assets/js/research-viewer.js"></script>
+  </body>
+</html>
