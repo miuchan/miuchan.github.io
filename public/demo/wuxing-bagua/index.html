@@ -143,6 +143,85 @@
         margin: 0;
       }
 
+      .balance-grid {
+        display: grid;
+        grid-template-columns: minmax(240px, 0.95fr) minmax(260px, 1.05fr);
+        gap: 1.75rem;
+        align-items: start;
+      }
+
+      .balance-intro {
+        display: flex;
+        flex-direction: column;
+        gap: 0.85rem;
+        font-size: 0.98rem;
+        color: rgba(226, 232, 240, 0.85);
+      }
+
+      .balance-intro strong {
+        color: #f8fafc;
+      }
+
+      .yin-yang-pairs {
+        display: grid;
+        gap: 1.15rem;
+      }
+
+      .yin-yang-card {
+        border: 1px solid rgba(56, 189, 248, 0.25);
+        border-radius: 16px;
+        padding: 1.1rem 1.25rem;
+        background: rgba(15, 23, 42, 0.65);
+        box-shadow: inset 0 0 0 1px rgba(8, 47, 73, 0.22);
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+      }
+
+      .yin-yang-card h3 {
+        margin: 0;
+        font-size: 1.12rem;
+        letter-spacing: 0.06em;
+        font-family: "Noto Serif SC", serif;
+        color: #38bdf8;
+      }
+
+      .yin-yang-card p {
+        margin: 0;
+        font-size: 0.95rem;
+        color: rgba(226, 232, 240, 0.8);
+      }
+
+      .yin-yang-elements {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .element-pill {
+        border: 1px solid rgba(148, 163, 184, 0.35);
+        border-radius: 999px;
+        padding: 0.35rem 0.85rem;
+        background: rgba(2, 6, 23, 0.6);
+        color: rgba(226, 232, 240, 0.88);
+        font-size: 0.88rem;
+        cursor: pointer;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+        font-family: inherit;
+      }
+
+      .element-pill:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.35);
+      }
+
+      .element-pill.active {
+        border-color: rgba(56, 189, 248, 0.85);
+        color: #f8fafc;
+        box-shadow: 0 14px 28px rgba(56, 189, 248, 0.2);
+        transform: translateY(-2px);
+      }
+
       .trigram-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -198,6 +277,11 @@
 
       .trigram-card.highlight::after {
         opacity: 1;
+      }
+
+      .yin-yang-card.highlight {
+        border-color: rgba(56, 189, 248, 0.65);
+        box-shadow: 0 18px 32px rgba(56, 189, 248, 0.2);
       }
 
       .legend-list {
@@ -299,6 +383,10 @@
         .diagram-layout {
           grid-template-columns: 1fr;
         }
+
+        .balance-grid {
+          grid-template-columns: 1fr;
+        }
       }
 
       @media (max-width: 600px) {
@@ -337,6 +425,12 @@
                   <stop offset="0%" stop-color="rgba(14,116,144,0.25)" />
                   <stop offset="55%" stop-color="rgba(15,23,42,0.0)" />
                 </radialGradient>
+                <linearGradient id="taiji-split" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#f8fafc" />
+                  <stop offset="50%" stop-color="#f8fafc" />
+                  <stop offset="50%" stop-color="#0f172a" />
+                  <stop offset="100%" stop-color="#0f172a" />
+                </linearGradient>
                 <marker
                   id="arrow-sheng"
                   markerWidth="10"
@@ -361,10 +455,24 @@
               <circle cx="260" cy="260" r="240" fill="url(#background-glow)" />
             </svg>
             <p class="diagram-caption">
-              蓝色实线表示相生循环，红色虚线表示相克制衡；外圈八卦与内圈五行通过方位与气候相互映射。
+              蓝色实线表示相生循环，红色虚线表示相克制衡；中心太极与外圈八卦、内圈五行联动呈现阴阳枢纽。
             </p>
           </div>
           <aside id="element-info" aria-live="polite"></aside>
+        </div>
+      </section>
+      <section>
+        <h2>阴阳平衡：动静互参</h2>
+        <div class="balance-grid">
+          <div class="balance-intro">
+            <p>
+              五行的动态并非孤立，它们在<strong>阴阳两极</strong>间不断转化：阳势外展、阴势内敛，土为枢纽使能量得以周流。
+            </p>
+            <p>
+              通过把握每一行的阴阳指向，我们能够设计出既能增长又能稳态的策略组合，让系统在扩张与约束之间保持弹性。
+            </p>
+          </div>
+          <div id="yin-yang-pairs" class="yin-yang-pairs" aria-label="阴阳平衡分组"></div>
         </div>
       </section>
       <section>
@@ -403,6 +511,7 @@
       const svg = document.getElementById('bagua-diagram');
       const infoPanel = document.getElementById('element-info');
       const trigramGrid = document.getElementById('trigram-grid');
+      const yinYangContainer = document.getElementById('yin-yang-pairs');
 
       const wuXing = [
         {
@@ -415,7 +524,9 @@
           climate: '风',
           organs: '肝 · 胆',
           virtues: '生发、扩张、柔韧',
-          trigrams: ['震', '巽']
+          trigrams: ['震', '巽'],
+          polarity: '阳势',
+          balance: '以舒展之力打开通道，需要水之阴润为根基。'
         },
         {
           id: 'fire',
@@ -427,7 +538,9 @@
           climate: '炎',
           organs: '心 · 小肠',
           virtues: '洞察、外放、炽热',
-          trigrams: ['离']
+          trigrams: ['离'],
+          polarity: '极阳',
+          balance: '点燃行动与洞察，需辅以金与水的收敛降温。'
         },
         {
           id: 'earth',
@@ -439,7 +552,9 @@
           climate: '湿',
           organs: '脾 · 胃',
           virtues: '承载、调和、信任',
-          trigrams: ['坤', '艮']
+          trigrams: ['坤', '艮'],
+          polarity: '中和',
+          balance: '位居枢纽调节阴阳，确保资源沉淀与节奏同步。'
         },
         {
           id: 'metal',
@@ -451,7 +566,9 @@
           climate: '燥',
           organs: '肺 · 大肠',
           virtues: '收敛、决断、肃正',
-          trigrams: ['乾', '兑']
+          trigrams: ['乾', '兑'],
+          polarity: '阴势',
+          balance: '以肃杀之力界定边界，需要木火激活新的秩序。'
         },
         {
           id: 'water',
@@ -463,7 +580,9 @@
           climate: '寒',
           organs: '肾 · 膀胱',
           virtues: '渗透、韧性、潜藏',
-          trigrams: ['坎']
+          trigrams: ['坎'],
+          polarity: '至阴',
+          balance: '潜藏与滋养底能，为阳势的再生提供回路。'
         }
       ];
 
@@ -491,7 +610,8 @@
           image: '☵',
           direction: '北',
           quality: '险 · 流动',
-          governance: '安全防御 · 弹性网络'
+          governance: '安全防御 · 弹性网络',
+          polarity: '阴中含阳'
         },
         {
           name: '艮',
@@ -500,7 +620,8 @@
           image: '☶',
           direction: '东北',
           quality: '止 · 蓄势',
-          governance: '边界管理 · 可靠部署'
+          governance: '边界管理 · 可靠部署',
+          polarity: '少阳守静'
         },
         {
           name: '震',
@@ -509,7 +630,8 @@
           image: '☳',
           direction: '东',
           quality: '动 · 觉醒',
-          governance: '创新启动 · 风险唤醒'
+          governance: '创新启动 · 风险唤醒',
+          polarity: '阳动初生'
         },
         {
           name: '巽',
@@ -518,7 +640,8 @@
           image: '☴',
           direction: '东南',
           quality: '入 · 渗透',
-          governance: '渗透扩散 · 共识传播'
+          governance: '渗透扩散 · 共识传播',
+          polarity: '阴柔入世'
         },
         {
           name: '离',
@@ -527,7 +650,8 @@
           image: '☲',
           direction: '南',
           quality: '明 · 可视',
-          governance: '洞察分析 · 视觉系统'
+          governance: '洞察分析 · 视觉系统',
+          polarity: '阳中含阴'
         },
         {
           name: '坤',
@@ -536,7 +660,8 @@
           image: '☷',
           direction: '西南',
           quality: '顺 · 承载',
-          governance: '运营调度 · 土地治理'
+          governance: '运营调度 · 土地治理',
+          polarity: '纯阴承载'
         },
         {
           name: '兑',
@@ -545,7 +670,8 @@
           image: '☱',
           direction: '西',
           quality: '悦 · 开放',
-          governance: '对话协商 · 资源分配'
+          governance: '对话协商 · 资源分配',
+          polarity: '阴中带阳'
         },
         {
           name: '乾',
@@ -554,13 +680,15 @@
           image: '☰',
           direction: '西北',
           quality: '健 · 创造',
-          governance: '战略统筹 · 开放标准'
+          governance: '战略统筹 · 开放标准',
+          polarity: '纯阳开创'
         }
       ];
 
       const center = 260;
       const innerRadius = 150;
       const outerRadius = 220;
+      const taijiRadius = 54;
 
       const elementNodes = new Map();
       const shengLines = [];
@@ -572,6 +700,33 @@
           y: center + Math.sin(angle) * radius
         };
       };
+
+      const taijiGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      taijiGroup.setAttribute('class', 'taiji-group');
+
+      const taijiCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      taijiCircle.setAttribute('cx', center);
+      taijiCircle.setAttribute('cy', center);
+      taijiCircle.setAttribute('r', taijiRadius);
+      taijiCircle.setAttribute('fill', 'url(#taiji-split)');
+      taijiCircle.setAttribute('opacity', '0.92');
+      taijiGroup.appendChild(taijiCircle);
+
+      const yinSmall = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      yinSmall.setAttribute('cx', center);
+      yinSmall.setAttribute('cy', center - taijiRadius / 2);
+      yinSmall.setAttribute('r', taijiRadius / 6.2);
+      yinSmall.setAttribute('fill', '#0f172a');
+      taijiGroup.appendChild(yinSmall);
+
+      const yangSmall = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      yangSmall.setAttribute('cx', center);
+      yangSmall.setAttribute('cy', center + taijiRadius / 2);
+      yangSmall.setAttribute('r', taijiRadius / 6.2);
+      yangSmall.setAttribute('fill', '#f8fafc');
+      taijiGroup.appendChild(yangSmall);
+
+      svg.appendChild(taijiGroup);
 
       wuXing.forEach((element, index) => {
         const angle = (Math.PI * 2 * index) / wuXing.length - Math.PI / 2;
@@ -667,6 +822,7 @@
             <dt>德性特质</dt><dd>${element.virtues}</dd>
             <dt>相生</dt><dd>${element.name}生${generates.name} · 受${generatedBy.name}滋养</dd>
             <dt>相克</dt><dd>${element.name}克${controls.name} · 受${controlledBy.name}制衡</dd>
+            <dt>阴阳平衡</dt><dd>${element.polarity} —— ${element.balance}</dd>
             <dt>对应卦象</dt><dd>${element.trigrams.join('、')}</dd>
           </dl>
         `;
@@ -695,7 +851,75 @@
         document.querySelectorAll('.trigram-label').forEach((label) => {
           label.setAttribute('fill', label.dataset.element === elementId ? '#f8fafc' : 'rgba(226,232,240,0.75)');
         });
+
+        document.querySelectorAll('.element-pill').forEach((pill) => {
+          const isActive = pill.dataset.element === elementId;
+          pill.classList.toggle('active', isActive);
+          pill.setAttribute('aria-pressed', isActive);
+        });
+
+        document.querySelectorAll('.yin-yang-card').forEach((card) => {
+          const hasActive = card.querySelector(`.element-pill[data-element="${elementId}"]`);
+          card.classList.toggle('highlight', Boolean(hasActive));
+        });
       };
+
+      if (yinYangContainer) {
+        const yinYangGroups = [
+          {
+            title: '阳动之势',
+            description: '木与火牵引系统外展，分别承担结构生长与行动点燃。',
+            elements: ['wood', 'fire']
+          },
+          {
+            title: '中枢调和',
+            description: '土处于中心枢纽，把扩张与收敛转化为秩序与信任。',
+            elements: ['earth']
+          },
+          {
+            title: '阴守之力',
+            description: '金与水通过收敛与潜藏，构建反馈以保持系统韧性。',
+            elements: ['metal', 'water']
+          }
+        ];
+
+        yinYangGroups.forEach((group) => {
+          const card = document.createElement('article');
+          card.className = 'yin-yang-card';
+          card.innerHTML = `
+            <h3>${group.title}</h3>
+            <p>${group.description}</p>
+          `;
+
+          const elementRow = document.createElement('div');
+          elementRow.className = 'yin-yang-elements';
+
+          group.elements.forEach((elementId) => {
+            const element = wuXing.find((item) => item.id === elementId);
+            const pill = document.createElement('button');
+            pill.className = 'element-pill';
+            pill.dataset.element = elementId;
+            pill.type = 'button';
+            pill.textContent = `${element.name} · ${element.polarity}`;
+            pill.setAttribute('aria-label', `${element.name}行阴阳特质：${element.balance}`);
+            pill.setAttribute('aria-pressed', 'false');
+            const activate = () => updateActiveState(elementId);
+            pill.addEventListener('mouseenter', activate);
+            pill.addEventListener('focus', activate);
+            pill.addEventListener('click', activate);
+            pill.addEventListener('keydown', (event) => {
+              if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                activate();
+              }
+            });
+            elementRow.appendChild(pill);
+          });
+
+          card.appendChild(elementRow);
+          yinYangContainer.appendChild(card);
+        });
+      }
 
       // Render trigram cards
       trigramData.forEach((trigram) => {
@@ -709,6 +933,7 @@
             <span>拼音：${trigram.pinyin}</span>
             <span>方位：${trigram.direction}</span>
             <span>对应五行：${wuXing.find((item) => item.id === trigram.element).name}</span>
+            <span>阴阳特征：${trigram.polarity}</span>
           </div>
         `;
         card.addEventListener('mouseenter', () => updateActiveState(trigram.element));
