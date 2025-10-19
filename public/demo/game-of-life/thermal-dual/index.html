@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>生命游戏：热对偶共振场</title>
+  <meta name="description" content="在康威生命游戏中引入热对偶共振：让热扩散与声学对偶场共同驱动出生与存活阈值，体验一座会呼吸的热-声细胞自动机实验室。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="layout">
+    <header class="hero">
+      <a class="back" href="../../../index.html#projects">← 返回作品集合</a>
+      <h1>生命游戏：热对偶共振场</h1>
+      <p>把康威生命游戏嵌入朋子与友子的热对偶实验舱：每一个格点同时携带生命状态、热能偏置与声学对偶相位，阈值会随热流与共振实时漂移。观察
+        生与灭如何在双场耦合下交替、在冷热交界处形成自愈波纹。</p>
+      <div class="tags" aria-label="演示标签">
+        <span class="tag">生命游戏</span>
+        <span class="tag">热对偶</span>
+        <span class="tag">多物理场自动机</span>
+      </div>
+    </header>
+
+    <section class="stage">
+      <canvas id="lifeCanvas" width="720" height="720" role="img" aria-label="展示热对偶共振生命游戏演化的画布"></canvas>
+      <aside class="panel">
+        <h2>玩法说明</h2>
+        <ul>
+          <li>点击或拖动画布即可绘制/擦除活细胞，热与共振会随之跃迁。</li>
+          <li>热扩散系数控制温度场的平滑度；对偶耦合增益决定声-热如何互相推送。</li>
+          <li>共振调谐灵敏度会影响出生/存活阈值对热与声的响应，灵敏度越高，阈值漂移越剧烈。</li>
+          <li>触发“热脉冲”按钮，为实验舱注入一次热-声激励，观察波前如何分裂与锁定。</li>
+        </ul>
+      </aside>
+    </section>
+
+    <section class="controls" aria-describedby="controls-help">
+      <div class="stats" role="status" aria-live="polite">
+        <div class="stat">
+          <span class="label">代数</span>
+          <strong data-generation>0</strong>
+        </div>
+        <div class="stat">
+          <span class="label">活细胞</span>
+          <strong data-alive>0</strong>
+        </div>
+        <div class="stat">
+          <span class="label">热对偶偏置</span>
+          <strong data-heat>+0.0 mK</strong>
+        </div>
+        <div class="stat">
+          <span class="label">共振相干度</span>
+          <strong data-coherence>0%</strong>
+        </div>
+      </div>
+      <div class="control-group">
+        <button type="button" id="toggle">暂停演化</button>
+        <button type="button" id="step" class="secondary">单步</button>
+        <button type="button" id="clear" class="secondary">清空</button>
+        <button type="button" id="random" class="secondary">随机填充</button>
+        <button type="button" id="pulse" class="ghost">热脉冲</button>
+      </div>
+      <div class="control-group sliders">
+        <label class="slider">
+          <span>演化速度 <strong data-speed>160 ms</strong></span>
+          <input type="range" id="speed" min="40" max="400" value="160" step="10">
+        </label>
+        <label class="slider">
+          <span>热扩散系数 <strong data-diffusion>0.18</strong></span>
+          <input type="range" id="diffusion" min="0.05" max="0.35" value="0.18" step="0.01">
+        </label>
+        <label class="slider">
+          <span>对偶耦合增益 <strong data-coupling>0.22</strong></span>
+          <input type="range" id="coupling" min="0" max="0.45" value="0.22" step="0.01">
+        </label>
+        <label class="slider">
+          <span>共振调谐灵敏度 <strong data-tuning>1.2</strong></span>
+          <input type="range" id="tuning" min="0" max="2" value="1.2" step="0.1">
+        </label>
+      </div>
+      <p class="controls-note" id="controls-help">当热场与声场同步时，阈值呈现呼吸式收缩：增大耦合增益会放大热-声偏置，灵敏度决定生命规则对偏置的反应程度。低扩散
+        对应局部剧烈的“热结晶”，高扩散则让图样更平滑、易于锁定在热对偶基态。</p>
+    </section>
+
+    <section class="insight">
+      <h2>热对偶如何塑造演化？</h2>
+      <p>朋子和友子的热对偶共振舱强调“热流与声学相位的对偶互换”。在本实验中，生命游戏的出生与存活不再是固定阈值，而是根据局部热偏置与声
+        学相干度实时调节：</p>
+      <ul>
+        <li><strong>热流调权：</strong>活细胞会泵入正温偏置，冷却区域则拉低阈值，形成冷热交错的“热带通路”。</li>
+        <li><strong>声学对偶：</strong>共振场像次级速度项，捕捉热梯度的变化，推动阈值产生滞后效应，催生脉冲和反向波。</li>
+        <li><strong>自愈机制：</strong>当热与声差值收敛，相干度上升，局部区域进入稳定的热对偶平台，像实验舱中的可逆热管。</li>
+      </ul>
+    </section>
+
+    <section class="modes">
+      <h2>试试这些演化场景</h2>
+      <div class="mode-grid">
+        <article class="mode">
+          <h3>共振风暴</h3>
+          <p>提升耦合增益至 0.35 以上，再触发热脉冲，你会看到热波与声波分离成双螺旋，滑翔子在热束缚区被折返。</p>
+        </article>
+        <article class="mode">
+          <h3>对偶固锁</h3>
+          <p>把扩散降至 0.08、灵敏度调至 0.6，尝试手动绘制一个环状结构：热场会在边缘冻结，内部维持振荡，像热对偶谐振腔。</p>
+        </article>
+        <article class="mode">
+          <h3>热舒适测试</h3>
+          <p>保持高扩散（≥0.28）并降低耦合，观察系统如何迅速回归均匀态，平均热偏置趋近 0，说明舱体进入舒适平衡。</p>
+        </article>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>© <span id="year"></span> Miuchan · 热对偶生命游戏实验</p>
+    </footer>
+  </main>
+  <script type="module" src="thermal-dual.js"></script>
+</body>
+</html>
