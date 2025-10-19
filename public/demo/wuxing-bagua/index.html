@@ -210,6 +210,19 @@
         font-family: inherit;
       }
 
+      .element-pill strong {
+        display: block;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+      }
+
+      .element-pill span {
+        display: block;
+        font-size: 0.75rem;
+        opacity: 0.72;
+        line-height: 1.35;
+      }
+
       .element-pill:focus {
         outline: none;
         box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.35);
@@ -220,6 +233,127 @@
         color: #f8fafc;
         box-shadow: 0 14px 28px rgba(56, 189, 248, 0.2);
         transform: translateY(-2px);
+      }
+
+      .bazi-section {
+        display: flex;
+        flex-direction: column;
+        gap: 1.75rem;
+      }
+
+      .bazi-intro {
+        display: grid;
+        grid-template-columns: minmax(280px, 1fr) minmax(280px, 1.1fr);
+        gap: 1.5rem;
+        align-items: start;
+        color: rgba(226, 232, 240, 0.85);
+      }
+
+      .bazi-intro p {
+        margin: 0;
+        font-size: 0.98rem;
+      }
+
+      .unity-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1rem;
+      }
+
+      .unity-card {
+        border: 1px solid rgba(56, 189, 248, 0.25);
+        border-radius: 16px;
+        padding: 1rem 1.1rem;
+        background: rgba(15, 23, 42, 0.72);
+        box-shadow: inset 0 0 0 1px rgba(8, 47, 73, 0.18);
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+      }
+
+      .unity-card h3 {
+        margin: 0;
+        font-size: 1.05rem;
+        font-family: "Noto Serif SC", serif;
+        letter-spacing: 0.06em;
+        color: #38bdf8;
+      }
+
+      .unity-card p {
+        margin: 0;
+        font-size: 0.92rem;
+        color: rgba(226, 232, 240, 0.78);
+      }
+
+      .unity-card .element-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .bazi-grid {
+        display: grid;
+        gap: 1.5rem;
+      }
+
+      .pillar-card {
+        border-radius: 20px;
+        border: 1px solid rgba(148, 163, 184, 0.25);
+        background: linear-gradient(160deg, rgba(15, 23, 42, 0.9), rgba(2, 6, 23, 0.82));
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.1rem;
+        box-shadow: 0 20px 44px rgba(2, 6, 23, 0.55);
+      }
+
+      .pillar-header h3 {
+        margin: 0;
+        font-family: "Noto Serif SC", serif;
+        letter-spacing: 0.08em;
+        font-size: 1.28rem;
+        color: #f8fafc;
+      }
+
+      .pillar-header p {
+        margin: 0.35rem 0 0;
+        color: rgba(226, 232, 240, 0.75);
+        font-size: 0.95rem;
+      }
+
+      .pillar-energy {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+        gap: 1rem;
+      }
+
+      .pillar-energy__item {
+        display: flex;
+        flex-direction: column;
+        gap: 0.55rem;
+        border: 1px solid rgba(56, 189, 248, 0.18);
+        border-radius: 16px;
+        padding: 0.9rem 1rem;
+        background: rgba(15, 23, 42, 0.65);
+      }
+
+      .pillar-energy__summary {
+        margin: 0;
+        font-size: 0.9rem;
+        color: rgba(226, 232, 240, 0.82);
+      }
+
+      .pillar-energy__meta {
+        margin: 0;
+        font-size: 0.82rem;
+        color: rgba(148, 163, 184, 0.85);
+      }
+
+      .pillar-narrative {
+        margin: 0;
+        font-size: 0.94rem;
+        color: rgba(226, 232, 240, 0.8);
+        line-height: 1.65;
       }
 
       .trigram-grid {
@@ -387,6 +521,10 @@
         .balance-grid {
           grid-template-columns: 1fr;
         }
+
+        .bazi-intro {
+          grid-template-columns: 1fr;
+        }
       }
 
       @media (max-width: 600px) {
@@ -400,6 +538,10 @@
         }
 
         #element-info dl {
+          grid-template-columns: 1fr;
+        }
+
+        .pillar-energy {
           grid-template-columns: 1fr;
         }
       }
@@ -475,6 +617,17 @@
           <div id="yin-yang-pairs" class="yin-yang-pairs" aria-label="阴阳平衡分组"></div>
         </div>
       </section>
+      <section class="bazi-section" aria-labelledby="bazi-title">
+        <h2 id="bazi-title">生辰八字：阴阳统一的时间矩阵</h2>
+        <div class="bazi-intro">
+          <p>
+            选取一组具备代表性的生辰八字，将天干的阴阳张力、地支的藏干循环与八卦方位统一进同一坐标。年、月、日、时四柱像四个时间维度，
+            让木火金水土各据其位，并通过太极枢纽转换为治理策略。
+          </p>
+          <div id="bazi-unity" class="unity-grid" aria-label="阴阳对立统一视图"></div>
+        </div>
+        <div id="bazi-grid" class="bazi-grid" aria-label="生辰八字四柱拆解"></div>
+      </section>
       <section>
         <h2>八卦图谱：气候、方位与策略</h2>
         <div id="trigram-grid" class="trigram-grid"></div>
@@ -512,6 +665,8 @@
       const infoPanel = document.getElementById('element-info');
       const trigramGrid = document.getElementById('trigram-grid');
       const yinYangContainer = document.getElementById('yin-yang-pairs');
+      const baziGrid = document.getElementById('bazi-grid');
+      const baziUnityContainer = document.getElementById('bazi-unity');
 
       const wuXing = [
         {
@@ -682,6 +837,129 @@
           quality: '健 · 创造',
           governance: '战略统筹 · 开放标准',
           polarity: '纯阳开创'
+        }
+      ];
+
+      const baziChart = [
+        {
+          pillar: '年柱 · 根基',
+          focus: '组织基因与集体记忆',
+          stem: {
+            symbol: '甲',
+            title: '甲木',
+            element: 'wood',
+            polarity: '阳木',
+            bagua: '震雷',
+            summary: '春雷鼓动，唤醒底层创新与生长冲动。',
+            meta: '激发系统的原生觉醒能力。'
+          },
+          branch: {
+            symbol: '辰',
+            title: '辰土',
+            element: 'earth',
+            polarity: '阳土',
+            bagua: '巽风',
+            summary: '湿土蓄势，承载木水潜流并调节节奏。',
+            meta: '藏干：乙木 · 戊土 · 癸水，形成调和底座。'
+          },
+          integration: '甲木拔节与辰土守藏构成阳木对阴土的辩证统一：创新冲动植根于稳固土壤，祖先资源转化为可持续的扩张势能。'
+        },
+        {
+          pillar: '月柱 · 策动',
+          focus: '战略节奏与组织执行',
+          stem: {
+            symbol: '丙',
+            title: '丙火',
+            element: 'fire',
+            polarity: '阳火',
+            bagua: '离火',
+            summary: '炽烈之光点燃洞察，照亮行动路线。',
+            meta: '驱动团队聚焦愿景与表达。'
+          },
+          branch: {
+            symbol: '午',
+            title: '午火',
+            element: 'fire',
+            polarity: '纯阳',
+            bagua: '离火',
+            summary: '盛夏阳火外放，强化决策执行与号召力。',
+            meta: '午中藏丁火、己土，令火势得以落地。'
+          },
+          integration: '丙午双火构成最强阳势，与金水阴面形成张力：战略表达快速放大，但需依靠金水之力校准节奏。'
+        },
+        {
+          pillar: '日柱 · 本体',
+          focus: '核心意志与界面设计',
+          stem: {
+            symbol: '辛',
+            title: '辛金',
+            element: 'metal',
+            polarity: '阴金',
+            bagua: '兑泽',
+            summary: '精炼如秋金，擅长切分信息与建立规则。',
+            meta: '让体验界面保持纯净边界。'
+          },
+          branch: {
+            symbol: '酉',
+            title: '酉金',
+            element: 'metal',
+            polarity: '阴金',
+            bagua: '兑泽',
+            summary: '兑卦之金重视协商、品评与资源回收。',
+            meta: '酉藏辛金，提供持续迭代的精炼能力。'
+          },
+          integration: '辛酉日主以阴金定界，吸纳年柱木势的创造并与午火形成对立统一：规则让光热得以聚焦，形成可执行的界面。'
+        },
+        {
+          pillar: '时柱 · 流动',
+          focus: '未来潜能与协作网络',
+          stem: {
+            symbol: '癸',
+            title: '癸水',
+            element: 'water',
+            polarity: '阴水',
+            bagua: '坎水',
+            summary: '细雨渗透，滋养系统的弹性与记忆。',
+            meta: '为长期迭代提供流动补给。'
+          },
+          branch: {
+            symbol: '亥',
+            title: '亥水',
+            element: 'water',
+            polarity: '阴水',
+            bagua: '坎水',
+            summary: '北方水脉深藏万物之根，连接潜意识网络。',
+            meta: '亥中藏壬水、甲木，完成水木生生不息。'
+          },
+          integration: '癸亥在时间末端回流水势，与午火对冲形成太极：火代表显性输出，水负责收纳反馈，让体验循环持续再生。'
+        }
+      ];
+
+      const unityPairs = [
+        {
+          title: '阳木开局 vs 阴金定界',
+          description: '年柱甲辰打开生态，日柱辛酉精炼边界，攻守互补让增长与治理同时成立。',
+          elements: [
+            { element: 'wood', label: '甲木', detail: '震卦 · 春雷生发' },
+            { element: 'metal', label: '辛金', detail: '兑卦 · 精准收敛' }
+          ]
+        },
+        {
+          title: '离火跃升 vs 坎水涵养',
+          description: '月柱丙午点燃战略与声量，时柱癸亥输送弹性水脉，火水交融维持系统循环。',
+          elements: [
+            { element: 'fire', label: '丙火', detail: '离卦 · 炽烈洞察' },
+            { element: 'water', label: '癸水', detail: '坎卦 · 潜流滋养' }
+          ]
+        },
+        {
+          title: '辰土枢纽调度五行',
+          description: '辰土承载木水并与午火、酉金联动，把对立元素约束在同一节奏上，实现太极旋转。',
+          elements: [
+            { element: 'earth', label: '辰土', detail: '巽风 · 中轴调和' },
+            { element: 'metal', label: '酉金', detail: '兑卦 · 协商回路' },
+            { element: 'wood', label: '乙木', detail: '藏干乙木 · 暗生潜力' }
+          ]
         }
       ];
 
@@ -864,6 +1142,19 @@
         });
       };
 
+      const attachElementActivation = (node, elementId) => {
+        const activate = () => updateActiveState(elementId);
+        ['mouseenter', 'focus', 'click'].forEach((eventName) => {
+          node.addEventListener(eventName, activate);
+        });
+        node.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            activate();
+          }
+        });
+      };
+
       if (yinYangContainer) {
         const yinYangGroups = [
           {
@@ -900,24 +1191,113 @@
             pill.className = 'element-pill';
             pill.dataset.element = elementId;
             pill.type = 'button';
-            pill.textContent = `${element.name} · ${element.polarity}`;
+            pill.innerHTML = `<strong>${element.name}</strong><span>${element.polarity} · ${element.balance}</span>`;
             pill.setAttribute('aria-label', `${element.name}行阴阳特质：${element.balance}`);
             pill.setAttribute('aria-pressed', 'false');
-            const activate = () => updateActiveState(elementId);
-            pill.addEventListener('mouseenter', activate);
-            pill.addEventListener('focus', activate);
-            pill.addEventListener('click', activate);
-            pill.addEventListener('keydown', (event) => {
-              if (event.key === 'Enter' || event.key === ' ') {
-                event.preventDefault();
-                activate();
-              }
-            });
+            attachElementActivation(pill, elementId);
             elementRow.appendChild(pill);
           });
 
           card.appendChild(elementRow);
           yinYangContainer.appendChild(card);
+        });
+      }
+
+      const createElementPill = (config) => {
+        const pill = document.createElement('button');
+        pill.className = 'element-pill';
+        pill.dataset.element = config.element;
+        pill.type = 'button';
+        pill.innerHTML = `<strong>${config.label}</strong><span>${config.detail}</span>`;
+        pill.setAttribute('aria-label', `${config.label} —— ${config.detail}`);
+        pill.setAttribute('aria-pressed', 'false');
+        attachElementActivation(pill, config.element);
+        return pill;
+      };
+
+      if (baziUnityContainer) {
+        unityPairs.forEach((pair) => {
+          const card = document.createElement('article');
+          card.className = 'unity-card';
+          const title = document.createElement('h3');
+          title.textContent = pair.title;
+          const description = document.createElement('p');
+          description.textContent = pair.description;
+          const elementGroup = document.createElement('div');
+          elementGroup.className = 'element-group';
+          pair.elements.forEach((item) => {
+            const pill = createElementPill(item);
+            elementGroup.appendChild(pill);
+          });
+          card.appendChild(title);
+          card.appendChild(description);
+          card.appendChild(elementGroup);
+          baziUnityContainer.appendChild(card);
+        });
+      }
+
+      if (baziGrid) {
+        baziChart.forEach((pillar) => {
+          const card = document.createElement('article');
+          card.className = 'pillar-card';
+
+          const header = document.createElement('div');
+          header.className = 'pillar-header';
+          const title = document.createElement('h3');
+          title.textContent = pillar.pillar;
+          const focus = document.createElement('p');
+          focus.textContent = pillar.focus;
+          header.appendChild(title);
+          header.appendChild(focus);
+
+          const energy = document.createElement('div');
+          energy.className = 'pillar-energy';
+
+          const stemBlock = document.createElement('div');
+          stemBlock.className = 'pillar-energy__item';
+          const stemPill = createElementPill({
+            element: pillar.stem.element,
+            label: `${pillar.stem.symbol}${pillar.stem.title}`,
+            detail: `${pillar.stem.polarity} · ${pillar.stem.bagua}`
+          });
+          const stemSummary = document.createElement('p');
+          stemSummary.className = 'pillar-energy__summary';
+          stemSummary.textContent = pillar.stem.summary;
+          const stemMeta = document.createElement('p');
+          stemMeta.className = 'pillar-energy__meta';
+          stemMeta.textContent = pillar.stem.meta;
+          stemBlock.appendChild(stemPill);
+          stemBlock.appendChild(stemSummary);
+          stemBlock.appendChild(stemMeta);
+
+          const branchBlock = document.createElement('div');
+          branchBlock.className = 'pillar-energy__item';
+          const branchPill = createElementPill({
+            element: pillar.branch.element,
+            label: `${pillar.branch.symbol}${pillar.branch.title}`,
+            detail: `${pillar.branch.polarity} · ${pillar.branch.bagua}`
+          });
+          const branchSummary = document.createElement('p');
+          branchSummary.className = 'pillar-energy__summary';
+          branchSummary.textContent = pillar.branch.summary;
+          const branchMeta = document.createElement('p');
+          branchMeta.className = 'pillar-energy__meta';
+          branchMeta.textContent = pillar.branch.meta;
+          branchBlock.appendChild(branchPill);
+          branchBlock.appendChild(branchSummary);
+          branchBlock.appendChild(branchMeta);
+
+          energy.appendChild(stemBlock);
+          energy.appendChild(branchBlock);
+
+          const narrative = document.createElement('p');
+          narrative.className = 'pillar-narrative';
+          narrative.textContent = pillar.integration;
+
+          card.appendChild(header);
+          card.appendChild(energy);
+          card.appendChild(narrative);
+          baziGrid.appendChild(card);
         });
       }
 
