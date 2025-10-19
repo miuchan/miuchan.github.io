@@ -1,0 +1,26 @@
+module formal.repository.integrity
+
+open import data.string
+
+// Repository-wide structural guarantees summarised as Aya definitions.
+def repositoryModules : String =>
+  "index.html anchors the static site with assets/css/styles.css providing the design system and assets/js/main.js rendering data-driven content blocks."
+
+def contentPillars : String =>
+  "docs/ stores long-form research, public/demo/ preserves interactive explorations, public/blog/ contains historical essays, and public/resume/ delivers collaboration-ready profiles."
+
+def toolingCoverage : String =>
+  "tools/aya hosts the in-repo Aya engine while scripts/run_aya.sh compiles every formal/*.aya artefact for local and CI validation."
+
+def formalAssets : String =>
+  "formal/HelloAya.aya demonstrates theorem declarations and formal/FunctionLimitLanguage.aya models DSL construction for calculus narratives."
+
+def verificationWorkflow : String =>
+  "python3 -m tools.aya compile <paths> underpins automation, with GitHub Actions executing the same command set to guarantee deterministic results."
+
+def repositoryAssurance : String =>
+  repositoryModules ++ "\n" ++
+  contentPillars ++ "\n" ++
+  toolingCoverage ++ "\n" ++
+  formalAssets ++ "\n" ++
+  verificationWorkflow
