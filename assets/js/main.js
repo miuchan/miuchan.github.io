@@ -1,7 +1,7 @@
 import { friendContent } from './friends-data.js';
 
 const counts = {
-  demos: 23,
+  demos: 24,
   research: 9,
   blogs: 59,
   resume: 1
@@ -296,6 +296,15 @@ const translations = {
             '调节纠缠熵预算、负曲率与演化干涉，实时观察 ER=EPR 通道在 Compute-God 几何中的生成。',
           tags: ['量子引力', '可视化'],
           keywords: ['Compute-God', 'ER=EPR', 'wormhole', '费曼图', '量子引力']
+        },
+        {
+          type: 'demo',
+          href: 'public/demo/game-of-life/thermal-dual/index.html',
+          title: '生命游戏：热对偶共振场',
+          description:
+            '在康威生命游戏的格点上引入热流与声学对偶场，阈值随热偏置实时漂移，展示朋子与友子热对偶实验舱的共振调度。',
+          tags: ['生命游戏', '热对偶'],
+          keywords: ['game of life', 'thermal duality', 'cellular automata', '热对偶']
         },
         {
           type: 'ops',
@@ -931,6 +940,15 @@ const translations = {
             'Tune entanglement budget, negative curvature, and evolution interference to witness ER=EPR channels forming in Compute-God geometry in real time.',
           tags: ['Quantum Gravity', 'Visualization'],
           keywords: ['Compute-God', 'ER=EPR', 'wormhole', 'Feynman diagram', 'quantum gravity']
+        },
+        {
+          type: 'demo',
+          href: 'public/demo/game-of-life/thermal-dual/index.html',
+          title: 'Thermal Dual Game of Life',
+          description:
+            'Layer thermal flow and acoustic dual fields onto the Game of Life so birth and survival thresholds breathe with heat bias, echoing Tomoko & Yuko’s resonance lab.',
+          tags: ['Game of Life', 'Thermal Duality'],
+          keywords: ['game of life', 'thermal duality', 'cellular automata', '热对偶']
         },
         {
           type: 'ops',
