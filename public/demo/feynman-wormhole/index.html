@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Compute-God 费曼虫洞生成器</title>
+  <meta name="description" content="基于 Compute-God 框架的费曼虫洞生成器：调节纠缠熵、几何曲率与演化干涉，观察 ER=EPR 通道的实时构建。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <a class="back-link" href="../../index.html#library">← 返回知识导航</a>
+      <h1>Compute-God 费曼虫洞生成器</h1>
+      <p>在 Compute-God 的可计算几何中，费曼图的每一条世界线都可以重写为穿越 ER 桥的纠缠通道。本实验室允许你调节纠缠预算、几何曲率与演化干涉，实时观察虫洞截面如何响应，验证 CG-3 与拓扑-纠缠同构命题。</p>
+      <div class="meta">
+        <span class="badge">Compute-God</span>
+        <span class="badge">ER=EPR</span>
+        <span class="badge">Feynman Diagram</span>
+        <span class="meta-note">拖动控制器，虫洞截面与量子流同步变形。</span>
+      </div>
+    </header>
+
+    <section class="wormhole-lab">
+      <div class="canvas-container">
+        <canvas id="wormhole-canvas" width="780" height="540" role="img" aria-label="Compute-God 框架下的费曼虫洞可视化"></canvas>
+      </div>
+      <div class="control-panel" aria-describedby="control-help">
+        <div class="control">
+          <label for="entanglement">纠缠熵预算 S<sub>E</sub></label>
+          <input id="entanglement" type="range" min="0.1" max="1" step="0.01" value="0.58">
+          <span class="value" id="entanglement-value">0.58</span>
+        </div>
+        <div class="control">
+          <label for="curvature">几何曲率 κ</label>
+          <input id="curvature" type="range" min="-1.4" max="-0.1" step="0.01" value="-0.62">
+          <span class="value" id="curvature-value">-0.62</span>
+        </div>
+        <div class="control">
+          <label for="coherence">演化干涉 ζ</label>
+          <input id="coherence" type="range" min="0" max="1" step="0.01" value="0.44">
+          <span class="value" id="coherence-value">0.44</span>
+        </div>
+        <p class="control-help" id="control-help">S<sub>E</sub> 表示纠缠熵预算；负曲率 κ 控制 ER 桥的喉道；ζ 为 Compute-God 演化干涉项，影响振幅与延迟。</p>
+      </div>
+      <div class="readings">
+        <div class="reading">
+          <span class="label">截面面积 A<sub>Σ</sub> / ℓ<sub>p</sub><sup>2</sup></span>
+          <span class="number" id="area-reading">0.00</span>
+        </div>
+        <div class="reading">
+          <span class="label">纠缠熵 S<sub>E</sub></span>
+          <span class="number" id="entropy-reading">0.00</span>
+        </div>
+        <div class="reading">
+          <span class="label">演化增益 G<sub>CG</sub></span>
+          <span class="number" id="gain-reading">0.00</span>
+        </div>
+        <div class="reading">
+          <span class="label">跨模态延迟 Δt (fs)</span>
+          <span class="number" id="delay-reading">0</span>
+        </div>
+      </div>
+      <div class="telemetry" aria-live="polite">
+        <h3>Compute-God 遥测</h3>
+        <p id="telemetry-stream">CG-Σ: 0.0% · Φ: 0.00 · χ: 0.00</p>
+      </div>
+    </section>
+
+    <section class="explain">
+      <h2>为什么费曼图能生成虫洞？</h2>
+      <p>在 Compute-God 公理体系下，费曼图不仅是散射振幅的记账方式，更是可计算几何中的信息线路。两条世界线之间的虚光子交换被映射到非局域纠缠子空间；当纠缠熵达到 CG-3 限定的预算时，几何重构会自动拉起一条满足极小截面的 ER 桥。</p>
+      <p>本生成器将这些变量压缩进三个控制器：S<sub>E</sub> 决定你投入多少纠缠资源；负曲率 κ 重写喉道的张度；演化干涉 ζ 则衡量 \(\mathcal{G}\) 的相位一致性。当 ζ 升高时，虫洞内部的波纹趋于平滑，延迟下降，跨模态迁移效率随之提升。</p>
+    </section>
+
+    <section class="insights">
+      <h2>如何读取数值？</h2>
+      <ul>
+        <li><span class="note-title">截面面积 A<sub>Σ</sub></span> — 直接由 CG-3 的离散 Ryu-Takayanagi 关系计算，与你设定的 S<sub>E</sub> 成比例，同时受 κ 的压缩影响。</li>
+        <li><span class="note-title">演化增益 G<sub>CG</sub></span> — 度量 \(\mathcal{G}\) 在当前配置下的纠缠迁移效率。当 κ 过于陡峭或 ζ 过低时，会自动下降提示瓶颈。</li>
+        <li><span class="note-title">跨模态延迟 Δt</span> — 将虫洞视为跨模态传输线，使用 Compute-God 的守恒性公理估算传播延迟，帮助你评估 EPR 资源的调度速度。</li>
+      </ul>
+    </section>
+
+    <section class="notes">
+      <h2>进一步实验</h2>
+      <ul>
+        <li><span class="note-title">调节 κ 的梯度</span> — 观察曲率绝对值减小如何让喉道膨胀，并使虚光子回路更接近费曼图的经典轨迹。</li>
+        <li><span class="note-title">保持 S<sub>E</sub> 恒定，扫描 ζ</span> — 这相当于在实验室调整演化算子的相位锁定，测量非局域干涉条纹的对比度。</li>
+        <li><span class="note-title">记录遥测读数</span> — 结合 Compute-God ER=EPR 论文中的实验预测，验证非局域干涉放大与跨模态迁移守恒的条件。</li>
+      </ul>
+    </section>
+
+    <footer class="footer">
+      <p>感谢与你共同架设虫洞。如果你希望将 Compute-God 的几何推演带入线下实验室，欢迎回到 <a href="../../index.html">首页</a> 与我联络。</p>
+    </footer>
+  </main>
+  <script src="wormhole.js"></script>
+</body>
+</html>

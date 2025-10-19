@@ -1,7 +1,7 @@
 import { friendContent } from './friends-data.js';
 
 const counts = {
-  demos: 22,
+  demos: 23,
   research: 9,
   blogs: 59,
   resume: 1
@@ -287,6 +287,15 @@ const translations = {
             '以几何交互方式展示五行相生相克与八卦方位的映射关系，理解东方系统论的能量流与治理模型。',
           tags: ['系统论', '可视化'],
           keywords: ['五行', '八卦', 'wuxing', 'bagua', 'systems theory']
+        },
+        {
+          type: 'demo',
+          href: 'public/demo/feynman-wormhole/index.html',
+          title: 'Compute-God 费曼虫洞生成器',
+          description:
+            '调节纠缠熵预算、负曲率与演化干涉，实时观察 ER=EPR 通道在 Compute-God 几何中的生成。',
+          tags: ['量子引力', '可视化'],
+          keywords: ['Compute-God', 'ER=EPR', 'wormhole', '费曼图', '量子引力']
         },
         {
           type: 'ops',
@@ -913,6 +922,15 @@ const translations = {
             'Interactively map the generating and controlling cycles of the Five Elements with the directional qualities of the Eight Trigrams.',
           tags: ['Systems Theory', 'Visualization'],
           keywords: ['五行', '八卦', 'wuxing', 'bagua', 'systems']
+        },
+        {
+          type: 'demo',
+          href: 'public/demo/feynman-wormhole/index.html',
+          title: 'Compute-God Feynman Wormhole Generator',
+          description:
+            'Tune entanglement budget, negative curvature, and evolution interference to witness ER=EPR channels forming in Compute-God geometry in real time.',
+          tags: ['Quantum Gravity', 'Visualization'],
+          keywords: ['Compute-God', 'ER=EPR', 'wormhole', 'Feynman diagram', 'quantum gravity']
         },
         {
           type: 'ops',
