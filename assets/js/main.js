@@ -2,7 +2,7 @@ import { friendContent } from './friends-data.js';
 
 const counts = {
   demos: 22,
-  research: 7,
+  research: 8,
   blogs: 59,
   resume: 1
 };
@@ -391,6 +391,15 @@ const translations = {
           keywords: ['singularity', 'proof', '数学']
         },
         {
+          type: 'research',
+          href: 'docs/earth-online-iteration-2025.md',
+          title: 'Earth Online 自治航道蓝图',
+          description:
+            '总结 2025 年的行星实验迭代：如何在多主体协作、遥测治理与体验系统之间建立自治航道。',
+          tags: ['自治系统', '协作治理'],
+          keywords: ['autonomous corridor', 'governance', '遥测', '自治']
+        },
+        {
           type: 'story',
           href: 'public/blog/internet-of-everything-design.html',
           title: '万物互联体验架构',
@@ -566,15 +575,21 @@ const translations = {
           description: '构建多感官交互的星球界面，为地球体验实验室搭建视觉主脑。',
           tags: ['WebGL', '交互']
         },
-          {
-            year: '2024',
-            title: 'Earth Online 体验实验室',
-            description: '重构整个站点为地球 Online 操作系统，联动所有研究、原型与伙伴网络。',
-            tags: ['重构', '系统']
-          }
-        ]
-      }
-    },
+        {
+          year: '2024',
+          title: 'Earth Online 体验实验室',
+          description: '重构整个站点为地球 Online 操作系统，联动所有研究、原型与伙伴网络。',
+          tags: ['重构', '系统']
+        },
+        {
+          year: '2025',
+          title: '自治航道迭代',
+          description: '发布自治航道蓝图，将多主体遥测治理纳入地球 Online 的核心迭代循环。',
+          tags: ['自治', '遥测']
+        }
+      ]
+    }
+  },
     alliances: {
       eyebrow: 'Alliance Network',
       title: '联盟星港：与我们同频的体验实验室',
@@ -997,6 +1012,15 @@ const translations = {
           keywords: ['singularity', 'proof', '数学']
         },
         {
+          type: 'research',
+          href: 'docs/earth-online-iteration-2025.md',
+          title: 'Earth Online Autonomous Corridor Blueprint',
+          description:
+            'Captures the 2025 iteration of the planetary lab—linking telemetry governance, multi-agent coordination, and experience systems into an autonomous corridor.',
+          tags: ['Autonomy', 'Governance'],
+          keywords: ['autonomous corridor', 'governance', 'telemetry', 'autonomy']
+        },
+        {
           type: 'story',
           href: 'public/blog/internet-of-everything-design.html',
           title: 'Internet of Everything Experience Architecture',
@@ -1176,16 +1200,23 @@ const translations = {
             'A multisensory planetary interface became the visual cortex of the Experience Lab.',
           tags: ['WebGL', 'Interaction']
         },
-          {
-            year: '2024',
-            title: 'Earth Online Experience Lab',
-            description:
-              'The entire site reassembled into an Earth Online OS, syncing research, prototypes, and partner constellations.',
-            tags: ['Rebuild', 'System']
-          }
-        ]
-      }
-    },
+        {
+          year: '2024',
+          title: 'Earth Online Experience Lab',
+          description:
+            'The entire site reassembled into an Earth Online OS, syncing research, prototypes, and partner constellations.',
+          tags: ['Rebuild', 'System']
+        },
+        {
+          year: '2025',
+          title: 'Autonomous corridor iteration',
+          description:
+            'Released the autonomous corridor blueprint, folding multi-agent telemetry governance into the core update loop.',
+          tags: ['Autonomy', 'Telemetry']
+        }
+      ]
+    }
+  },
     alliances: {
       eyebrow: 'Alliance Network',
       title: 'Alliance harbor: experience labs in resonance',
