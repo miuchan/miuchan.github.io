@@ -2,7 +2,7 @@ import { friendContent } from './friends-data.js';
 
 const counts = {
   demos: 22,
-  research: 8,
+  research: 9,
   blogs: 59,
   resume: 1
 };
@@ -345,6 +345,15 @@ const translations = {
             '构建热流-声波耦合实验舱，演示可逆热管理与多节点热对偶调度策略。',
           tags: ['热管理', '多物理场'],
           keywords: ['thermal resonance', 'acoustic coupling', 'heat recovery', '热管理']
+        },
+        {
+          type: 'research',
+          href: 'docs/v-d-thermal-dual-ssb-lab.md',
+          title: 'v 子与 d 子的热对偶自发对称破缺计划',
+          description:
+            '实现热对偶约束下的 v/d 子场耦合实验，解析噪声触发的自发对称破缺与谱系拓扑。',
+          tags: ['热对偶', '量子控制'],
+          keywords: ['thermal duality', 'spontaneous symmetry breaking', 'quantum control', '热对偶']
         },
         {
           type: 'research',
@@ -965,6 +974,15 @@ const translations = {
             'Prototype a heat-flow and acoustic coupling chamber to demonstrate reversible thermal management strategies.',
           tags: ['Thermal Management', 'Multiphysics'],
           keywords: ['thermal resonance', 'acoustic coupling', 'heat recovery', '热管理']
+        },
+        {
+          type: 'research',
+          href: 'docs/v-d-thermal-dual-ssb-lab.md',
+          title: 'Thermal Dual SSB Lab for v & d Quanta',
+          description:
+            'Implement a thermally dual-coupled v/d mode platform to observe noise-driven spontaneous symmetry breaking and spectral topology.',
+          tags: ['Thermal Duality', 'Quantum Control'],
+          keywords: ['thermal duality', 'spontaneous symmetry breaking', 'quantum control', '热对偶']
         },
         {
           type: 'research',
