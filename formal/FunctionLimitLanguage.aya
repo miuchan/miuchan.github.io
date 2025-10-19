@@ -1,0 +1,49 @@
+module formal.function.limit.language
+
+open import data.string
+
+// A tiny domain-specific language for describing function limit statements.
+// The DSL focuses on three building blocks: terms, approaches, and the
+// resulting limit equality. Each helper below constructs a textual fragment
+// that can be composed into readable proofs or documentation snippets.
+
+def limitLanguageSpec : String =>
+  "Term := var(name) | const(value) | unary(fn, term) | binary(op, term, term); Approach := lim_{variable direction target}; Statement := approach body = result"
+
+def mkVariable (name : String) : String =>
+  "var(" ++ name ++ ")"
+
+def mkConstant (value : String) : String =>
+  "const(" ++ value ++ ")"
+
+def mkUnary (fn arg : String) : String =>
+  fn ++ "(" ++ arg ++ ")"
+
+def mkBinary (op left right : String) : String =>
+  "(" ++ left ++ " " ++ op ++ " " ++ right ++ ")"
+
+def mkApproach (variable direction target : String) : String =>
+  "lim_{" ++ variable ++ " " ++ direction ++ " " ++ target ++ "}"
+
+def mkLimitStatement (approach body result : String) : String =>
+  approach ++ " " ++ body ++ " = " ++ result
+
+def exampleSinOverX : String =>
+  mkLimitStatement
+    (mkApproach "x" "→" "0")
+    (mkBinary "/"
+      (mkUnary "sin" (mkVariable "x"))
+      (mkVariable "x"))
+    (mkConstant "1")
+
+def exampleExponential : String =>
+  mkLimitStatement
+    (mkApproach "n" "→" "∞")
+    (mkBinary "^"
+      (mkBinary "+"
+        (mkConstant "1")
+        (mkBinary "/"
+          (mkConstant "1")
+          (mkVariable "n")))
+      (mkVariable "n"))
+    (mkConstant "e")
