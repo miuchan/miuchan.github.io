@@ -44,6 +44,12 @@ const researchEntries = [
     source: 'chtholly-hououin-temporal-synchrony-lab.md'
   },
   {
+    id: 'grandfather-paradox-worldline-pruning',
+    title: '祖父悖论与世界线修改的剪枝策略',
+    description: '在祖父悖论场景下，通过剪枝策略维护时间旅行的因果一致性。',
+    source: 'grandfather-paradox-worldline-pruning.md'
+  },
+  {
     id: 'originlab-origin-suite-analysis',
     title: 'OriginLab Origin/OriginPro 产品评估',
     description: '科研与工程领域的数据分析与绘图软件评估。',
