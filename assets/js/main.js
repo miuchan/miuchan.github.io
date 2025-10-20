@@ -43,7 +43,7 @@ const translations = {
         {
           label: '资产矩阵',
           value: `${counts.total}+`,
-          hint: `原型 ${counts.demos} · 研究 ${counts.research} · 长文 ${counts.blogs} · 履历 ${counts.resume}`
+          hint: `原型 ${counts.demos} · 研究 ${counts.research} · 长文 ${counts.blogs}`
         },
         {
           label: '实验舱段',
@@ -113,19 +113,14 @@ const translations = {
       description:
         '以 WebGL 星球引擎、凸优化信息架构与联盟星网，将研究、原型与协议压缩进一个实时进化的空间界面，邀请你随时登舰探索。',
       primaryCta: '进入体验簇阵',
-      secondaryCta: '查看履历网络',
+      secondaryCta: '前往联络站',
       ctaAria: '快速入口',
       stats: [
         {
           label: '星球资产',
           value: `${counts.total}+`,
           description: '交互原型、研究、长文与协作剧本组成的地球体验曲面。',
-          meta: [
-            `原型 ${counts.demos}`,
-            `研究 ${counts.research}`,
-            `长文 ${counts.blogs}`,
-            `履历 ${counts.resume}`
-          ]
+          meta: [`原型 ${counts.demos}`, `研究 ${counts.research}`, `长文 ${counts.blogs}`]
         },
         {
           label: '实时实验舱',
@@ -185,8 +180,8 @@ const translations = {
         {
           title: '联盟星网 · 共振协同层',
           narrative:
-            '构建跨学科伙伴的协作协议，为履历、节奏与资源提供快速对接的星际路由。',
-          protocols: ['履历网络', '共创节奏脚本', '伙伴路由图']
+            '构建跨学科伙伴的协作协议，为资源、节奏与知识图谱提供快速对接的星际路由。',
+          protocols: ['资源路由图', '共创节奏脚本', '联盟互操作协议']
         }
       ]
     },
@@ -449,14 +444,6 @@ const translations = {
           description: '记录长期共创伙伴的角色、节奏与跨界联系。',
           tags: ['伙伴网络', '组织运营'],
           keywords: ['network', 'community', '伙伴']
-        },
-        {
-          type: 'ops',
-          href: 'public/resume/index.html',
-          title: '在线履历与合作模式',
-          description: '以空间化信息架构呈现个人履历、技能矩阵与合作指南。',
-          tags: ['履历', '协作'],
-          keywords: ['resume', 'collaboration', '履历']
         }
       ]
     },
@@ -632,12 +619,6 @@ const translations = {
         '无论你来自设计工程、系统科学还是生态治理，我们都期待与你共创新的地球体验模式。以下资源帮助你快速建立凸优化的协作通道。',
       links: [
         {
-          title: '星际履历网络',
-          description: '探索履历、技能矩阵与合作协议，确定你的对接轨道。',
-          href: 'public/resume/index.html',
-          cta: '进入履历站'
-        },
-        {
           title: '体验簇阵导航',
           description: '在交互实验与协作模板中穿梭，定位与你的任务同频的卡片。',
           href: '#decks',
@@ -686,7 +667,7 @@ const translations = {
         {
           label: 'Asset matrix',
           value: `${counts.total}+`,
-          hint: `Prototypes ${counts.demos} · Research ${counts.research} · Essays ${counts.blogs} · Resume ${counts.resume}`
+          hint: `Prototypes ${counts.demos} · Research ${counts.research} · Essays ${counts.blogs}`
         },
         {
           label: 'Active lab pods',
@@ -756,19 +737,14 @@ const translations = {
       description:
         'A continuously evolving operating room for Earth: WebGL engines, convex information architecture, and alliance networks compress research, prototypes, and protocols into a navigable spatial console.',
       primaryCta: 'Enter the experience decks',
-      secondaryCta: 'View resume network',
+      secondaryCta: 'Navigate to docking station',
       ctaAria: 'Quick access',
       stats: [
         {
           label: 'Planetary assets',
           value: `${counts.total}+`,
           description: 'Interactive prototypes, research, longform essays, and collaboration playbooks form the Earth Online field.',
-          meta: [
-            `Prototypes ${counts.demos}`,
-            `Research ${counts.research}`,
-            `Essays ${counts.blogs}`,
-            `Resume ${counts.resume}`
-          ]
+          meta: [`Prototypes ${counts.demos}`, `Research ${counts.research}`, `Essays ${counts.blogs}`]
         },
         {
           label: 'Live lab pods',
@@ -828,8 +804,8 @@ const translations = {
         {
           title: 'Alliance mesh · Co-creation layer',
           narrative:
-            'Provide partners with interoperable resumes, cadences, and resource protocols to open new collaboration routes fast.',
-          protocols: ['Resume network', 'Co-creation cadence scripts', 'Partner routing map']
+            'Provide partners with interoperable cadences and resource protocols so new collaboration routes open instantly.',
+          protocols: ['Resource routing map', 'Co-creation cadence scripts', 'Alliance interoperability']
         }
       ]
     },
@@ -1098,14 +1074,6 @@ const translations = {
           description: 'Profiles long-term co-creators, their rhythms, and cross-domain connections.',
           tags: ['Partner Network', 'Org Ops'],
           keywords: ['network', 'community', '伙伴']
-        },
-        {
-          type: 'ops',
-          href: 'public/resume/index.html',
-          title: 'Spatial Resume & Collaboration Modes',
-          description: 'A spatial information architecture for skills, resume strands, and collaboration guides.',
-          tags: ['Resume', 'Collaboration'],
-          keywords: ['resume', 'collaboration', '履历']
         }
       ]
     },
@@ -1285,12 +1253,6 @@ const translations = {
       intro:
         'Whether you work in design engineering, systems science, or ecological governance, we want to co-create new planetary experiences. These links open convex collaboration routes fast.',
       links: [
-        {
-          title: 'Interstellar resume network',
-          description: 'Explore resumes, skill matrices, and collaboration protocols to find the right alignment.',
-          href: 'public/resume/index.html',
-          cta: 'Enter the resume hub'
-        },
         {
           title: 'Experience deck navigator',
           description: 'Traverse interactive experiments and operational templates to pinpoint the right card.',
