@@ -1,14 +1,10 @@
-import {
-  LANGUAGE_FALLBACK,
-  SUPPORTED_LANGUAGE_CODES,
-  setStoredLanguage
-} from './i18n/languages.js';
+import { LANGUAGE_FALLBACK, setStoredLanguage } from './i18n/languages.js';
 import {
   applyDocumentLanguage,
   createTranslationRegistry,
-  populateLanguageSelect,
   resolveTranslation
 } from './i18n/registry.js';
+import { enhanceLanguageToggle } from './i18n/toggle.js';
 import { researchEntries } from './research-data.js';
 
 const baseTranslations = {
@@ -97,10 +93,10 @@ const abstractElement = document.getElementById('document-abstract');
 const contentElement = document.getElementById('document-content');
 const sidebarListElement = document.getElementById('document-sidebar-list');
 const metaDescription = document.querySelector('meta[name="description"]');
-const languageToggle = document.getElementById('research-language-toggle');
-
 const statusElement = document.createElement('p');
 statusElement.className = 'document-status';
+
+let languageToggleBinding = null;
 
 function getLocalizedEntry(entry, lang) {
   if (!entry) return null;
@@ -160,9 +156,24 @@ function updateMeta(lang) {
   document.title = title;
 }
 
+function getLanguageToggleBinding() {
+  if (languageToggleBinding) {
+    return languageToggleBinding;
+  }
+
+  const select = document.querySelector('[data-language-toggle]');
+  languageToggleBinding = enhanceLanguageToggle(select, translationRegistry, {
+    onChange: (nextLanguage) => {
+      applyLanguage(nextLanguage);
+    }
+  });
+
+  return languageToggleBinding;
+}
+
 function updateLanguageSelector(lang) {
-  if (!languageToggle) return;
-  populateLanguageSelect(languageToggle, translationRegistry, lang);
+  const binding = getLanguageToggleBinding();
+  binding.update(lang);
 }
 
 function renderSidebar(lang, activeId) {
@@ -370,14 +381,6 @@ function applyLanguage(lang) {
   renderAbstract(resolved, localizedEntry);
   renderDocument(resolved, localizedEntry);
   updateHistory();
-}
-
-if (languageToggle) {
-  languageToggle.addEventListener('change', (event) => {
-    const nextLang = event.target?.value;
-    const resolved = SUPPORTED_LANGUAGE_CODES.has(nextLang) ? nextLang : LANGUAGE_FALLBACK;
-    applyLanguage(resolved);
-  });
 }
 
 applyLanguage(state.language);

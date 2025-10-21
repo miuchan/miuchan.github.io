@@ -1,16 +1,11 @@
 import { friendContent } from './friends-data.js';
-import {
-  LANGUAGE_DEFINITIONS,
-  LANGUAGE_FALLBACK,
-  SUPPORTED_LANGUAGE_CODES,
-  setStoredLanguage
-} from './i18n/languages.js';
+import { LANGUAGE_DEFINITIONS, LANGUAGE_FALLBACK, setStoredLanguage } from './i18n/languages.js';
 import {
   applyDocumentLanguage,
   createTranslationRegistry,
-  populateLanguageSelect,
   resolveTranslation
 } from './i18n/registry.js';
+import { enhanceLanguageToggle } from './i18n/toggle.js';
 import { computeInformationGradient, mapGradientToPercentages } from './recursive-gradient.js';
 
 const counts = {
@@ -1633,6 +1628,7 @@ const translationRegistry = createTranslationRegistry(baseTranslations, {
 });
 
 const translations = translationRegistry.dictionaries;
+let languageToggleBinding = null;
 
 function getTranslation(lang) {
   return translationRegistry.get(lang);
@@ -2158,10 +2154,24 @@ function updateStaticText(lang) {
   });
 }
 
+function getLanguageToggleBinding() {
+  if (languageToggleBinding) {
+    return languageToggleBinding;
+  }
+
+  const select = document.querySelector('[data-language-toggle]');
+  languageToggleBinding = enhanceLanguageToggle(select, translationRegistry, {
+    onChange: (nextLanguage) => {
+      applyLanguage(nextLanguage);
+    }
+  });
+
+  return languageToggleBinding;
+}
+
 function updateLanguageSelector(lang) {
-  const select = document.getElementById('language-toggle');
-  if (!select) return;
-  populateLanguageSelect(select, translationRegistry, lang);
+  const binding = getLanguageToggleBinding();
+  binding.update(lang);
 }
 
 function renderHeaderStatus(lang) {
@@ -3608,17 +3618,6 @@ function initialize() {
   initEarthScene();
   bindHeroPointer();
   bindCommandPaletteEvents();
-
-  const toggle = document.getElementById('language-toggle');
-  if (toggle) {
-    toggle.addEventListener('change', (event) => {
-      const nextLang = event.target?.value;
-      const resolved = SUPPORTED_LANGUAGE_CODES.has(nextLang) ? nextLang : LANGUAGE_FALLBACK;
-      if (translations[resolved]) {
-        applyLanguage(resolved);
-      }
-    });
-  }
 }
 
 initialize();
