@@ -30,6 +30,14 @@ miuchan.github.io 现已重构为零依赖的静态站点，使用原生 HTML、
 GitHub Actions 工作流会在推送和 Pull Request 时自动安装 Python 3.11 并调用同一脚本，
 使用内置的 Aya Engine 校验形式化资产，确保持续集成流程稳定。
 
+## Compute-God 标准模型验证器
+
+为配合《Compute-God 标准模型验证器蓝图》，仓库新增可执行的粒子属性与对称性校验工具：
+
+1. 执行 `python3 -m tools.compute_god` 或 `pipx run compute-god-sm`，将自动读取 `formal/compute_god_standard_model.json`。
+2. 工具会逐项检查粒子基本量、守恒律、规范异常抵消与实验观测约束，输出机器可读/可视化的验证报告。
+3. 若需导出结构化数据，可附加 `--json` 选项获取 JSON 格式的分节结果。
+
 ## 维护指南
 
 1. **新增资源**：更新 `assets/js/main.js` 中的 `artifactEntries` 列表，确保搜索索引与过滤器同步。
