@@ -417,24 +417,42 @@ a:focus {
 }
 
 .language-toggle {
-  padding: 0.5rem 0.9rem;
+  appearance: none;
+  -webkit-appearance: none;
+  padding: 0.5rem 2.2rem 0.5rem 1rem;
   border-radius: 999px;
   border: 1px solid rgba(0, 245, 255, 0.35);
-  background: rgba(0, 245, 255, 0.08);
+  background: rgba(0, 245, 255, 0.08)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23FFFFFF' d='M1.41 0 6 4.58 10.59 0 12 1.41 6 7.41 0 1.41z'/%3E%3C/svg%3E")
+    no-repeat right 0.9rem center;
+  background-size: 0.7rem auto;
   color: #ffffff;
   font-size: 0.85rem;
   font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  text-transform: none;
   cursor: pointer;
-  transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+  transition: box-shadow var(--transition), background var(--transition), border var(--transition);
 }
 
 .language-toggle:hover,
-.language-toggle:focus {
-  transform: translateY(-1px);
+.language-toggle:focus,
+.language-toggle:focus-visible {
   box-shadow: 0 12px 28px rgba(0, 245, 255, 0.24);
-  background: rgba(0, 245, 255, 0.18);
+  background: rgba(0, 245, 255, 0.18)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23FFFFFF' d='M1.41 0 6 4.58 10.59 0 12 1.41 6 7.41 0 1.41z'/%3E%3C/svg%3E")
+    no-repeat right 0.9rem center;
+  border-color: rgba(0, 245, 255, 0.65);
+  outline: none;
+}
+
+.language-toggle option {
+  color: #0a1120;
+  background-color: #ffffff;
+}
+
+.language-toggle::-ms-expand {
+  display: none;
 }
 
 .hero {

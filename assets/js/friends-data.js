@@ -271,6 +271,6 @@ export const friendContent = {
   en: buildFriendContent('en')
 };
 
-export function getFriendContent(lang = 'zh') {
-  return friendContent[lang] || friendContent.zh;
+export function getFriendContent(lang = 'en') {
+  return friendContent[lang] || friendContent.en;
 }

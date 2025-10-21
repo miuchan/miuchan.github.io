@@ -8,15 +8,16 @@ const translations = {
     meta: {
       htmlLang: 'zh-CN',
       direction: 'ltr',
-      toggleText: 'EN',
-      toggleLabel: '切换到英语',
+      toggleText: '中文',
+      toggleLabel: '选择语言',
       navAria: '主导航',
       brandAria: 'Earth Online 实验室标识',
       actionsAria: '友链操作',
       networkAria: '友链列表'
     },
     language: {
-      toggleLabel: '切换到英语'
+      toggleLabel: '选择语言',
+      selectorLabel: '选择语言'
     },
     brand: {
       subtitle: '体验实验室 · Planetary Experience Lab',
@@ -54,15 +55,16 @@ const translations = {
     meta: {
       htmlLang: 'en',
       direction: 'ltr',
-      toggleText: '中文',
-      toggleLabel: 'Switch to Chinese',
+      toggleText: 'English',
+      toggleLabel: 'Select language',
       navAria: 'Primary navigation',
       brandAria: 'Earth Online lab mark',
       actionsAria: 'Alliance actions',
       networkAria: 'Alliance directory'
     },
     language: {
-      toggleLabel: 'Switch to Chinese'
+      toggleLabel: 'Select language',
+      selectorLabel: 'Select language'
     },
     brand: {
       subtitle: 'Planetary Experience Lab',
@@ -97,6 +99,56 @@ const translations = {
   }
 };
 
+const LANGUAGE_DEFINITIONS = [
+  { code: 'en', label: 'English', htmlLang: 'en', direction: 'ltr' },
+  { code: 'zh', label: '中文', htmlLang: 'zh-CN', direction: 'ltr' },
+  { code: 'es', label: 'Español', htmlLang: 'es', direction: 'ltr' },
+  { code: 'fr', label: 'Français', htmlLang: 'fr', direction: 'ltr' },
+  { code: 'de', label: 'Deutsch', htmlLang: 'de', direction: 'ltr' },
+  { code: 'ja', label: '日本語', htmlLang: 'ja', direction: 'ltr' },
+  { code: 'pt', label: 'Português', htmlLang: 'pt', direction: 'ltr' },
+  { code: 'ru', label: 'Русский', htmlLang: 'ru', direction: 'ltr' },
+  { code: 'hi', label: 'हिन्दी', htmlLang: 'hi', direction: 'ltr' },
+  { code: 'ar', label: 'العربية', htmlLang: 'ar', direction: 'rtl' }
+];
+
+const LANGUAGE_FALLBACK = 'en';
+
+const SUPPORTED_LANGUAGE_CODES = new Set(
+  LANGUAGE_DEFINITIONS.map((definition) => definition.code)
+);
+
+LANGUAGE_DEFINITIONS.forEach((definition) => {
+  if (definition.code === 'en' || definition.code === 'zh') {
+    const existing = translations[definition.code];
+    if (existing) {
+      existing.meta.htmlLang = definition.htmlLang;
+      existing.meta.direction = definition.direction || existing.meta.direction || 'ltr';
+      existing.meta.toggleText = definition.label;
+      if (existing.language) {
+        existing.language.selectorLabel =
+          existing.language.selectorLabel || existing.language.toggleLabel || existing.meta.toggleLabel;
+      } else {
+        existing.language = {
+          toggleLabel: existing.meta.toggleLabel,
+          selectorLabel: existing.meta.toggleLabel
+        };
+      }
+    }
+    return;
+  }
+
+  const clone = JSON.parse(JSON.stringify(translations.en));
+  clone.meta.htmlLang = definition.htmlLang;
+  clone.meta.direction = definition.direction || 'ltr';
+  clone.meta.toggleText = definition.label;
+  clone.meta.toggleLabel = translations.en.language?.selectorLabel || 'Select language';
+  clone.language = clone.language || {};
+  clone.language.toggleLabel = clone.meta.toggleLabel;
+  clone.language.selectorLabel = translations.en.language?.selectorLabel || 'Select language';
+  translations[definition.code] = clone;
+});
+
 function resolveTranslation(dictionary, keyPath) {
   return keyPath.split('.').reduce((acc, key) => (acc ? acc[key] : undefined), dictionary);
 }
@@ -110,8 +162,19 @@ function determineLanguage() {
   } catch (error) {
     // ignore storage issues
   }
-  const browser = (navigator.language || 'zh').toLowerCase();
-  return browser.startsWith('zh') ? 'zh' : 'en';
+  const browser = (navigator.language || LANGUAGE_FALLBACK).toLowerCase();
+  const exact = LANGUAGE_DEFINITIONS.find((definition) => browser === definition.code);
+  if (exact) return exact.code;
+
+  const matched = LANGUAGE_DEFINITIONS.find((definition) => browser.startsWith(`${definition.code}-`));
+  if (matched) return matched.code;
+
+  const primary = browser.split('-')[0];
+  if (SUPPORTED_LANGUAGE_CODES.has(primary)) {
+    return primary;
+  }
+
+  return LANGUAGE_FALLBACK;
 }
 
 const state = {
@@ -272,13 +335,30 @@ function updateMeta(lang) {
   document.title = translations[lang].documentTitle;
 }
 
-function updateLanguageToggle(lang) {
-  const button = document.getElementById('friends-language-toggle');
-  if (!button) return;
-  const meta = translations[lang].meta;
-  const languageSection = translations[lang].language;
-  button.textContent = meta.toggleText;
-  button.setAttribute('aria-label', languageSection.toggleLabel || meta.toggleLabel);
+function updateLanguageSelector(lang) {
+  const select = document.getElementById('friends-language-toggle');
+  if (!select) return;
+
+  select.innerHTML = '';
+  LANGUAGE_DEFINITIONS.forEach((definition) => {
+    const option = document.createElement('option');
+    option.value = definition.code;
+    option.textContent = definition.label;
+    select.appendChild(option);
+  });
+
+  const selected = SUPPORTED_LANGUAGE_CODES.has(lang) ? lang : LANGUAGE_FALLBACK;
+  select.value = selected;
+
+  const translation = translations[selected];
+  const labelText =
+    translation?.language?.selectorLabel ||
+    translation?.language?.toggleLabel ||
+    translation?.meta?.toggleLabel ||
+    'Select language';
+
+  select.setAttribute('aria-label', labelText);
+  select.setAttribute('title', labelText);
 }
 
 function applyLanguage(lang) {
@@ -291,7 +371,7 @@ function applyLanguage(lang) {
 
   updateMeta(lang);
   updateStaticText(lang);
-  updateLanguageToggle(lang);
+  updateLanguageSelector(lang);
   renderFriendNetwork(lang);
 }
 
@@ -300,9 +380,12 @@ function initialize() {
 
   const toggle = document.getElementById('friends-language-toggle');
   if (toggle) {
-    toggle.addEventListener('click', () => {
-      const nextLang = state.language === 'zh' ? 'en' : 'zh';
-      applyLanguage(nextLang);
+    toggle.addEventListener('change', (event) => {
+      const nextLang = event.target?.value;
+      const resolved = SUPPORTED_LANGUAGE_CODES.has(nextLang) ? nextLang : LANGUAGE_FALLBACK;
+      if (translations[resolved]) {
+        applyLanguage(resolved);
+      }
     });
   }
 }

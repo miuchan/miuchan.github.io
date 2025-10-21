@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>友链星港 · Earth Online 体验实验室</title>
+    <title>Alliance Harbor · Earth Online Experience Lab</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -15,30 +15,38 @@
   <body>
     <header class="site-header">
       <div class="inner header__inner">
-        <div class="brand" aria-label="Earth Online 实验室标识" data-i18n-attr="aria-label:brand.ariaLabel">
+        <div class="brand" aria-label="Earth Online lab mark" data-i18n-attr="aria-label:brand.ariaLabel">
           <span class="brand__title">Earth Online</span>
-          <span class="brand__subtitle" data-i18n="brand.subtitle">体验实验室 · Planetary Experience Lab</span>
+          <span class="brand__subtitle" data-i18n="brand.subtitle">Planetary Experience Lab</span>
         </div>
         <nav
           class="site-nav"
-          aria-label="主导航"
+          aria-label="Primary navigation"
           data-i18n-attr="aria-label:nav.ariaLabel"
         >
-          <a href="../index.html#hero" data-i18n="nav.home">主页</a>
-          <a href="../index.html#labs" data-i18n="nav.labs">实验矩阵</a>
-          <a href="../index.html#alliances" data-i18n="nav.alliances">友链星港</a>
-          <a href="../index.html#contact" data-i18n="nav.contact">联络站</a>
+          <a href="../index.html#hero" data-i18n="nav.home">Home</a>
+          <a href="../index.html#labs" data-i18n="nav.labs">Lab Matrix</a>
+          <a href="../index.html#alliances" data-i18n="nav.alliances">Alliance Harbor</a>
+          <a href="../index.html#contact" data-i18n="nav.contact">Contact</a>
         </nav>
         <div class="header__actions">
-          <button
+          <select
             class="language-toggle"
             id="friends-language-toggle"
-            type="button"
-            aria-label="切换语言"
+            aria-label="Select language"
             data-i18n-attr="aria-label:language.toggleLabel"
           >
-            EN
-          </button>
+            <option value="en" selected>English</option>
+            <option value="zh">中文</option>
+            <option value="es">Español</option>
+            <option value="fr">Français</option>
+            <option value="de">Deutsch</option>
+            <option value="ja">日本語</option>
+            <option value="pt">Português</option>
+            <option value="ru">Русский</option>
+            <option value="hi">हिन्दी</option>
+            <option value="ar">العربية</option>
+          </select>
         </div>
       </div>
     </header>
@@ -48,18 +56,18 @@
         <div class="inner subpage-hero__inner">
           <div class="subpage-hero__content">
             <p class="section__eyebrow" data-i18n="hero.eyebrow">Alliance Network</p>
-            <h1 id="friends-title" data-i18n="hero.title">友链星港</h1>
+            <h1 id="friends-title" data-i18n="hero.title">Alliance Harbor</h1>
             <p class="subpage-hero__lead" data-i18n="hero.lead">
-              Earth Online 的伙伴网络不断扩张。我们在这里记录每一位与我们共同探索体验与知识边界的朋友，方便你快速建立链接并开启合作。
+              Earth Online’s partner network keeps expanding. Discover collaborators exploring the boundaries of experience and knowledge, and open a new line together.
             </p>
             <div
               class="subpage-hero__actions"
               role="group"
-              aria-label="友链操作"
+              aria-label="Alliance actions"
               data-i18n-attr="aria-label:hero.actionsAria"
             >
-              <a class="button" href="../index.html#contact" data-i18n="hero.primaryCta">申请交换友链</a>
-              <a class="button button--ghost" href="../index.html" data-i18n="hero.secondaryCta">返回主站</a>
+              <a class="button" href="../index.html#contact" data-i18n="hero.primaryCta">Request a link exchange</a>
+              <a class="button button--ghost" href="../index.html" data-i18n="hero.secondaryCta">Return to main site</a>
             </div>
           </div>
         </div>
@@ -67,7 +75,7 @@
 
       <section
         class="section section--alt"
-        aria-label="友链列表"
+        aria-label="Alliance directory"
         data-i18n-attr="aria-label:network.ariaLabel"
       >
         <div class="inner">
@@ -79,7 +87,7 @@
     <footer class="site-footer">
       <div class="inner">
         <p data-i18n="footer.credit">© 2024 Earth Online Experience Lab · Powered by Aman Sharma</p>
-        <p class="footer-note" data-i18n="footer.note">欢迎 fork、引用或将实验室成果嵌入你的宇宙级项目。</p>
+        <p class="footer-note" data-i18n="footer.note">Feel free to fork, cite, or embed these experiments into your interstellar project.</p>
       </div>
     </footer>
 
