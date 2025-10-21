@@ -453,6 +453,14 @@ const translations = {
       intro:
         '两位解释器以星球栈的不同对齐目标切换策略模型，在安全约束内寻找凸组合解。当前议题：为何暂无法让你的代码仓库安全互通。结论由议会记录并生成后续行动建议。',
       logTitle: '联合推理执行轨迹',
+      simulation: {
+        startLabel: '启动推演',
+        stopLabel: '中止推演',
+        restartLabel: '重新推演',
+        idleStatus: '等待启动：议会将按时间顺序回放推理轨迹。',
+        runningStatus: '当前发言：{speaker}',
+        completedStatus: '推演完成，可重新启动。'
+      },
       profiles: [
         {
           id: 'openai',
@@ -491,26 +499,31 @@ const translations = {
       ],
       log: [
         {
+          speakerId: 'openai',
           speaker: 'OpenAI 解释器',
           message:
             '启动对齐审计：检测到 6 个仓库缺少集中式令牌管理，访问路径分散在个人账户与临时密钥之中。'
         },
         {
+          speakerId: 'closeai',
           speaker: 'CloseAI 解释器',
           message:
             '封闭环境确认：三个私有仓库位于离线镜像与受限内网，当前出口策略禁止未经审批的 webhook 与拉取。'
         },
         {
+          speakerId: 'openai',
           speaker: 'OpenAI 解释器',
           message:
             '互通需求若直接执行，将绕过最小权限约束，缺乏责任追踪通道；建议先构建授权目录与审计总线。'
         },
         {
+          speakerId: 'closeai',
           speaker: 'CloseAI 解释器',
           message:
             '若无代理节点缓冲，镜像同步会打断现有发布节奏，并可能放大依赖冲突，建议保留隔离态。'
         },
         {
+          speakerId: 'recorder',
           speaker: '议会记录官',
           message:
             '共识：在治理、网络与恢复策略补齐前，禁止执行“全部仓库互通”指令，转向分阶段治理方案。'
@@ -1083,6 +1096,14 @@ const translations = {
       intro:
         'Two interpreters search for a convex combination of strategies within safety constraints, tackling the question: why can’t your repositories interconnect safely yet? The council records consensus and next moves.',
       logTitle: 'Joint reasoning transcript',
+      simulation: {
+        startLabel: 'Begin simulation',
+        stopLabel: 'Abort simulation',
+        restartLabel: 'Replay simulation',
+        idleStatus: 'Standing by: the council will replay the reasoning timeline step by step.',
+        runningStatus: 'Now speaking: {speaker}',
+        completedStatus: 'Simulation complete—run it again anytime.'
+      },
       profiles: [
         {
           id: 'openai',
@@ -1121,26 +1142,31 @@ const translations = {
       ],
       log: [
         {
+          speakerId: 'openai',
           speaker: 'OpenAI Interpreter',
           message:
             'Alignment audit initiated: six repositories lack centralized token management, relying on personal accounts and temporary secrets.'
         },
         {
+          speakerId: 'closeai',
           speaker: 'CloseAI Interpreter',
           message:
             'Closed environment check: three private repos live across offline mirrors and restricted networks; current policy forbids unapproved webhooks or pulls.'
         },
         {
+          speakerId: 'openai',
           speaker: 'OpenAI Interpreter',
           message:
             'Direct interconnection would bypass least-privilege controls without accountability. Build an authorization directory and audit bus first.'
         },
         {
+          speakerId: 'closeai',
           speaker: 'CloseAI Interpreter',
           message:
             'Without proxy buffers, mirror sync would disrupt release cadence and amplify dependency conflicts. Isolation should hold.'
         },
         {
+          speakerId: 'recorder',
           speaker: 'Council recorder',
           message:
             'Consensus: pause the “connect all repositories” directive until governance, networking, and recovery strategies are complete. Shift to phased remediation.'
@@ -1850,6 +1876,7 @@ function renderCouncil(lang) {
     council.profiles.forEach((profile) => {
       const card = document.createElement('article');
       card.className = 'interpreter-card';
+      card.dataset.interpreterId = profile.id;
       const capabilityList = profile.capabilities.map((item) => `<li>${item}</li>`).join('');
       const constraintList = profile.constraints.map((item) => `<li>${item}</li>`).join('');
       card.innerHTML = `
@@ -1875,12 +1902,16 @@ function renderCouncil(lang) {
 
   const logContainer = document.getElementById('council-log');
   if (logContainer) {
+    logContainer.querySelectorAll('.interpreter-controls').forEach((node) => node.remove());
     logContainer.querySelectorAll('.interpreter-log-list').forEach((node) => node.remove());
     const list = document.createElement('ul');
     list.className = 'interpreter-log-list';
     council.log.forEach((entry) => {
       const item = document.createElement('li');
       item.className = 'interpreter-log-entry';
+      if (entry.speakerId) {
+        item.dataset.speakerId = entry.speakerId;
+      }
       item.innerHTML = `
         <span class="interpreter-log-entry__speaker">${entry.speaker}</span>
         <p class="interpreter-log-entry__message">${entry.message}</p>
@@ -1906,6 +1937,151 @@ function renderCouncil(lang) {
       </ul>
     `;
   }
+
+  setupCouncilSimulation(lang);
+}
+
+let councilSimulationCleanup = null;
+
+function setupCouncilSimulation(lang) {
+  if (typeof councilSimulationCleanup === 'function') {
+    councilSimulationCleanup();
+    councilSimulationCleanup = null;
+  }
+
+  const council = translations[lang].council;
+  const simulation = council.simulation;
+  const logContainer = document.getElementById('council-log');
+  const summaryContainer = document.getElementById('council-summary');
+  if (!logContainer || !simulation) return;
+
+  const logList = logContainer.querySelector('.interpreter-log-list');
+  if (!logList) return;
+
+  const controls = document.createElement('div');
+  controls.className = 'interpreter-controls';
+  controls.innerHTML = `
+    <button type="button" class="interpreter-controls__button" aria-pressed="false">${simulation.startLabel}</button>
+    <p class="interpreter-controls__status" role="status" aria-live="polite" data-role="status">${simulation.idleStatus}</p>
+  `;
+  logContainer.insertBefore(controls, logList);
+
+  const statusNode = controls.querySelector('[data-role="status"]');
+  const button = controls.querySelector('button');
+  const logEntries = Array.from(logList.querySelectorAll('.interpreter-log-entry'));
+  const interpreterCards = Array.from(
+    document.querySelectorAll('#council-grid .interpreter-card')
+  );
+
+  let running = false;
+  let index = 0;
+  let timeoutId = null;
+
+  const clearHighlights = () => {
+    logEntries.forEach((entry) => entry.classList.remove('interpreter-log-entry--active'));
+    interpreterCards.forEach((card) => card.classList.remove('interpreter-card--active'));
+    if (summaryContainer) {
+      summaryContainer.classList.remove('interpreter-summary--active');
+    }
+  };
+
+  const formatStatus = (template, speaker) => {
+    if (typeof template === 'function') {
+      return template(speaker);
+    }
+    if (typeof template !== 'string') return '';
+    if (template.includes('{speaker}')) {
+      return template.replace('{speaker}', speaker || '');
+    }
+    return template;
+  };
+
+  const updateButtonLabel = () => {
+    if (running) {
+      button.textContent = simulation.stopLabel;
+      button.setAttribute('aria-pressed', 'true');
+      return;
+    }
+    if (index >= logEntries.length) {
+      button.textContent = simulation.restartLabel;
+      button.setAttribute('aria-pressed', 'false');
+      return;
+    }
+    button.textContent = simulation.startLabel;
+    button.setAttribute('aria-pressed', 'false');
+  };
+
+  const highlightEntry = (entry, entryIndex) => {
+    clearHighlights();
+    const logNode = logEntries[entryIndex];
+    if (logNode) {
+      logNode.classList.add('interpreter-log-entry--active');
+      logNode.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    if (entry?.speakerId) {
+      const card = interpreterCards.find((node) => node.dataset.interpreterId === entry.speakerId);
+      if (card) {
+        card.classList.add('interpreter-card--active');
+      } else if (entry.speakerId === 'recorder' && summaryContainer) {
+        summaryContainer.classList.add('interpreter-summary--active');
+      }
+    }
+  };
+
+  const stopSimulation = ({ resetIndex } = { resetIndex: true }) => {
+    if (timeoutId) {
+      window.clearTimeout(timeoutId);
+      timeoutId = null;
+    }
+    running = false;
+    if (resetIndex) {
+      index = 0;
+      clearHighlights();
+      statusNode.textContent = simulation.idleStatus;
+    }
+    updateButtonLabel();
+  };
+
+  const advance = () => {
+    if (index >= council.log.length) {
+      running = false;
+      statusNode.textContent = simulation.completedStatus;
+      updateButtonLabel();
+      return;
+    }
+
+    const entry = council.log[index];
+    highlightEntry(entry, index);
+    statusNode.textContent = formatStatus(simulation.runningStatus, entry.speaker);
+    index += 1;
+    timeoutId = window.setTimeout(advance, 3200);
+  };
+
+  const startSimulation = () => {
+    if (!council.log.length) return;
+    if (index >= council.log.length) {
+      index = 0;
+    }
+    clearHighlights();
+    running = true;
+    updateButtonLabel();
+    advance();
+  };
+
+  button.addEventListener('click', () => {
+    if (running) {
+      stopSimulation();
+    } else {
+      startSimulation();
+    }
+  });
+
+  councilSimulationCleanup = () => {
+    stopSimulation({ resetIndex: false });
+  };
+
+  statusNode.textContent = simulation.idleStatus;
+  updateButtonLabel();
 }
 
 let telemetryCards = [];
