@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Compute-God 标准模型验证控制台</title>
+    <meta
+      name="description"
+      content="在浏览器中载入 Compute-God 标准模型登记表，逐项执行粒子属性、守恒律、异常抵消与实验约束检查。"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script type="module" src="validator.js" defer></script>
+  </head>
+  <body>
+    <header class="hero">
+      <div class="hero__inner">
+        <p class="hero__eyebrow">Compute-God · Field Tools</p>
+        <h1 class="hero__title">标准模型验证控制台</h1>
+        <p class="hero__description">
+          将粒子属性、对称性与交互登记表映射到 Compute-God 公理体系，实时输出可追踪的验证分节报告。
+          该页面以原生 HTML、CSS 与 JavaScript 重构命令行校验器，适配桌面与移动端操作。
+        </p>
+        <div class="hero__status" role="status" aria-live="polite" id="hero-status">
+          待命：尚未载入数据集。
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="panel">
+        <div class="panel__header">
+          <h2>操作流程</h2>
+          <p>
+            可直接加载仓库内的标准模型登记表，或上传自定义 JSON 文件。系统会执行七个分节检查，并生成总结报告与 JSON 输出。
+          </p>
+        </div>
+        <div class="actions" role="group" aria-label="数据载入与验证控制">
+          <button type="button" class="action-button" id="load-default">
+            载入默认登记表并验证
+          </button>
+          <button type="button" class="action-button action-button--ghost" id="open-file-picker">
+            上传自定义 JSON
+          </button>
+          <button type="button" class="action-button action-button--ghost" id="run-from-editor">
+            使用下方编辑器验证
+          </button>
+        </div>
+        <input type="file" accept="application/json" id="file-input" hidden />
+        <details class="hint">
+          <summary>支持的字段结构</summary>
+          <p>
+            粒子需提供名称、统计性质、SU(2)/SU(3) 表示、同位旋 \(T_3\)、超荷、质量区间、重子/轻子数与自旋。
+            交互需声明入射/出射态以及需守恒的量，约束用于测试实验观测。
+          </p>
+        </details>
+      </section>
+
+      <section class="panel">
+        <div class="panel__header">
+          <h2>数据集编辑器</h2>
+          <p>
+            将 JSON 粘贴至此区域，可快速调整质量区间、对称性或新增交互，随后点击“使用下方编辑器验证”。
+          </p>
+        </div>
+        <textarea
+          id="dataset-editor"
+          spellcheck="false"
+          aria-label="标准模型登记表 JSON 编辑器"
+          placeholder="在此粘贴或编辑登记表 JSON。若留空则使用默认数据。"
+        ></textarea>
+      </section>
+
+      <section class="panel">
+        <div class="panel__header">
+          <h2>数据摘要</h2>
+          <p>快速概览粒子、交互与约束的分布，便于校对输入数据。</p>
+        </div>
+        <div class="summary-grid" id="dataset-summary" role="list">
+          <p class="placeholder">尚未生成摘要。</p>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel__header">
+          <h2>验证报告</h2>
+          <p>七个检查分节覆盖粒子元数据、同位旋电荷关系、相互作用守恒、规范异常抵消与实验约束。</p>
+        </div>
+        <div class="report" id="report-output">
+          <p class="placeholder">尚未运行验证。</p>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel__header">
+          <h2>结果 JSON</h2>
+          <p>下方展示可复制的机器可读报告，便于纳入 CI 流程或进一步分析。</p>
+        </div>
+        <pre class="code-block" id="report-json" aria-live="polite">{
+  "status": "waiting",
+  "message": "尚未运行验证。"
+}</pre>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>
+        构建者：Earth Online Experience Lab · 以开放科学精神共享 Compute-God 研究工具。
+        <a href="../../index.html">返回站点首页</a>
+      </p>
+    </footer>
+  </body>
+</html>

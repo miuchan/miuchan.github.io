@@ -13,7 +13,7 @@ import {
 } from './i18n/registry.js';
 
 const counts = {
-  demos: 24,
+  demos: 25,
   research: 9,
   blogs: 59,
   resume: 1
@@ -248,6 +248,21 @@ const baseTranslations = {
         }
       ],
       entries: [
+        {
+          type: 'demo',
+          href: 'public/demo/compute-god-standard-model-validator/index.html',
+          title: 'Compute-God 标准模型验证控制台',
+          description:
+            '在浏览器中加载 Compute-God 标准模型登记表，执行粒子字段、守恒律、规范异常与实验约束的全量验证。',
+          tags: ['粒子物理', '验证工具'],
+          keywords: [
+            'standard model',
+            'validator',
+            'Compute-God',
+            '粒子物理',
+            'conservation laws'
+          ]
+        },
         {
           type: 'demo',
           href: 'public/demo/intelligent-driving-lab/index.html',
@@ -893,6 +908,21 @@ const baseTranslations = {
         }
       ],
       entries: [
+        {
+          type: 'demo',
+          href: 'public/demo/compute-god-standard-model-validator/index.html',
+          title: 'Compute-God Standard Model Validator',
+          description:
+            'Load the Compute-God Standard Model registry in the browser to run field, conservation, anomaly, and experimental checks.',
+          tags: ['Particle Physics', 'Validation'],
+          keywords: [
+            'standard model',
+            'validator',
+            'Compute-God',
+            'particle physics',
+            'conservation laws'
+          ]
+        },
         {
           type: 'demo',
           href: 'public/demo/intelligent-driving-lab/index.html',

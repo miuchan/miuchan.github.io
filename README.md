@@ -32,11 +32,11 @@ GitHub Actions 工作流会在推送和 Pull Request 时自动安装 Python 3.11
 
 ## Compute-God 标准模型验证器
 
-为配合《Compute-God 标准模型验证器蓝图》，仓库新增可执行的粒子属性与对称性校验工具：
+为配合《Compute-God 标准模型验证器蓝图》，仓库将验证工具重构为纯前端体验：
 
-1. 执行 `python3 -m tools.compute_god` 或 `pipx run compute-god-sm`，将自动读取 `formal/compute_god_standard_model.json`。
-2. 工具会逐项检查粒子基本量、守恒律、规范异常抵消与实验观测约束，输出机器可读/可视化的验证报告。
-3. 若需导出结构化数据，可附加 `--json` 选项获取 JSON 格式的分节结果。
+1. 直接在浏览器打开 `public/demo/compute-god-standard-model-validator/index.html`，或通过 `index.html` 的体验簇阵入口访问。
+2. 页面可加载仓库默认的 `formal/compute_god_standard_model.json`，或粘贴/上传自定义 JSON，实时运行粒子字段、守恒律、规范异常与实验约束检查。
+3. 验证结果会以分节卡片与 JSON 摘要呈现，便于复制到报告或纳入 CI 流程。原命令行版本仍保留在 `tools/compute_god/` 目录，可按需调用。
 
 ## 维护指南
 
