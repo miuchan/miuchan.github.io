@@ -17,7 +17,8 @@ const translations = {
     },
     language: {
       toggleLabel: '选择语言',
-      selectorLabel: '选择语言'
+      selectorLabel: '选择语言',
+      fallbackTag: '英文内容'
     },
     brand: {
       subtitle: '体验实验室 · Planetary Experience Lab',
@@ -64,7 +65,8 @@ const translations = {
     },
     language: {
       toggleLabel: 'Select language',
-      selectorLabel: 'Select language'
+      selectorLabel: 'Select language',
+      fallbackTag: 'English content'
     },
     brand: {
       subtitle: 'Planetary Experience Lab',
@@ -112,14 +114,19 @@ const LANGUAGE_DEFINITIONS = [
   { code: 'ar', label: 'العربية', htmlLang: 'ar', direction: 'rtl' }
 ];
 
+const LOCALIZED_LANGUAGE_CODES = new Set(['en', 'zh']);
+
 const LANGUAGE_FALLBACK = 'en';
 
 const SUPPORTED_LANGUAGE_CODES = new Set(
   LANGUAGE_DEFINITIONS.map((definition) => definition.code)
 );
 
+translations.en.__isFallback = false;
+translations.zh.__isFallback = false;
+
 LANGUAGE_DEFINITIONS.forEach((definition) => {
-  if (definition.code === 'en' || definition.code === 'zh') {
+  if (LOCALIZED_LANGUAGE_CODES.has(definition.code)) {
     const existing = translations[definition.code];
     if (existing) {
       existing.meta.htmlLang = definition.htmlLang;
@@ -134,6 +141,7 @@ LANGUAGE_DEFINITIONS.forEach((definition) => {
           selectorLabel: existing.meta.toggleLabel
         };
       }
+      existing.__isFallback = false;
     }
     return;
   }
@@ -146,11 +154,45 @@ LANGUAGE_DEFINITIONS.forEach((definition) => {
   clone.language = clone.language || {};
   clone.language.toggleLabel = clone.meta.toggleLabel;
   clone.language.selectorLabel = translations.en.language?.selectorLabel || 'Select language';
+  clone.language.fallbackTag = translations.en.language?.fallbackTag || 'English content';
+  clone.__isFallback = true;
   translations[definition.code] = clone;
 });
 
-function resolveTranslation(dictionary, keyPath) {
-  return keyPath.split('.').reduce((acc, key) => (acc ? acc[key] : undefined), dictionary);
+function resolveTranslation(dictionary, keyPath, fallbackDictionary) {
+  if (!keyPath) return undefined;
+  const keys = keyPath.split('.');
+  const traverse = (source) =>
+    keys.reduce((acc, key) => {
+      if (acc && Object.prototype.hasOwnProperty.call(acc, key)) {
+        return acc[key];
+      }
+      return undefined;
+    }, source);
+
+  const primary = traverse(dictionary);
+  if (primary !== undefined) {
+    return primary;
+  }
+
+  if (!fallbackDictionary || fallbackDictionary === dictionary) {
+    return undefined;
+  }
+
+  return traverse(fallbackDictionary);
+}
+
+function getTranslation(lang) {
+  return translations[lang] || translations[LANGUAGE_FALLBACK];
+}
+
+function getLocalizedValue(lang, keyPath) {
+  return resolveTranslation(translations[lang], keyPath, translations[LANGUAGE_FALLBACK]);
+}
+
+function isFallbackLanguage(lang) {
+  const translation = translations[lang];
+  return !translation || translation.__isFallback === true;
 }
 
 function determineLanguage() {
@@ -288,7 +330,10 @@ function renderFriendNetwork(lang) {
 
   const fragment = document.createDocumentFragment();
   const { featured, clusters } = getFriendContent(lang).friendNetwork;
-  const visitLabel = translations[lang].buttons.visit;
+  const visitLabel =
+    getLocalizedValue(lang, 'buttons.visit') ||
+    getLocalizedValue(LANGUAGE_FALLBACK, 'buttons.visit') ||
+    'Visit site';
 
   if (featured) {
     fragment.appendChild(createFeaturedSection(featured, visitLabel));
@@ -302,10 +347,10 @@ function renderFriendNetwork(lang) {
 }
 
 function updateStaticText(lang) {
-  const dictionary = translations[lang];
+  const dictionary = getTranslation(lang);
   document.querySelectorAll('[data-i18n]').forEach((element) => {
     const key = element.getAttribute('data-i18n');
-    const value = resolveTranslation(dictionary, key);
+    const value = resolveTranslation(dictionary, key, translations[LANGUAGE_FALLBACK]);
     if (typeof value === 'string') {
       element.textContent = value;
     }
@@ -320,7 +365,7 @@ function updateStaticText(lang) {
     descriptors.forEach((descriptor) => {
       const [attr, key] = descriptor.split(':').map((part) => part.trim());
       if (!attr || !key) return;
-      const value = resolveTranslation(dictionary, key);
+      const value = resolveTranslation(dictionary, key, translations[LANGUAGE_FALLBACK]);
       if (typeof value === 'string') {
         element.setAttribute(attr, value);
       }
@@ -329,10 +374,17 @@ function updateStaticText(lang) {
 }
 
 function updateMeta(lang) {
-  const meta = translations[lang].meta;
-  document.documentElement.lang = meta.htmlLang;
-  document.documentElement.dir = meta.direction || 'ltr';
-  document.title = translations[lang].documentTitle;
+  const translation = getTranslation(lang);
+  const fallbackTranslation = getTranslation(LANGUAGE_FALLBACK);
+  const meta = translation.meta || fallbackTranslation.meta || {};
+  const effectiveMeta = isFallbackLanguage(lang) ? fallbackTranslation.meta || meta : meta;
+  const htmlLang = effectiveMeta?.htmlLang || fallbackTranslation.meta?.htmlLang || 'en';
+  const direction = effectiveMeta?.direction || fallbackTranslation.meta?.direction || 'ltr';
+  document.documentElement.lang = htmlLang;
+  document.documentElement.dir = direction;
+  document.documentElement.setAttribute('data-language', lang);
+  const title = translation.documentTitle || fallbackTranslation.documentTitle || document.title;
+  document.title = title;
 }
 
 function updateLanguageSelector(lang) {
@@ -340,17 +392,28 @@ function updateLanguageSelector(lang) {
   if (!select) return;
 
   select.innerHTML = '';
+  const activeTranslation = getTranslation(lang);
+  const fallbackDictionary = translations[LANGUAGE_FALLBACK];
+  const fallbackTag =
+    resolveTranslation(activeTranslation, 'language.fallbackTag', fallbackDictionary) ||
+    resolveTranslation(fallbackDictionary, 'language.fallbackTag') ||
+    'English content';
+
   LANGUAGE_DEFINITIONS.forEach((definition) => {
     const option = document.createElement('option');
     option.value = definition.code;
-    option.textContent = definition.label;
+    const translation = translations[definition.code];
+    const fallback = translation?.__isFallback === true;
+    option.textContent = fallback ? `${definition.label} · ${fallbackTag}` : definition.label;
+    option.dataset.fallback = String(fallback);
+    option.dir = definition.direction || 'ltr';
     select.appendChild(option);
   });
 
   const selected = SUPPORTED_LANGUAGE_CODES.has(lang) ? lang : LANGUAGE_FALLBACK;
   select.value = selected;
 
-  const translation = translations[selected];
+  const translation = getTranslation(selected);
   const labelText =
     translation?.language?.selectorLabel ||
     translation?.language?.toggleLabel ||

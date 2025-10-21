@@ -32,7 +32,8 @@ const translations = {
     },
     language: {
       toggleLabel: '选择语言',
-      selectorLabel: '选择语言'
+      selectorLabel: '选择语言',
+      fallbackTag: '英文内容'
     },
     brand: {
       subtitle: '体验实验室 · Planetary Experience Lab',
@@ -454,6 +455,11 @@ const translations = {
       intro:
         '两位解释器以星球栈的不同对齐目标切换策略模型，在安全约束内寻找凸组合解。当前议题：为何暂无法让你的代码仓库安全互通。结论由议会记录并生成后续行动建议。',
       logTitle: '联合推理执行轨迹',
+      focusLabel: '策略焦点',
+      constraintsLabel: '关键约束',
+      verdictLabel: '结论',
+      blockersLabel: '核心阻塞',
+      actionsLabel: '推荐行动',
       simulation: {
         startLabel: '启动推演',
         stopLabel: '中止推演',
@@ -670,7 +676,8 @@ const translations = {
     },
     language: {
       toggleLabel: 'Select language',
-      selectorLabel: 'Select language'
+      selectorLabel: 'Select language',
+      fallbackTag: 'English content'
     },
     brand: {
       subtitle: 'Planetary Experience Lab',
@@ -1098,6 +1105,11 @@ const translations = {
       intro:
         'Two interpreters search for a convex combination of strategies within safety constraints, tackling the question: why can’t your repositories interconnect safely yet? The council records consensus and next moves.',
       logTitle: 'Joint reasoning transcript',
+      focusLabel: 'Strategic focus',
+      constraintsLabel: 'Key constraints',
+      verdictLabel: 'Verdict',
+      blockersLabel: 'Core blockers',
+      actionsLabel: 'Recommended actions',
       simulation: {
         startLabel: 'Begin simulation',
         stopLabel: 'Abort simulation',
@@ -1321,6 +1333,8 @@ const LANGUAGE_DEFINITIONS = [
   { code: 'ar', label: 'العربية', htmlLang: 'ar', direction: 'rtl' }
 ];
 
+const LOCALIZED_LANGUAGE_CODES = new Set(['en', 'zh']);
+
 const LANGUAGE_FALLBACK = 'en';
 
 const SUPPORTED_LANGUAGE_CODES = new Set(
@@ -1335,8 +1349,11 @@ translations.en.decks.entries.forEach((entry, index) => {
   entry.keywords = Array.from(new Set([...(entry.keywords || []), ...zhKeywords]));
 });
 
+translations.en.__isFallback = false;
+translations.zh.__isFallback = false;
+
 LANGUAGE_DEFINITIONS.forEach((definition) => {
-  if (definition.code === 'en' || definition.code === 'zh') {
+  if (LOCALIZED_LANGUAGE_CODES.has(definition.code)) {
     const existing = translations[definition.code];
     if (existing) {
       existing.meta.htmlLang = definition.htmlLang;
@@ -1351,6 +1368,7 @@ LANGUAGE_DEFINITIONS.forEach((definition) => {
           selectorLabel: existing.meta.toggleLabel
         };
       }
+      existing.__isFallback = false;
     }
     return;
   }
@@ -1363,13 +1381,47 @@ LANGUAGE_DEFINITIONS.forEach((definition) => {
   clone.language = clone.language || {};
   clone.language.toggleLabel = clone.meta.toggleLabel;
   clone.language.selectorLabel = translations.en.language?.selectorLabel || 'Select language';
+  clone.language.fallbackTag = translations.en.language?.fallbackTag || 'English content';
+  clone.__isFallback = true;
   translations[definition.code] = clone;
 });
 
 const STORAGE_KEY = 'earth-online-language';
 
-function resolveTranslation(dictionary, keyPath) {
-  return keyPath.split('.').reduce((acc, key) => (acc ? acc[key] : undefined), dictionary);
+function resolveTranslation(dictionary, keyPath, fallbackDictionary) {
+  if (!keyPath) return undefined;
+  const keys = keyPath.split('.');
+  const traverse = (source) =>
+    keys.reduce((acc, key) => {
+      if (acc && Object.prototype.hasOwnProperty.call(acc, key)) {
+        return acc[key];
+      }
+      return undefined;
+    }, source);
+
+  const primary = traverse(dictionary);
+  if (primary !== undefined) {
+    return primary;
+  }
+
+  if (!fallbackDictionary || fallbackDictionary === dictionary) {
+    return undefined;
+  }
+
+  return traverse(fallbackDictionary);
+}
+
+function getTranslation(lang) {
+  return translations[lang] || translations[LANGUAGE_FALLBACK];
+}
+
+function getLocalizedValue(lang, keyPath) {
+  return resolveTranslation(translations[lang], keyPath, translations[LANGUAGE_FALLBACK]);
+}
+
+function isFallbackLanguage(lang) {
+  const translation = translations[lang];
+  return !translation || translation.__isFallback === true;
 }
 
 function determineLanguage() {
@@ -1471,7 +1523,13 @@ function escapeSelector(value) {
   return String(value).replace(/[^a-zA-Z0-9_\-]/g, (char) => `\\${char}`);
 }
 
-function createNavList(items, lang, depth = 0, navDictionary = translations[lang]?.nav || {}) {
+function createNavList(
+  items,
+  lang,
+  depth = 0,
+  navDictionary = getLocalizedValue(lang, 'nav') || {},
+  fallbackDictionary = getLocalizedValue(LANGUAGE_FALLBACK, 'nav') || {}
+) {
   const list = document.createElement('ol');
   list.className = depth === 0 ? 'nav-tree' : 'nav-tree__children';
 
@@ -1494,14 +1552,14 @@ function createNavList(items, lang, depth = 0, navDictionary = translations[lang
 
     const label = document.createElement('span');
     label.className = 'nav-tree__text';
-    const fallback = resolveTranslation(navDictionary, item.id) || item.id;
+    const fallback = resolveTranslation(navDictionary, item.id, fallbackDictionary) || item.id;
     label.textContent = item.label || fallback;
     anchor.appendChild(label);
 
     li.appendChild(anchor);
 
     if (Array.isArray(item.children) && item.children.length) {
-      li.appendChild(createNavList(item.children, lang, depth + 1, navDictionary));
+      li.appendChild(createNavList(item.children, lang, depth + 1, navDictionary, fallbackDictionary));
     }
 
     list.appendChild(li);
@@ -1510,7 +1568,7 @@ function createNavList(items, lang, depth = 0, navDictionary = translations[lang
   return list;
 }
 
-function buildNavigationTree(navDefinition, lang) {
+function buildNavigationTree(navDefinition, lang, fallbackNav = {}) {
   const navRoot = document.getElementById('site-nav');
   if (!navRoot) return;
 
@@ -1523,7 +1581,7 @@ function buildNavigationTree(navDefinition, lang) {
   navRoot.classList.toggle('site-nav--tree', hierarchy.length > 0);
   if (!hierarchy.length) return;
 
-  const tree = createNavList(hierarchy, lang, 0);
+  const tree = createNavList(hierarchy, lang, 0, navDefinition, fallbackNav);
   navRoot.appendChild(tree);
 }
 
@@ -1606,26 +1664,34 @@ function activateNavigationObserver() {
 }
 
 function updateInformationArchitecture(lang) {
-  const navDefinition = translations[lang]?.nav;
+  const navDefinition = getLocalizedValue(lang, 'nav') || {};
   if (!navDefinition) return;
   const hierarchy = Array.isArray(navDefinition.hierarchy) ? navDefinition.hierarchy : [];
   assignInformationDepth(hierarchy);
-  buildNavigationTree(navDefinition, lang);
+  const fallbackNav = getLocalizedValue(LANGUAGE_FALLBACK, 'nav') || {};
+  buildNavigationTree(navDefinition, lang, fallbackNav);
   activateNavigationObserver();
 }
 
 function updateDocumentMeta(lang) {
-  const meta = translations[lang].meta;
-  document.documentElement.lang = meta.htmlLang;
-  document.documentElement.dir = meta.direction || 'ltr';
-  document.title = translations[lang].documentTitle;
+  const translation = getTranslation(lang);
+  const fallbackTranslation = getTranslation(LANGUAGE_FALLBACK);
+  const meta = translation.meta || fallbackTranslation.meta || {};
+  const effectiveMeta = isFallbackLanguage(lang) ? fallbackTranslation.meta || meta : meta;
+  const htmlLang = effectiveMeta?.htmlLang || fallbackTranslation.meta?.htmlLang || 'en';
+  const direction = effectiveMeta?.direction || fallbackTranslation.meta?.direction || 'ltr';
+  document.documentElement.lang = htmlLang;
+  document.documentElement.dir = direction;
+  document.documentElement.setAttribute('data-language', lang);
+  const title = translation.documentTitle || fallbackTranslation.documentTitle || document.title;
+  document.title = title;
 }
 
 function updateStaticText(lang) {
-  const dictionary = translations[lang];
+  const dictionary = getTranslation(lang);
   document.querySelectorAll('[data-i18n]').forEach((element) => {
     const key = element.getAttribute('data-i18n');
-    const value = resolveTranslation(dictionary, key);
+    const value = resolveTranslation(dictionary, key, translations[LANGUAGE_FALLBACK]);
     if (typeof value === 'string') {
       element.textContent = value;
     }
@@ -1640,7 +1706,7 @@ function updateStaticText(lang) {
     descriptors.forEach((descriptor) => {
       const [attr, key] = descriptor.split(':').map((part) => part.trim());
       if (!attr || !key) return;
-      const value = resolveTranslation(dictionary, key);
+      const value = resolveTranslation(dictionary, key, translations[LANGUAGE_FALLBACK]);
       if (typeof value === 'string') {
         element.setAttribute(attr, value);
       }
@@ -1653,17 +1719,28 @@ function updateLanguageSelector(lang) {
   if (!select) return;
 
   select.innerHTML = '';
+  const activeTranslation = getTranslation(lang);
+  const fallbackDictionary = translations[LANGUAGE_FALLBACK];
+  const fallbackTag =
+    resolveTranslation(activeTranslation, 'language.fallbackTag', fallbackDictionary) ||
+    resolveTranslation(fallbackDictionary, 'language.fallbackTag') ||
+    'English content';
+
   LANGUAGE_DEFINITIONS.forEach((definition) => {
     const option = document.createElement('option');
     option.value = definition.code;
-    option.textContent = definition.label;
+    const translation = translations[definition.code];
+    const fallback = translation?.__isFallback === true;
+    option.textContent = fallback ? `${definition.label} · ${fallbackTag}` : definition.label;
+    option.dataset.fallback = String(fallback);
+    option.dir = definition.direction || 'ltr';
     select.appendChild(option);
   });
 
   const selected = SUPPORTED_LANGUAGE_CODES.has(lang) ? lang : LANGUAGE_FALLBACK;
   select.value = selected;
 
-  const translation = translations[selected];
+  const translation = getTranslation(selected);
   const labelText =
     translation?.language?.selectorLabel ||
     translation?.language?.toggleLabel ||
@@ -1675,7 +1752,7 @@ function updateLanguageSelector(lang) {
 }
 
 function renderHeaderStatus(lang) {
-  const header = translations[lang]?.header;
+  const header = getLocalizedValue(lang, 'header') || {};
   const container = document.getElementById('header-status');
   if (!container) return;
   container.innerHTML = '';
@@ -1710,7 +1787,8 @@ function renderHeaderStatus(lang) {
 }
 
 function renderHeroStats(lang) {
-  const stats = translations[lang].hero.stats;
+  const hero = getLocalizedValue(lang, 'hero') || {};
+  const stats = Array.isArray(hero.stats) ? hero.stats : [];
   const container = document.getElementById('hero-stats');
   if (!container) return;
   container.innerHTML = '';
@@ -1740,9 +1818,9 @@ function renderHeroStats(lang) {
 }
 
 function renderHeroControls(lang) {
-  const heroConfig = translations[lang]?.hero;
+  const heroConfig = getLocalizedValue(lang, 'hero') || {};
   const control = document.getElementById('hero-control');
-  if (!heroConfig || !control) return;
+  if (!control) return;
 
   if (heroConfig.controlAria) {
     control.setAttribute('aria-label', heroConfig.controlAria);
@@ -1802,7 +1880,8 @@ function renderHeroControls(lang) {
 }
 
 function renderStackLayers(lang) {
-  const layers = translations[lang].stack.layers;
+  const stack = getLocalizedValue(lang, 'stack') || {};
+  const layers = Array.isArray(stack.layers) ? stack.layers : [];
   const grid = document.getElementById('stack-grid');
   if (!grid) return;
   grid.innerHTML = '';
@@ -1824,13 +1903,13 @@ function renderStackLayers(lang) {
 }
 
 function setupDeckSection(lang) {
-  const decks = translations[lang].decks;
+  const decks = getLocalizedValue(lang, 'decks') || {};
   const filterContainer = document.getElementById('deck-filters');
   const searchInput = document.getElementById('deck-search');
 
   if (filterContainer) {
     filterContainer.innerHTML = '';
-    decks.filters.forEach((filter) => {
+    (decks.filters || []).forEach((filter) => {
       const button = document.createElement('button');
       button.type = 'button';
       button.className = 'filter-chip';
@@ -1846,13 +1925,17 @@ function setupDeckSection(lang) {
       });
       filterContainer.appendChild(button);
     });
-    filterContainer.setAttribute('aria-label', decks.filterAria);
+    if (decks.filterAria) {
+      filterContainer.setAttribute('aria-label', decks.filterAria);
+    }
   }
 
   if (searchInput) {
-    searchInput.placeholder = decks.searchPlaceholder;
+    searchInput.placeholder = decks.searchPlaceholder || '';
     searchInput.value = state.deckKeyword;
-    searchInput.setAttribute('aria-label', decks.searchLabel);
+    if (decks.searchLabel) {
+      searchInput.setAttribute('aria-label', decks.searchLabel);
+    }
     searchInput.oninput = (event) => {
       state.deckKeyword = event.target.value.trim();
       renderDeckEntries(lang);
@@ -1863,17 +1946,21 @@ function setupDeckSection(lang) {
 }
 
 function renderDeckEntries(lang) {
-  const decks = translations[lang].decks;
+  const decks = getLocalizedValue(lang, 'decks') || {};
   const grid = document.getElementById('deck-grid');
   const summary = document.getElementById('deck-summary');
   if (!grid || !summary) return;
 
   const keyword = state.deckKeyword.toLowerCase();
-  const filterLabel =
-    decks.filters.find((filter) => filter.id === state.deckFilter)?.label || decks.filters[0].label;
+  const filters = Array.isArray(decks.filters) ? decks.filters : [];
+  const filterLabel = filters.find((filter) => filter.id === state.deckFilter)?.label || filters[0]?.label || '';
   const clusterMap = decks.clusterMap || {};
+  const clusters = Array.isArray(decks.clusters) ? decks.clusters : [];
+  const deckCta = decks.cta || getLocalizedValue(LANGUAGE_FALLBACK, 'decks.cta') || '';
 
-  const decoratedEntries = decks.entries.map((entry, index) => ({
+  const entries = Array.isArray(decks.entries) ? decks.entries : [];
+
+  const decoratedEntries = entries.map((entry, index) => ({
     ...entry,
     __index: index,
     clusterId: clusterMap[entry.type] || 'operations'
@@ -1888,7 +1975,7 @@ function renderDeckEntries(lang) {
         ? translations.en.decks.entries[entry.__index].keywords || []
         : translations.zh.decks.entries[entry.__index].keywords || [];
     const localizedKeywords = entry.keywords || [];
-    const clusterMeta = decks.clusters.find((cluster) => cluster.id === entry.clusterId);
+    const clusterMeta = clusters.find((cluster) => cluster.id === entry.clusterId);
     const haystack = [
       entry.title,
       entry.description,
@@ -1905,7 +1992,7 @@ function renderDeckEntries(lang) {
   grid.innerHTML = '';
 
   const fragment = document.createDocumentFragment();
-  decks.clusters.forEach((cluster) => {
+  clusters.forEach((cluster) => {
     const clusterEntries = filtered.filter((entry) => entry.clusterId === cluster.id);
     if (!clusterEntries.length) return;
 
@@ -1933,7 +2020,7 @@ function renderDeckEntries(lang) {
         <p>${entry.description}</p>
         <ul>${tags}</ul>
         <a href="${entry.href}">
-          ${decks.cta}
+          ${deckCta}
           <span>↗</span>
         </a>
       `;
@@ -1945,34 +2032,56 @@ function renderDeckEntries(lang) {
   });
 
   grid.appendChild(fragment);
-  summary.textContent = decks.summary(filtered.length, state.deckKeyword, filterLabel);
+  if (typeof decks.summary === 'function') {
+    summary.textContent = decks.summary(filtered.length, state.deckKeyword, filterLabel);
+  } else {
+    const fallbackSummary = getLocalizedValue(LANGUAGE_FALLBACK, 'decks.summary');
+    if (typeof fallbackSummary === 'function') {
+      summary.textContent = fallbackSummary(filtered.length, state.deckKeyword, filterLabel);
+    } else {
+      summary.textContent = String(filtered.length);
+    }
+  }
 }
 function renderCouncil(lang) {
-  const council = translations[lang].council;
+  const council = getLocalizedValue(lang, 'council') || {};
+  const fallbackCouncil = getLocalizedValue(LANGUAGE_FALLBACK, 'council') || {};
+  const focusLabel = council.focusLabel || fallbackCouncil.focusLabel || 'Strategic focus';
+  const constraintsLabel = council.constraintsLabel || fallbackCouncil.constraintsLabel || 'Key constraints';
+  const verdictLabel = council.verdictLabel || fallbackCouncil.verdictLabel || 'Verdict';
+  const blockersLabel = council.blockersLabel || fallbackCouncil.blockersLabel || 'Core blockers';
+  const actionsLabel = council.actionsLabel || fallbackCouncil.actionsLabel || 'Recommended actions';
+
   const grid = document.getElementById('council-grid');
   if (grid) {
     grid.innerHTML = '';
     const fragment = document.createDocumentFragment();
-    council.profiles.forEach((profile) => {
+    const profiles = Array.isArray(council.profiles) ? council.profiles : [];
+    profiles.forEach((profile) => {
+      if (!profile) return;
       const card = document.createElement('article');
       card.className = 'interpreter-card';
-      card.dataset.interpreterId = profile.id;
-      const capabilityList = profile.capabilities.map((item) => `<li>${item}</li>`).join('');
-      const constraintList = profile.constraints.map((item) => `<li>${item}</li>`).join('');
+      card.dataset.interpreterId = profile.id || '';
+      const capabilityList = (Array.isArray(profile.capabilities) ? profile.capabilities : [])
+        .map((item) => `<li>${item}</li>`)
+        .join('');
+      const constraintList = (Array.isArray(profile.constraints) ? profile.constraints : [])
+        .map((item) => `<li>${item}</li>`)
+        .join('');
       card.innerHTML = `
-        <h3 class="interpreter-card__title">${profile.title}</h3>
-        <p class="interpreter-card__subtitle">${profile.subtitle}</p>
+        <h3 class="interpreter-card__title">${profile.title || ''}</h3>
+        <p class="interpreter-card__subtitle">${profile.subtitle || ''}</p>
         <div>
-          <h4>${lang === 'zh' ? '策略焦点' : 'Strategic focus'}</h4>
+          <h4>${focusLabel}</h4>
           <ul class="interpreter-card__list">${capabilityList}</ul>
         </div>
         <div>
-          <h4>${lang === 'zh' ? '关键约束' : 'Key constraints'}</h4>
+          <h4>${constraintsLabel}</h4>
           <ul class="interpreter-card__list">${constraintList}</ul>
         </div>
         <p class="interpreter-card__verdict">
-          <strong>${lang === 'zh' ? '结论' : 'Verdict'}</strong>
-          ${profile.verdict}
+          <strong>${verdictLabel}</strong>
+          ${profile.verdict || ''}
         </p>
       `;
       fragment.appendChild(card);
@@ -1986,15 +2095,17 @@ function renderCouncil(lang) {
     logContainer.querySelectorAll('.interpreter-log-list').forEach((node) => node.remove());
     const list = document.createElement('ul');
     list.className = 'interpreter-log-list';
-    council.log.forEach((entry) => {
+    const logEntries = Array.isArray(council.log) ? council.log : [];
+    logEntries.forEach((entry) => {
+      if (!entry) return;
       const item = document.createElement('li');
       item.className = 'interpreter-log-entry';
       if (entry.speakerId) {
         item.dataset.speakerId = entry.speakerId;
       }
       item.innerHTML = `
-        <span class="interpreter-log-entry__speaker">${entry.speaker}</span>
-        <p class="interpreter-log-entry__message">${entry.message}</p>
+        <span class="interpreter-log-entry__speaker">${entry.speaker || ''}</span>
+        <p class="interpreter-log-entry__message">${entry.message || ''}</p>
       `;
       list.appendChild(item);
     });
@@ -2003,19 +2114,25 @@ function renderCouncil(lang) {
 
   const summaryContainer = document.getElementById('council-summary');
   if (summaryContainer) {
-    const consensus = council.consensus;
-    summaryContainer.innerHTML = `
-      <h3 id="council-summary-title">${consensus.title}</h3>
-      <p>${consensus.intro}</p>
-      <p><strong>${lang === 'zh' ? '核心阻塞' : 'Core blockers'}</strong></p>
-      <ul class="interpreter-summary-list">
-        ${consensus.blockers.map((item) => `<li>${item}</li>`).join('')}
-      </ul>
-      <p><strong>${lang === 'zh' ? '推荐行动' : 'Recommended actions'}</strong></p>
-      <ul class="interpreter-summary-list">
-        ${consensus.actions.map((item) => `<li>${item}</li>`).join('')}
-      </ul>
-    `;
+    const consensus = council.consensus || fallbackCouncil.consensus;
+    if (consensus) {
+      const blockers = Array.isArray(consensus.blockers) ? consensus.blockers : [];
+      const actions = Array.isArray(consensus.actions) ? consensus.actions : [];
+      summaryContainer.innerHTML = `
+        <h3 id="council-summary-title">${consensus.title || ''}</h3>
+        <p>${consensus.intro || ''}</p>
+        <p><strong>${blockersLabel}</strong></p>
+        <ul class="interpreter-summary-list">
+          ${blockers.map((item) => `<li>${item}</li>`).join('')}
+        </ul>
+        <p><strong>${actionsLabel}</strong></p>
+        <ul class="interpreter-summary-list">
+          ${actions.map((item) => `<li>${item}</li>`).join('')}
+        </ul>
+      `;
+    } else {
+      summaryContainer.innerHTML = '';
+    }
   }
 
   setupCouncilSimulation(lang);
@@ -2029,11 +2146,19 @@ function setupCouncilSimulation(lang) {
     councilSimulationCleanup = null;
   }
 
-  const council = translations[lang].council;
-  const simulation = council.simulation;
+  const council = getLocalizedValue(lang, 'council') || {};
+  const fallbackSimulation = getLocalizedValue(LANGUAGE_FALLBACK, 'council.simulation') || {};
+  const simulation = {
+    startLabel: council.simulation?.startLabel || fallbackSimulation.startLabel || 'Begin simulation',
+    stopLabel: council.simulation?.stopLabel || fallbackSimulation.stopLabel || 'Abort simulation',
+    restartLabel: council.simulation?.restartLabel || fallbackSimulation.restartLabel || 'Replay simulation',
+    idleStatus: council.simulation?.idleStatus || fallbackSimulation.idleStatus || '',
+    runningStatus: council.simulation?.runningStatus || fallbackSimulation.runningStatus || '',
+    completedStatus: council.simulation?.completedStatus || fallbackSimulation.completedStatus || ''
+  };
   const logContainer = document.getElementById('council-log');
   const summaryContainer = document.getElementById('council-summary');
-  if (!logContainer || !simulation) return;
+  if (!logContainer) return;
 
   const logList = logContainer.querySelector('.interpreter-log-list');
   if (!logList) return;
@@ -2123,14 +2248,15 @@ function setupCouncilSimulation(lang) {
   };
 
   const advance = () => {
-    if (index >= council.log.length) {
+    const councilLog = Array.isArray(council.log) ? council.log : [];
+    if (index >= councilLog.length) {
       running = false;
       statusNode.textContent = simulation.completedStatus;
       updateButtonLabel();
       return;
     }
 
-    const entry = council.log[index];
+    const entry = councilLog[index];
     highlightEntry(entry, index);
     statusNode.textContent = formatStatus(simulation.runningStatus, entry.speaker);
     index += 1;
@@ -2138,8 +2264,9 @@ function setupCouncilSimulation(lang) {
   };
 
   const startSimulation = () => {
-    if (!council.log.length) return;
-    if (index >= council.log.length) {
+    const councilLog = Array.isArray(council.log) ? council.log : [];
+    if (!councilLog.length) return;
+    if (index >= councilLog.length) {
       index = 0;
     }
     clearHighlights();
@@ -2168,7 +2295,7 @@ let telemetryCards = [];
 let telemetryFrameId = null;
 
 function renderTelemetryStreams(lang) {
-  const telemetry = translations[lang].signals.telemetry;
+  const telemetry = getLocalizedValue(lang, 'signals.telemetry') || {};
   const container = document.getElementById('signal-telemetry');
   if (!container) return;
   container.innerHTML = '';
@@ -2176,7 +2303,7 @@ function renderTelemetryStreams(lang) {
   const fragment = document.createDocumentFragment();
   telemetryCards = [];
 
-  telemetry.streams.forEach((stream) => {
+  (Array.isArray(telemetry.streams) ? telemetry.streams : []).forEach((stream) => {
     const card = document.createElement('article');
     card.className = 'telemetry-card';
     card.innerHTML = `
@@ -2249,13 +2376,13 @@ function animateTelemetry() {
 }
 
 function renderChronicle(lang) {
-  const chronicle = translations[lang].signals.chronicle;
+  const chronicle = getLocalizedValue(lang, 'signals.chronicle') || {};
   const container = document.getElementById('chronicle-stream');
   if (!container) return;
   container.innerHTML = '';
 
   const fragment = document.createDocumentFragment();
-  chronicle.entries.forEach((entry) => {
+  (Array.isArray(chronicle.entries) ? chronicle.entries : []).forEach((entry) => {
     const item = document.createElement('article');
     item.className = 'timeline-item';
     item.setAttribute('data-year', entry.year);
@@ -2272,13 +2399,14 @@ function renderChronicle(lang) {
 }
 
 function renderAlliances(lang) {
-  const alliances = translations[lang].alliances;
+  const alliances = getLocalizedValue(lang, 'alliances') || {};
+  const fallbackVisit = getLocalizedValue(LANGUAGE_FALLBACK, 'alliances.visitCta') || 'Visit site';
   const container = document.getElementById('alliance-grid');
   if (!container) return;
   container.innerHTML = '';
 
   const fragment = document.createDocumentFragment();
-  alliances.items.forEach((alliance) => {
+  (Array.isArray(alliances.items) ? alliances.items : []).forEach((alliance) => {
     const card = document.createElement('article');
     card.className = 'alliance-card';
     const tags = (alliance.tags || []).map((tag) => `<li>${tag}</li>`).join('');
@@ -2288,7 +2416,7 @@ function renderAlliances(lang) {
       ${alliance.note ? `<p class="alliance-card__note">${alliance.note}</p>` : ''}
       <ul>${tags}</ul>
       <a href="${alliance.url}" target="_blank" rel="noopener noreferrer">
-        ${alliances.visitCta}
+        ${alliances.visitCta || fallbackVisit}
         <span aria-hidden="true">↗</span>
       </a>
     `;
@@ -2299,13 +2427,13 @@ function renderAlliances(lang) {
 }
 
 function renderDock(lang) {
-  const dock = translations[lang].dock;
+  const dock = getLocalizedValue(lang, 'dock') || {};
   const container = document.getElementById('dock-links');
   if (!container) return;
   container.innerHTML = '';
 
   const fragment = document.createDocumentFragment();
-  dock.links.forEach((link) => {
+  (Array.isArray(dock.links) ? dock.links : []).forEach((link) => {
     const card = document.createElement('article');
     card.className = 'contact-card';
     card.innerHTML = `
@@ -2320,11 +2448,11 @@ function renderDock(lang) {
 }
 
 function buildCommandPaletteGroups(lang) {
-  const dictionary = translations[lang];
+  const dictionary = getTranslation(lang);
   if (!dictionary) return [];
 
   const groups = [];
-  const commandDictionary = dictionary.commandPalette || {};
+  const commandDictionary = dictionary.commandPalette || getLocalizedValue(LANGUAGE_FALLBACK, 'commandPalette') || {};
 
   const navItems = [];
   const hierarchy = Array.isArray(dictionary.nav?.hierarchy) ? dictionary.nav.hierarchy : [];
@@ -2336,7 +2464,10 @@ function buildCommandPaletteGroups(lang) {
       navItems.push({
         id: `section-${node.id}`,
         label,
-        description: depth > 0 ? chain.slice(0, -1).join(' / ') : dictionary.nav?.ariaLabel || '',
+        description:
+          depth > 0
+            ? chain.slice(0, -1).join(' / ')
+            : dictionary.nav?.ariaLabel || getLocalizedValue(LANGUAGE_FALLBACK, 'nav.ariaLabel') || '',
         action: 'scroll',
         target: node.id,
         keywords: [node.id, node.label, node.index, ...chain]
@@ -2351,7 +2482,9 @@ function buildCommandPaletteGroups(lang) {
   };
   walkNav(hierarchy);
   if (navItems.length) {
-    groups.push({ id: 'sections', label: commandDictionary.sectionGroup || 'Sections', items: navItems });
+    const sectionLabel =
+      commandDictionary.sectionGroup || getLocalizedValue(LANGUAGE_FALLBACK, 'commandPalette.sectionGroup') || 'Sections';
+    groups.push({ id: 'sections', label: sectionLabel, items: navItems });
   }
 
   const deckEntries = Array.isArray(dictionary.decks?.entries) ? dictionary.decks.entries : [];
@@ -2367,7 +2500,9 @@ function buildCommandPaletteGroups(lang) {
       .toLowerCase()
   }));
   if (deckItems.length) {
-    groups.push({ id: 'decks', label: commandDictionary.deckGroup || 'Decks', items: deckItems });
+    const deckLabel =
+      commandDictionary.deckGroup || getLocalizedValue(LANGUAGE_FALLBACK, 'commandPalette.deckGroup') || 'Decks';
+    groups.push({ id: 'decks', label: deckLabel, items: deckItems });
   }
 
   const chronicleEntries = Array.isArray(dictionary.signals?.chronicle?.entries)
@@ -2385,7 +2520,9 @@ function buildCommandPaletteGroups(lang) {
       .toLowerCase()
   }));
   if (timelineItems.length) {
-    groups.push({ id: 'timeline', label: commandDictionary.signalGroup || 'Timeline', items: timelineItems });
+    const timelineLabel =
+      commandDictionary.signalGroup || getLocalizedValue(LANGUAGE_FALLBACK, 'commandPalette.signalGroup') || 'Timeline';
+    groups.push({ id: 'timeline', label: timelineLabel, items: timelineItems });
   }
 
   return groups;
@@ -2394,7 +2531,7 @@ function buildCommandPaletteGroups(lang) {
 function setupCommandPalette(lang) {
   const palette = document.getElementById('command-palette');
   if (!palette) return;
-  const dictionary = translations[lang]?.commandPalette;
+  const dictionary = getLocalizedValue(lang, 'commandPalette') || getLocalizedValue(LANGUAGE_FALLBACK, 'commandPalette');
   if (!dictionary) return;
 
   commandPaletteState.groups = buildCommandPaletteGroups(lang);
