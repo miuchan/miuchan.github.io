@@ -161,9 +161,19 @@ export function populateLanguageSelect(selectElement, registry, activeLanguage) 
     option.value = definition.code;
     const dictionary = registry.get(definition.code);
     const fallback = registry.isFallback(definition.code);
-    option.textContent = fallback ? `${definition.label} · ${fallbackTag}` : definition.label;
+    const optionLabel = fallback ? `${definition.label} · ${fallbackTag}` : definition.label;
+    const accessibleLabel = fallback ? `${definition.label} (${fallbackTag})` : definition.label;
+    option.textContent = optionLabel;
     option.dataset.fallback = String(fallback);
     option.dir = definition.direction || 'ltr';
+    const optionLang =
+      dictionary?.meta?.htmlLang || dictionary?.meta?.lang || definition.htmlLang || definition.code;
+    if (optionLang) {
+      option.lang = optionLang;
+      option.setAttribute('lang', optionLang);
+    }
+    option.setAttribute('aria-label', accessibleLabel);
+    option.title = accessibleLabel;
     selectElement.appendChild(option);
   });
 
