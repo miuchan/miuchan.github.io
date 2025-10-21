@@ -258,12 +258,8 @@
       }
 
       function estimateParameters(trajectory, dt) {
-        const A1 = [];
-        const b1 = [];
-        const A2 = [];
-        const b2 = [];
-        const A3 = [];
-        const b3 = [];
+        const rows = [];
+        const rhs = [];
 
         for (let i = 1; i < trajectory.length - 1; i += 1) {
           const prev = trajectory[i - 1];
@@ -274,33 +270,111 @@
           const dydt = (next.y - prev.y) / (2 * dt);
           const dzdt = (next.z - prev.z) / (2 * dt);
 
-          A1.push(curr.y - curr.x);
-          b1.push(dxdt);
+          rows.push([curr.y - curr.x, 0, 0]);
+          rhs.push(dxdt);
 
-          A2.push(curr.x);
-          b2.push(dydt + curr.y + curr.x * curr.z);
+          rows.push([0, curr.x, 0]);
+          rhs.push(dydt + curr.y + curr.x * curr.z);
 
-          if (Math.abs(curr.z) > 1e-6) {
-            A3.push(curr.z);
-            b3.push(curr.x * curr.y - dzdt);
+          if (Math.abs(curr.z) > 1e-8) {
+            rows.push([0, 0, curr.z]);
+            rhs.push(curr.x * curr.y - dzdt);
           }
         }
 
-        const sigma = solveLeastSquares(A1, b1);
-        const rho = solveLeastSquares(A2, b2);
-        const beta = solveLeastSquares(A3, b3);
+        const { solution, objective } = solveLeastSquares(rows, rhs);
 
-        return { sigma, rho, beta };
+        return { sigma: solution[0], rho: solution[1], beta: solution[2], objective };
       }
 
-      function solveLeastSquares(A, b) {
-        let numerator = 0;
-        let denominator = 0;
-        for (let i = 0; i < A.length; i += 1) {
-          numerator += A[i] * b[i];
-          denominator += A[i] * A[i];
+      function solveLeastSquares(rows, rhs) {
+        const ata = [
+          [0, 0, 0],
+          [0, 0, 0],
+          [0, 0, 0],
+        ];
+        const atb = [0, 0, 0];
+
+        for (let i = 0; i < rows.length; i += 1) {
+          const [a1, a2, a3] = rows[i];
+          const b = rhs[i];
+
+          ata[0][0] += a1 * a1;
+          ata[0][1] += a1 * a2;
+          ata[0][2] += a1 * a3;
+          ata[1][0] += a2 * a1;
+          ata[1][1] += a2 * a2;
+          ata[1][2] += a2 * a3;
+          ata[2][0] += a3 * a1;
+          ata[2][1] += a3 * a2;
+          ata[2][2] += a3 * a3;
+
+          atb[0] += a1 * b;
+          atb[1] += a2 * b;
+          atb[2] += a3 * b;
         }
-        return numerator / denominator;
+
+        const regularization = 1e-6;
+        ata[0][0] += regularization;
+        ata[1][1] += regularization;
+        ata[2][2] += regularization;
+
+        const solution = solveSymmetricSystem(ata, atb);
+
+        let objective = 0;
+        for (let i = 0; i < rows.length; i += 1) {
+          const [a1, a2, a3] = rows[i];
+          const b = rhs[i];
+          const residual = a1 * solution[0] + a2 * solution[1] + a3 * solution[2] - b;
+          objective += residual * residual;
+        }
+
+        return { solution, objective };
+      }
+
+      function solveSymmetricSystem(matrix, vector) {
+        const augmented = [
+          [...matrix[0], vector[0]],
+          [...matrix[1], vector[1]],
+          [...matrix[2], vector[2]],
+        ];
+
+        for (let pivot = 0; pivot < 3; pivot += 1) {
+          let maxRow = pivot;
+          let maxVal = Math.abs(augmented[pivot][pivot]);
+          for (let row = pivot + 1; row < 3; row += 1) {
+            const val = Math.abs(augmented[row][pivot]);
+            if (val > maxVal) {
+              maxVal = val;
+              maxRow = row;
+            }
+          }
+
+          if (maxVal < 1e-12) {
+            throw new Error("系统矩阵不可逆，无法求解最小二乘问题");
+          }
+
+          if (maxRow !== pivot) {
+            const tmp = augmented[pivot];
+            augmented[pivot] = augmented[maxRow];
+            augmented[maxRow] = tmp;
+          }
+
+          const pivotVal = augmented[pivot][pivot];
+          for (let col = pivot; col < 4; col += 1) {
+            augmented[pivot][col] /= pivotVal;
+          }
+
+          for (let row = 0; row < 3; row += 1) {
+            if (row === pivot) continue;
+            const factor = augmented[row][pivot];
+            for (let col = pivot; col < 4; col += 1) {
+              augmented[row][col] -= factor * augmented[pivot][col];
+            }
+          }
+        }
+
+        return augmented.map((row) => row[3]);
       }
 
       function addNoise(trajectory, level) {
@@ -387,11 +461,12 @@
         const noisy = noiseLevel > 0 ? addNoise(truncated, noiseLevel) : truncated;
 
         const estimates = estimateParameters(noisy, defaultParams.dt);
-        const { sigma, rho, beta } = estimates;
+        const { sigma, rho, beta, objective } = estimates;
 
         document.getElementById("sigma-estimate").textContent = sigma.toFixed(6);
         document.getElementById("rho-estimate").textContent = rho.toFixed(6);
         document.getElementById("beta-estimate").textContent = beta.toFixed(6);
+        document.getElementById("objective-value").textContent = objective.toExponential(3);
 
         const sigmaError = Math.abs(sigma - defaultParams.sigma);
         const rhoError = Math.abs(rho - defaultParams.rho);
@@ -406,7 +481,9 @@
         log(
           `优化完成：σ=${sigma.toFixed(4)}, ρ=${rho.toFixed(4)}, β=${beta.toFixed(
             4,
-          )}, 噪声=${noiseLevel.toFixed(2)}, 采样比例=${sampleRatio}`,
+          )}, 噪声=${noiseLevel.toFixed(2)}, 采样比例=${sampleRatio}, 目标=${objective.toExponential(
+            2,
+          )}`,
         );
       }
     </script>
@@ -480,6 +557,11 @@
             <p>真实值：<span data-true-value="2.6666667"></span></p>
             <p>估计值：<span id="beta-estimate">--</span></p>
             <p>绝对误差：<span id="beta-error">--</span></p>
+          </div>
+          <div class="summary-card">
+            <h3>凸目标值</h3>
+            <p>Σ‖Aθ - b‖²</p>
+            <p>当前值：<span id="objective-value">--</span></p>
           </div>
         </div>
       </section>
