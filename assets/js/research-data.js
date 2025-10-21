@@ -197,6 +197,24 @@ export const researchEntries = [
     }
   },
   {
+    id: 'compute-god-standard-model-validator',
+    sources: {
+      en: 'en/compute-god-standard-model-validator.md',
+      zh: 'zh/compute-god-standard-model-validator.md'
+    },
+    translations: {
+      en: {
+        title: 'Compute-God Standard Model Validator Blueprint',
+        description:
+          'Design for a validator that encodes Standard Model particles, symmetries, and interactions within the Compute-God axioms.'
+      },
+      zh: {
+        title: 'Compute-God 标准模型验证器蓝图',
+        description: '将标准模型粒子、对称性与相互作用嵌入 Compute-God 公理体系的验证器方案。'
+      }
+    }
+  },
+  {
     id: 'quantum-microtubules-in-neurons',
     sources: {
       en: 'en/quantum-microtubules-in-neurons.md',
