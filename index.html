@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Earth Online · 体验实验室</title>
+    <title>Earth Online · Experience Lab</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -15,21 +15,21 @@
   <body>
     <header class="site-header">
       <div class="inner header__inner">
-        <div class="brand" aria-label="Earth Online 实验室标识" data-i18n-attr="aria-label:brand.ariaLabel">
+        <div class="brand" aria-label="Earth Online lab mark" data-i18n-attr="aria-label:brand.ariaLabel">
           <span class="brand__title">Earth Online</span>
-          <span class="brand__subtitle" data-i18n="brand.subtitle">体验实验室 · Planetary Experience Lab</span>
+          <span class="brand__subtitle" data-i18n="brand.subtitle">Planetary Experience Lab</span>
         </div>
         <div
           class="header__status"
           id="header-status"
           role="list"
-          aria-label="地球 Online 当前指标"
+          aria-label="Earth Online live indicators"
           data-i18n-attr="aria-label:header.statusAria"
         ></div>
         <nav
           class="site-nav"
           id="site-nav"
-          aria-label="主导航"
+          aria-label="Primary navigation"
           data-i18n-attr="aria-label:nav.ariaLabel"
         ></nav>
         <div class="header__actions">
@@ -43,17 +43,25 @@
             data-i18n="nav.commandLabel"
             data-i18n-attr="aria-label:nav.commandLabel"
           >
-            导航矩阵
+            Command Matrix
           </button>
-          <button
+          <select
             class="language-toggle"
             id="language-toggle"
-            type="button"
-            aria-label="切换语言"
+            aria-label="Select language"
             data-i18n-attr="aria-label:language.toggleLabel"
           >
-            EN
-          </button>
+            <option value="en" selected>English</option>
+            <option value="zh">中文</option>
+            <option value="es">Español</option>
+            <option value="fr">Français</option>
+            <option value="de">Deutsch</option>
+            <option value="ja">日本語</option>
+            <option value="pt">Português</option>
+            <option value="ru">Русский</option>
+            <option value="hi">हिन्दी</option>
+            <option value="ar">العربية</option>
+          </select>
         </div>
       </div>
     </header>
@@ -65,19 +73,19 @@
           <div class="inner hero__content">
             <div class="hero__text">
               <p class="hero__eyebrow" data-i18n="hero.eyebrow">Planetary Experience Interface</p>
-              <h1 id="hero-title" data-i18n="hero.title">将你的主页重构为地球 Online 体验实验室</h1>
+              <h1 id="hero-title" data-i18n="hero.title">Earth Online: planetary experience console</h1>
               <p class="hero__description" data-i18n="hero.description">
-                这是一座实时进化的地球体验操作系统：我们以 WebGL 星球引擎、时序故事矩阵与协作协议，将所有研究、原型与伙伴网络汇聚于一个全新的空间界面，邀请你随时登舰探索。
+                A continuously evolving operating room for Earth: WebGL engines, convex information architecture, and alliance networks compress research, prototypes, and protocols into a navigable spatial console.
               </p>
               <div
                 class="hero__cta"
                 role="group"
-                aria-label="快速入口"
+                aria-label="Quick access"
                 data-i18n-attr="aria-label:hero.ctaAria"
               >
-                <a class="button" href="#decks" data-i18n="hero.primaryCta">进入体验簇阵</a>
+                <a class="button" href="#decks" data-i18n="hero.primaryCta">Enter the experience decks</a>
                 <a class="button button--ghost" href="#dock" data-i18n="hero.secondaryCta"
-                  >前往联络站</a
+                  >Navigate to docking station</a
                 >
               </div>
               <div
@@ -89,7 +97,7 @@
               >
                 <div class="hero__control-slider">
                   <label for="hero-rotation" data-role="rotation-label" data-i18n="hero.rotationLabel"
-                    >星球自转速度</label
+                    >Planet rotation speed</label
                   >
                   <div class="hero__control-track">
                     <input
@@ -104,7 +112,7 @@
                     <span class="hero__slider-value" id="rotation-speed-display">80%</span>
                   </div>
                   <p class="hero__control-hint" data-role="rotation-hint" data-i18n="hero.rotationHint">
-                    拖动调节星球自转与视角。
+                    Drag to re-time the orbital rotation and tilt the view.
                   </p>
                 </div>
                 <div class="hero__control-actions">
@@ -115,10 +123,10 @@
                     data-role="pulse-button"
                     data-i18n="hero.pulseButton"
                   >
-                    激活遥测脉冲
+                    Trigger telemetry pulse
                   </button>
                   <p class="hero__control-hint" data-role="pulse-hint" data-i18n="hero.pulseHint">
-                    随机增强信号，观察指标变化。
+                    Inject a playful burst to the metrics and watch them react.
                   </p>
                 </div>
               </div>
@@ -136,9 +144,9 @@
         <div class="inner">
           <header class="section__header">
             <p class="section__eyebrow" data-i18n="architecture.eyebrow">Recursive Gradient Descent</p>
-            <h2 id="architecture-title" data-i18n="architecture.title">递归梯度下降信息架构</h2>
+            <h2 id="architecture-title" data-i18n="architecture.title">Recursive gradient descent information architecture</h2>
             <p data-i18n="architecture.intro">
-              我们将整个体验界面视作需要不断收敛的目标函数：每一次信息下潜都重新分配权重，让使用者以最短路径抵达决策所需的上下文与行动入口。
+              We treat the interface as a function we minimise: every recursive descent re-weights the signals, reduces noise, and amplifies decisive variables so visitors land on the right context and action gateway instantly.
             </p>
           </header>
           <div class="ia-branch">
@@ -146,9 +154,9 @@
               <div class="inner">
                 <header class="section__header">
                   <p class="section__eyebrow" data-i18n="stack.eyebrow">Planetary Stack</p>
-                  <h2 id="stack-title" data-i18n="stack.title">地球 Online 星球栈图</h2>
+                  <h2 id="stack-title" data-i18n="stack.title">The Earth Online planetary stack</h2>
                   <p data-i18n="stack.intro">
-                    我们将地球 Online 抽象为三层协同的星球栈：从数据地幔到体验轨道与联盟星网，凸优化每一次信息流动，让协作决策拥有最短路径。
+                    We model Earth Online as a convex, collaborative planetary stack that links data, experience, and alliances. Each layer optimizes the path from signal to action.
                   </p>
                 </header>
                 <div class="grid" id="stack-grid" aria-live="polite"></div>
@@ -162,9 +170,9 @@
                   <div class="inner">
                     <header class="section__header">
                       <p class="section__eyebrow" data-i18n="council.eyebrow">Interpreter Council</p>
-                      <h2 id="council-title" data-i18n="council.title">地球 Online AI 议会协同推演</h2>
+                      <h2 id="council-title" data-i18n="council.title">Earth Online AI council co-reasoning</h2>
                       <p data-i18n="council.intro">
-                        三层星球栈的决策权交由两位解释器共同审议：他们在对齐目标、策略模型与安全约束之间寻找最优凸组合，为地球 Online 的操作守则提供依据。
+                        Two interpreters search for a convex combination of strategies within safety constraints, tackling the question: why can’t your repositories interconnect safely yet? The council records consensus and next moves.
                       </p>
                     </header>
                     <div class="interpreter-layout">
@@ -172,11 +180,11 @@
                         class="interpreter-grid"
                         id="council-grid"
                         aria-live="polite"
-                        aria-label="解释器画像"
+                        aria-label="Interpreter profiles"
                       ></div>
                       <div class="interpreter-panel">
                         <div class="interpreter-log" id="council-log" aria-live="polite">
-                          <h3 id="council-log-title" data-i18n="council.logTitle">联合推理执行轨迹</h3>
+                          <h3 id="council-log-title" data-i18n="council.logTitle">Joint reasoning transcript</h3>
                         </div>
                         <div
                           class="interpreter-summary"
@@ -192,20 +200,20 @@
                   <div class="inner">
                     <header class="section__header">
                       <p class="section__eyebrow" data-i18n="signals.eyebrow">Signal Hub</p>
-                      <h2 id="signals-title" data-i18n="signals.title">信号中枢：实时指标与演进年表</h2>
-                      <p data-i18n="signals.intro">
-                        星球栈的运行态势通过遥测与时间线同步呈现。凸优化的指标体系帮助你即时捕捉能量流向与关键跃迁。
-                      </p>
+                  <h2 id="signals-title" data-i18n="signals.title">Signal hub: live metrics and evolution log</h2>
+                  <p data-i18n="signals.intro">
+                    The planetary stack broadcasts its pulse through telemetry and timelines. Optimized metrics keep you aligned with shifting energy and pivotal transitions.
+                  </p>
                     </header>
                     <div class="signals-grid">
                       <section class="signals-panel" aria-labelledby="signal-telemetry-title">
-                        <h3 id="signal-telemetry-title" data-i18n="signals.telemetry.title">实时遥测阵列</h3>
-                        <p data-i18n="signals.telemetry.intro">我们监控资产谱系、协作频率与稳定性，以动态凸组合展现地球 Online 的运行脉冲。</p>
+                        <h3 id="signal-telemetry-title" data-i18n="signals.telemetry.title">Real-time telemetry array</h3>
+                        <p data-i18n="signals.telemetry.intro">We monitor asset spectra, collaboration cadence, and stability to reveal the live rhythm of Earth Online.</p>
                         <div class="telemetry" id="signal-telemetry" aria-live="polite"></div>
                       </section>
                       <section class="signals-panel" aria-labelledby="chronicle-title">
-                        <h3 id="chronicle-title" data-i18n="signals.chronicle.title">地球 Online 年表</h3>
-                        <p data-i18n="signals.chronicle.intro">关键节点构成星球栈的演进轨道，帮助你从起源到未来规划快速建立坐标。</p>
+                        <h3 id="chronicle-title" data-i18n="signals.chronicle.title">Earth Online evolution log</h3>
+                        <p data-i18n="signals.chronicle.intro">Key jumps chart the orbit from origin to future plans so you can orient instantly.</p>
                         <div class="timeline" id="chronicle-stream" aria-live="polite"></div>
                       </section>
                     </div>
@@ -217,17 +225,17 @@
               <div class="inner">
                 <header class="section__header">
                   <p class="section__eyebrow" data-i18n="decks.eyebrow">Experience Decks</p>
-                  <h2 id="decks-title" data-i18n="decks.title">体验簇阵：以任务域凸优化的实验卡组</h2>
+                  <h2 id="decks-title" data-i18n="decks.title">Experience decks: convex clusters for planetary missions</h2>
                   <p data-i18n="decks.intro">
-                    每一张卡片都对应一条可执行的地球体验航线。通过聚类筛选与语义搜索，快速定位与你的任务最匹配的实验资产。
+                    Each card unlocks a runnable planetary route. Cluster filters and semantic search help you jump straight to the assets aligned with your mission.
                   </p>
                 </header>
                 <div class="lab-controls" role="search">
-                  <label class="visually-hidden" for="deck-search" data-i18n="decks.searchLabel">搜索实验</label>
+                  <label class="visually-hidden" for="deck-search" data-i18n="decks.searchLabel">Search decks</label>
                   <input
                     id="deck-search"
                     type="search"
-                    placeholder="输入关键词（例如 WebGL、气候、协作）"
+                    placeholder="Type a keyword (e.g. WebGL, climate, collaboration)"
                     data-i18n-attr="placeholder:decks.searchPlaceholder"
                     aria-describedby="deck-summary"
                   />
@@ -235,7 +243,7 @@
                     class="filter-group"
                     id="deck-filters"
                     role="group"
-                    aria-label="实验过滤"
+                    aria-label="Deck filters"
                     data-i18n-attr="aria-label:decks.filterAria"
                   ></div>
                 </div>
@@ -251,15 +259,15 @@
         <div class="inner">
           <header class="section__header">
             <p class="section__eyebrow" data-i18n="alliances.eyebrow">Alliance Network</p>
-            <h2 id="alliances-title" data-i18n="alliances.title">联盟星港：与我们同频的体验实验室</h2>
+            <h2 id="alliances-title" data-i18n="alliances.title">Alliance harbor: experience labs in resonance</h2>
             <p data-i18n="alliances.intro">
-              星港记录着与 Earth Online 共振的伙伴，他们在不同宇宙推进设计、技术与叙事的边界，欢迎沿航线拜访。
+              Meet creators and researchers orbiting Earth Online. They stretch design, technology, and narrative in their universes—plot a course and say hello.
             </p>
           </header>
           <div class="alliance-grid" id="alliance-grid" aria-live="polite"></div>
           <div class="alliance-cta">
             <a class="button button--ghost" href="friends/index.html" data-i18n="alliances.cta">
-              进入完整友链档案
+              View full alliance index
               <span aria-hidden="true">↗</span>
             </a>
           </div>
@@ -270,9 +278,9 @@
         <div class="inner">
           <header class="section__header">
             <p class="section__eyebrow" data-i18n="dock.eyebrow">Docking Station</p>
-            <h2 id="dock-title" data-i18n="dock.title">准备好与 Earth Online 对接吗？</h2>
+            <h2 id="dock-title" data-i18n="dock.title">Ready to dock with Earth Online?</h2>
             <p data-i18n="dock.intro">
-              无论你来自设计工程、系统科学还是生态治理，我们都期待与你共创新的地球体验模式。以下资源帮助你快速建立凸优化的协作通道。
+              Whether you work in design engineering, systems science, or ecological governance, we want to co-create new planetary experiences. These links open convex collaboration routes fast.
             </p>
           </header>
           <div class="contact" id="dock-links" aria-live="polite"></div>
@@ -283,9 +291,9 @@
     <footer class="site-footer">
       <div class="inner">
         <p data-i18n="footer.credit">© 2024 Earth Online Experience Lab · Powered by Aman Sharma</p>
-        <p class="footer-note" data-i18n="footer.note">欢迎 fork、引用或将实验室成果嵌入你的宇宙级项目。</p>
+        <p class="footer-note" data-i18n="footer.note">Feel free to fork, cite, or embed these experiments into your interstellar project.</p>
         <p class="footer-note footer-note--subtle">
-          <a href="public/resume/index.html">履历档案 · Resume archive</a>
+          <a href="public/resume/index.html">Resume archive</a>
         </p>
       </div>
     </footer>
@@ -295,29 +303,29 @@
       <div class="command-palette__panel" role="document">
         <header class="command-palette__header">
           <div>
-            <h2 id="command-palette-title" data-i18n="commandPalette.title">导航矩阵</h2>
+            <h2 id="command-palette-title" data-i18n="commandPalette.title">Command matrix</h2>
             <p id="command-palette-description" data-i18n="commandPalette.subtitle">
-              搜索信息架构、体验簇或信号节点。
+              Search the information architecture, experience decks, or signal timeline.
             </p>
           </div>
           <span class="command-palette__hint" id="command-palette-hint" data-i18n="commandPalette.keyboardHint"
-            >快捷键：Ctrl/⌘ + K</span
+            >Shortcut: Ctrl/⌘ + K</span
           >
         </header>
         <div class="command-palette__search">
-          <label class="visually-hidden" for="command-search" data-i18n="commandPalette.searchLabel">搜索</label>
+          <label class="visually-hidden" for="command-search" data-i18n="commandPalette.searchLabel">Search</label>
           <input
             id="command-search"
             type="search"
             autocomplete="off"
             spellcheck="false"
-            placeholder="输入关键词或使用 Ctrl + K"
+            placeholder="Type a keyword or press Ctrl + K"
             data-i18n-attr="placeholder:commandPalette.searchPlaceholder"
           />
         </div>
         <div class="command-palette__body" id="command-results" role="listbox" aria-labelledby="command-palette-title"></div>
         <p class="command-palette__empty" id="command-empty" hidden data-i18n="commandPalette.noResults">
-          没有匹配项，换个关键词试试。
+          No matches yet—try another keyword.
         </p>
       </div>
     </div>
