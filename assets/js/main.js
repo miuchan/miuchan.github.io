@@ -11,6 +11,7 @@ import {
   populateLanguageSelect,
   resolveTranslation
 } from './i18n/registry.js';
+import { computeInformationGradient, mapGradientToPercentages } from './recursive-gradient.js';
 
 const counts = {
   demos: 25,
@@ -1538,6 +1539,8 @@ const earthSceneControls = {
 };
 
 let navObserver = null;
+let informationGradientWeights = new Map();
+let informationGradientPercents = new Map();
 
 function traverseHierarchy(nodes, callback, depth = 0) {
   if (!Array.isArray(nodes)) return;
@@ -1551,31 +1554,55 @@ function traverseHierarchy(nodes, callback, depth = 0) {
 }
 
 function assignInformationDepth(hierarchy) {
+  const gradientMap = computeInformationGradient(hierarchy, {
+    rootWeight: 1,
+    learningRate: 0.52,
+    depthDecay: 0.7,
+    iterations: 24,
+    minimumWeight: 0.02,
+    tolerance: 0.00025
+  });
+  informationGradientWeights = gradientMap;
+  informationGradientPercents = mapGradientToPercentages(gradientMap);
+
   const visited = new Set();
 
   traverseHierarchy(hierarchy, (node, depth) => {
     const element = document.getElementById(node.id);
     if (!element) return;
+
     element.setAttribute('data-ia-depth', String(depth));
     if (node.index) {
       element.setAttribute('data-ia-index', node.index);
     } else {
       element.removeAttribute('data-ia-index');
     }
+
+    const weight = gradientMap.get(node.id);
+    if (typeof weight === 'number') {
+      const normalised = Math.max(0, Math.min(1, weight));
+      const fixed = normalised.toFixed(3);
+      element.setAttribute('data-ia-weight', fixed);
+      element.style.setProperty('--ia-weight', fixed);
+    } else {
+      element.removeAttribute('data-ia-weight');
+      element.style.removeProperty('--ia-weight');
+    }
+
     visited.add(element);
   });
 
-  document.querySelectorAll('[data-ia-depth]').forEach((element) => {
-    if (!visited.has(element)) {
+  document
+    .querySelectorAll('[data-ia-depth], [data-ia-index], [data-ia-weight]')
+    .forEach((element) => {
+      if (visited.has(element)) return;
       element.removeAttribute('data-ia-depth');
-    }
-  });
-
-  document.querySelectorAll('[data-ia-index]').forEach((element) => {
-    if (!visited.has(element)) {
       element.removeAttribute('data-ia-index');
-    }
-  });
+      element.removeAttribute('data-ia-weight');
+      if (element && element.style && typeof element.style.removeProperty === 'function') {
+        element.style.removeProperty('--ia-weight');
+      }
+    });
 }
 
 function escapeSelector(value) {
@@ -1618,6 +1645,26 @@ function createNavList(
     const fallback = resolveTranslation(navDictionary, item.id, fallbackDictionary) || item.id;
     label.textContent = item.label || fallback;
     anchor.appendChild(label);
+
+    const weight = informationGradientWeights.get(item.id);
+    if (typeof weight === 'number') {
+      const normalised = Math.max(0, Math.min(1, weight));
+      const fixed = normalised.toFixed(3);
+      const badge = document.createElement('span');
+      badge.className = 'nav-tree__weight';
+      const percent = informationGradientPercents.get(item.id);
+      const percentValue = typeof percent === 'number' ? percent : Math.round(normalised * 100);
+      const densityLabel = lang === 'zh' ? '信息密度' : 'Signal density';
+      badge.textContent = `${percentValue}%`;
+      badge.setAttribute('aria-label', `${densityLabel} ${percentValue}%`);
+      badge.title = `${densityLabel}: ${percentValue}%`;
+      anchor.appendChild(badge);
+      li.style.setProperty('--ia-weight', fixed);
+      li.dataset.gradientWeight = fixed;
+    } else {
+      li.style.removeProperty('--ia-weight');
+      delete li.dataset.gradientWeight;
+    }
 
     li.appendChild(anchor);
 
