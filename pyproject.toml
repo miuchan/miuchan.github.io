@@ -36,6 +36,7 @@ Repository = "https://github.com/miuchan/miuchan.github.io"
 
 [project.scripts]
 aya = "tools.aya.__main__:main"
+compute-god-sm = "tools.compute_god.__main__:main"
 
 [tool.hatch.version]
 path = "tools/aya/__about__.py"

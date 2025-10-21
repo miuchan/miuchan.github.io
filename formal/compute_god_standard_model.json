@@ -1,0 +1,793 @@
+{
+  "metadata": {
+    "framework": "Compute-God",
+    "schema_version": "1.0",
+    "units": {
+      "mass": "GeV",
+      "energy": "GeV",
+      "time": "1e-24 s"
+    }
+  },
+  "particles": [
+    {
+      "name": "u_L",
+      "display_name": "up quark (left)",
+      "sector": "quark",
+      "generation": 1,
+      "statistics": "fermion",
+      "chirality": "left",
+      "multiplet": "Q_L",
+      "representations": {
+        "su3": "fundamental",
+        "su2": "doublet"
+      },
+      "t3": 0.5,
+      "hypercharge": 0.3333333333,
+      "charge": 0.6666666667,
+      "baryon_number": 0.3333333333,
+      "lepton_number": 0.0,
+      "mass_range": {
+        "lower": 0.002,
+        "upper": 0.0023
+      },
+      "spin": 0.5,
+      "validate_charge_relation": true
+    },
+    {
+      "name": "d_L",
+      "display_name": "down quark (left)",
+      "sector": "quark",
+      "generation": 1,
+      "statistics": "fermion",
+      "chirality": "left",
+      "multiplet": "Q_L",
+      "representations": {
+        "su3": "fundamental",
+        "su2": "doublet"
+      },
+      "t3": -0.5,
+      "hypercharge": 0.3333333333,
+      "charge": -0.3333333333,
+      "baryon_number": 0.3333333333,
+      "lepton_number": 0.0,
+      "mass_range": {
+        "lower": 0.0045,
+        "upper": 0.005
+      },
+      "spin": 0.5,
+      "validate_charge_relation": true
+    },
+    {
+      "name": "u_R",
+      "display_name": "up quark (right)",
+      "sector": "quark",
+      "generation": 1,
+      "statistics": "fermion",
+      "chirality": "right",
+      "multiplet": "u_R",
+      "representations": {
+        "su3": "fundamental",
+        "su2": "singlet"
+      },
+      "t3": 0.0,
+      "hypercharge": 1.3333333333,
+      "charge": 0.6666666667,
+      "baryon_number": 0.3333333333,
+      "lepton_number": 0.0,
+      "mass_range": {
+        "lower": 0.002,
+        "upper": 0.0023
+      },
+      "spin": 0.5,
+      "validate_charge_relation": true
+    },
+    {
+      "name": "d_R",
+      "display_name": "down quark (right)",
+      "sector": "quark",
+      "generation": 1,
+      "statistics": "fermion",
+      "chirality": "right",
+      "multiplet": "d_R",
+      "representations": {
+        "su3": "fundamental",
+        "su2": "singlet"
+      },
+      "t3": 0.0,
+      "hypercharge": -0.6666666667,
+      "charge": -0.3333333333,
+      "baryon_number": 0.3333333333,
+      "lepton_number": 0.0,
+      "mass_range": {
+        "lower": 0.0045,
+        "upper": 0.005
+      },
+      "spin": 0.5,
+      "validate_charge_relation": true
+    },
+    {
+      "name": "c_L",
+      "display_name": "charm quark (left)",
+      "sector": "quark",
+      "generation": 2,
+      "statistics": "fermion",
+      "chirality": "left",
+      "multiplet": "Q_L",
+      "representations": {
+        "su3": "fundamental",
+        "su2": "doublet"
+      },
+      "t3": 0.5,
+      "hypercharge": 0.3333333333,
+      "charge": 0.6666666667,
+      "baryon_number": 0.3333333333,
+      "lepton_number": 0.0,
+      "mass_range": {
+        "lower": 1.27,
+        "upper": 1.28
+      },
+      "spin": 0.5,
+      "validate_charge_relation": true
+    },
+    {
+      "name": "s_L",
+      "display_name": "strange quark (left)",
+      "sector": "quark",
+      "generation": 2,
+      "statistics": "fermion",
+      "chirality": "left",
+      "multiplet": "Q_L",
+      "representations": {
+        "su3": "fundamental",
+        "su2": "doublet"
+      },
+      "t3": -0.5,
+      "hypercharge": 0.3333333333,
+      "charge": -0.3333333333,
+      "baryon_number": 0.3333333333,
+      "lepton_number": 0.0,
+      "mass_range": {
+        "lower": 0.095,
+        "upper": 0.105
+      },
+      "spin": 0.5,
+      "validate_charge_relation": true
+    },
+    {
+      "name": "c_R",
+      "display_name": "charm quark (right)",
+      "sector": "quark",
+      "generation": 2,
+      "statistics": "fermion",
+      "chirality": "right",
+      "multiplet": "u_R",
+      "representations": {
+        "su3": "fundamental",
+        "su2": "singlet"
+      },
+      "t3": 0.0,
+      "hypercharge": 1.3333333333,
+      "charge": 0.6666666667,
+      "baryon_number": 0.3333333333,
+      "lepton_number": 0.0,
+      "mass_range": {
+        "lower": 1.27,
+        "upper": 1.28
+      },
+      "spin": 0.5,
+      "validate_charge_relation": true
+    },
+    {
+      "name": "s_R",
+      "display_name": "strange quark (right)",
+      "sector": "quark",
+      "generation": 2,
+      "statistics": "fermion",
+      "chirality": "right",
+      "multiplet": "d_R",
+      "representations": {
+        "su3": "fundamental",
+        "su2": "singlet"
+      },
+      "t3": 0.0,
+      "hypercharge": -0.6666666667,
+      "charge": -0.3333333333,
+      "baryon_number": 0.3333333333,
+      "lepton_number": 0.0,
+      "mass_range": {
+        "lower": 0.095,
+        "upper": 0.105
+      },
+      "spin": 0.5,
+      "validate_charge_relation": true
+    },
+    {
+      "name": "t_L",
+      "display_name": "top quark (left)",
+      "sector": "quark",
+      "generation": 3,
+      "statistics": "fermion",
+      "chirality": "left",
+      "multiplet": "Q_L",
+      "representations": {
+        "su3": "fundamental",
+        "su2": "doublet"
+      },
+      "t3": 0.5,
+      "hypercharge": 0.3333333333,
+      "charge": 0.6666666667,
+      "baryon_number": 0.3333333333,
+      "lepton_number": 0.0,
+      "mass_range": {
+        "lower": 172.5,
+        "upper": 173.5
+      },
+      "spin": 0.5,
+      "validate_charge_relation": true
+    },
+    {
+      "name": "b_L",
+      "display_name": "bottom quark (left)",
+      "sector": "quark",
+      "generation": 3,
+      "statistics": "fermion",
+      "chirality": "left",
+      "multiplet": "Q_L",
+      "representations": {
+        "su3": "fundamental",
+        "su2": "doublet"
+      },
+      "t3": -0.5,
+      "hypercharge": 0.3333333333,
+      "charge": -0.3333333333,
+      "baryon_number": 0.3333333333,
+      "lepton_number": 0.0,
+      "mass_range": {
+        "lower": 4.18,
+        "upper": 4.21
+      },
+      "spin": 0.5,
+      "validate_charge_relation": true
+    },
+    {
+      "name": "t_R",
+      "display_name": "top quark (right)",
+      "sector": "quark",
+      "generation": 3,
+      "statistics": "fermion",
+      "chirality": "right",
+      "multiplet": "u_R",
+      "representations": {
+        "su3": "fundamental",
+        "su2": "singlet"
+      },
+      "t3": 0.0,
+      "hypercharge": 1.3333333333,
+      "charge": 0.6666666667,
+      "baryon_number": 0.3333333333,
+      "lepton_number": 0.0,
+      "mass_range": {
+        "lower": 172.5,
+        "upper": 173.5
+      },
+      "spin": 0.5,
+      "validate_charge_relation": true
+    },
+    {
+      "name": "b_R",
+      "display_name": "bottom quark (right)",
+      "sector": "quark",
+      "generation": 3,
+      "statistics": "fermion",
+      "chirality": "right",
+      "multiplet": "d_R",
+      "representations": {
+        "su3": "fundamental",
+        "su2": "singlet"
+      },
+      "t3": 0.0,
+      "hypercharge": -0.6666666667,
+      "charge": -0.3333333333,
+      "baryon_number": 0.3333333333,
+      "lepton_number": 0.0,
+      "mass_range": {
+        "lower": 4.18,
+        "upper": 4.21
+      },
+      "spin": 0.5,
+      "validate_charge_relation": true
+    },
+    {
+      "name": "nu_e_L",
+      "display_name": "electron neutrino (left)",
+      "sector": "lepton",
+      "generation": 1,
+      "statistics": "fermion",
+      "chirality": "left",
+      "multiplet": "L_L",
+      "representations": {
+        "su3": "singlet",
+        "su2": "doublet"
+      },
+      "t3": 0.5,
+      "hypercharge": -1.0,
+      "charge": 0.0,
+      "baryon_number": 0.0,
+      "lepton_number": 1.0,
+      "mass_range": {
+        "lower": 0.0,
+        "upper": 1e-06
+      },
+      "spin": 0.5,
+      "validate_charge_relation": true
+    },
+    {
+      "name": "e_L",
+      "display_name": "electron (left)",
+      "sector": "lepton",
+      "generation": 1,
+      "statistics": "fermion",
+      "chirality": "left",
+      "multiplet": "L_L",
+      "representations": {
+        "su3": "singlet",
+        "su2": "doublet"
+      },
+      "t3": -0.5,
+      "hypercharge": -1.0,
+      "charge": -1.0,
+      "baryon_number": 0.0,
+      "lepton_number": 1.0,
+      "mass_range": {
+        "lower": 0.000511,
+        "upper": 0.000511
+      },
+      "spin": 0.5,
+      "validate_charge_relation": true
+    },
+    {
+      "name": "e_R",
+      "display_name": "electron (right)",
+      "sector": "lepton",
+      "generation": 1,
+      "statistics": "fermion",
+      "chirality": "right",
+      "multiplet": "e_R",
+      "representations": {
+        "su3": "singlet",
+        "su2": "singlet"
+      },
+      "t3": 0.0,
+      "hypercharge": -2.0,
+      "charge": -1.0,
+      "baryon_number": 0.0,
+      "lepton_number": 1.0,
+      "mass_range": {
+        "lower": 0.000511,
+        "upper": 0.000511
+      },
+      "spin": 0.5,
+      "validate_charge_relation": true
+    },
+    {
+      "name": "nu_mu_L",
+      "display_name": "muon neutrino (left)",
+      "sector": "lepton",
+      "generation": 2,
+      "statistics": "fermion",
+      "chirality": "left",
+      "multiplet": "L_L",
+      "representations": {
+        "su3": "singlet",
+        "su2": "doublet"
+      },
+      "t3": 0.5,
+      "hypercharge": -1.0,
+      "charge": 0.0,
+      "baryon_number": 0.0,
+      "lepton_number": 1.0,
+      "mass_range": {
+        "lower": 0.0,
+        "upper": 0.00019
+      },
+      "spin": 0.5,
+      "validate_charge_relation": true
+    },
+    {
+      "name": "mu_L",
+      "display_name": "muon (left)",
+      "sector": "lepton",
+      "generation": 2,
+      "statistics": "fermion",
+      "chirality": "left",
+      "multiplet": "L_L",
+      "representations": {
+        "su3": "singlet",
+        "su2": "doublet"
+      },
+      "t3": -0.5,
+      "hypercharge": -1.0,
+      "charge": -1.0,
+      "baryon_number": 0.0,
+      "lepton_number": 1.0,
+      "mass_range": {
+        "lower": 0.1056,
+        "upper": 0.1057
+      },
+      "spin": 0.5,
+      "validate_charge_relation": true
+    },
+    {
+      "name": "mu_R",
+      "display_name": "muon (right)",
+      "sector": "lepton",
+      "generation": 2,
+      "statistics": "fermion",
+      "chirality": "right",
+      "multiplet": "e_R",
+      "representations": {
+        "su3": "singlet",
+        "su2": "singlet"
+      },
+      "t3": 0.0,
+      "hypercharge": -2.0,
+      "charge": -1.0,
+      "baryon_number": 0.0,
+      "lepton_number": 1.0,
+      "mass_range": {
+        "lower": 0.1056,
+        "upper": 0.1057
+      },
+      "spin": 0.5,
+      "validate_charge_relation": true
+    },
+    {
+      "name": "nu_tau_L",
+      "display_name": "tau neutrino (left)",
+      "sector": "lepton",
+      "generation": 3,
+      "statistics": "fermion",
+      "chirality": "left",
+      "multiplet": "L_L",
+      "representations": {
+        "su3": "singlet",
+        "su2": "doublet"
+      },
+      "t3": 0.5,
+      "hypercharge": -1.0,
+      "charge": 0.0,
+      "baryon_number": 0.0,
+      "lepton_number": 1.0,
+      "mass_range": {
+        "lower": 0.0,
+        "upper": 0.0182
+      },
+      "spin": 0.5,
+      "validate_charge_relation": true
+    },
+    {
+      "name": "tau_L",
+      "display_name": "tau (left)",
+      "sector": "lepton",
+      "generation": 3,
+      "statistics": "fermion",
+      "chirality": "left",
+      "multiplet": "L_L",
+      "representations": {
+        "su3": "singlet",
+        "su2": "doublet"
+      },
+      "t3": -0.5,
+      "hypercharge": -1.0,
+      "charge": -1.0,
+      "baryon_number": 0.0,
+      "lepton_number": 1.0,
+      "mass_range": {
+        "lower": 1.776,
+        "upper": 1.777
+      },
+      "spin": 0.5,
+      "validate_charge_relation": true
+    },
+    {
+      "name": "tau_R",
+      "display_name": "tau (right)",
+      "sector": "lepton",
+      "generation": 3,
+      "statistics": "fermion",
+      "chirality": "right",
+      "multiplet": "e_R",
+      "representations": {
+        "su3": "singlet",
+        "su2": "singlet"
+      },
+      "t3": 0.0,
+      "hypercharge": -2.0,
+      "charge": -1.0,
+      "baryon_number": 0.0,
+      "lepton_number": 1.0,
+      "mass_range": {
+        "lower": 1.776,
+        "upper": 1.777
+      },
+      "spin": 0.5,
+      "validate_charge_relation": true
+    },
+    {
+      "name": "gluon",
+      "display_name": "gluon",
+      "sector": "gauge",
+      "statistics": "boson",
+      "chirality": "vector",
+      "multiplet": "G",
+      "representations": {
+        "su3": "adjoint",
+        "su2": "singlet"
+      },
+      "t3": 0.0,
+      "hypercharge": 0.0,
+      "charge": 0.0,
+      "baryon_number": 0.0,
+      "lepton_number": 0.0,
+      "mass_range": {
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      "spin": 1.0,
+      "validate_charge_relation": false
+    },
+    {
+      "name": "photon",
+      "display_name": "photon",
+      "sector": "gauge",
+      "statistics": "boson",
+      "chirality": "vector",
+      "multiplet": "A",
+      "representations": {
+        "su3": "singlet",
+        "su2": "singlet"
+      },
+      "t3": 0.0,
+      "hypercharge": 0.0,
+      "charge": 0.0,
+      "baryon_number": 0.0,
+      "lepton_number": 0.0,
+      "mass_range": {
+        "lower": 0.0,
+        "upper": 0.0
+      },
+      "spin": 1.0,
+      "validate_charge_relation": false
+    },
+    {
+      "name": "W_plus",
+      "display_name": "W boson (+)",
+      "sector": "gauge",
+      "statistics": "boson",
+      "chirality": "vector",
+      "multiplet": "W",
+      "representations": {
+        "su3": "singlet",
+        "su2": "triplet"
+      },
+      "t3": 1.0,
+      "hypercharge": 0.0,
+      "charge": 1.0,
+      "baryon_number": 0.0,
+      "lepton_number": 0.0,
+      "mass_range": {
+        "lower": 80.377,
+        "upper": 80.379
+      },
+      "spin": 1.0,
+      "validate_charge_relation": false
+    },
+    {
+      "name": "W_minus",
+      "display_name": "W boson (-)",
+      "sector": "gauge",
+      "statistics": "boson",
+      "chirality": "vector",
+      "multiplet": "W",
+      "representations": {
+        "su3": "singlet",
+        "su2": "triplet"
+      },
+      "t3": -1.0,
+      "hypercharge": 0.0,
+      "charge": -1.0,
+      "baryon_number": 0.0,
+      "lepton_number": 0.0,
+      "mass_range": {
+        "lower": 80.377,
+        "upper": 80.379
+      },
+      "spin": 1.0,
+      "validate_charge_relation": false
+    },
+    {
+      "name": "Z_boson",
+      "display_name": "Z boson",
+      "sector": "gauge",
+      "statistics": "boson",
+      "chirality": "vector",
+      "multiplet": "Z",
+      "representations": {
+        "su3": "singlet",
+        "su2": "triplet"
+      },
+      "t3": 0.0,
+      "hypercharge": 0.0,
+      "charge": 0.0,
+      "baryon_number": 0.0,
+      "lepton_number": 0.0,
+      "mass_range": {
+        "lower": 91.187,
+        "upper": 91.188
+      },
+      "spin": 1.0,
+      "validate_charge_relation": false
+    },
+    {
+      "name": "Higgs",
+      "display_name": "Higgs boson",
+      "sector": "scalar",
+      "statistics": "boson",
+      "chirality": "scalar",
+      "multiplet": "H",
+      "representations": {
+        "su3": "singlet",
+        "su2": "doublet"
+      },
+      "t3": 0.0,
+      "hypercharge": 0.0,
+      "charge": 0.0,
+      "baryon_number": 0.0,
+      "lepton_number": 0.0,
+      "mass_range": {
+        "lower": 125.09,
+        "upper": 125.11
+      },
+      "spin": 0.0,
+      "validate_charge_relation": true
+    }
+  ],
+  "interactions": [
+    {
+      "name": "charged_current_u_to_d",
+      "type": "weak",
+      "incoming": [
+        "u_L"
+      ],
+      "outgoing": [
+        "d_L",
+        "W_plus"
+      ],
+      "checks": [
+        "electric_charge",
+        "baryon_number",
+        "lepton_number",
+        "color"
+      ]
+    },
+    {
+      "name": "charged_current_d_to_u",
+      "type": "weak",
+      "incoming": [
+        "d_L",
+        "W_plus"
+      ],
+      "outgoing": [
+        "u_L"
+      ],
+      "checks": [
+        "electric_charge",
+        "baryon_number",
+        "lepton_number",
+        "color"
+      ]
+    },
+    {
+      "name": "leptonic_charged_current",
+      "type": "weak",
+      "incoming": [
+        "nu_e_L"
+      ],
+      "outgoing": [
+        "e_L",
+        "W_plus"
+      ],
+      "checks": [
+        "electric_charge",
+        "baryon_number",
+        "lepton_number"
+      ]
+    },
+    {
+      "name": "neutral_current_quark",
+      "type": "weak",
+      "incoming": [
+        "u_L",
+        "Z_boson"
+      ],
+      "outgoing": [
+        "u_L"
+      ],
+      "checks": [
+        "electric_charge",
+        "baryon_number",
+        "color"
+      ]
+    },
+    {
+      "name": "yukawa_top",
+      "type": "yukawa",
+      "incoming": [
+        "Higgs",
+        "q_top_left"
+      ],
+      "outgoing": [
+        "t_R"
+      ],
+      "checks": [
+        "electric_charge",
+        "baryon_number",
+        "color"
+      ]
+    },
+    {
+      "name": "higgs_gauge_coupling",
+      "type": "scalar_gauge",
+      "incoming": [
+        "Higgs"
+      ],
+      "outgoing": [
+        "W_plus",
+        "W_minus"
+      ],
+      "checks": [
+        "electric_charge",
+        "baryon_number",
+        "lepton_number"
+      ]
+    }
+  ],
+  "derived_states": {
+    "q_top_left": {
+      "components": [
+        "t_L",
+        "b_L"
+      ],
+      "weights": [
+        1.0,
+        0.0
+      ]
+    }
+  },
+  "constraints": [
+    {
+      "name": "Z_mass",
+      "observable": "M_Z",
+      "value": 91.1876,
+      "uncertainty": 0.0021,
+      "prediction": 91.188,
+      "sigma_limit": 5.0
+    },
+    {
+      "name": "W_mass",
+      "observable": "M_W",
+      "value": 80.377,
+      "uncertainty": 0.012,
+      "prediction": 80.378,
+      "sigma_limit": 3.0
+    },
+    {
+      "name": "higgs_signal_strength",
+      "observable": "mu_H",
+      "value": 1.0,
+      "uncertainty": 0.1,
+      "prediction": 0.98,
+      "sigma_limit": 2.0
+    }
+  ]
+}
