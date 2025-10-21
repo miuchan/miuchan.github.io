@@ -171,6 +171,42 @@
       </section>
 
       <section
+        id="priority-map"
+        class="section priority-map"
+        aria-labelledby="priority-map-title"
+      >
+        <div class="inner priority-map__inner">
+          <header class="section__header priority-map__header">
+            <p class="section__eyebrow" data-i18n="priorityGuide.eyebrow">Gradient navigation</p>
+            <h2 id="priority-map-title" data-i18n="priorityGuide.title">
+              Signal guide: recursive gradient descent map
+            </h2>
+            <p class="priority-map__description" data-i18n="priorityGuide.description">
+              Recursive gradient descent recalibrates every surface so you move with less friction.
+            </p>
+          </header>
+          <div class="priority-map__content">
+            <section class="priority-map__panel" aria-labelledby="priority-summary-title">
+              <h3 id="priority-summary-title" data-i18n="priorityGuide.summaryTitle">Signal summary</h3>
+              <p class="priority-map__intro" data-i18n="priorityGuide.summaryIntro">
+                Recursive weighting keeps the descent focused on the densest nodes.
+              </p>
+              <p class="priority-map__lede" id="priority-summary-primary"></p>
+              <p class="priority-map__lede priority-map__lede--subtle" id="priority-summary-secondary"></p>
+              <dl class="priority-map__metrics" id="priority-map-metrics"></dl>
+            </section>
+            <section class="priority-map__panel" aria-labelledby="priority-focus-title">
+              <h3 id="priority-focus-title" data-i18n="priorityGuide.focusTitle">Priority waypoints</h3>
+              <p class="priority-map__intro" data-i18n="priorityGuide.focusDescription">
+                Follow these sections to harvest the densest information first.
+              </p>
+              <div class="priority-map__list" id="priority-map-list" role="list"></div>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section
         id="gradient-flow"
         class="section gradient-flow"
         aria-labelledby="gradient-flow-title"

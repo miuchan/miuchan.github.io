@@ -83,6 +83,7 @@ const baseTranslations = {
     },
     nav: {
       hero: '开场',
+      'priority-map': '梯度信号导引',
       architecture: '递归信息场',
       stack: '星球栈图',
       decks: '体验簇阵',
@@ -94,6 +95,7 @@ const baseTranslations = {
       ariaLabel: '信息架构导航',
       hierarchy: [
         { id: 'hero', index: '0', label: '轨道入口' },
+        { id: 'priority-map', index: '0.1', label: '梯度信号导引' },
         {
           id: 'architecture',
           index: '1',
@@ -169,6 +171,73 @@ const baseTranslations = {
       gradientMaxLabel: '澎湃',
       pulseButton: '激活遥测脉冲',
       pulseHint: '随机增强信号，观察指标变化。'
+    },
+    priorityGuide: {
+      eyebrow: '梯度指引',
+      title: '信息信号导引图',
+      description:
+        '递归梯度下降实时为每个界面重分配权重，让你以最低能耗抵达关键信息。',
+      summaryTitle: '信号摘要',
+      summaryIntro: '主要版块会随梯度权重即时重排。',
+      summaryPrimary(label, percent) {
+        if (!label) {
+          return '信号正在校准中。';
+        }
+        return `最高信号落在 ${label}（密度 ${percent}%）。`;
+      },
+      summarySecondary(label, percent) {
+        if (!label) {
+          return '';
+        }
+        return `次级航线：${label} 覆盖 ${percent}% 信号。`;
+      },
+      focusTitle: '优先航线',
+      focusDescription: '沿着这些节点快速完成信息获取。',
+      itemCta: '前往版块',
+      percentLabel: '信号密度',
+      empty: '信号正在校准，稍后即可看到导引图。',
+      metrics: {
+        coverageLabel: '前三权重覆盖',
+        coverageHint: '前三个节点合计掌握的信号占比。',
+        coverageFormat(value) {
+          return `${value}%`;
+        },
+        falloffLabel: '梯度衰减',
+        falloffHint: '首个与第 4 个节点之间的信号落差。',
+        falloffFormat(value) {
+          return `${value}%`;
+        }
+      },
+      descriptions: {
+        architecture: {
+          label: '递归信息场',
+          description: '了解梯度下降如何重排整个信息场与指标。'
+        },
+        stack: {
+          label: '星球栈图',
+          description: '查看串联遥测、实验与联盟的行星级栈层。'
+        },
+        decks: {
+          label: '体验簇阵',
+          description: '直接跳入可运行的行星级实验与任务资产。'
+        },
+        council: {
+          label: 'AI 议会',
+          description: '阅读双解释器如何协商共识与策略。'
+        },
+        signals: {
+          label: '信号中枢',
+          description: '实时洞察遥测脉冲与演化年表。'
+        },
+        alliances: {
+          label: '联盟星港',
+          description: '拜访共振的伙伴实验室，拓展协作航线。'
+        },
+        dock: {
+          label: '联络站',
+          description: '获取联络方式与协作通道。'
+        }
+      }
     },
     gradientFlow: {
       eyebrow: 'UI 梯度流系统',
@@ -799,6 +868,7 @@ const baseTranslations = {
     },
     nav: {
       hero: 'Launch',
+      'priority-map': 'Signal guide',
       architecture: 'Recursive IA',
       stack: 'Planetary Stack',
       decks: 'Experience Decks',
@@ -810,6 +880,7 @@ const baseTranslations = {
       ariaLabel: 'Information architecture navigation',
       hierarchy: [
         { id: 'hero', index: '0', label: 'Launch bay' },
+        { id: 'priority-map', index: '0.1', label: 'Gradient signal guide' },
         {
           id: 'architecture',
           index: '1',
@@ -885,6 +956,73 @@ const baseTranslations = {
       gradientMaxLabel: 'Vivid',
       pulseButton: 'Trigger telemetry pulse',
       pulseHint: 'Inject a playful burst to the metrics and watch them react.'
+    },
+    priorityGuide: {
+      eyebrow: 'Gradient navigation',
+      title: 'Signal guide: recursive gradient descent map',
+      description:
+        'The recursive gradient descent pass re-weights each surface so you can move through the lab with minimal friction.',
+      summaryTitle: 'Signal summary',
+      summaryIntro: 'Weights update continuously to keep the descent focused on the densest signals.',
+      summaryPrimary(label, percent) {
+        if (!label) {
+          return 'Signal calibration in progress.';
+        }
+        return `Highest signal lands on ${label} (${percent}% density).`;
+      },
+      summarySecondary(label, percent) {
+        if (!label) {
+          return '';
+        }
+        return `Next waypoint: ${label} holds ${percent}% of the field.`;
+      },
+      focusTitle: 'Priority waypoints',
+      focusDescription: 'Follow these sections first to capture the steepest signal gradients.',
+      itemCta: 'Open section',
+      percentLabel: 'Signal density',
+      empty: 'Weights are calibrating—check back in a moment.',
+      metrics: {
+        coverageLabel: 'Top coverage',
+        coverageHint: 'Share of signal held by the three leading sections.',
+        coverageFormat(value) {
+          return `${value}%`;
+        },
+        falloffLabel: 'Gradient falloff',
+        falloffHint: 'Drop between the first and fourth waypoints.',
+        falloffFormat(value) {
+          return `${value}%`;
+        }
+      },
+      descriptions: {
+        architecture: {
+          label: 'Recursive information field',
+          description: 'See how the gradient descent reorganises every surface and metric.'
+        },
+        stack: {
+          label: 'Planetary stack map',
+          description: 'Inspect the layers binding telemetry, experiments, and alliances together.'
+        },
+        decks: {
+          label: 'Experience decks',
+          description: 'Jump straight into runnable planetary experiments and mission-ready assets.'
+        },
+        council: {
+          label: 'Interpreter council',
+          description: 'Review how dual interpreters negotiate strategic consensus.'
+        },
+        signals: {
+          label: 'Signal hub',
+          description: 'Watch telemetry pulses and evolution milestones in real time.'
+        },
+        alliances: {
+          label: 'Alliance harbor',
+          description: 'Meet partner labs in resonance and explore their constellations.'
+        },
+        dock: {
+          label: 'Docking station',
+          description: 'Lock onto contact routes and collaboration corridors.'
+        }
+      }
     },
     gradientFlow: {
       eyebrow: 'UI Gradient Flow System',
@@ -1605,6 +1743,207 @@ function assignInformationDepth(hierarchy) {
     });
 }
 
+function renderGradientGuide(lang, hierarchy, fallbackNav = {}) {
+  const list = document.getElementById('priority-map-list');
+  const metrics = document.getElementById('priority-map-metrics');
+  const summaryPrimary = document.getElementById('priority-summary-primary');
+  const summarySecondary = document.getElementById('priority-summary-secondary');
+
+  if (!list || !metrics || !summaryPrimary || !summarySecondary) return;
+
+  const dictionary = getLocalizedValue(lang, 'priorityGuide') || {};
+  const fallbackDictionary = getLocalizedValue(LANGUAGE_FALLBACK, 'priorityGuide') || {};
+
+  const descriptionEntries = {
+    ...(fallbackDictionary.descriptions || {}),
+    ...(dictionary.descriptions || {})
+  };
+
+  const trackedIds = Object.keys(descriptionEntries);
+  const navLabels = new Map();
+  const activeHierarchy = Array.isArray(hierarchy) ? hierarchy : [];
+  traverseHierarchy(activeHierarchy, (node) => {
+    if (node?.id && node.label && !navLabels.has(node.id)) {
+      navLabels.set(node.id, node.label);
+    }
+  });
+  const fallbackHierarchy = Array.isArray(fallbackNav?.hierarchy) ? fallbackNav.hierarchy : [];
+  traverseHierarchy(fallbackHierarchy, (node) => {
+    if (node?.id && node.label && !navLabels.has(node.id)) {
+      navLabels.set(node.id, node.label);
+    }
+  });
+
+  const percentLabel = dictionary.percentLabel || fallbackDictionary.percentLabel || 'Signal density';
+  const itemCta = dictionary.itemCta || fallbackDictionary.itemCta || 'Open section';
+  const emptyMessage = dictionary.empty || fallbackDictionary.empty || '';
+
+  const items = trackedIds
+    .map((id) => {
+      const meta = descriptionEntries[id] || {};
+      const label = meta.label || navLabels.get(id) || id;
+      const description = meta.description || '';
+      const weightValue = informationGradientWeights.get(id);
+      const percentValue = informationGradientPercents.get(id);
+      const weight = typeof weightValue === 'number' && Number.isFinite(weightValue) ? weightValue : 0;
+      const percent = typeof percentValue === 'number' && Number.isFinite(percentValue)
+        ? Math.max(0, Math.min(100, Math.round(percentValue)))
+        : Math.max(0, Math.min(100, Math.round(weight * 100)));
+      return { id, label, description, weight, percent };
+    })
+    .filter((item) => item.weight > 0);
+
+  items.sort((a, b) => b.weight - a.weight);
+
+  if (!items.length) {
+    list.innerHTML = '';
+    metrics.innerHTML = '';
+    if (emptyMessage) {
+      const empty = document.createElement('p');
+      empty.className = 'priority-map__empty';
+      empty.textContent = emptyMessage;
+      list.appendChild(empty);
+    }
+    summaryPrimary.textContent = emptyMessage || '';
+    summarySecondary.textContent = '';
+    return;
+  }
+
+  list.innerHTML = '';
+  const fragment = document.createDocumentFragment();
+  const maxItems = Math.min(items.length, 4);
+
+  for (let index = 0; index < maxItems; index += 1) {
+    const item = items[index];
+    const card = document.createElement('article');
+    card.className = 'priority-map__item';
+    card.setAttribute('role', 'listitem');
+    const ratio = Math.max(0, Math.min(1, (item.percent || 0) / 100));
+    card.style.setProperty('--priority-progress', ratio.toFixed(3));
+
+    const head = document.createElement('div');
+    head.className = 'priority-map__item-head';
+
+    const rank = document.createElement('span');
+    rank.className = 'priority-map__item-rank';
+    rank.textContent = `#${index + 1}`;
+    head.appendChild(rank);
+
+    const percentEl = document.createElement('span');
+    percentEl.className = 'priority-map__item-percent';
+    percentEl.textContent = `${item.percent}%`;
+    percentEl.setAttribute('aria-label', `${percentLabel} ${item.percent}%`);
+    head.appendChild(percentEl);
+
+    card.appendChild(head);
+
+    const title = document.createElement('h4');
+    title.className = 'priority-map__item-title';
+    title.textContent = item.label;
+    card.appendChild(title);
+
+    if (item.description) {
+      const description = document.createElement('p');
+      description.className = 'priority-map__item-description';
+      description.textContent = item.description;
+      card.appendChild(description);
+    }
+
+    const link = document.createElement('a');
+    link.className = 'priority-map__item-link';
+    link.href = `#${item.id}`;
+    link.innerHTML = `${itemCta} <span aria-hidden="true">↗</span>`;
+    link.setAttribute('aria-label', `${itemCta} ${item.label}`);
+    card.appendChild(link);
+
+    fragment.appendChild(card);
+  }
+
+  list.appendChild(fragment);
+
+  const topItems = items.slice(0, maxItems);
+  const primaryItem = topItems[0] || null;
+  const secondaryItem = topItems[1] || null;
+
+  const summaryPrimaryFn =
+    typeof dictionary.summaryPrimary === 'function'
+      ? dictionary.summaryPrimary
+      : typeof fallbackDictionary.summaryPrimary === 'function'
+        ? fallbackDictionary.summaryPrimary
+        : null;
+
+  const summarySecondaryFn =
+    typeof dictionary.summarySecondary === 'function'
+      ? dictionary.summarySecondary
+      : typeof fallbackDictionary.summarySecondary === 'function'
+        ? fallbackDictionary.summarySecondary
+        : null;
+
+  if (summaryPrimaryFn && primaryItem) {
+    summaryPrimary.textContent = summaryPrimaryFn(primaryItem.label, primaryItem.percent);
+  } else if (primaryItem) {
+    summaryPrimary.textContent = `${primaryItem.label}: ${primaryItem.percent}%`;
+  } else {
+    summaryPrimary.textContent = emptyMessage || '';
+  }
+
+  if (summarySecondaryFn && secondaryItem) {
+    summarySecondary.textContent = summarySecondaryFn(secondaryItem.label, secondaryItem.percent);
+  } else if (secondaryItem) {
+    summarySecondary.textContent = `${secondaryItem.label}: ${secondaryItem.percent}%`;
+  } else {
+    summarySecondary.textContent = '';
+  }
+
+  metrics.innerHTML = '';
+
+  const coverage = Math.min(
+    100,
+    Math.round(items.slice(0, Math.min(3, items.length)).reduce((total, item) => total + item.percent, 0))
+  );
+  const comparisonItem = items[3] || items[items.length - 1] || { percent: 0 };
+  const falloff = Math.max(0, Math.round((primaryItem ? primaryItem.percent : 0) - comparisonItem.percent));
+
+  const metricsDictionary = dictionary.metrics || {};
+  const fallbackMetrics = fallbackDictionary.metrics || {};
+
+  const coverageLabel = metricsDictionary.coverageLabel || fallbackMetrics.coverageLabel || 'Top coverage';
+  const coverageHint = metricsDictionary.coverageHint || fallbackMetrics.coverageHint || '';
+  const coverageFormat =
+    typeof metricsDictionary.coverageFormat === 'function'
+      ? metricsDictionary.coverageFormat
+      : typeof fallbackMetrics.coverageFormat === 'function'
+        ? fallbackMetrics.coverageFormat
+        : (value) => `${value}%`;
+
+  const falloffLabel = metricsDictionary.falloffLabel || fallbackMetrics.falloffLabel || 'Gradient falloff';
+  const falloffHint = metricsDictionary.falloffHint || fallbackMetrics.falloffHint || '';
+  const falloffFormat =
+    typeof metricsDictionary.falloffFormat === 'function'
+      ? metricsDictionary.falloffFormat
+      : typeof fallbackMetrics.falloffFormat === 'function'
+        ? fallbackMetrics.falloffFormat
+        : (value) => `${value}%`;
+
+  const appendMetric = (label, value, hint) => {
+    const wrapper = document.createElement('div');
+    const term = document.createElement('dt');
+    term.textContent = label;
+    const data = document.createElement('dd');
+    data.textContent = value;
+    if (hint) {
+      data.setAttribute('title', hint);
+      data.setAttribute('aria-label', `${label}: ${value}. ${hint}`);
+    }
+    wrapper.appendChild(term);
+    wrapper.appendChild(data);
+    metrics.appendChild(wrapper);
+  };
+
+  appendMetric(coverageLabel, coverageFormat(coverage), coverageHint);
+  appendMetric(falloffLabel, falloffFormat(falloff), falloffHint);
+}
+
 function escapeSelector(value) {
   if (!value) return '';
   if (typeof CSS !== 'undefined' && typeof CSS.escape === 'function') {
@@ -1777,8 +2116,9 @@ function updateInformationArchitecture(lang) {
   const navDefinition = getLocalizedValue(lang, 'nav') || {};
   if (!navDefinition) return;
   const hierarchy = Array.isArray(navDefinition.hierarchy) ? navDefinition.hierarchy : [];
-  assignInformationDepth(hierarchy);
   const fallbackNav = getLocalizedValue(LANGUAGE_FALLBACK, 'nav') || {};
+  assignInformationDepth(hierarchy);
+  renderGradientGuide(lang, hierarchy, fallbackNav);
   buildNavigationTree(navDefinition, lang, fallbackNav);
   activateNavigationObserver();
 }

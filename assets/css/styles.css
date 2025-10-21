@@ -886,6 +886,198 @@ a:focus {
   text-transform: uppercase;
 }
 
+.priority-map {
+  position: relative;
+}
+
+.priority-map__inner {
+  display: grid;
+  gap: 2.5rem;
+}
+
+.priority-map__description {
+  max-width: 38rem;
+  color: var(--text-muted);
+}
+
+.priority-map__content {
+  display: grid;
+  gap: 1.8rem;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+}
+
+.priority-map__panel {
+  position: relative;
+  display: grid;
+  gap: 1rem;
+  padding: 1.85rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(0, 245, 255, 0.16);
+  background: linear-gradient(150deg, rgba(6, 12, 24, 0.9), rgba(5, 11, 22, 0.72));
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.priority-map__panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 20% 20%, rgba(0, 245, 255, 0.25), transparent 65%);
+  opacity: 0.32;
+  pointer-events: none;
+}
+
+.priority-map__panel > * {
+  position: relative;
+  z-index: 1;
+}
+
+.priority-map__intro {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.priority-map__lede {
+  margin: 0;
+  font-family: 'Space Grotesk', system-ui;
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+}
+
+.priority-map__lede--subtle {
+  color: rgba(214, 226, 255, 0.72);
+  font-size: 0.98rem;
+}
+
+.priority-map__metrics {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.9rem;
+}
+
+.priority-map__metrics div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1.2rem;
+}
+
+.priority-map__metrics dt {
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(214, 226, 255, 0.78);
+}
+
+.priority-map__metrics dd {
+  margin: 0;
+  font-family: 'Space Grotesk', system-ui;
+  font-size: 1.2rem;
+  color: #ffffff;
+}
+
+.priority-map__list {
+  display: grid;
+  gap: 1.1rem;
+}
+
+.priority-map__item {
+  position: relative;
+  display: grid;
+  gap: 0.65rem;
+  padding: 1.45rem 1.5rem;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(0, 245, 255, 0.14);
+  background: rgba(4, 9, 20, 0.78);
+  overflow: hidden;
+  transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+  --priority-progress: 0;
+}
+
+.priority-map__item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(0, 245, 255, 0.28), rgba(76, 111, 255, 0.24));
+  opacity: 0.36;
+  transform-origin: left center;
+  transform: scaleX(var(--priority-progress));
+  transition: transform 380ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.priority-map__item:hover {
+  transform: translateY(-3px);
+  border-color: rgba(0, 245, 255, 0.32);
+  box-shadow: 0 24px 52px rgba(0, 12, 45, 0.5);
+}
+
+.priority-map__item > * {
+  position: relative;
+  z-index: 1;
+}
+
+.priority-map__item-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.priority-map__item-rank {
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(214, 226, 255, 0.72);
+}
+
+.priority-map__item-percent {
+  font-family: 'Space Grotesk', system-ui;
+  font-size: 1.2rem;
+  color: #ffffff;
+}
+
+.priority-map__item-title {
+  margin: 0;
+  font-size: 1.1rem;
+  letter-spacing: 0.02em;
+}
+
+.priority-map__item-description {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.92rem;
+}
+
+.priority-map__item-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.priority-map__item-link span {
+  transition: transform var(--transition);
+}
+
+.priority-map__item-link:hover span,
+.priority-map__item-link:focus span {
+  transform: translateX(4px);
+}
+
+.priority-map__empty {
+  margin: 0;
+  padding: 1.1rem 1.25rem;
+  border-radius: var(--radius-md);
+  border: 1px dashed rgba(0, 245, 255, 0.22);
+  background: rgba(4, 9, 20, 0.6);
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
 .gradient-flow {
   position: relative;
   z-index: 2;
@@ -1070,6 +1262,18 @@ a:focus {
 
   .gradient-flow {
     padding-top: 3rem;
+  }
+
+  .priority-map__content {
+    grid-template-columns: 1fr;
+  }
+
+  .priority-map__panel {
+    padding: 1.5rem;
+  }
+
+  .priority-map__item {
+    padding: 1.25rem 1.2rem;
   }
 }
 
