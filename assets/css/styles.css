@@ -531,7 +531,14 @@ a:focus {
   letter-spacing: 0.04em;
   text-transform: none;
   cursor: pointer;
+  text-align: start;
   transition: box-shadow var(--transition), background var(--transition), border var(--transition);
+}
+
+.language-toggle[dir='rtl'] {
+  padding: 0.5rem 1rem 0.5rem 2.2rem;
+  background-position: left 0.9rem center;
+  text-align: end;
 }
 
 .language-toggle:hover,
@@ -545,9 +552,20 @@ a:focus {
   outline: none;
 }
 
+.language-toggle[dir='rtl']:hover,
+.language-toggle[dir='rtl']:focus,
+.language-toggle[dir='rtl']:focus-visible {
+  background-position: left 0.9rem center;
+}
+
 .language-toggle option {
   color: #0a1120;
   background-color: #ffffff;
+  text-align: start;
+}
+
+.language-toggle option[dir='rtl'] {
+  text-align: end;
 }
 
 .language-toggle::-ms-expand {
