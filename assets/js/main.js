@@ -9,7 +9,7 @@ import { enhanceLanguageToggle } from './i18n/toggle.js';
 import { computeInformationGradient, mapGradientToPercentages } from './recursive-gradient.js';
 
 const counts = {
-  demos: 25,
+  demos: 26,
   research: 9,
   blogs: 59,
   resume: 1
@@ -373,6 +373,15 @@ const baseTranslations = {
         }
       ],
       entries: [
+        {
+          type: 'demo',
+          href: 'public/demo/minimal-ui-engine/index.html',
+          title: 'Mini UI Engine · 最小系统',
+          description:
+            '从零实现信号、effect 与渲染器的最小 UI 内核，并将其编排为指标、剧本与事件流组成的微型操作系统。',
+          tags: ['UI 引擎', '系统设计'],
+          keywords: ['ui engine', 'minimal system', 'signal', 'effect']
+        },
         {
           type: 'demo',
           href: 'public/demo/compute-god-standard-model-validator/index.html',
@@ -1159,6 +1168,15 @@ const baseTranslations = {
         }
       ],
       entries: [
+        {
+          type: 'demo',
+          href: 'public/demo/minimal-ui-engine/index.html',
+          title: 'Mini UI Engine · Minimal System',
+          description:
+            'Build a signal/effect/render loop from scratch, then orchestrate metrics, playbooks, and event streams into a tiny operating console.',
+          tags: ['UI Engine', 'Systems'],
+          keywords: ['ui engine', 'minimal system', 'signal', 'effect']
+        },
         {
           type: 'demo',
           href: 'public/demo/compute-god-standard-model-validator/index.html',
