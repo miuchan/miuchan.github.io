@@ -581,8 +581,9 @@ const baseTranslations = {
           },
           {
             label: '协作频率',
-            base: 128,
-            unit: 'Hz',
+            base: 4.6,
+            unit: 'GHz',
+            min: 4.6,
             description: '跨时区团队的同步/异步协作节奏。'
           },
           {
@@ -1231,8 +1232,9 @@ const baseTranslations = {
           },
           {
             label: 'Collaboration frequency',
-            base: 128,
-            unit: 'Hz',
+            base: 4.6,
+            unit: 'GHz',
+            min: 4.6,
             description: 'The sync/async rhythm of our distributed teams.'
           },
           {
@@ -2228,11 +2230,16 @@ function animateTelemetry() {
         variation * (stream.base * 0.03 + index * 1.2) +
         pulseStrength * (stream.base * 0.08 + index * 2.4) +
         pulseWave * 2.5;
+      if (typeof stream.min === 'number') {
+        value = Math.max(stream.min, value);
+      }
       if (stream.unit === '%') {
         value = Math.min(100, Math.max(92, value));
         strong.textContent = `${value.toFixed(2)}${stream.unit}`;
       } else if (stream.unit === 'Hz') {
         strong.textContent = `${Math.round(value)}${stream.unit}`;
+      } else if (stream.unit === 'GHz') {
+        strong.textContent = `${value.toFixed(2)}${stream.unit}`;
       } else if (stream.unit === 'lumen') {
         strong.textContent = `${value.toFixed(1)} ${stream.unit}`;
       } else {
