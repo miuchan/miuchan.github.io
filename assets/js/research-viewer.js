@@ -1,123 +1,233 @@
-const researchEntries = [
-  {
-    id: 'computational-singularity-proof',
-    title: 'Proof of the 470-Year Upper Bound on the Computational Singularity',
-    description:
-      'A mathematical treatment that combines historical throughput data with physical limits to constrain the duration of the computational singularity.',
-    source: 'computational-singularity-proof.md'
+import {
+  LANGUAGE_FALLBACK,
+  SUPPORTED_LANGUAGE_CODES,
+  setStoredLanguage
+} from './i18n/languages.js';
+import {
+  applyDocumentLanguage,
+  createTranslationRegistry,
+  populateLanguageSelect,
+  resolveTranslation
+} from './i18n/registry.js';
+import { researchEntries } from './research-data.js';
+
+const baseTranslations = {
+  en: {
+    documentTitle: 'Earth Online Research Library',
+    meta: {
+      htmlLang: 'en',
+      direction: 'ltr',
+      toggleLabel: 'Select language'
+    },
+    language: {
+      toggleLabel: 'Select language',
+      selectorLabel: 'Select language',
+      fallbackTag: 'English content'
+    },
+    header: {
+      back: '← Return to Earth Online',
+      backAria: 'Return to the Earth Online homepage',
+      eyebrow: 'Research Library'
+    },
+    sidebar: {
+      ariaLabel: 'Research index',
+      title: 'Research Index',
+      description: 'Browse all research papers and lab blueprints, or explore other assets in the experience decks.'
+    },
+    status: {
+      loading: 'Loading research manuscript…',
+      error: 'Unable to load the document. Please try again later.'
+    },
+    abstract: {
+      label: 'Research Overview'
+    }
   },
-  {
-    id: 'pinduoduo-distributed-automata-dynamics-center',
-    title: '拼多多分布式自动机动力系统研究中心',
-    description:
-      '分布式自动机驱动的供应链、物流、金融与产业带协同研究框架。',
-    source: 'pinduoduo-distributed-automata-dynamics-center.md'
-  },
-  {
-    id: 'tomoko-yuko-thermal-dual-resonance-lab',
-    title: '朋子和友子的热对偶共振实验室',
-    description: '热流与声波耦合的可逆热管理策略。',
-    source: 'tomoko-yuko-thermal-dual-resonance-lab.md'
-  },
-  {
-    id: 'v-d-thermal-dual-ssb-lab',
-    title: 'v 子与 d 子的热对偶自发对称破缺计划',
-    description: '探索热对偶约束下的量子场谱系与噪声触发机制。',
-    source: 'v-d-thermal-dual-ssb-lab.md'
-  },
-  {
-    id: 'micro-incentive-bridge-lab',
-    title: '微观激励桥实验室',
-    description: '跨社区公共项目的激励设计与资金路由协议。',
-    source: 'micro-incentive-bridge-lab.md'
-  },
-  {
-    id: 'whole-home-wireless-charging-lab',
-    title: '全屋智能无线充电实验舱',
-    description: '多房间谐振线圈阵列与随行供电网络设计。',
-    source: 'whole-home-wireless-charging-lab.md'
-  },
-  {
-    id: 'chtholly-hououin-temporal-synchrony-lab',
-    title: '珂朵莉·凤凰院凶真时间同调实验室',
-    description: '跨时间线的体验安全协议与共鸣写作工具链。',
-    source: 'chtholly-hououin-temporal-synchrony-lab.md'
-  },
-  {
-    id: 'grandfather-paradox-worldline-pruning',
-    title: '祖父悖论与世界线修改的剪枝策略',
-    description: '在祖父悖论场景下，通过剪枝策略维护时间旅行的因果一致性。',
-    source: 'grandfather-paradox-worldline-pruning.md'
-  },
-  {
-    id: 'originlab-origin-suite-analysis',
-    title: 'OriginLab Origin/OriginPro 产品评估',
-    description: '科研与工程领域的数据分析与绘图软件评估。',
-    source: 'originlab-origin-suite-analysis.md'
-  },
-  {
-    id: 'earth-online-iteration-2025',
-    title: 'Earth Online 自治航道蓝图',
-    description: '2025 年行星实验迭代与自治协作航道总结。',
-    source: 'earth-online-iteration-2025.md'
+  zh: {
+    documentTitle: 'Earth Online 研究文稿',
+    meta: {
+      htmlLang: 'zh-CN',
+      direction: 'ltr',
+      toggleLabel: '选择语言'
+    },
+    language: {
+      toggleLabel: '选择语言',
+      selectorLabel: '选择语言',
+      fallbackTag: '英文内容'
+    },
+    header: {
+      back: '← 返回 Earth Online',
+      backAria: '返回 Earth Online 首页',
+      eyebrow: '研究文稿库'
+    },
+    sidebar: {
+      ariaLabel: '研究论文索引',
+      title: '研究索引',
+      description: '浏览所有研究论文与实验室蓝图，或前往体验簇探索其他资产。'
+    },
+    status: {
+      loading: '正在加载研究文稿…',
+      error: '暂时无法加载文稿，请稍后再试。'
+    },
+    abstract: {
+      label: '研究摘要'
+    }
   }
-];
+};
+
+const translationRegistry = createTranslationRegistry(baseTranslations, {
+  localizedLanguageCodes: ['en', 'zh']
+});
 
 const params = new URLSearchParams(window.location.search);
 const requestedId = params.get('doc');
-const activeEntry = researchEntries.find((entry) => entry.id === requestedId) || researchEntries[0];
+const requestedLang = params.get('lang');
+
+const initialEntry = researchEntries.find((entry) => entry.id === requestedId) || researchEntries[0];
+const initialLanguage = translationRegistry.has(requestedLang)
+  ? requestedLang
+  : translationRegistry.determineLanguage();
+
+const state = {
+  language: initialLanguage,
+  entryId: initialEntry?.id || null
+};
 
 const titleElement = document.getElementById('document-title');
 const abstractElement = document.getElementById('document-abstract');
 const contentElement = document.getElementById('document-content');
 const sidebarListElement = document.getElementById('document-sidebar-list');
 const metaDescription = document.querySelector('meta[name="description"]');
+const languageToggle = document.getElementById('research-language-toggle');
 
-document.title = `${activeEntry.title} · Earth Online 研究文稿`;
-titleElement.textContent = activeEntry.title;
+const statusElement = document.createElement('p');
+statusElement.className = 'document-status';
 
-if (metaDescription) {
-  metaDescription.setAttribute('content', `${activeEntry.title} · ${activeEntry.description}`);
+function getLocalizedEntry(entry, lang) {
+  if (!entry) return null;
+  const dictionary = entry.translations || {};
+  const fallbackTranslation = dictionary[LANGUAGE_FALLBACK] || {};
+  const localized = dictionary[lang] || fallbackTranslation;
+  const sources = entry.sources || {};
+  return {
+    id: entry.id,
+    source: sources[lang] || sources[LANGUAGE_FALLBACK],
+    title: localized.title || fallbackTranslation.title || entry.id,
+    description: localized.description || fallbackTranslation.description || '',
+    sources
+  };
 }
 
-researchEntries.forEach((entry) => {
-  const item = document.createElement('li');
-  item.className = 'document-sidebar__item';
+function getLocalizedEntries(lang) {
+  return researchEntries
+    .map((entry) => getLocalizedEntry(entry, lang))
+    .filter(Boolean);
+}
 
-  const link = document.createElement('a');
-  link.href = `research.html?doc=${entry.id}`;
-  link.className = 'document-sidebar__link';
-  const isActive = entry.id === activeEntry.id;
-  link.setAttribute('data-active', isActive ? 'true' : 'false');
-  if (isActive) {
-    link.setAttribute('aria-current', 'page');
-  }
-  link.textContent = entry.title;
+function updateStaticContent(lang) {
+  const dictionary = translationRegistry.get(lang);
+  const fallbackDictionary = translationRegistry.get(LANGUAGE_FALLBACK);
 
-  const description = document.createElement('p');
-  description.className = 'document-sidebar__description';
-  description.textContent = entry.description;
+  document.querySelectorAll('[data-i18n]').forEach((element) => {
+    const key = element.getAttribute('data-i18n');
+    const value = resolveTranslation(dictionary, key, fallbackDictionary);
+    if (typeof value === 'string') {
+      element.textContent = value;
+    }
+  });
 
-  item.appendChild(link);
-  item.appendChild(description);
-  sidebarListElement.appendChild(item);
-});
+  document.querySelectorAll('[data-i18n-attr]').forEach((element) => {
+    const descriptors = element
+      .getAttribute('data-i18n-attr')
+      .split(',')
+      .map((part) => part.trim())
+      .filter(Boolean);
+    descriptors.forEach((descriptor) => {
+      const [attr, key] = descriptor.split(':').map((part) => part.trim());
+      if (!attr || !key) return;
+      const value = resolveTranslation(dictionary, key, fallbackDictionary);
+      if (typeof value === 'string') {
+        element.setAttribute(attr, value);
+      }
+    });
+  });
+}
 
-if (abstractElement) {
+function updateMeta(lang) {
+  const translation = translationRegistry.get(lang);
+  const fallbackTranslation = translationRegistry.get(LANGUAGE_FALLBACK);
+  applyDocumentLanguage(translation);
+  const title = translation.documentTitle || fallbackTranslation.documentTitle || document.title;
+  document.title = title;
+}
+
+function updateLanguageSelector(lang) {
+  if (!languageToggle) return;
+  populateLanguageSelect(languageToggle, translationRegistry, lang);
+}
+
+function renderSidebar(lang, activeId) {
+  if (!sidebarListElement) return;
+  sidebarListElement.innerHTML = '';
+  const entries = getLocalizedEntries(lang);
+  entries.forEach((entry) => {
+    const item = document.createElement('li');
+    item.className = 'document-sidebar__item';
+
+    const link = document.createElement('a');
+    link.href = `research.html?doc=${entry.id}&lang=${lang}`;
+    link.className = 'document-sidebar__link';
+    const isActive = entry.id === activeId;
+    link.setAttribute('data-active', isActive ? 'true' : 'false');
+    if (isActive) {
+      link.setAttribute('aria-current', 'page');
+    }
+    link.textContent = entry.title;
+
+    const description = document.createElement('p');
+    description.className = 'document-sidebar__description';
+    description.textContent = entry.description;
+
+    item.appendChild(link);
+    item.appendChild(description);
+    sidebarListElement.appendChild(item);
+  });
+}
+
+function renderAbstract(lang, entry) {
+  if (!abstractElement) return;
   abstractElement.innerHTML = '';
+  const dictionary = translationRegistry.get(lang);
+  const fallbackDictionary = translationRegistry.get(LANGUAGE_FALLBACK);
+  const labelText =
+    resolveTranslation(dictionary, 'abstract.label', fallbackDictionary) ||
+    resolveTranslation(fallbackDictionary, 'abstract.label') ||
+    'Research Overview';
+
   const label = document.createElement('p');
   label.className = 'document-abstract__label';
-  label.textContent = 'Research Overview';
+  label.textContent = labelText;
 
   const description = document.createElement('p');
   description.className = 'document-abstract__description';
-  description.textContent = activeEntry.description;
+  description.textContent = entry?.description || '';
 
   abstractElement.appendChild(label);
   abstractElement.appendChild(description);
 }
 
-const convertMathNotation = (input) => {
+function showStatus(lang, key) {
+  const dictionary = translationRegistry.get(lang);
+  const fallbackDictionary = translationRegistry.get(LANGUAGE_FALLBACK);
+  const message =
+    resolveTranslation(dictionary, `status.${key}`, fallbackDictionary) ||
+    resolveTranslation(fallbackDictionary, `status.${key}`) ||
+    '';
+  contentElement.innerHTML = '';
+  statusElement.textContent = message;
+  contentElement.appendChild(statusElement);
+}
+
+function convertMathNotation(input) {
   let formatted = input;
   formatted = formatted.replace(/\\frac\{([^}]+)\}\{([^}]+)\}/g, '$1 / $2');
   formatted = formatted.replace(/\\times/g, '×');
@@ -130,16 +240,16 @@ const convertMathNotation = (input) => {
   formatted = formatted.replace(/_\{([^}]+)\}/g, '<sub>$1</sub>');
   formatted = formatted.replace(/\\/g, '');
   return formatted;
-};
+}
 
-const replaceInlineMath = (element) => {
+function replaceInlineMath(element) {
   if (!element) return;
   element.innerHTML = element.innerHTML.replace(/\\\((.+?)\\\)/g, (_, expr) => {
     return `<span class="math-inline">${convertMathNotation(expr)}</span>`;
   });
-};
+}
 
-const applyMathFormatting = (root) => {
+function applyMathFormatting(root) {
   const paragraphs = Array.from(root.querySelectorAll('p'));
   for (let i = 0; i < paragraphs.length; i += 1) {
     const paragraph = paragraphs[i];
@@ -171,42 +281,103 @@ const applyMathFormatting = (root) => {
   }
 
   root.querySelectorAll('li').forEach(replaceInlineMath);
-};
+}
 
-const fallbackMessage = document.createElement('p');
-fallbackMessage.className = 'document-status';
-fallbackMessage.textContent = '正在加载研究论文…';
-contentElement.appendChild(fallbackMessage);
-
-const loadDocument = async () => {
-  try {
-    const response = await fetch(activeEntry.source);
-
-    if (!response.ok) {
-      throw new Error(`无法加载文稿：${response.status}`);
-    }
-
-    const markdown = await response.text();
-    const html = marked.parse(markdown, { breaks: true, gfm: true });
-    contentElement.innerHTML = html;
-    applyMathFormatting(contentElement);
-
-    const firstHeading = contentElement.querySelector('h1');
-    if (firstHeading) {
-      firstHeading.remove();
-    }
-
-    contentElement.querySelectorAll('table').forEach((table) => {
-      table.classList.add('document-table');
-    });
-  } catch (error) {
-    contentElement.innerHTML = '';
-    const errorMessage = document.createElement('div');
-    errorMessage.className = 'document-status document-status--error';
-    errorMessage.textContent = '抱歉，研究论文暂时无法加载。请稍后重试。';
-    contentElement.appendChild(errorMessage);
-    console.error(error);
+async function renderDocument(lang, entry) {
+  if (!entry) {
+    showStatus(lang, 'error');
+    return;
   }
-};
 
-loadDocument();
+  showStatus(lang, 'loading');
+
+  const sourcesToTry = [];
+  if (entry.source) {
+    sourcesToTry.push(entry.source);
+  }
+  const fallbackSource = entry.sources?.[LANGUAGE_FALLBACK];
+  if (fallbackSource && fallbackSource !== entry.source) {
+    sourcesToTry.push(fallbackSource);
+  }
+
+  let markdown = null;
+  for (let i = 0; i < sourcesToTry.length; i += 1) {
+    const source = sourcesToTry[i];
+    try {
+      const response = await fetch(source);
+      if (response.ok) {
+        markdown = await response.text();
+        break;
+      }
+    } catch (error) {
+      // ignore fetch errors, try fallback
+    }
+  }
+
+  if (!markdown) {
+    showStatus(lang, 'error');
+    return;
+  }
+
+  const html = window.marked.parse(markdown, { breaks: true, gfm: true });
+  contentElement.innerHTML = html;
+  applyMathFormatting(contentElement);
+
+  const firstHeading = contentElement.querySelector('h1');
+  if (firstHeading) {
+    firstHeading.remove();
+  }
+
+  contentElement.querySelectorAll('table').forEach((table) => {
+    table.classList.add('document-table');
+    table.setAttribute('role', 'table');
+  });
+}
+
+function updateHistory() {
+  const url = new URL(window.location.href);
+  if (state.entryId) {
+    url.searchParams.set('doc', state.entryId);
+  } else {
+    url.searchParams.delete('doc');
+  }
+  url.searchParams.set('lang', state.language);
+  window.history.replaceState({}, '', `${url.pathname}?${url.searchParams.toString()}`);
+}
+
+function applyLanguage(lang) {
+  const resolved = translationRegistry.has(lang) ? lang : LANGUAGE_FALLBACK;
+  state.language = resolved;
+  setStoredLanguage(resolved);
+
+  updateStaticContent(resolved);
+  updateMeta(resolved);
+  updateLanguageSelector(resolved);
+
+  const baseEntry = researchEntries.find((entry) => entry.id === state.entryId) || researchEntries[0];
+  const localizedEntry = getLocalizedEntry(baseEntry, resolved);
+
+  if (titleElement) {
+    titleElement.textContent = localizedEntry?.title || '';
+  }
+  if (metaDescription) {
+    const descriptionText = localizedEntry?.description || '';
+    const pageTitle = localizedEntry?.title || '';
+    metaDescription.setAttribute('content', `${pageTitle}${descriptionText ? ` · ${descriptionText}` : ''}`);
+  }
+
+  renderSidebar(resolved, localizedEntry?.id || null);
+  renderAbstract(resolved, localizedEntry);
+  renderDocument(resolved, localizedEntry);
+  updateHistory();
+}
+
+if (languageToggle) {
+  languageToggle.addEventListener('change', (event) => {
+    const nextLang = event.target?.value;
+    const resolved = SUPPORTED_LANGUAGE_CODES.has(nextLang) ? nextLang : LANGUAGE_FALLBACK;
+    applyLanguage(resolved);
+  });
+}
+
+applyLanguage(state.language);

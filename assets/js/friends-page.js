@@ -1,8 +1,18 @@
 import { getFriendContent } from './friends-data.js';
+import {
+  LANGUAGE_DEFINITIONS,
+  LANGUAGE_FALLBACK,
+  SUPPORTED_LANGUAGE_CODES,
+  setStoredLanguage
+} from './i18n/languages.js';
+import {
+  applyDocumentLanguage,
+  createTranslationRegistry,
+  populateLanguageSelect,
+  resolveTranslation
+} from './i18n/registry.js';
 
-const STORAGE_KEY = 'earth-online-language';
-
-const translations = {
+const baseTranslations = {
   zh: {
     documentTitle: '友链星港 · Earth Online 体验实验室',
     meta: {
@@ -101,122 +111,26 @@ const translations = {
   }
 };
 
-const LANGUAGE_DEFINITIONS = [
-  { code: 'en', label: 'English', htmlLang: 'en', direction: 'ltr' },
-  { code: 'zh', label: '中文', htmlLang: 'zh-CN', direction: 'ltr' },
-  { code: 'es', label: 'Español', htmlLang: 'es', direction: 'ltr' },
-  { code: 'fr', label: 'Français', htmlLang: 'fr', direction: 'ltr' },
-  { code: 'de', label: 'Deutsch', htmlLang: 'de', direction: 'ltr' },
-  { code: 'ja', label: '日本語', htmlLang: 'ja', direction: 'ltr' },
-  { code: 'pt', label: 'Português', htmlLang: 'pt', direction: 'ltr' },
-  { code: 'ru', label: 'Русский', htmlLang: 'ru', direction: 'ltr' },
-  { code: 'hi', label: 'हिन्दी', htmlLang: 'hi', direction: 'ltr' },
-  { code: 'ar', label: 'العربية', htmlLang: 'ar', direction: 'rtl' }
-];
-
-const LOCALIZED_LANGUAGE_CODES = new Set(['en', 'zh']);
-
-const LANGUAGE_FALLBACK = 'en';
-
-const SUPPORTED_LANGUAGE_CODES = new Set(
-  LANGUAGE_DEFINITIONS.map((definition) => definition.code)
-);
-
-translations.en.__isFallback = false;
-translations.zh.__isFallback = false;
-
-LANGUAGE_DEFINITIONS.forEach((definition) => {
-  if (LOCALIZED_LANGUAGE_CODES.has(definition.code)) {
-    const existing = translations[definition.code];
-    if (existing) {
-      existing.meta.htmlLang = definition.htmlLang;
-      existing.meta.direction = definition.direction || existing.meta.direction || 'ltr';
-      existing.meta.toggleText = definition.label;
-      if (existing.language) {
-        existing.language.selectorLabel =
-          existing.language.selectorLabel || existing.language.toggleLabel || existing.meta.toggleLabel;
-      } else {
-        existing.language = {
-          toggleLabel: existing.meta.toggleLabel,
-          selectorLabel: existing.meta.toggleLabel
-        };
-      }
-      existing.__isFallback = false;
-    }
-    return;
-  }
-
-  const clone = JSON.parse(JSON.stringify(translations.en));
-  clone.meta.htmlLang = definition.htmlLang;
-  clone.meta.direction = definition.direction || 'ltr';
-  clone.meta.toggleText = definition.label;
-  clone.meta.toggleLabel = translations.en.language?.selectorLabel || 'Select language';
-  clone.language = clone.language || {};
-  clone.language.toggleLabel = clone.meta.toggleLabel;
-  clone.language.selectorLabel = translations.en.language?.selectorLabel || 'Select language';
-  clone.language.fallbackTag = translations.en.language?.fallbackTag || 'English content';
-  clone.__isFallback = true;
-  translations[definition.code] = clone;
+const translationRegistry = createTranslationRegistry(baseTranslations, {
+  localizedLanguageCodes: ['en', 'zh']
 });
 
-function resolveTranslation(dictionary, keyPath, fallbackDictionary) {
-  if (!keyPath) return undefined;
-  const keys = keyPath.split('.');
-  const traverse = (source) =>
-    keys.reduce((acc, key) => {
-      if (acc && Object.prototype.hasOwnProperty.call(acc, key)) {
-        return acc[key];
-      }
-      return undefined;
-    }, source);
-
-  const primary = traverse(dictionary);
-  if (primary !== undefined) {
-    return primary;
-  }
-
-  if (!fallbackDictionary || fallbackDictionary === dictionary) {
-    return undefined;
-  }
-
-  return traverse(fallbackDictionary);
-}
+const translations = translationRegistry.dictionaries;
 
 function getTranslation(lang) {
-  return translations[lang] || translations[LANGUAGE_FALLBACK];
+  return translationRegistry.get(lang);
 }
 
 function getLocalizedValue(lang, keyPath) {
-  return resolveTranslation(translations[lang], keyPath, translations[LANGUAGE_FALLBACK]);
+  return translationRegistry.resolve(lang, keyPath);
 }
 
 function isFallbackLanguage(lang) {
-  const translation = translations[lang];
-  return !translation || translation.__isFallback === true;
+  return translationRegistry.isFallback(lang);
 }
 
 function determineLanguage() {
-  try {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored && translations[stored]) {
-      return stored;
-    }
-  } catch (error) {
-    // ignore storage issues
-  }
-  const browser = (navigator.language || LANGUAGE_FALLBACK).toLowerCase();
-  const exact = LANGUAGE_DEFINITIONS.find((definition) => browser === definition.code);
-  if (exact) return exact.code;
-
-  const matched = LANGUAGE_DEFINITIONS.find((definition) => browser.startsWith(`${definition.code}-`));
-  if (matched) return matched.code;
-
-  const primary = browser.split('-')[0];
-  if (SUPPORTED_LANGUAGE_CODES.has(primary)) {
-    return primary;
-  }
-
-  return LANGUAGE_FALLBACK;
+  return translationRegistry.determineLanguage();
 }
 
 const state = {
@@ -376,13 +290,7 @@ function updateStaticText(lang) {
 function updateMeta(lang) {
   const translation = getTranslation(lang);
   const fallbackTranslation = getTranslation(LANGUAGE_FALLBACK);
-  const meta = translation.meta || fallbackTranslation.meta || {};
-  const effectiveMeta = isFallbackLanguage(lang) ? fallbackTranslation.meta || meta : meta;
-  const htmlLang = effectiveMeta?.htmlLang || fallbackTranslation.meta?.htmlLang || 'en';
-  const direction = effectiveMeta?.direction || fallbackTranslation.meta?.direction || 'ltr';
-  document.documentElement.lang = htmlLang;
-  document.documentElement.dir = direction;
-  document.documentElement.setAttribute('data-language', lang);
+  applyDocumentLanguage(translation);
   const title = translation.documentTitle || fallbackTranslation.documentTitle || document.title;
   document.title = title;
 }
@@ -390,47 +298,12 @@ function updateMeta(lang) {
 function updateLanguageSelector(lang) {
   const select = document.getElementById('friends-language-toggle');
   if (!select) return;
-
-  select.innerHTML = '';
-  const activeTranslation = getTranslation(lang);
-  const fallbackDictionary = translations[LANGUAGE_FALLBACK];
-  const fallbackTag =
-    resolveTranslation(activeTranslation, 'language.fallbackTag', fallbackDictionary) ||
-    resolveTranslation(fallbackDictionary, 'language.fallbackTag') ||
-    'English content';
-
-  LANGUAGE_DEFINITIONS.forEach((definition) => {
-    const option = document.createElement('option');
-    option.value = definition.code;
-    const translation = translations[definition.code];
-    const fallback = translation?.__isFallback === true;
-    option.textContent = fallback ? `${definition.label} · ${fallbackTag}` : definition.label;
-    option.dataset.fallback = String(fallback);
-    option.dir = definition.direction || 'ltr';
-    select.appendChild(option);
-  });
-
-  const selected = SUPPORTED_LANGUAGE_CODES.has(lang) ? lang : LANGUAGE_FALLBACK;
-  select.value = selected;
-
-  const translation = getTranslation(selected);
-  const labelText =
-    translation?.language?.selectorLabel ||
-    translation?.language?.toggleLabel ||
-    translation?.meta?.toggleLabel ||
-    'Select language';
-
-  select.setAttribute('aria-label', labelText);
-  select.setAttribute('title', labelText);
+  populateLanguageSelect(select, translationRegistry, lang);
 }
 
 function applyLanguage(lang) {
   state.language = lang;
-  try {
-    localStorage.setItem(STORAGE_KEY, lang);
-  } catch (error) {
-    // ignore storage failures
-  }
+  setStoredLanguage(lang);
 
   updateMeta(lang);
   updateStaticText(lang);
