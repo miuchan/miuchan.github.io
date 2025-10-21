@@ -13,6 +13,11 @@
     <link rel="stylesheet" href="assets/css/styles.css" />
   </head>
   <body>
+    <div class="gradient-flow-system" aria-hidden="true">
+      <div class="gradient-flow-system__layer gradient-flow-system__layer--primary"></div>
+      <div class="gradient-flow-system__layer gradient-flow-system__layer--secondary"></div>
+      <div class="gradient-flow-system__layer gradient-flow-system__layer--tertiary"></div>
+    </div>
     <header class="site-header">
       <div class="inner header__inner">
         <div class="brand" aria-label="Earth Online lab mark" data-i18n-attr="aria-label:brand.ariaLabel">
@@ -83,8 +88,14 @@
                 aria-label="Quick access"
                 data-i18n-attr="aria-label:hero.ctaAria"
               >
-                <a class="button" href="#decks" data-i18n="hero.primaryCta">Enter the experience decks</a>
-                <a class="button button--ghost" href="#dock" data-i18n="hero.secondaryCta"
+                <a class="button" href="#decks" data-i18n="hero.primaryCta" data-attention-curve>
+                  Enter the experience decks
+                </a>
+                <a
+                  class="button button--ghost"
+                  href="#dock"
+                  data-i18n="hero.secondaryCta"
+                  data-attention-curve
                   >Navigate to docking station</a
                 >
               </div>
@@ -115,6 +126,28 @@
                     Drag to re-time the orbital rotation and tilt the view.
                   </p>
                 </div>
+                <div class="hero__control-slider hero__control-slider--gradient">
+                  <div class="hero__control-headline">
+                    <label for="gradient-tempo" data-role="gradient-label">Gradient flow tempo</label>
+                    <span class="hero__slider-value" id="gradient-tempo-display">1.00x</span>
+                  </div>
+                  <div class="hero__control-track hero__control-track--bounded">
+                    <span class="hero__control-bound hero__control-bound--min" data-role="gradient-min">Calm</span>
+                    <input
+                      type="range"
+                      id="gradient-tempo"
+                      min="12"
+                      max="48"
+                      step="4"
+                      value="24"
+                      aria-describedby="gradient-tempo-display gradient-tempo-hint"
+                    />
+                    <span class="hero__control-bound hero__control-bound--max" data-role="gradient-max">Vivid</span>
+                  </div>
+                  <p class="hero__control-hint" data-role="gradient-hint" id="gradient-tempo-hint">
+                    Tune the aurora tempo to match the gradient descent rhythm.
+                  </p>
+                </div>
                 <div class="hero__control-actions">
                   <button
                     class="button button--ghost"
@@ -122,6 +155,7 @@
                     id="telemetry-pulse"
                     data-role="pulse-button"
                     data-i18n="hero.pulseButton"
+                    data-attention-curve
                   >
                     Trigger telemetry pulse
                   </button>
@@ -133,6 +167,36 @@
             </div>
             <div class="hero__stats" id="hero-stats" aria-live="polite" role="list"></div>
           </div>
+        </div>
+      </section>
+
+      <section
+        id="gradient-flow"
+        class="section gradient-flow"
+        aria-labelledby="gradient-flow-title"
+      >
+        <div class="inner gradient-flow__inner">
+          <div class="gradient-flow__intro">
+            <p class="gradient-flow__eyebrow" data-role="eyebrow">UI Gradient Flow System</p>
+            <h2 id="gradient-flow-title" class="gradient-flow__title" data-role="title">
+              Stabilise the descent pathway
+            </h2>
+            <p class="gradient-flow__description" data-role="description">
+              A multi-layer field tunes gradients, tempo, and attention feedback so the descent through Earth Online feels
+              stable, expressive, and energy-aware.
+            </p>
+            <dl class="gradient-flow__tempo-readout">
+              <div class="gradient-flow__metric">
+                <dt data-role="tempo-label">Current tempo</dt>
+                <dd id="gradient-tempo-readout">1.00x</dd>
+              </div>
+              <div class="gradient-flow__metric">
+                <dt data-role="energy-label">Energy phase</dt>
+                <dd id="gradient-energy-readout">Balanced resonance</dd>
+              </div>
+            </dl>
+          </div>
+          <div class="gradient-flow__layers" data-role="layers"></div>
         </div>
       </section>
 

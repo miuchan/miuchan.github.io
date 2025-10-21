@@ -30,6 +30,10 @@ const allianceCounts = {
     : 0
 };
 
+const GRADIENT_TEMPO_BASE = 24;
+const GRADIENT_TEMPO_MIN = 12;
+const GRADIENT_TEMPO_MAX = 48;
+
 const baseTranslations = {
   zh: {
     documentTitle: 'Earth Online · 体验实验室',
@@ -158,8 +162,64 @@ const baseTranslations = {
       controlAria: '星球自转与信号调谐面板',
       rotationLabel: '星球自转速度',
       rotationHint: '拖动调节星球自转与视角。',
+      gradientLabel: '梯度流节奏',
+      gradientHint: '调节极光节奏，让梯度下降更顺滑自然。',
+      gradientMinLabel: '宁静',
+      gradientMaxLabel: '澎湃',
       pulseButton: '激活遥测脉冲',
       pulseHint: '随机增强信号，观察指标变化。'
+    },
+    gradientFlow: {
+      eyebrow: 'UI 梯度流系统',
+      title: '稳定下降路径，调谐信息能量场',
+      description:
+        '通过多层信息密度与节奏引擎构成的能量场，让梯度下降过程保持稳定、愉悦且低能耗。',
+      tempoLabel: '当前节奏',
+      energyLabel: '能量阶段',
+      energyStates: {
+        calm: '宁静漂移',
+        balanced: '共振稳态',
+        rapid: '加速跃迁'
+      },
+      techLabel: '技术栈',
+      layers: [
+        {
+          id: 'gradient-system',
+          index: '01',
+          title: 'UI_GradientFlow_System',
+          description: '构建全局梯度节奏与动画控制系统，让界面随行星节奏而律动。',
+          tech: 'TailwindCSS · Framer Motion',
+          points: [
+            '以 Tailwind 风格设计令牌同步节奏、色彩与光场。',
+            '借助 Framer Motion 缓动曲线统一全局动画流形。',
+            '实时广播节奏参数至 WebGL、布局与交互节点。'
+          ]
+        },
+        {
+          id: 'layer-dissipation',
+          index: '02',
+          title: 'Layer_Dissipation_Layout',
+          description: '设计多层信息密度布局，以自然过渡引导梯度下降。',
+          tech: 'React 布局 · IntersectionObserver',
+          points: [
+            '堆叠层次密度并保持柔和的视差节奏。',
+            '使用 IntersectionObserver 触发显隐，平滑耗散能量。',
+            '在层级之间插值节奏，降低信息震荡。'
+          ]
+        },
+        {
+          id: 'attention-feedback',
+          index: '03',
+          title: 'Attention_Curve_Feedback',
+          description: '为交互注入顺滑反馈与能量散逸动画，让动作更加自然。',
+          tech: 'Framer 动效启发 · useTransition 思路',
+          points: [
+            '指针跟踪的能量光斑在交互时聚焦并舒缓释放。',
+            '焦点与无障碍状态共享柔滑的缓入缓出曲线。',
+            '交互完成后回收残余能量，保持界面平衡。'
+          ]
+        }
+      ]
     },
     architecture: {
       eyebrow: 'Recursive Gradient Descent',
@@ -818,8 +878,65 @@ const baseTranslations = {
       controlAria: 'Planet rotation and signal tuning console',
       rotationLabel: 'Planet rotation speed',
       rotationHint: 'Drag to re-time the orbital rotation and tilt the view.',
+      gradientLabel: 'Gradient flow tempo',
+      gradientHint: 'Tune the aurora tempo so the descent feels natural and efficient.',
+      gradientMinLabel: 'Calm',
+      gradientMaxLabel: 'Vivid',
       pulseButton: 'Trigger telemetry pulse',
       pulseHint: 'Inject a playful burst to the metrics and watch them react.'
+    },
+    gradientFlow: {
+      eyebrow: 'UI Gradient Flow System',
+      title: 'Stabilise the descent pathway',
+      description:
+        'A layered information field orchestrates gradient tempo, layout dissipation, and attention feedback so Earth Online stays fast, natural, and low energy.',
+      tempoLabel: 'Current tempo',
+      energyLabel: 'Energy phase',
+      energyStates: {
+        calm: 'Calm drift',
+        balanced: 'Balanced resonance',
+        rapid: 'Accelerated cascade'
+      },
+      techLabel: 'Tech',
+      layers: [
+        {
+          id: 'gradient-system',
+          index: '01',
+          title: 'UI_GradientFlow_System',
+          description:
+            'Implement a global gradient tempo and animation control system that keeps the interface in sync.',
+          tech: 'TailwindCSS · Framer Motion',
+          points: [
+            'Broadcast Tailwind-style tokens to steer gradient tempo.',
+            'Use Framer Motion easing curves for system-wide animation.',
+            'Continuously instrument the field so every surface listens to the tempo.'
+          ]
+        },
+        {
+          id: 'layer-dissipation',
+          index: '02',
+          title: 'Layer_Dissipation_Layout',
+          description: 'Design a multi-layer information density layout with natural transitions.',
+          tech: 'React layout · IntersectionObserver',
+          points: [
+            'Stack layered densities with gentle parallax offsets.',
+            'Trigger IntersectionObserver reveals to dissipate energy smoothly.',
+            'Blend depth cues to keep the descent faster and lower effort.'
+          ]
+        },
+        {
+          id: 'attention-feedback',
+          index: '03',
+          title: 'Attention_Curve_Feedback',
+          description: 'Implement smooth feedback and energy dissipation animations for user interactions.',
+          tech: 'Framer-inspired feedback · useTransition heuristics',
+          points: [
+            'Track pointer energy blooms for hover and focus states.',
+            'Apply easing curves inspired by useTransition for releases.',
+            'Let each interaction shed residual energy back into the field.'
+          ]
+        }
+      ]
     },
     architecture: {
       eyebrow: 'Recursive Gradient Descent',
@@ -1402,6 +1519,7 @@ const state = {
 
 const interactiveState = {
   rotationSliderValue: 80,
+  gradientTempoValue: GRADIENT_TEMPO_BASE,
   telemetryPulse: null,
   commandPaletteOpen: false,
   commandPaletteReturnFocus: null
@@ -1754,6 +1872,26 @@ function renderHeroControls(lang) {
     pulseHint.textContent = heroConfig.pulseHint;
   }
 
+  const gradientLabel = control.querySelector('[data-role="gradient-label"]');
+  if (gradientLabel) {
+    gradientLabel.textContent = heroConfig.gradientLabel || 'Gradient flow tempo';
+  }
+
+  const gradientHint = control.querySelector('[data-role="gradient-hint"]');
+  if (gradientHint) {
+    gradientHint.textContent = heroConfig.gradientHint || '';
+  }
+
+  const gradientMin = control.querySelector('[data-role="gradient-min"]');
+  if (gradientMin) {
+    gradientMin.textContent = heroConfig.gradientMinLabel || '';
+  }
+
+  const gradientMax = control.querySelector('[data-role="gradient-max"]');
+  if (gradientMax) {
+    gradientMax.textContent = heroConfig.gradientMaxLabel || '';
+  }
+
   const slider = document.getElementById('hero-rotation');
   const display = document.getElementById('rotation-speed-display');
   if (slider && display) {
@@ -1778,6 +1916,28 @@ function renderHeroControls(lang) {
     }
   }
 
+  const gradientSlider = document.getElementById('gradient-tempo');
+  if (gradientSlider) {
+    const updateGradientTempo = (rawValue) => {
+      const numeric = Number(rawValue);
+      if (Number.isNaN(numeric)) return;
+      setGradientTempo(numeric);
+    };
+
+    gradientSlider.value = String(interactiveState.gradientTempoValue);
+    gradientSlider.setAttribute('aria-valuemin', gradientSlider.min || String(GRADIENT_TEMPO_MIN));
+    gradientSlider.setAttribute('aria-valuemax', gradientSlider.max || String(GRADIENT_TEMPO_MAX));
+    gradientSlider.setAttribute('aria-valuenow', gradientSlider.value);
+    gradientSlider.setAttribute('aria-label', heroConfig.gradientLabel || 'Gradient flow tempo');
+
+    if (!gradientSlider.dataset.bound) {
+      gradientSlider.dataset.bound = 'true';
+      const handleGradientInput = (event) => updateGradientTempo(event.target.value);
+      gradientSlider.addEventListener('input', handleGradientInput);
+      gradientSlider.addEventListener('change', handleGradientInput);
+    }
+  }
+
   if (pulseButton && !pulseButton.dataset.bound) {
     pulseButton.dataset.bound = 'true';
     pulseButton.addEventListener('click', () => {
@@ -1785,6 +1945,237 @@ function renderHeroControls(lang) {
       earthSceneControls.pulseWobble();
     });
   }
+
+  refreshGradientTempoUI(lang);
+}
+
+function setGradientTempo(value) {
+  const numeric = Number(value);
+  const safeValue = Number.isFinite(numeric) ? numeric : GRADIENT_TEMPO_BASE;
+  const clamped = Math.min(Math.max(safeValue, GRADIENT_TEMPO_MIN), GRADIENT_TEMPO_MAX);
+  interactiveState.gradientTempoValue = clamped;
+  const ratio = clamped / GRADIENT_TEMPO_BASE;
+  document.documentElement.style.setProperty('--gradient-tempo', `${clamped}s`);
+  document.documentElement.style.setProperty('--gradient-tempo-ratio', ratio.toFixed(3));
+  refreshGradientTempoUI();
+}
+
+function resolveGradientEnergyPhase(ratio, lang = state.language) {
+  const config = getLocalizedValue(lang, 'gradientFlow') || {};
+  const states = config.energyStates || {};
+  if (ratio <= 0.85) {
+    return states.calm || states.balanced || '';
+  }
+  if (ratio >= 1.2) {
+    return states.rapid || states.balanced || '';
+  }
+  return states.balanced || '';
+}
+
+function refreshGradientTempoUI(lang = state.language) {
+  const ratio = interactiveState.gradientTempoValue / GRADIENT_TEMPO_BASE;
+  const display = document.getElementById('gradient-tempo-display');
+  if (display) {
+    display.textContent = `${ratio.toFixed(2)}x`;
+  }
+
+  const slider = document.getElementById('gradient-tempo');
+  if (slider) {
+    slider.value = String(interactiveState.gradientTempoValue);
+    slider.setAttribute('aria-valuenow', slider.value);
+  }
+
+  const readout = document.getElementById('gradient-tempo-readout');
+  if (readout) {
+    readout.textContent = `${ratio.toFixed(2)}x`;
+  }
+
+  const energyReadout = document.getElementById('gradient-energy-readout');
+  if (energyReadout) {
+    energyReadout.textContent = resolveGradientEnergyPhase(ratio, lang);
+  }
+}
+
+let gradientLayerObserver = null;
+
+function initializeGradientFlowSystem() {
+  setGradientTempo(interactiveState.gradientTempoValue);
+  activateGradientLayerObserver();
+}
+
+function renderGradientFlowSection(lang) {
+  const section = document.getElementById('gradient-flow');
+  if (!section) return;
+
+  const config = getLocalizedValue(lang, 'gradientFlow');
+  if (!config) return;
+
+  const setRoleText = (selector, value) => {
+    const element = section.querySelector(selector);
+    if (element) {
+      element.textContent = value || '';
+    }
+  };
+
+  setRoleText('[data-role="eyebrow"]', config.eyebrow);
+  setRoleText('[data-role="title"]', config.title);
+  setRoleText('[data-role="description"]', config.description);
+  setRoleText('[data-role="tempo-label"]', config.tempoLabel);
+  setRoleText('[data-role="energy-label"]', config.energyLabel);
+
+  const layersContainer = section.querySelector('[data-role="layers"]');
+  if (layersContainer) {
+    layersContainer.innerHTML = '';
+    if (Array.isArray(config.layers)) {
+      config.layers.forEach((layer, index) => {
+        const card = document.createElement('article');
+        card.className = 'gradient-layer';
+        card.dataset.gradientLayer = layer.id || `layer-${index + 1}`;
+
+        const indexEl = document.createElement('span');
+        indexEl.className = 'gradient-layer__index';
+        indexEl.textContent = layer.index || String(index + 1).padStart(2, '0');
+        card.appendChild(indexEl);
+
+        const title = document.createElement('h3');
+        title.className = 'gradient-layer__title';
+        title.textContent = layer.title || '';
+        card.appendChild(title);
+
+        if (layer.description) {
+          const description = document.createElement('p');
+          description.className = 'gradient-layer__description';
+          description.textContent = layer.description;
+          card.appendChild(description);
+        }
+
+        if (layer.tech) {
+          const meta = document.createElement('div');
+          meta.className = 'gradient-layer__meta';
+          if (config.techLabel) {
+            const label = document.createElement('span');
+            label.textContent = config.techLabel;
+            meta.appendChild(label);
+          }
+          const tech = document.createElement('span');
+          tech.className = 'gradient-layer__tech';
+          tech.textContent = layer.tech;
+          meta.appendChild(tech);
+          card.appendChild(meta);
+        }
+
+        if (Array.isArray(layer.points) && layer.points.length > 0) {
+          const list = document.createElement('ul');
+          list.className = 'gradient-layer__list';
+          layer.points.forEach((point) => {
+            const item = document.createElement('li');
+            item.textContent = point;
+            list.appendChild(item);
+          });
+          card.appendChild(list);
+        }
+
+        layersContainer.appendChild(card);
+      });
+    }
+  }
+
+  activateGradientLayerObserver();
+}
+
+function activateGradientLayerObserver() {
+  if (typeof IntersectionObserver === 'undefined') return;
+  if (!gradientLayerObserver) {
+    gradientLayerObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const element = entry.target;
+          if (!(element instanceof HTMLElement)) return;
+          if (entry.isIntersecting) {
+            element.classList.add('is-visible');
+          } else if (entry.boundingClientRect.top > 0) {
+            element.classList.remove('is-visible');
+          }
+        });
+      },
+      { threshold: 0.35, rootMargin: '0px 0px -10% 0px' }
+    );
+  }
+
+  const layers = document.querySelectorAll('[data-gradient-layer]');
+  layers.forEach((layer) => gradientLayerObserver.observe(layer));
+}
+
+function bindAttentionCurve() {
+  const elements = document.querySelectorAll('[data-attention-curve]');
+  elements.forEach((element) => {
+    if (!(element instanceof HTMLElement)) return;
+    if (element.dataset.attentionCurveBound === 'true') return;
+    element.dataset.attentionCurveBound = 'true';
+
+    const state = {
+      targetX: 0.5,
+      targetY: 0.5,
+      currentX: 0.5,
+      currentY: 0.5,
+      raf: null
+    };
+
+    const update = () => {
+      state.currentX += (state.targetX - state.currentX) * 0.18;
+      state.currentY += (state.targetY - state.currentY) * 0.18;
+      element.style.setProperty('--attention-x', String(state.currentX));
+      element.style.setProperty('--attention-y', String(state.currentY));
+      if (Math.abs(state.targetX - state.currentX) > 0.001 || Math.abs(state.targetY - state.currentY) > 0.001) {
+        state.raf = requestAnimationFrame(update);
+      } else {
+        state.raf = null;
+      }
+    };
+
+    const schedule = () => {
+      if (state.raf == null) {
+        state.raf = requestAnimationFrame(update);
+      }
+    };
+
+    const reset = () => {
+      state.targetX = 0.5;
+      state.targetY = 0.5;
+      schedule();
+    };
+
+    element.addEventListener('pointermove', (event) => {
+      const rect = element.getBoundingClientRect();
+      if (!rect.width || !rect.height) return;
+      const x = (event.clientX - rect.left) / rect.width;
+      const y = (event.clientY - rect.top) / rect.height;
+      state.targetX = Math.min(Math.max(x, 0.02), 0.98);
+      state.targetY = Math.min(Math.max(y, 0.02), 0.98);
+      schedule();
+    });
+
+    element.addEventListener('pointerleave', () => {
+      reset();
+    });
+
+    element.addEventListener('focus', () => {
+      reset();
+    });
+
+    element.addEventListener('blur', () => {
+      reset();
+    });
+
+    element.addEventListener('pointerdown', () => {
+      element.classList.add('attention-curve--active');
+      window.setTimeout(() => {
+        element.classList.remove('attention-curve--active');
+      }, 240);
+    });
+
+    reset();
+  });
 }
 
 function renderStackLayers(lang) {
@@ -2818,11 +3209,15 @@ function applyLanguage(lang) {
   renderChronicle(lang);
   renderAlliances(lang);
   renderDock(lang);
+  renderGradientFlowSection(lang);
+  refreshGradientTempoUI(lang);
+  bindAttentionCurve();
   setupCommandPalette(lang);
 }
 
 function initialize() {
   applyLanguage(state.language);
+  initializeGradientFlowSystem();
   initEarthScene();
   bindHeroPointer();
   bindCommandPaletteEvents();
