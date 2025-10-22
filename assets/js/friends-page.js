@@ -29,12 +29,12 @@ const baseTranslations = {
       subtitle: '体验实验室 · Planetary Experience Lab',
       ariaLabel: 'Earth Online 实验室标识'
     },
-    nav: {
-      home: '主页',
-      labs: '实验矩阵',
-      alliances: '友链星港',
-      contact: '联络站',
-      ariaLabel: '主导航'
+    primaryNav: {
+      ariaLabel: '主导航',
+      blog: '博客',
+      papers: '论文',
+      labs: '实验室',
+      friends: '友链'
     },
     hero: {
       eyebrow: 'Alliance Network',
@@ -77,12 +77,12 @@ const baseTranslations = {
       subtitle: 'Planetary Experience Lab',
       ariaLabel: 'Earth Online lab mark'
     },
-    nav: {
-      home: 'Home',
-      labs: 'Lab Matrix',
-      alliances: 'Alliance Harbor',
-      contact: 'Contact',
-      ariaLabel: 'Primary navigation'
+    primaryNav: {
+      ariaLabel: 'Primary navigation',
+      blog: 'Blog',
+      papers: 'Research',
+      labs: 'Labs',
+      friends: 'Friends'
     },
     hero: {
       eyebrow: 'Alliance Network',
