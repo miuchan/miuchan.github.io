@@ -4,6 +4,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Earth Online · Experience Lab</title>
+    <meta
+      name="description"
+      content="Earth Online is a planetary experience lab that prototypes research consoles, alliance networks, and narrative interfaces."
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -13,646 +17,179 @@
     <link rel="stylesheet" href="assets/css/styles.css" />
   </head>
   <body>
-    <div class="gradient-flow-system" aria-hidden="true">
-      <div class="gradient-flow-system__layer gradient-flow-system__layer--primary"></div>
-      <div class="gradient-flow-system__layer gradient-flow-system__layer--secondary"></div>
-      <div class="gradient-flow-system__layer gradient-flow-system__layer--tertiary"></div>
-    </div>
-    <header class="site-header">
-      <div class="inner header__inner">
-        <div class="brand" aria-label="Earth Online lab mark" data-i18n-attr="aria-label:brand.ariaLabel">
-          <span class="brand__title">Earth Online</span>
-          <span class="brand__subtitle" data-i18n="brand.subtitle">Planetary Experience Lab</span>
-        </div>
-        <nav
-          class="site-nav site-nav--links"
-          aria-label="Primary navigation"
-          data-i18n-attr="aria-label:primaryNav.ariaLabel"
-        >
-          <a href="public/blog/index.html" data-i18n="primaryNav.blog">博客</a>
-          <a href="docs/research.html" data-i18n="primaryNav.papers">论文</a>
-          <a href="#decks" data-i18n="primaryNav.labs">实验室</a>
-          <a href="friends/index.html" data-i18n="primaryNav.friends">友链</a>
+    <header class="top-bar" id="top">
+      <div class="container top-bar__inner">
+        <a class="brand" href="#hero" data-i18n="brand.name">Earth Online</a>
+        <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="primary-nav">Menu</button>
+        <nav class="nav" id="primary-nav" aria-label="Primary navigation">
+          <ul class="nav__list">
+            <li><a href="#mission" data-i18n="nav.mission">Mission</a></li>
+            <li><a href="#labs" data-i18n="nav.labs">Labs</a></li>
+            <li><a href="#research" data-i18n="nav.research">Research</a></li>
+            <li><a href="#signals" data-i18n="nav.signals">Signals</a></li>
+            <li><a href="#alliances" data-i18n="nav.alliances">Alliances</a></li>
+            <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
+            <li><a href="public/blog/index.html" data-i18n="nav.blog">Blog</a></li>
+          </ul>
         </nav>
-        <div
-          class="header__status"
-          id="header-status"
-          role="list"
-          aria-label="Earth Online live indicators"
-          data-i18n-attr="aria-label:header.statusAria"
-        ></div>
-        <nav
-          class="site-nav site-nav--tree"
-          id="site-nav"
-          aria-label="Primary navigation"
-          data-i18n-attr="aria-label:nav.ariaLabel"
-        ></nav>
-        <div class="header__actions">
-          <button
-            class="header__action"
-            id="command-toggle"
-            type="button"
-            aria-haspopup="dialog"
-            aria-expanded="false"
-            aria-controls="command-palette"
-            data-i18n="nav.commandLabel"
-            data-i18n-attr="aria-label:nav.commandLabel"
-          >
-            Command Matrix
-          </button>
-          <select
-            class="language-toggle"
-            id="language-toggle"
-            data-language-toggle
-            aria-label="Select language"
-            data-i18n-attr="aria-label:language.toggleLabel"
-          ></select>
+        <div class="top-bar__actions">
+          <select id="language-select" class="language-select" aria-label="Change language">
+            <option value="en">English</option>
+            <option value="zh">中文</option>
+          </select>
+          <a class="button button--ghost" href="docs/research.html" data-i18n="nav.researchLibrary">Research Library</a>
         </div>
       </div>
     </header>
 
     <main>
-      <section id="hero" class="hero" aria-labelledby="hero-title">
-        <canvas id="earth-canvas" aria-hidden="true"></canvas>
-        <div class="hero__overlay">
-          <div class="inner hero__content">
-            <div class="hero__text">
-              <p class="hero__eyebrow" data-i18n="hero.eyebrow">Planetary Experience Interface</p>
-              <h1 id="hero-title" data-i18n="hero.title">Earth Online: planetary experience console</h1>
-              <p class="hero__description" data-i18n="hero.description">
-                A continuously evolving operating room for Earth: WebGL engines, convex information architecture, and alliance networks compress research, prototypes, and protocols into a navigable spatial console.
-              </p>
-              <div
-                class="hero__cta"
-                role="group"
-                aria-label="Quick access"
-                data-i18n-attr="aria-label:hero.ctaAria"
-              >
-                <a class="button" href="#decks" data-i18n="hero.primaryCta" data-attention-curve>
-                  Enter the experience decks
-                </a>
-                <a
-                  class="button button--ghost"
-                  href="#dock"
-                  data-i18n="hero.secondaryCta"
-                  data-attention-curve
-                  >Navigate to docking station</a
-                >
-              </div>
-              <div
-                class="hero__control"
-                id="hero-control"
-                role="region"
-                aria-live="polite"
-                data-i18n-attr="aria-label:hero.controlAria"
-              >
-                <div class="hero__control-slider">
-                  <label for="hero-rotation" data-role="rotation-label" data-i18n="hero.rotationLabel"
-                    >Planet rotation speed</label
-                  >
-                  <div class="hero__control-track">
-                    <input
-                      type="range"
-                      id="hero-rotation"
-                      min="0"
-                      max="160"
-                      step="5"
-                      value="80"
-                      aria-describedby="rotation-speed-display"
-                    />
-                    <span class="hero__slider-value" id="rotation-speed-display">80%</span>
-                  </div>
-                  <p class="hero__control-hint" data-role="rotation-hint" data-i18n="hero.rotationHint">
-                    Drag to re-time the orbital rotation and tilt the view.
-                  </p>
-                </div>
-                <div class="hero__control-slider hero__control-slider--gradient">
-                  <div class="hero__control-headline">
-                    <label for="gradient-tempo" data-role="gradient-label">Gradient flow tempo</label>
-                    <span class="hero__slider-value" id="gradient-tempo-display">1.00x</span>
-                  </div>
-                  <div class="hero__control-track hero__control-track--bounded">
-                    <span class="hero__control-bound hero__control-bound--min" data-role="gradient-min">Calm</span>
-                    <input
-                      type="range"
-                      id="gradient-tempo"
-                      min="12"
-                      max="48"
-                      step="4"
-                      value="24"
-                      aria-describedby="gradient-tempo-display gradient-tempo-hint"
-                    />
-                    <span class="hero__control-bound hero__control-bound--max" data-role="gradient-max">Vivid</span>
-                  </div>
-                  <p class="hero__control-hint" data-role="gradient-hint" id="gradient-tempo-hint">
-                    Tune the aurora tempo to match the gradient descent rhythm.
-                  </p>
-                </div>
-                <div class="hero__control-actions">
-                  <button
-                    class="button button--ghost"
-                    type="button"
-                    id="telemetry-pulse"
-                    data-role="pulse-button"
-                    data-i18n="hero.pulseButton"
-                    data-attention-curve
-                  >
-                    Trigger telemetry pulse
-                  </button>
-                  <p class="hero__control-hint" data-role="pulse-hint" data-i18n="hero.pulseHint">
-                    Inject a playful burst to the metrics and watch them react.
-                  </p>
-                </div>
-              </div>
+      <section class="hero" id="hero">
+        <div class="container hero__inner">
+          <div class="hero__content">
+            <p class="eyebrow" data-i18n="hero.eyebrow">Planetary experience interface</p>
+            <h1 class="hero__title" data-i18n="hero.title">A control console for future knowledge ecosystems</h1>
+            <p class="hero__description" data-i18n="hero.description">
+              We rebuild Earth as a navigable information nebula. The lab fuses research decks, WebGL experiments, and alliance
+              protocols into one continuously evolving operating system.
+            </p>
+            <div class="hero__actions">
+              <a class="button" href="#labs" data-i18n="hero.primaryCta">Explore experience decks</a>
+              <a class="button button--ghost" href="#contact" data-i18n="hero.secondaryCta">Start a collaboration</a>
             </div>
-            <div class="hero__stats" id="hero-stats" aria-live="polite" role="list"></div>
+            <div class="hero__stats" id="hero-stats"></div>
+          </div>
+          <div class="hero__visual">
+            <div class="orbital-grid" aria-hidden="true">
+              <div class="orbital-grid__ring orbital-grid__ring--outer"></div>
+              <div class="orbital-grid__ring orbital-grid__ring--middle"></div>
+              <div class="orbital-grid__ring orbital-grid__ring--inner"></div>
+              <div class="orbital-grid__planet"></div>
+            </div>
+            <p class="hero__caption" data-i18n="hero.caption">
+              Signals stream through the lab every day. We simulate new narratives, protocols, and interfaces, then ship them to
+              production.
+            </p>
           </div>
         </div>
       </section>
 
-      <section
-        id="priority-map"
-        class="section priority-map"
-        aria-labelledby="priority-map-title"
-      >
-        <div class="inner priority-map__inner">
-          <header class="section__header priority-map__header">
-            <p class="section__eyebrow" data-i18n="priorityGuide.eyebrow">Gradient navigation</p>
-            <h2 id="priority-map-title" data-i18n="priorityGuide.title">
-              Signal guide: recursive gradient descent map
-            </h2>
-            <p class="priority-map__description" data-i18n="priorityGuide.description">
-              Recursive gradient descent recalibrates every surface so you move with less friction.
+      <section class="section" id="mission">
+        <div class="container section__inner">
+          <div class="section__header">
+            <p class="eyebrow" data-i18n="mission.eyebrow">Mission layers</p>
+            <h2 data-i18n="mission.title">Three tracks for building the planetary console</h2>
+            <p class="section__description" data-i18n="mission.description">
+              Each track links research, prototyping, and alliance operations into one orbital loop. Together they keep Earth
+              Online’s operating model alive.
             </p>
-          </header>
-          <div class="priority-map__content">
-            <section class="priority-map__panel" aria-labelledby="priority-summary-title">
-              <h3 id="priority-summary-title" data-i18n="priorityGuide.summaryTitle">Signal summary</h3>
-              <p class="priority-map__intro" data-i18n="priorityGuide.summaryIntro">
-                Recursive weighting keeps the descent focused on the densest nodes.
-              </p>
-              <p class="priority-map__lede" id="priority-summary-primary"></p>
-              <p class="priority-map__lede priority-map__lede--subtle" id="priority-summary-secondary"></p>
-              <dl class="priority-map__metrics" id="priority-map-metrics"></dl>
-            </section>
-            <section class="priority-map__panel" aria-labelledby="priority-focus-title">
-              <h3 id="priority-focus-title" data-i18n="priorityGuide.focusTitle">Priority waypoints</h3>
-              <p class="priority-map__intro" data-i18n="priorityGuide.focusDescription">
-                Follow these sections to harvest the densest information first.
-              </p>
-              <div class="priority-map__list" id="priority-map-list" role="list"></div>
-            </section>
-            <section
-              class="priority-map__panel priority-map__panel--map"
-              aria-labelledby="priority-orbits-title"
+          </div>
+          <div class="card-grid" id="mission-grid"></div>
+        </div>
+      </section>
+
+      <section class="section section--accent" id="labs">
+        <div class="container section__inner">
+          <div class="section__header">
+            <p class="eyebrow" data-i18n="labs.eyebrow">Experience decks</p>
+            <h2 data-i18n="labs.title">Active laboratories shipping in production</h2>
+            <p class="section__description" data-i18n="labs.description">
+              We maintain a rotating fleet of experiments. Each deck links interface research with real usage and telemetry.
+            </p>
+          </div>
+          <div class="deck-grid" id="lab-grid"></div>
+        </div>
+      </section>
+
+      <section class="section" id="research">
+        <div class="container section__inner">
+          <div class="section__header">
+            <p class="eyebrow" data-i18n="research.eyebrow">Research library</p>
+            <h2 data-i18n="research.title">Mathematical proofs and lab blueprints</h2>
+            <p class="section__description" data-i18n="research.description">
+              Our research notes model economic systems, simulation hardware, and narrative governance. Read the latest
+              manuscripts or explore the full archive.
+            </p>
+          </div>
+          <div class="research-highlight" id="research-highlight"></div>
+          <a class="inline-link" href="docs/research.html" data-i18n="research.cta">Browse the full library →</a>
+        </div>
+      </section>
+
+      <section class="section section--split" id="signals">
+        <div class="container section__inner">
+          <div class="section__header">
+            <p class="eyebrow" data-i18n="signals.eyebrow">Signal log</p>
+            <h2 data-i18n="signals.title">Recent transmissions from the lab</h2>
+            <p class="section__description" data-i18n="signals.description">
+              The signal log keeps track of new deployments, essays, and alliance events. Follow the cadence and plug into the
+              network.
+            </p>
+          </div>
+          <div class="timeline" id="signal-timeline"></div>
+        </div>
+      </section>
+
+      <section class="section section--accent" id="alliances">
+        <div class="container section__inner">
+          <div class="section__header">
+            <p class="eyebrow" data-i18n="alliances.eyebrow">Alliance harbor</p>
+            <h2 data-i18n="alliances.title">Partners shaping the experience network</h2>
+            <p class="section__description" data-i18n="alliances.description">
+              We maintain an alliance network of independent labs, studios, and communities. They help us test new protocols and
+              activate joint missions.
+            </p>
+          </div>
+          <div class="alliance-grid" id="alliance-grid"></div>
+          <a class="inline-link" href="friends/index.html" data-i18n="alliances.cta">Meet the alliance harbor →</a>
+        </div>
+      </section>
+
+      <section class="section section--contrast" id="contact">
+        <div class="container contact">
+          <div class="contact__content">
+            <p class="eyebrow" data-i18n="contact.eyebrow">Docking station</p>
+            <h2 data-i18n="contact.title">Launch a joint mission with Earth Online</h2>
+            <p class="contact__description" data-i18n="contact.description">
+              Tell us about the system you want to build. We’ll assemble a bespoke team across research, design, and engineering
+              to bring it to life.
+            </p>
+          </div>
+          <div class="contact__actions">
+            <a class="button" href="mailto:hello@earthonline.systems" data-i18n="contact.primary">Email the lab</a>
+            <a class="button button--ghost" href="https://github.com/miuchan" target="_blank" rel="noopener" data-i18n="contact.secondary"
+              >Visit our GitHub</a
             >
-              <h3 id="priority-orbits-title" data-i18n="priorityGuide.orbits.title">Galaxy trajectories</h3>
-              <p class="priority-map__intro" data-i18n="priorityGuide.orbits.intro">
-                Select a flight path based on what you need to accomplish and we’ll surface the fastest route.
-              </p>
-              <div class="priority-map__orbits" role="list">
-                <article class="orbit-card" aria-labelledby="orbit-explore-title" role="listitem">
-                  <div class="orbit-card__header">
-                    <span class="orbit-card__tag" data-i18n="priorityGuide.orbits.explore.tag">Explorer</span>
-                    <h4 id="orbit-explore-title" class="orbit-card__title" data-i18n="priorityGuide.orbits.explore.title">
-                      Explorer orbit
-                    </h4>
-                  </div>
-                  <p class="orbit-card__description" data-i18n="priorityGuide.orbits.explore.description">
-                    For visitors scouting immersive experiences and simulations.
-                  </p>
-                  <ul class="orbit-card__routes">
-                    <li>
-                      <a
-                        class="orbit-card__link"
-                        href="#decks"
-                        data-i18n="priorityGuide.orbits.explore.routes.0.label"
-                        data-i18n-attr="aria-label:priorityGuide.orbits.explore.routes.0.aria"
-                      >
-                        Launch experience decks
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        class="orbit-card__link orbit-card__link--subtle"
-                        href="#signals"
-                        data-i18n="priorityGuide.orbits.explore.routes.1.label"
-                        data-i18n-attr="aria-label:priorityGuide.orbits.explore.routes.1.aria"
-                      >
-                        Check live telemetry
-                      </a>
-                    </li>
-                  </ul>
-                </article>
-                <article class="orbit-card" aria-labelledby="orbit-build-title" role="listitem">
-                  <div class="orbit-card__header">
-                    <span class="orbit-card__tag" data-i18n="priorityGuide.orbits.build.tag">Builder</span>
-                    <h4 id="orbit-build-title" class="orbit-card__title" data-i18n="priorityGuide.orbits.build.title">
-                      Builder orbit
-                    </h4>
-                  </div>
-                  <p class="orbit-card__description" data-i18n="priorityGuide.orbits.build.description">
-                    For engineers and operators looking for system blueprints and governance rhythms.
-                  </p>
-                  <ul class="orbit-card__routes">
-                    <li>
-                      <a
-                        class="orbit-card__link"
-                        href="#stack"
-                        data-i18n="priorityGuide.orbits.build.routes.0.label"
-                        data-i18n-attr="aria-label:priorityGuide.orbits.build.routes.0.aria"
-                      >
-                        Study the planetary stack
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        class="orbit-card__link orbit-card__link--subtle"
-                        href="#council"
-                        data-i18n="priorityGuide.orbits.build.routes.1.label"
-                        data-i18n-attr="aria-label:priorityGuide.orbits.build.routes.1.aria"
-                      >
-                        Review AI council transcripts
-                      </a>
-                    </li>
-                  </ul>
-                </article>
-                <article class="orbit-card" aria-labelledby="orbit-alliance-title" role="listitem">
-                  <div class="orbit-card__header">
-                    <span class="orbit-card__tag" data-i18n="priorityGuide.orbits.alliance.tag">Alliances</span>
-                    <h4
-                      id="orbit-alliance-title"
-                      class="orbit-card__title"
-                      data-i18n="priorityGuide.orbits.alliance.title"
-                    >
-                      Alliance orbit
-                    </h4>
-                  </div>
-                  <p class="orbit-card__description" data-i18n="priorityGuide.orbits.alliance.description">
-                    For collaborators seeking partners, channels, and contact signals.
-                  </p>
-                  <ul class="orbit-card__routes">
-                    <li>
-                      <a
-                        class="orbit-card__link"
-                        href="#alliances"
-                        data-i18n="priorityGuide.orbits.alliance.routes.0.label"
-                        data-i18n-attr="aria-label:priorityGuide.orbits.alliance.routes.0.aria"
-                      >
-                        Browse alliance harbor
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        class="orbit-card__link orbit-card__link--subtle"
-                        href="#dock"
-                        data-i18n="priorityGuide.orbits.alliance.routes.1.label"
-                        data-i18n-attr="aria-label:priorityGuide.orbits.alliance.routes.1.aria"
-                      >
-                        Dock and open a channel
-                      </a>
-                    </li>
-                  </ul>
-                </article>
-              </div>
-            </section>
           </div>
-        </div>
-      </section>
-
-      <section
-        id="mission-lanes"
-        class="section mission-lanes"
-        aria-labelledby="mission-lanes-title"
-      >
-        <div class="inner mission-lanes__inner">
-          <header class="section__header mission-lanes__header">
-            <p class="section__eyebrow" data-i18n="missionLanes.eyebrow">Mission routing</p>
-            <h2 id="mission-lanes-title" data-i18n="missionLanes.title">Choose your orbit and objective</h2>
-            <p data-i18n="missionLanes.intro">
-              Earth Online now behaves like a universe simulator: each lane is a curated trajectory for a different intent.
-              Pick the one that matches your focus to jump into the right systems instantly.
-            </p>
-          </header>
-          <div class="mission-lanes__grid" role="list">
-            <article class="mission-card" aria-labelledby="mission-explorer-title" role="listitem">
-              <header class="mission-card__header">
-                <span class="mission-card__tag" data-i18n="missionLanes.explorer.tag">Exploration orbit</span>
-                <h3 id="mission-explorer-title" class="mission-card__title" data-i18n="missionLanes.explorer.title">
-                  Exploration orbit · sense the simulations
-                </h3>
-              </header>
-              <p class="mission-card__description" data-i18n="missionLanes.explorer.description">
-                Ideal if you want to experience playable prototypes, climate rehearsals, and sensory storytelling.
-              </p>
-              <ul class="mission-card__routes">
-                <li data-i18n="missionLanes.explorer.routes.0">· Enter the Experience Decks to browse interactive labs.</li>
-                <li data-i18n="missionLanes.explorer.routes.1">· Watch the signal hub for live telemetry and changelog.</li>
-                <li data-i18n="missionLanes.explorer.routes.2">· Dive into longform narratives that explain each simulation.</li>
-              </ul>
-              <div class="mission-card__actions">
-                <a class="mission-card__link" href="#decks" data-i18n="missionLanes.explorer.cta">Launch decks</a>
-              </div>
-            </article>
-            <article class="mission-card" aria-labelledby="mission-builder-title" role="listitem">
-              <header class="mission-card__header">
-                <span class="mission-card__tag" data-i18n="missionLanes.builder.tag">Systems orbit</span>
-                <h3 id="mission-builder-title" class="mission-card__title" data-i18n="missionLanes.builder.title">
-                  Systems orbit · assemble the stack
-                </h3>
-              </header>
-              <p class="mission-card__description" data-i18n="missionLanes.builder.description">
-                Use this route if you are building operations, governance, or infrastructure alongside us.
-              </p>
-              <ul class="mission-card__routes">
-                <li data-i18n="missionLanes.builder.routes.0">· Start with the planetary stack to inspect data, orchestration, and perception layers.</li>
-                <li data-i18n="missionLanes.builder.routes.1">· Consult the AI council transcripts for constraints and next strategic jumps.</li>
-                <li data-i18n="missionLanes.builder.routes.2">· Map deck filters to your own pipelines using the mission taxonomy.</li>
-              </ul>
-              <div class="mission-card__actions">
-                <a class="mission-card__link" href="#stack" data-i18n="missionLanes.builder.cta">Open systems view</a>
-              </div>
-            </article>
-            <article class="mission-card" aria-labelledby="mission-alliance-title" role="listitem">
-              <header class="mission-card__header">
-                <span class="mission-card__tag" data-i18n="missionLanes.alliance.tag">Alliance orbit</span>
-                <h3 id="mission-alliance-title" class="mission-card__title" data-i18n="missionLanes.alliance.title">
-                  Alliance orbit · activate collaboration
-                </h3>
-              </header>
-              <p class="mission-card__description" data-i18n="missionLanes.alliance.description">
-                The quickest path for institutions, labs, and communities ready to co-create or request support.
-              </p>
-              <ul class="mission-card__routes">
-                <li data-i18n="missionLanes.alliance.routes.0">· Explore the alliance harbor to see who is already in resonance.</li>
-                <li data-i18n="missionLanes.alliance.routes.1">· Jump to the docking station for direct contact channels.</li>
-                <li data-i18n="missionLanes.alliance.routes.2">· Share your telemetry so we can integrate and extend the simulator.</li>
-              </ul>
-              <div class="mission-card__actions">
-                <a class="mission-card__link" href="#alliances" data-i18n="missionLanes.alliance.cta">Plot alliance route</a>
-              </div>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section
-        id="gradient-flow"
-        class="section gradient-flow"
-        aria-labelledby="gradient-flow-title"
-      >
-        <div class="inner gradient-flow__inner">
-          <div class="gradient-flow__intro">
-            <p class="gradient-flow__eyebrow" data-role="eyebrow">UI Gradient Flow System</p>
-            <h2 id="gradient-flow-title" class="gradient-flow__title" data-role="title">
-              Stabilise the descent pathway
-            </h2>
-            <p class="gradient-flow__description" data-role="description">
-              A multi-layer field tunes gradients, tempo, and attention feedback so the descent through Earth Online feels
-              stable, expressive, and energy-aware.
-            </p>
-            <dl class="gradient-flow__tempo-readout">
-              <div class="gradient-flow__metric">
-                <dt data-role="tempo-label">Current tempo</dt>
-                <dd id="gradient-tempo-readout">1.00x</dd>
-              </div>
-              <div class="gradient-flow__metric">
-                <dt data-role="energy-label">Energy phase</dt>
-                <dd id="gradient-energy-readout">Balanced resonance</dd>
-              </div>
-            </dl>
-          </div>
-          <div class="gradient-flow__layers" data-role="layers"></div>
-        </div>
-      </section>
-
-      <section
-        id="architecture"
-        class="section ia-surface"
-        aria-labelledby="architecture-title"
-      >
-        <div class="inner">
-          <header class="section__header">
-            <p class="section__eyebrow" data-i18n="architecture.eyebrow">Recursive Gradient Descent</p>
-            <h2 id="architecture-title" data-i18n="architecture.title">Recursive gradient descent information architecture</h2>
-            <p data-i18n="architecture.intro">
-              We treat the interface as a function we minimise: every recursive descent re-weights the signals, reduces noise, and amplifies decisive variables so visitors land on the right context and action gateway instantly.
-            </p>
-          </header>
-          <div class="ia-branch">
-            <section id="stack" class="section ia-surface ia-surface--nested" aria-labelledby="stack-title">
-              <div class="inner">
-                <header class="section__header">
-                  <p class="section__eyebrow" data-i18n="stack.eyebrow">Planetary Stack</p>
-                  <h2 id="stack-title" data-i18n="stack.title">The Earth Online planetary stack</h2>
-                  <p data-i18n="stack.intro">
-                    We model Earth Online as a convex, collaborative planetary stack that links data, experience, and alliances. Each layer optimizes the path from signal to action.
-                  </p>
-                </header>
-                <div class="grid" id="stack-grid" aria-live="polite"></div>
-              </div>
-              <div class="ia-branch ia-branch--nested">
-                <section
-                  id="council"
-                  class="section ia-surface ia-surface--nested"
-                  aria-labelledby="council-title"
-                >
-                  <div class="inner">
-                    <header class="section__header">
-                      <p class="section__eyebrow" data-i18n="council.eyebrow">Interpreter Council</p>
-                      <h2 id="council-title" data-i18n="council.title">Earth Online AI council co-reasoning</h2>
-                      <p data-i18n="council.intro">
-                        Two interpreters search for a convex combination of strategies within safety constraints, tackling the question: why can’t your repositories interconnect safely yet? The council records consensus and next moves.
-                      </p>
-                    </header>
-                    <div class="interpreter-layout">
-                      <div
-                        class="interpreter-grid"
-                        id="council-grid"
-                        aria-live="polite"
-                        aria-label="Interpreter profiles"
-                      ></div>
-                      <div class="interpreter-panel">
-                        <div class="interpreter-log" id="council-log" aria-live="polite">
-                          <h3 id="council-log-title" data-i18n="council.logTitle">Joint reasoning transcript</h3>
-                        </div>
-                        <div
-                          class="interpreter-summary"
-                          id="council-summary"
-                          aria-live="polite"
-                          aria-labelledby="council-summary-title"
-                        ></div>
-                      </div>
-                    </div>
-                  </div>
-                </section>
-                <section id="signals" class="section ia-surface ia-surface--nested" aria-labelledby="signals-title">
-                  <div class="inner">
-                    <header class="section__header">
-                      <p class="section__eyebrow" data-i18n="signals.eyebrow">Signal Hub</p>
-                  <h2 id="signals-title" data-i18n="signals.title">Signal hub: live metrics and evolution log</h2>
-                  <p data-i18n="signals.intro">
-                    The planetary stack broadcasts its pulse through telemetry and timelines. Optimized metrics keep you aligned with shifting energy and pivotal transitions.
-                  </p>
-                    </header>
-                    <div class="signals-grid">
-                      <section class="signals-panel" aria-labelledby="signal-telemetry-title">
-                        <h3 id="signal-telemetry-title" data-i18n="signals.telemetry.title">Real-time telemetry array</h3>
-                        <p data-i18n="signals.telemetry.intro">We monitor asset spectra, collaboration cadence, and stability to reveal the live rhythm of Earth Online.</p>
-                        <div class="telemetry" id="signal-telemetry" aria-live="polite"></div>
-                      </section>
-                      <section class="signals-panel" aria-labelledby="chronicle-title">
-                        <h3 id="chronicle-title" data-i18n="signals.chronicle.title">Earth Online evolution log</h3>
-                        <p data-i18n="signals.chronicle.intro">Key jumps chart the orbit from origin to future plans so you can orient instantly.</p>
-                        <div class="timeline" id="chronicle-stream" aria-live="polite"></div>
-                      </section>
-                    </div>
-                  </div>
-                </section>
-              </div>
-            </section>
-            <section id="decks" class="section ia-surface ia-surface--nested" aria-labelledby="decks-title">
-              <div class="inner">
-                <header class="section__header">
-                  <p class="section__eyebrow" data-i18n="decks.eyebrow">Experience Decks</p>
-                  <h2 id="decks-title" data-i18n="decks.title">Experience decks: convex clusters for planetary missions</h2>
-                  <p data-i18n="decks.intro">
-                    Each card unlocks a runnable planetary route. Cluster filters and semantic search help you jump straight to the assets aligned with your mission.
-                  </p>
-                </header>
-                <div class="lab-controls" role="search">
-                  <label class="visually-hidden" for="deck-search" data-i18n="decks.searchLabel">Search decks</label>
-                  <input
-                    id="deck-search"
-                    type="search"
-                    placeholder="Type a keyword (e.g. WebGL, climate, collaboration)"
-                    data-i18n-attr="placeholder:decks.searchPlaceholder"
-                    aria-describedby="deck-summary"
-                  />
-                  <div
-                    class="filter-group"
-                    id="deck-filters"
-                    role="group"
-                    aria-label="Deck filters"
-                    data-i18n-attr="aria-label:decks.filterAria"
-                  ></div>
-                </div>
-                <p id="deck-summary" class="browser-summary"></p>
-                <div class="deck-grid" id="deck-grid" aria-live="polite"></div>
-              </div>
-            </section>
-          </div>
-        </div>
-      </section>
-
-      <section id="research-library" class="section ia-surface" aria-labelledby="research-library-title">
-        <div class="inner">
-          <header class="section__header">
-            <p class="section__eyebrow" data-i18n="researchLibrary.eyebrow">Research library</p>
-            <h2 id="research-library-title" data-i18n="researchLibrary.title">Every research log, now on the homepage</h2>
-            <p data-i18n="researchLibrary.intro">Read every blueprint and proof without leaving this page.</p>
-          </header>
-          <p id="research-library-summary" class="browser-summary"></p>
-          <div class="research-library" id="research-library-list" aria-live="polite"></div>
-        </div>
-      </section>
-
-      <section id="alliances" class="section ia-surface" aria-labelledby="alliances-title">
-        <div class="inner">
-          <header class="section__header">
-            <p class="section__eyebrow" data-i18n="alliances.eyebrow">Alliance Network</p>
-            <h2 id="alliances-title" data-i18n="alliances.title">Alliance harbor: experience labs in resonance</h2>
-            <p data-i18n="alliances.intro">
-              Meet creators and researchers orbiting Earth Online. They stretch design, technology, and narrative in their universes—plot a course and say hello.
-            </p>
-          </header>
-          <div class="alliance-grid" id="alliance-grid" aria-live="polite"></div>
-          <div class="alliance-cta">
-            <a class="button button--ghost" href="friends/index.html" data-i18n="alliances.cta">
-              View full alliance index
-              <span aria-hidden="true">↗</span>
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <section id="friend-network" class="section ia-surface" aria-labelledby="friend-network-title">
-        <div class="inner">
-          <header class="section__header">
-            <p class="section__eyebrow" data-i18n="alliances.network.eyebrow">Alliance atlas</p>
-            <h2 id="friend-network-title" data-i18n="alliances.network.title">Surface the entire partner signal on one screen</h2>
-            <p data-i18n="alliances.network.intro">
-              Scan the seasonal spotlight and collaboration clusters without leaving the homepage.
-            </p>
-          </header>
-          <div class="friend-network" role="list">
-            <section class="friend-network__feature" aria-labelledby="friend-network-feature-heading">
-              <h3 id="friend-network-feature-heading" data-i18n="alliances.network.featuredLabel">Featured orbit</h3>
-              <div id="friend-network-feature" class="friend-network__feature-card" aria-live="polite"></div>
-            </section>
-            <section class="friend-network__clusters" aria-labelledby="friend-network-clusters-heading">
-              <h3 id="friend-network-clusters-heading" data-i18n="alliances.network.clustersLabel">Collaboration clusters</h3>
-              <div id="friend-network-clusters" class="friend-network__cluster-list" aria-live="polite"></div>
-            </section>
-          </div>
-        </div>
-      </section>
-
-      <section id="dock" class="section ia-surface" aria-labelledby="dock-title">
-        <div class="inner">
-          <header class="section__header">
-            <p class="section__eyebrow" data-i18n="dock.eyebrow">Docking Station</p>
-            <h2 id="dock-title" data-i18n="dock.title">Ready to dock with Earth Online?</h2>
-            <p data-i18n="dock.intro">
-              Whether you work in design engineering, systems science, or ecological governance, we want to co-create new planetary experiences. These links open convex collaboration routes fast.
-            </p>
-          </header>
-          <div class="contact" id="dock-links" aria-live="polite"></div>
         </div>
       </section>
     </main>
 
-    <footer class="site-footer">
-      <div class="inner">
-        <p data-i18n="footer.credit">© 2024 Earth Online Experience Lab · Powered by Aman Sharma</p>
-        <p class="footer-note" data-i18n="footer.note">Feel free to fork, cite, or embed these experiments into your interstellar project.</p>
-        <p class="footer-note footer-note--subtle">
-          <a href="public/resume/index.html">Resume archive</a>
-        </p>
+    <footer class="footer">
+      <div class="container footer__inner">
+        <div>
+          <p class="footer__brand" data-i18n="footer.title">Earth Online · Experience Lab</p>
+          <p class="footer__description" data-i18n="footer.description">
+            Building navigable systems for knowledge, alliances, and planetary scale collaboration.
+          </p>
+        </div>
+        <ul class="footer__links">
+          <li><a href="public/blog/index.html" data-i18n="footer.blog">Blog</a></li>
+          <li><a href="docs/research.html" data-i18n="footer.research">Research</a></li>
+          <li><a href="friends/index.html" data-i18n="footer.friends">Alliance Harbor</a></li>
+          <li><a href="https://github.com/miuchan" target="_blank" rel="noopener" data-i18n="footer.github">GitHub</a></li>
+        </ul>
       </div>
+      <p class="footer__note" data-i18n="footer.note">© <span id="current-year"></span> Earth Online Lab. All rights reserved.</p>
     </footer>
 
-    <div class="command-palette" id="command-palette" role="dialog" aria-modal="true" aria-hidden="true">
-      <div class="command-palette__backdrop" tabindex="-1"></div>
-      <div class="command-palette__panel" role="document">
-        <header class="command-palette__header">
-          <div>
-            <h2 id="command-palette-title" data-i18n="commandPalette.title">Command matrix</h2>
-            <p id="command-palette-description" data-i18n="commandPalette.subtitle">
-              Search the information architecture, experience decks, or signal timeline.
-            </p>
-          </div>
-          <span class="command-palette__hint" id="command-palette-hint" data-i18n="commandPalette.keyboardHint"
-            >Shortcut: Ctrl/⌘ + K</span
-          >
-        </header>
-        <div class="command-palette__search">
-          <label class="visually-hidden" for="command-search" data-i18n="commandPalette.searchLabel">Search</label>
-          <input
-            id="command-search"
-            type="search"
-            autocomplete="off"
-            spellcheck="false"
-            placeholder="Type a keyword or press Ctrl + K"
-            data-i18n-attr="placeholder:commandPalette.searchPlaceholder"
-          />
-        </div>
-        <div class="command-palette__body" id="command-results" role="listbox" aria-labelledby="command-palette-title"></div>
-        <p class="command-palette__empty" id="command-empty" hidden data-i18n="commandPalette.noResults">
-          No matches yet—try another keyword.
+    <noscript>
+      <div class="noscript">
+        <p>
+          JavaScript is disabled. Earth Online’s interactive console works best with JavaScript enabled. You can still browse the
+          static content above.
         </p>
       </div>
-    </div>
+    </noscript>
 
     <script type="module" src="assets/js/main.js"></script>
   </body>

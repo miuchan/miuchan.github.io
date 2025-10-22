@@ -1,328 +1,362 @@
 import { getFriendContent } from './friends-data.js';
-import { LANGUAGE_DEFINITIONS, LANGUAGE_FALLBACK, setStoredLanguage } from './i18n/languages.js';
-import {
-  applyDocumentLanguage,
-  createTranslationRegistry,
-  resolveTranslation
-} from './i18n/registry.js';
-import { enhanceLanguageToggle } from './i18n/toggle.js';
 
-const baseTranslations = {
-  zh: {
-    documentTitle: '友链星港 · Earth Online 体验实验室',
-    meta: {
-      htmlLang: 'zh-CN',
-      direction: 'ltr',
-      toggleText: '中文',
-      toggleLabel: '选择语言',
-      navAria: '主导航',
-      brandAria: 'Earth Online 实验室标识',
-      actionsAria: '友链操作',
-      networkAria: '友链列表'
-    },
-    language: {
-      toggleLabel: '选择语言',
-      selectorLabel: '选择语言',
-      fallbackTag: '英文内容'
-    },
-    brand: {
-      subtitle: '体验实验室 · Planetary Experience Lab',
-      ariaLabel: 'Earth Online 实验室标识'
-    },
-    primaryNav: {
-      ariaLabel: '主导航',
-      blog: '博客',
-      papers: '论文',
-      labs: '实验室',
-      friends: '友链'
-    },
-    hero: {
-      eyebrow: 'Alliance Network',
-      title: '友链星港',
-      lead:
-        'Earth Online 的伙伴网络不断扩张。我们在这里记录每一位与我们共同探索体验与知识边界的朋友，方便你快速建立链接并开启合作。',
-      primaryCta: '申请交换友链',
-      secondaryCta: '返回主站',
-      actionsAria: '友链操作'
-    },
-    buttons: {
-      visit: '访问主页'
-    },
-    network: {
-      ariaLabel: '友链列表'
-    },
-    footer: {
-      credit: '© 2024 Earth Online Experience Lab · Powered by Aman Sharma',
-      note: '欢迎 fork、引用或将实验室成果嵌入你的宇宙级项目。'
-    }
-  },
+const LANGUAGE_FALLBACK = 'en';
+const SUPPORTED_LANGUAGES = ['en', 'zh'];
+
+const textDictionary = {
   en: {
-    documentTitle: 'Alliance Harbor · Earth Online Experience Lab',
-    meta: {
-      htmlLang: 'en',
-      direction: 'ltr',
-      toggleText: 'English',
-      toggleLabel: 'Select language',
-      navAria: 'Primary navigation',
-      brandAria: 'Earth Online lab mark',
-      actionsAria: 'Alliance actions',
-      networkAria: 'Alliance directory'
-    },
-    language: {
-      toggleLabel: 'Select language',
-      selectorLabel: 'Select language',
-      fallbackTag: 'English content'
-    },
-    brand: {
-      subtitle: 'Planetary Experience Lab',
-      ariaLabel: 'Earth Online lab mark'
-    },
-    primaryNav: {
-      ariaLabel: 'Primary navigation',
-      blog: 'Blog',
-      papers: 'Research',
+    documentTitle: 'Alliance Harbor · Earth Online',
+    brand: { name: 'Earth Online' },
+    nav: {
+      mission: 'Mission',
       labs: 'Labs',
-      friends: 'Friends'
+      research: 'Research',
+      signals: 'Signals',
+      alliances: 'Alliances',
+      contact: 'Contact',
+      blog: 'Blog',
+      home: 'Return home'
     },
     hero: {
-      eyebrow: 'Alliance Network',
-      title: 'Alliance Harbor',
-      lead:
-        'Earth Online’s partner network keeps expanding. Discover collaborators exploring the boundaries of experience and knowledge, and open a new line together.',
-      primaryCta: 'Request a link exchange',
-      secondaryCta: 'Return to main site',
-      actionsAria: 'Alliance actions'
+      eyebrow: 'Alliance harbor',
+      title: 'A network of independent labs building the future together',
+      description:
+        'Earth Online collaborates with studios, researchers, and community builders across the world. Together we design new rituals, prototype AI-driven tooling, and activate learning constellations.',
+      primaryCta: 'Browse the alliance directory',
+      secondaryCta: 'Start a partnership',
+      hint: 'Each partner brings a first-person perspective on experience design.',
+      stat(count) {
+        return `${count} partners in orbit`;
+      }
     },
-    buttons: {
+    featured: {
+      eyebrow: 'Featured orbit',
+      title: 'Season spotlight',
+      description: 'Each season we highlight one partner whose work expands the boundaries of Earth Online’s practice.',
+      badge: 'Featured partner'
+    },
+    clusters: {
+      eyebrow: 'Alliance clusters',
+      title: 'Constellations of collaboration',
+      description:
+        'Partners are organized by the missions they co-develop with us—from creation workflows to data storytelling and open knowledge networks.'
+    },
+    directory: {
+      eyebrow: 'Alliance directory',
+      title: 'All partners',
+      description: 'Explore every collaborator in the network. Visit their universes and start a conversation.',
       visit: 'Visit site'
     },
-    network: {
-      ariaLabel: 'Alliance directory'
+    footer: {
+      title: 'Earth Online · Experience Lab',
+      description: 'Building navigable systems for knowledge, alliances, and planetary scale collaboration.',
+      blog: 'Blog',
+      research: 'Research',
+      friends: 'Alliance Harbor',
+      github: 'GitHub',
+      note: '© {year} Earth Online Lab. All rights reserved.'
+    }
+  },
+  zh: {
+    documentTitle: '联盟星港 · Earth Online',
+    brand: { name: 'Earth Online' },
+    nav: {
+      mission: '使命',
+      labs: '实验室',
+      research: '研究',
+      signals: '信号',
+      alliances: '联盟',
+      contact: '联络',
+      blog: '博客',
+      home: '返回首页'
+    },
+    hero: {
+      eyebrow: '联盟星港',
+      title: '独立实验室组成的共创网络',
+      description: 'Earth Online 与全球的工作室、研究者与社区构建者合作，共同设计仪式、原型 AI 驱动工具，并激活学习星群。',
+      primaryCta: '浏览联盟目录',
+      secondaryCta: '发起合作',
+      hint: '每位伙伴都带来体验设计的一线视角。',
+      stat(count) {
+        return `${count} 个伙伴节点`;
+      }
+    },
+    featured: {
+      eyebrow: '星港焦点',
+      title: '本季关注',
+      description: '每个季度我们都会选出一位最能代表 Earth Online 精神的伙伴。',
+      badge: '精选伙伴'
+    },
+    clusters: {
+      eyebrow: '联盟星群',
+      title: '协作星座',
+      description: '我们按照共同建设的任务来组织伙伴：从创作工作流到数据叙事与开放知识网络。'
+    },
+    directory: {
+      eyebrow: '联盟目录',
+      title: '全部伙伴',
+      description: '探索所有协作者，访问他们的宇宙并开启对话。',
+      visit: '访问站点'
     },
     footer: {
-      credit: '© 2024 Earth Online Experience Lab · Powered by Aman Sharma',
-      note: 'Feel free to fork, cite, or embed these experiments into your interstellar project.'
+      title: 'Earth Online · 体验实验室',
+      description: '构建可导航的知识、联盟与行星协作系统。',
+      blog: '博客',
+      research: '研究',
+      friends: '联盟星港',
+      github: 'GitHub',
+      note: '© {year} Earth Online Lab. 保留所有权利。'
     }
   }
 };
 
-const translationRegistry = createTranslationRegistry(baseTranslations, {
-  localizedLanguageCodes: ['en', 'zh']
-});
-
-const translations = translationRegistry.dictionaries;
-let languageToggleBinding = null;
-
-function getTranslation(lang) {
-  return translationRegistry.get(lang);
+function getDictionary(lang) {
+  return textDictionary[lang] || textDictionary[LANGUAGE_FALLBACK];
 }
 
-function getLocalizedValue(lang, keyPath) {
-  return translationRegistry.resolve(lang, keyPath);
-}
-
-function isFallbackLanguage(lang) {
-  return translationRegistry.isFallback(lang);
-}
-
-function determineLanguage() {
-  return translationRegistry.determineLanguage();
-}
-
-const state = {
-  language: determineLanguage()
-};
-
-const createTagList = (tags = []) =>
-  tags
-    .map((tag) => `<li>${tag}</li>`)
-    .join('');
-
-function createFriendCard(friend, visitLabel, { variant = 'standard' } = {}) {
-  const card = document.createElement('article');
-  const description = friend.description || friend.slogan || '';
-  const note = friend.note ? `<p class="alliance-card__note">${friend.note}</p>` : '';
-  const tags = createTagList(friend.tags || []);
-
-  const classes = ['alliance-card', 'alliance-card--detailed'];
-  if (variant === 'featured') {
-    classes.push('alliance-card--featured');
+function applyStaticText(lang) {
+  const dictionary = getDictionary(lang);
+  document.documentElement.lang = lang;
+  const fallback = getDictionary(LANGUAGE_FALLBACK);
+  const docTitle = dictionary.documentTitle || fallback.documentTitle;
+  if (docTitle) {
+    document.title = docTitle;
   }
-  card.className = classes.join(' ');
-
-  card.innerHTML = `
-    <h3>${friend.name}</h3>
-    ${description ? `<p>${description}</p>` : ''}
-    ${note}
-    ${tags ? `<ul>${tags}</ul>` : ''}
-    <a href="${friend.url}" target="_blank" rel="noopener noreferrer">
-      ${visitLabel}
-      <span aria-hidden="true">↗</span>
-    </a>
-  `;
-
-  return card;
-}
-
-function createFeaturedSection(featured, visitLabel) {
-  const section = document.createElement('section');
-  section.className = 'friend-featured';
-
-  const layout = document.createElement('div');
-  layout.className = 'friend-featured__layout';
-
-  const meta = document.createElement('div');
-  meta.className = 'friend-featured__meta';
-
-  if (featured.badge) {
-    const badge = document.createElement('p');
-    badge.className = 'friend-featured__badge';
-    badge.textContent = featured.badge;
-    meta.appendChild(badge);
-  }
-
-  const title = document.createElement('h2');
-  title.className = 'friend-featured__title';
-  title.textContent = featured.title;
-  meta.appendChild(title);
-
-  if (featured.summary) {
-    const summary = document.createElement('p');
-    summary.className = 'friend-featured__summary';
-    summary.textContent = featured.summary;
-    meta.appendChild(summary);
-  }
-
-  layout.appendChild(meta);
-  layout.appendChild(createFriendCard(featured.friend, visitLabel, { variant: 'featured' }));
-
-  section.appendChild(layout);
-  return section;
-}
-
-function createClusterSection(cluster, visitLabel) {
-  const section = document.createElement('section');
-  section.className = 'friend-cluster';
-
-  const header = document.createElement('header');
-  header.className = 'friend-cluster__header';
-
-  const title = document.createElement('h2');
-  title.className = 'friend-cluster__title';
-  title.textContent = cluster.title;
-  header.appendChild(title);
-
-  if (cluster.summary) {
-    const summary = document.createElement('p');
-    summary.className = 'friend-cluster__summary';
-    summary.textContent = cluster.summary;
-    header.appendChild(summary);
-  }
-
-  const grid = document.createElement('div');
-  grid.className = 'friend-cluster__grid alliance-grid';
-
-  (cluster.friends || []).forEach((friend) => {
-    grid.appendChild(createFriendCard(friend, visitLabel));
+  document.querySelectorAll('[data-i18n]').forEach((node) => {
+    const path = node.getAttribute('data-i18n');
+    if (!path) return;
+    const segments = path.split('.');
+    let current = dictionary;
+    let fallbackCursor = fallback;
+    for (const segment of segments) {
+      current = current?.[segment];
+      fallbackCursor = fallbackCursor?.[segment];
+    }
+    if (typeof current === 'string') {
+      if (path === 'footer.note') {
+        node.textContent = current.replace('{year}', new Date().getFullYear());
+      } else {
+        node.textContent = current;
+      }
+    } else if (typeof fallbackCursor === 'string') {
+      node.textContent = fallbackCursor.replace('{year}', new Date().getFullYear());
+    }
   });
-
-  section.appendChild(header);
-  section.appendChild(grid);
-
-  return section;
 }
 
-function renderFriendNetwork(lang) {
-  const grid = document.getElementById('friend-grid');
-  if (!grid) return;
+function renderFeatured(lang) {
+  const container = document.getElementById('featured-card');
+  if (!container) return;
+  const content = getFriendContent(lang);
+  const featured = content.friendNetwork?.featured?.friend;
+  container.innerHTML = '';
+  if (!featured) return;
 
+  const badge = document.createElement('span');
+  badge.className = 'featured-card__badge';
+  badge.textContent = getDictionary(lang).featured.badge;
+
+  const title = document.createElement('h3');
+  title.className = 'featured-card__title';
+  const link = document.createElement('a');
+  link.href = featured.url;
+  link.target = '_blank';
+  link.rel = 'noopener';
+  link.textContent = featured.name;
+  title.appendChild(link);
+
+  const description = document.createElement('p');
+  description.className = 'featured-card__description';
+  description.textContent = featured.description || '';
+
+  const elements = [badge, title, description];
+  if (featured.note) {
+    const note = document.createElement('p');
+    note.className = 'featured-card__note';
+    note.textContent = featured.note;
+    elements.push(note);
+  }
+
+  const tags = document.createElement('div');
+  tags.className = 'card__meta';
+  (featured.tags || []).slice(0, 4).forEach((tag) => {
+    const badgeTag = document.createElement('span');
+    badgeTag.className = 'tag';
+    badgeTag.textContent = tag;
+    tags.appendChild(badgeTag);
+  });
+  elements.push(tags);
+  container.append(...elements);
+}
+
+function renderClusters(lang) {
+  const grid = document.getElementById('cluster-grid');
+  if (!grid) return;
+  const content = getFriendContent(lang);
   grid.innerHTML = '';
 
-  const fragment = document.createDocumentFragment();
-  const { featured, clusters } = getFriendContent(lang).friendNetwork;
-  const visitLabel =
-    getLocalizedValue(lang, 'buttons.visit') ||
-    getLocalizedValue(LANGUAGE_FALLBACK, 'buttons.visit') ||
-    'Visit site';
+  content.friendNetwork?.clusters?.forEach((cluster) => {
+    const card = document.createElement('article');
+    card.className = 'cluster-card';
 
-  if (featured) {
-    fragment.appendChild(createFeaturedSection(featured, visitLabel));
-  }
+    const title = document.createElement('h3');
+    title.textContent = cluster.title;
 
-  (clusters || []).forEach((cluster) => {
-    fragment.appendChild(createClusterSection(cluster, visitLabel));
+    const summary = document.createElement('p');
+    summary.textContent = cluster.summary;
+
+    const list = document.createElement('div');
+    list.className = 'cluster-card__friends';
+    cluster.friends.forEach((friend) => {
+      const item = document.createElement('div');
+      item.className = 'cluster-card__friend';
+
+      const link = document.createElement('a');
+      link.href = friend.url;
+      link.target = '_blank';
+      link.rel = 'noopener';
+      link.textContent = friend.name;
+
+      const description = document.createElement('p');
+      description.textContent = friend.description;
+
+      item.append(link, description);
+      list.appendChild(item);
+    });
+
+    card.append(title, summary, list);
+    grid.appendChild(card);
   });
-
-  grid.appendChild(fragment);
 }
 
-function updateStaticText(lang) {
-  const dictionary = getTranslation(lang);
-  document.querySelectorAll('[data-i18n]').forEach((element) => {
-    const key = element.getAttribute('data-i18n');
-    const value = resolveTranslation(dictionary, key, translations[LANGUAGE_FALLBACK]);
-    if (typeof value === 'string') {
-      element.textContent = value;
-    }
+function renderDirectory(lang) {
+  const grid = document.getElementById('directory-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  const content = getFriendContent(lang);
+  const allFriends = content.featuredAlliances;
+  const visitLabel = getDictionary(lang).directory.visit;
+
+  allFriends.forEach((friend) => {
+    const card = document.createElement('article');
+    card.className = 'alliance-card';
+
+    const title = document.createElement('h3');
+    const link = document.createElement('a');
+    link.href = friend.url;
+    link.target = '_blank';
+    link.rel = 'noopener';
+    link.textContent = friend.name;
+    title.appendChild(link);
+
+    const description = document.createElement('p');
+    description.textContent = friend.description;
+
+    const meta = document.createElement('div');
+    meta.className = 'alliance-card__meta';
+    (friend.tags || []).slice(0, 3).forEach((tag) => {
+      const badge = document.createElement('span');
+      badge.className = 'tag';
+      badge.textContent = tag;
+      meta.appendChild(badge);
+    });
+
+    const action = document.createElement('a');
+    action.href = friend.url;
+    action.target = '_blank';
+    action.rel = 'noopener';
+    action.className = 'inline-link';
+    action.textContent = visitLabel;
+
+    card.append(title, description, meta, action);
+    grid.appendChild(card);
+  });
+}
+
+function updateAllianceCount(lang) {
+  const node = document.getElementById('ally-count');
+  if (!node) return;
+  const content = getFriendContent(lang);
+  const dictionary = getDictionary(lang);
+  if (typeof dictionary.hero.stat === 'function') {
+    node.textContent = dictionary.hero.stat(content.featuredAlliances.length);
+  } else {
+    node.textContent = `${content.featuredAlliances.length}`;
+  }
+}
+
+function updateLanguageSelect(lang) {
+  const select = document.getElementById('language-select');
+  if (!select) return;
+  select.value = lang;
+}
+
+function applyLanguage(lang) {
+  const nextLang = SUPPORTED_LANGUAGES.includes(lang) ? lang : LANGUAGE_FALLBACK;
+  applyStaticText(nextLang);
+  renderFeatured(nextLang);
+  renderClusters(nextLang);
+  renderDirectory(nextLang);
+  updateAllianceCount(nextLang);
+  updateLanguageSelect(nextLang);
+  window.localStorage.setItem('earth-online-language', nextLang);
+}
+
+function getInitialLanguage() {
+  const stored = window.localStorage.getItem('earth-online-language');
+  if (stored && SUPPORTED_LANGUAGES.includes(stored)) {
+    return stored;
+  }
+  const browser = navigator.language?.toLowerCase() || LANGUAGE_FALLBACK;
+  if (browser.startsWith('zh')) return 'zh';
+  return LANGUAGE_FALLBACK;
+}
+
+function handleNavigation() {
+  const nav = document.getElementById('primary-nav');
+  const toggle = document.getElementById('nav-toggle');
+  if (!nav || !toggle) return;
+
+  toggle.addEventListener('click', () => {
+    const isOpen = nav.getAttribute('data-open') === 'true';
+    const next = !isOpen;
+    nav.setAttribute('data-open', String(next));
+    toggle.setAttribute('aria-expanded', String(next));
   });
 
-  document.querySelectorAll('[data-i18n-attr]').forEach((element) => {
-    const descriptors = element
-      .getAttribute('data-i18n-attr')
-      .split(',')
-      .map((part) => part.trim())
-      .filter(Boolean);
-    descriptors.forEach((descriptor) => {
-      const [attr, key] = descriptor.split(':').map((part) => part.trim());
-      if (!attr || !key) return;
-      const value = resolveTranslation(dictionary, key, translations[LANGUAGE_FALLBACK]);
-      if (typeof value === 'string') {
-        element.setAttribute(attr, value);
-      }
+  nav.querySelectorAll('a[href^="#"]').forEach((link) => {
+    link.addEventListener('click', () => {
+      nav.setAttribute('data-open', 'false');
+      toggle.setAttribute('aria-expanded', 'false');
     });
   });
 }
 
-function updateMeta(lang) {
-  const translation = getTranslation(lang);
-  const fallbackTranslation = getTranslation(LANGUAGE_FALLBACK);
-  applyDocumentLanguage(translation);
-  const title = translation.documentTitle || fallbackTranslation.documentTitle || document.title;
-  document.title = title;
-}
-
-function getLanguageToggleBinding() {
-  if (languageToggleBinding) {
-    return languageToggleBinding;
-  }
-
-  const select = document.querySelector('[data-language-toggle]');
-  languageToggleBinding = enhanceLanguageToggle(select, translationRegistry, {
-    onChange: (nextLanguage) => {
-      applyLanguage(nextLanguage);
-    }
+function initLanguageToggle() {
+  const select = document.getElementById('language-select');
+  if (!select) return;
+  select.addEventListener('change', (event) => {
+    applyLanguage(event.target.value);
   });
-
-  return languageToggleBinding;
 }
 
-function updateLanguageSelector(lang) {
-  const binding = getLanguageToggleBinding();
-  binding.update(lang);
+function setYear() {
+  const node = document.getElementById('current-year');
+  if (node) {
+    node.textContent = String(new Date().getFullYear());
+  }
 }
 
-function applyLanguage(lang) {
-  state.language = lang;
-  setStoredLanguage(lang);
-
-  updateMeta(lang);
-  updateStaticText(lang);
-  updateLanguageSelector(lang);
-  renderFriendNetwork(lang);
+function init() {
+  setYear();
+  handleNavigation();
+  initLanguageToggle();
+  const initialLanguage = getInitialLanguage();
+  applyLanguage(initialLanguage);
 }
 
-function initialize() {
-  applyLanguage(state.language);
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
 }
-
-initialize();
