@@ -84,35 +84,39 @@ const baseTranslations = {
       ]
     },
     nav: {
-      hero: '开场',
-      'priority-map': '梯度信号导引',
-      architecture: '递归信息场',
+      hero: '发射序列',
+      'priority-map': '星河导览图',
+      'mission-lanes': '任务航线',
+      architecture: '模拟器系统场',
+      'gradient-flow': '梯度场调谐',
       stack: '星球栈图',
       decks: '体验簇阵',
       council: 'AI 议会',
       signals: '信号中枢',
       alliances: '联盟星港',
       dock: '联络站',
-      commandLabel: '导航矩阵',
+      commandLabel: '星图矩阵',
       ariaLabel: '信息架构导航',
       hierarchy: [
-        { id: 'hero', index: '0', label: '轨道入口' },
-        { id: 'priority-map', index: '0.1', label: '梯度信号导引' },
+        { id: 'hero', index: '0', label: '发射舱门' },
+        { id: 'priority-map', index: '0.1', label: '星河导览图' },
+        { id: 'mission-lanes', index: '0.2', label: '任务航线' },
         {
           id: 'architecture',
           index: '1',
-          label: '递归信息场',
+          label: '模拟器系统场',
           children: [
+            { id: 'gradient-flow', index: '1.1', label: '梯度场调谐' },
             {
               id: 'stack',
-              index: '1.1',
+              index: '1.2',
               label: '星球栈图',
               children: [
-                { id: 'council', index: '1.1.1', label: 'AI 议会' },
-                { id: 'signals', index: '1.1.2', label: '信号中枢' }
+                { id: 'council', index: '1.2.1', label: 'AI 议会' },
+                { id: 'signals', index: '1.2.2', label: '信号中枢' }
               ]
             },
-            { id: 'decks', index: '1.2', label: '体验簇阵' }
+            { id: 'decks', index: '1.3', label: '体验簇阵' }
           ]
         },
         { id: 'alliances', index: '2', label: '联盟星港' },
@@ -120,23 +124,23 @@ const baseTranslations = {
       ]
     },
     commandPalette: {
-      title: '导航矩阵',
-      subtitle: '搜索信息架构、体验簇或信号节点。',
+      title: '星图矩阵',
+      subtitle: '搜索银河导引图、体验簇阵或信号时间线。',
       searchLabel: '搜索',
       searchPlaceholder: '输入关键词或使用 Ctrl + K',
-      sectionGroup: '信息架构',
+      sectionGroup: '信息星图',
       deckGroup: '体验簇阵',
-      signalGroup: '信号年表',
+      signalGroup: '信号时间线',
       keyboardHint: '快捷键：Ctrl/⌘ + K',
       noResults: '没有匹配项，换个关键词试试。'
     },
     hero: {
-      eyebrow: 'Planetary Experience Interface',
-      title: '地球 Online：行星级体验操作室',
+      eyebrow: '宇宙模拟交互界面',
+      title: '地球 Online：行星宇宙模拟器',
       description:
-        '以 WebGL 星球引擎、凸优化信息架构与联盟星网，将研究、原型与协议压缩进一个实时进化的空间界面，邀请你随时登舰探索。',
-      primaryCta: '进入体验簇阵',
-      secondaryCta: '前往联络站',
+        '全站以宇宙模拟器重构：实时重排的星河信息架构、WebGL 行星引擎与联盟星网，将研究、原型与协议折叠为可探索的宇宙。无论你是探索者、系统建造者还是联盟伙伴，都能沿着自然轨道抵达目标。',
+      primaryCta: '启动体验甲板',
+      secondaryCta: '停靠联络舱',
       ctaAria: '快速入口',
       stats: [
         {
@@ -175,45 +179,102 @@ const baseTranslations = {
       pulseHint: '随机增强信号，观察指标变化。'
     },
     priorityGuide: {
-      eyebrow: '梯度指引',
-      title: '信息信号导引图',
+      eyebrow: '星河导航',
+      title: '银河导引图：为不同航线自适应排布',
       description:
-        '递归梯度下降实时为每个界面重分配权重，让你以最低能耗抵达关键信息。',
-      summaryTitle: '信号摘要',
-      summaryIntro: '主要版块会随梯度权重即时重排。',
+        '信息架构像宇宙模拟器一样实时自洽，梯度场会为不同角色排出最平滑的轨道，让探索、建造与协作都顺畅抵达。',
+      summaryTitle: '轨道简报',
+      summaryIntro: '核心节点会随着信号密度即时重排。',
       summaryPrimary(label, percent) {
         if (!label) {
-          return '信号正在校准中。';
+          return '星图正在校准中。';
         }
-        return `最高信号落在 ${label}（密度 ${percent}%）。`;
+        return `最高能量轨道：${label}（信号密度 ${percent}%）。`;
       },
       summarySecondary(label, percent) {
         if (!label) {
           return '';
         }
-        return `次级航线：${label} 覆盖 ${percent}% 信号。`;
+        return `备选轨道：${label} 覆盖 ${percent}% 的信号。`;
       },
-      focusTitle: '优先航线',
-      focusDescription: '沿着这些节点快速完成信息获取。',
-      itemCta: '前往版块',
+      focusTitle: '首选航线',
+      focusDescription: '沿着这些航线登陆，可在最短路径完成任务。',
+      itemCta: '打开航线',
       percentLabel: '信号密度',
-      empty: '信号正在校准，稍后即可看到导引图。',
+      empty: '星图正在校准，请稍候。',
       metrics: {
-        coverageLabel: '前三权重覆盖',
-        coverageHint: '前三个节点合计掌握的信号占比。',
+        coverageLabel: '前三轨道覆盖',
+        coverageHint: '信号最密集的三条航线覆盖率。',
         coverageFormat(value) {
           return `${value}%`;
         },
-        falloffLabel: '梯度衰减',
-        falloffHint: '首个与第 4 个节点之间的信号落差。',
+        falloffLabel: '能量衰减',
+        falloffHint: '首条航线与后续节点的信号落差。',
         falloffFormat(value) {
           return `${value}%`;
         }
       },
+      orbits: {
+        title: '选择你的轨道',
+        intro: '根据任务选择一条轨道，系统会快速联通关键界面。',
+        explore: {
+          tag: '探索者',
+          title: '探索者轨道',
+          description: '适合体验沉浸式原型、仿真与叙事。',
+          routes: [
+            {
+              label: '启动体验簇阵',
+              aria: '前往体验簇阵航线'
+            },
+            {
+              label: '查看实时遥测',
+              aria: '跳转至信号中枢'
+            }
+          ]
+        },
+        build: {
+          tag: '系统建造者',
+          title: '建造者轨道',
+          description: '面向搭建系统蓝图、节奏与治理协议的协作者。',
+          routes: [
+            {
+              label: '研读星球栈图',
+              aria: '前往星球栈图'
+            },
+            {
+              label: '阅读 AI 议会记录',
+              aria: '跳转至 AI 议会'
+            }
+          ]
+        },
+        alliance: {
+          tag: '联盟协作者',
+          title: '联盟轨道',
+          description: '帮助你快速找到伙伴、对接通道与联络方式。',
+          routes: [
+            {
+              label: '浏览联盟星港',
+              aria: '跳转至联盟星港'
+            },
+            {
+              label: '停靠联络舱',
+              aria: '跳转至联络站'
+            }
+          ]
+        }
+      },
       descriptions: {
         architecture: {
-          label: '递归信息场',
-          description: '了解梯度下降如何重排整个信息场与指标。'
+          label: '模拟器系统场',
+          description: '了解宇宙模拟器的系统如何协同驱动。'
+        },
+        'mission-lanes': {
+          label: '任务航线',
+          description: '为探索者、建造者与联盟伙伴定制的轨道矩阵。'
+        },
+        'gradient-flow': {
+          label: '梯度场调谐',
+          description: '观察界面能量如何调节节奏与注意力。'
         },
         stack: {
           label: '星球栈图',
@@ -239,6 +300,45 @@ const baseTranslations = {
           label: '联络站',
           description: '获取联络方式与协作通道。'
         }
+      }
+    },
+    missionLanes: {
+      eyebrow: '任务航线',
+      title: '选择你的轨道与目标',
+      intro:
+        '地球 Online 现在像宇宙模拟器一样运作：每条航线针对不同关注点编排，快速联通关键系统。',
+      explorer: {
+        tag: '探索者轨道',
+        title: '探索者轨道 · 感知模拟',
+        description: '适合体验沉浸原型、气候排练与叙事宇宙。',
+        routes: [
+          '· 进入体验簇阵，浏览实时运行的体验实验室。',
+          '· 留在信号中枢，追踪实时遥测与演化日志。',
+          '· 阅读叙事档案，理解每次模拟背后的设定。'
+        ],
+        cta: '启动体验甲板'
+      },
+      builder: {
+        tag: '系统轨道',
+        title: '系统轨道 · 组装星球栈',
+        description: '适合负责架构运营、治理或基础设施的协作者。',
+        routes: [
+          '· 从星球栈图出发，理解数据、编排与感知层的连接。',
+          '· 研读 AI 议会记录，掌握当前约束与下一步策略。',
+          '· 依据任务分类将体验簇阵的筛选标签映射到你的流程。'
+        ],
+        cta: '打开系统视图'
+      },
+      alliance: {
+        tag: '联盟轨道',
+        title: '联盟轨道 · 启动共创',
+        description: '为想要共振协作或发起支援请求的机构、实验室与社区准备。',
+        routes: [
+          '· 浏览联盟星港，了解已经在轨的伙伴与项目。',
+          '· 直达联络站，选择最适合的对接渠道。',
+          '· 分享你的遥测数据，让模拟器吸纳并扩展航线。'
+        ],
+        cta: '规划联盟航线'
       }
     },
     gradientFlow: {
@@ -885,35 +985,39 @@ const baseTranslations = {
       ]
     },
     nav: {
-      hero: 'Launch',
-      'priority-map': 'Signal guide',
-      architecture: 'Recursive IA',
-      stack: 'Planetary Stack',
-      decks: 'Experience Decks',
-      council: 'AI Council',
-      signals: 'Signal Hub',
-      alliances: 'Alliance Harbor',
-      dock: 'Dock',
-      commandLabel: 'Command Matrix',
+      hero: 'Launch sequence',
+      'priority-map': 'Galaxy map',
+      'mission-lanes': 'Mission trajectories',
+      architecture: 'Simulator systems',
+      'gradient-flow': 'Gradient field tuning',
+      stack: 'Planetary stack',
+      decks: 'Experience decks',
+      council: 'AI council',
+      signals: 'Signal hub',
+      alliances: 'Alliance harbor',
+      dock: 'Docking station',
+      commandLabel: 'Star chart matrix',
       ariaLabel: 'Information architecture navigation',
       hierarchy: [
         { id: 'hero', index: '0', label: 'Launch bay' },
-        { id: 'priority-map', index: '0.1', label: 'Gradient signal guide' },
+        { id: 'priority-map', index: '0.1', label: 'Galaxy map' },
+        { id: 'mission-lanes', index: '0.2', label: 'Mission trajectories' },
         {
           id: 'architecture',
           index: '1',
-          label: 'Recursive information field',
+          label: 'Simulator systems field',
           children: [
+            { id: 'gradient-flow', index: '1.1', label: 'Gradient field tuning' },
             {
               id: 'stack',
-              index: '1.1',
+              index: '1.2',
               label: 'Planetary stack map',
               children: [
-                { id: 'council', index: '1.1.1', label: 'Interpreter council' },
-                { id: 'signals', index: '1.1.2', label: 'Signal hub' }
+                { id: 'council', index: '1.2.1', label: 'Interpreter council' },
+                { id: 'signals', index: '1.2.2', label: 'Signal hub' }
               ]
             },
-            { id: 'decks', index: '1.2', label: 'Experience decks' }
+            { id: 'decks', index: '1.3', label: 'Experience decks' }
           ]
         },
         { id: 'alliances', index: '2', label: 'Alliance harbor' },
@@ -921,23 +1025,23 @@ const baseTranslations = {
       ]
     },
     commandPalette: {
-      title: 'Command matrix',
-      subtitle: 'Search the information architecture, experience decks, or signal timeline.',
+      title: 'Star chart matrix',
+      subtitle: 'Search the galaxy map, experience decks, or signal timeline.',
       searchLabel: 'Search',
       searchPlaceholder: 'Type a keyword or press Ctrl + K',
-      sectionGroup: 'Information architecture',
+      sectionGroup: 'Galaxy map',
       deckGroup: 'Experience decks',
       signalGroup: 'Signal timeline',
       keyboardHint: 'Shortcut: Ctrl/⌘ + K',
       noResults: 'No matches yet—try another keyword.'
     },
     hero: {
-      eyebrow: 'Planetary Experience Interface',
-      title: 'Earth Online: planetary experience console',
+      eyebrow: 'Universe simulator interface',
+      title: 'Earth Online: universe simulator for planetary missions',
       description:
-        'A continuously evolving operating room for Earth: WebGL engines, convex information architecture, and alliance networks compress research, prototypes, and protocols into a navigable spatial console.',
-      primaryCta: 'Enter the experience decks',
-      secondaryCta: 'Navigate to docking station',
+        'Earth Online now behaves like a living universe: adaptive galaxy maps, WebGL engines, and alliance constellations compress research, prototypes, and protocols into navigable orbits for explorers, builders, and collaborators.',
+      primaryCta: 'Launch the experience decks',
+      secondaryCta: 'Dock at mission control',
       ctaAria: 'Quick access',
       stats: [
         {
@@ -976,70 +1080,166 @@ const baseTranslations = {
       pulseHint: 'Inject a playful burst to the metrics and watch them react.'
     },
     priorityGuide: {
-      eyebrow: 'Gradient navigation',
-      title: 'Signal guide: recursive gradient descent map',
+      eyebrow: 'Galaxy navigation',
+      title: 'Galaxy map: adaptive orbits for every visitor',
       description:
-        'The recursive gradient descent pass re-weights each surface so you can move through the lab with minimal friction.',
-      summaryTitle: 'Signal summary',
-      summaryIntro: 'Weights update continuously to keep the descent focused on the densest signals.',
+        'Earth Online recalculates like a universe simulator; gradient fields surface the smoothest path whether you are exploring, building, or collaborating.',
+      summaryTitle: 'Orbit briefing',
+      summaryIntro: 'Core waypoints reshuffle as signal density shifts.',
       summaryPrimary(label, percent) {
         if (!label) {
-          return 'Signal calibration in progress.';
+          return 'Galaxy map calibrating.';
         }
-        return `Highest signal lands on ${label} (${percent}% density).`;
+        return `Top orbit: ${label} (${percent}% signal density).`;
       },
       summarySecondary(label, percent) {
         if (!label) {
           return '';
         }
-        return `Next waypoint: ${label} holds ${percent}% of the field.`;
+        return `Secondary orbit: ${label} carries ${percent}% of the field.`;
       },
-      focusTitle: 'Priority waypoints',
-      focusDescription: 'Follow these sections first to capture the steepest signal gradients.',
-      itemCta: 'Open section',
+      focusTitle: 'Primary trajectories',
+      focusDescription: 'Follow these trajectories to reach the steepest signal gradients first.',
+      itemCta: 'Open trajectory',
       percentLabel: 'Signal density',
-      empty: 'Weights are calibrating—check back in a moment.',
+      empty: 'Galaxy map is calibrating—check back soon.',
       metrics: {
-        coverageLabel: 'Top coverage',
-        coverageHint: 'Share of signal held by the three leading sections.',
+        coverageLabel: 'Leading orbit coverage',
+        coverageHint: 'Share of signal contained in the three densest orbits.',
         coverageFormat(value) {
           return `${value}%`;
         },
-        falloffLabel: 'Gradient falloff',
-        falloffHint: 'Drop between the first and fourth waypoints.',
+        falloffLabel: 'Signal falloff',
+        falloffHint: 'Drop between the first orbit and the next cluster.',
         falloffFormat(value) {
           return `${value}%`;
         }
       },
+      orbits: {
+        title: 'Choose a flight path',
+        intro: 'Pick the orbit that fits your intent and the console will surface the right systems instantly.',
+        explore: {
+          tag: 'Explorers',
+          title: 'Explorer orbit',
+          description: 'Ideal for immersive simulations and storytelling.',
+          routes: [
+            {
+              label: 'Launch experience decks',
+              aria: 'Jump to the experience decks section'
+            },
+            {
+              label: 'Check live telemetry',
+              aria: 'Jump to the signal hub section'
+            }
+          ]
+        },
+        build: {
+          tag: 'Builders',
+          title: 'Builder orbit',
+          description: 'For engineers and operators looking for system blueprints and governance rhythms.',
+          routes: [
+            {
+              label: 'Study the planetary stack',
+              aria: 'Jump to the planetary stack section'
+            },
+            {
+              label: 'Review AI council transcripts',
+              aria: 'Jump to the AI council section'
+            }
+          ]
+        },
+        alliance: {
+          tag: 'Alliances',
+          title: 'Alliance orbit',
+          description: 'For collaborators seeking partners and contact channels.',
+          routes: [
+            {
+              label: 'Browse alliance harbor',
+              aria: 'Jump to the alliance harbor section'
+            },
+            {
+              label: 'Dock and open a channel',
+              aria: 'Jump to the docking station section'
+            }
+          ]
+        }
+      },
       descriptions: {
         architecture: {
-          label: 'Recursive information field',
-          description: 'See how the gradient descent reorganises every surface and metric.'
+          label: 'Simulator systems field',
+          description: 'Understand how the universe simulator orchestrates each layer.'
+        },
+        'mission-lanes': {
+          label: 'Mission trajectories',
+          description: 'Curated routes for explorers, builders, and alliance partners.'
+        },
+        'gradient-flow': {
+          label: 'Gradient field tuning',
+          description: 'See how the interface balances energy, tempo, and attention.'
         },
         stack: {
           label: 'Planetary stack map',
-          description: 'Inspect the layers binding telemetry, experiments, and alliances together.'
+          description: 'Trace the layers connecting telemetry, experiments, and alliances.'
         },
         decks: {
           label: 'Experience decks',
-          description: 'Jump straight into runnable planetary experiments and mission-ready assets.'
+          description: 'Launch runnable experiments aligned with your mission.'
         },
         council: {
           label: 'Interpreter council',
-          description: 'Review how dual interpreters negotiate strategic consensus.'
+          description: 'Read how the interpreters negotiate constraints and strategy.'
         },
         signals: {
           label: 'Signal hub',
-          description: 'Watch telemetry pulses and evolution milestones in real time.'
+          description: 'Monitor telemetry pulses and the evolution timeline.'
         },
         alliances: {
           label: 'Alliance harbor',
-          description: 'Meet partner labs in resonance and explore their constellations.'
+          description: 'Meet partners in resonance and open collaboration routes.'
         },
         dock: {
           label: 'Docking station',
-          description: 'Lock onto contact routes and collaboration corridors.'
+          description: 'Find contact channels and collaboration entry points.'
         }
+      }
+    },
+    missionLanes: {
+      eyebrow: 'Mission routing',
+      title: 'Choose your orbit and objective',
+      intro:
+        'Earth Online operates like a universe simulator: each lane is a curated trajectory tailored to different intents so you can reach the right systems instantly.',
+      explorer: {
+        tag: 'Explorer orbit',
+        title: 'Explorer orbit · sense the simulations',
+        description: 'Perfect for playable prototypes, climate rehearsals, and narrative worlds.',
+        routes: [
+          '· Enter the Experience Decks to browse live labs.',
+          '· Watch the signal hub for telemetry and changelog updates.',
+          '· Dive into longform narratives to decode each simulation.'
+        ],
+        cta: 'Launch decks'
+      },
+      builder: {
+        tag: 'Systems orbit',
+        title: 'Systems orbit · assemble the stack',
+        description: 'Use this lane when you are shaping operations, governance, or infrastructure alongside us.',
+        routes: [
+          '· Start with the planetary stack to inspect data, orchestration, and perception layers.',
+          '· Review AI council transcripts to understand constraints and upcoming moves.',
+          '· Map deck filters to your pipelines using the mission taxonomy.'
+        ],
+        cta: 'Open systems view'
+      },
+      alliance: {
+        tag: 'Alliance orbit',
+        title: 'Alliance orbit · activate collaboration',
+        description: 'Designed for institutions, labs, and communities ready to co-create or request support.',
+        routes: [
+          '· Explore the alliance harbor to see who is already in resonance.',
+          '· Jump to the docking station for direct contact channels.',
+          '· Share your telemetry so the simulator can integrate and extend the network.'
+        ],
+        cta: 'Plot alliance route'
       }
     },
     gradientFlow: {

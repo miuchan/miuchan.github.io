@@ -202,6 +202,196 @@
               </p>
               <div class="priority-map__list" id="priority-map-list" role="list"></div>
             </section>
+            <section
+              class="priority-map__panel priority-map__panel--map"
+              aria-labelledby="priority-orbits-title"
+            >
+              <h3 id="priority-orbits-title" data-i18n="priorityGuide.orbits.title">Galaxy trajectories</h3>
+              <p class="priority-map__intro" data-i18n="priorityGuide.orbits.intro">
+                Select a flight path based on what you need to accomplish and we’ll surface the fastest route.
+              </p>
+              <div class="priority-map__orbits" role="list">
+                <article class="orbit-card" aria-labelledby="orbit-explore-title" role="listitem">
+                  <div class="orbit-card__header">
+                    <span class="orbit-card__tag" data-i18n="priorityGuide.orbits.explore.tag">Explorer</span>
+                    <h4 id="orbit-explore-title" class="orbit-card__title" data-i18n="priorityGuide.orbits.explore.title">
+                      Explorer orbit
+                    </h4>
+                  </div>
+                  <p class="orbit-card__description" data-i18n="priorityGuide.orbits.explore.description">
+                    For visitors scouting immersive experiences and simulations.
+                  </p>
+                  <ul class="orbit-card__routes">
+                    <li>
+                      <a
+                        class="orbit-card__link"
+                        href="#decks"
+                        data-i18n="priorityGuide.orbits.explore.routes.0.label"
+                        data-i18n-attr="aria-label:priorityGuide.orbits.explore.routes.0.aria"
+                      >
+                        Launch experience decks
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        class="orbit-card__link orbit-card__link--subtle"
+                        href="#signals"
+                        data-i18n="priorityGuide.orbits.explore.routes.1.label"
+                        data-i18n-attr="aria-label:priorityGuide.orbits.explore.routes.1.aria"
+                      >
+                        Check live telemetry
+                      </a>
+                    </li>
+                  </ul>
+                </article>
+                <article class="orbit-card" aria-labelledby="orbit-build-title" role="listitem">
+                  <div class="orbit-card__header">
+                    <span class="orbit-card__tag" data-i18n="priorityGuide.orbits.build.tag">Builder</span>
+                    <h4 id="orbit-build-title" class="orbit-card__title" data-i18n="priorityGuide.orbits.build.title">
+                      Builder orbit
+                    </h4>
+                  </div>
+                  <p class="orbit-card__description" data-i18n="priorityGuide.orbits.build.description">
+                    For engineers and operators looking for system blueprints and governance rhythms.
+                  </p>
+                  <ul class="orbit-card__routes">
+                    <li>
+                      <a
+                        class="orbit-card__link"
+                        href="#stack"
+                        data-i18n="priorityGuide.orbits.build.routes.0.label"
+                        data-i18n-attr="aria-label:priorityGuide.orbits.build.routes.0.aria"
+                      >
+                        Study the planetary stack
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        class="orbit-card__link orbit-card__link--subtle"
+                        href="#council"
+                        data-i18n="priorityGuide.orbits.build.routes.1.label"
+                        data-i18n-attr="aria-label:priorityGuide.orbits.build.routes.1.aria"
+                      >
+                        Review AI council transcripts
+                      </a>
+                    </li>
+                  </ul>
+                </article>
+                <article class="orbit-card" aria-labelledby="orbit-alliance-title" role="listitem">
+                  <div class="orbit-card__header">
+                    <span class="orbit-card__tag" data-i18n="priorityGuide.orbits.alliance.tag">Alliances</span>
+                    <h4
+                      id="orbit-alliance-title"
+                      class="orbit-card__title"
+                      data-i18n="priorityGuide.orbits.alliance.title"
+                    >
+                      Alliance orbit
+                    </h4>
+                  </div>
+                  <p class="orbit-card__description" data-i18n="priorityGuide.orbits.alliance.description">
+                    For collaborators seeking partners, channels, and contact signals.
+                  </p>
+                  <ul class="orbit-card__routes">
+                    <li>
+                      <a
+                        class="orbit-card__link"
+                        href="#alliances"
+                        data-i18n="priorityGuide.orbits.alliance.routes.0.label"
+                        data-i18n-attr="aria-label:priorityGuide.orbits.alliance.routes.0.aria"
+                      >
+                        Browse alliance harbor
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        class="orbit-card__link orbit-card__link--subtle"
+                        href="#dock"
+                        data-i18n="priorityGuide.orbits.alliance.routes.1.label"
+                        data-i18n-attr="aria-label:priorityGuide.orbits.alliance.routes.1.aria"
+                      >
+                        Dock and open a channel
+                      </a>
+                    </li>
+                  </ul>
+                </article>
+              </div>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="mission-lanes"
+        class="section mission-lanes"
+        aria-labelledby="mission-lanes-title"
+      >
+        <div class="inner mission-lanes__inner">
+          <header class="section__header mission-lanes__header">
+            <p class="section__eyebrow" data-i18n="missionLanes.eyebrow">Mission routing</p>
+            <h2 id="mission-lanes-title" data-i18n="missionLanes.title">Choose your orbit and objective</h2>
+            <p data-i18n="missionLanes.intro">
+              Earth Online now behaves like a universe simulator: each lane is a curated trajectory for a different intent.
+              Pick the one that matches your focus to jump into the right systems instantly.
+            </p>
+          </header>
+          <div class="mission-lanes__grid" role="list">
+            <article class="mission-card" aria-labelledby="mission-explorer-title" role="listitem">
+              <header class="mission-card__header">
+                <span class="mission-card__tag" data-i18n="missionLanes.explorer.tag">Exploration orbit</span>
+                <h3 id="mission-explorer-title" class="mission-card__title" data-i18n="missionLanes.explorer.title">
+                  Exploration orbit · sense the simulations
+                </h3>
+              </header>
+              <p class="mission-card__description" data-i18n="missionLanes.explorer.description">
+                Ideal if you want to experience playable prototypes, climate rehearsals, and sensory storytelling.
+              </p>
+              <ul class="mission-card__routes">
+                <li data-i18n="missionLanes.explorer.routes.0">· Enter the Experience Decks to browse interactive labs.</li>
+                <li data-i18n="missionLanes.explorer.routes.1">· Watch the signal hub for live telemetry and changelog.</li>
+                <li data-i18n="missionLanes.explorer.routes.2">· Dive into longform narratives that explain each simulation.</li>
+              </ul>
+              <div class="mission-card__actions">
+                <a class="mission-card__link" href="#decks" data-i18n="missionLanes.explorer.cta">Launch decks</a>
+              </div>
+            </article>
+            <article class="mission-card" aria-labelledby="mission-builder-title" role="listitem">
+              <header class="mission-card__header">
+                <span class="mission-card__tag" data-i18n="missionLanes.builder.tag">Systems orbit</span>
+                <h3 id="mission-builder-title" class="mission-card__title" data-i18n="missionLanes.builder.title">
+                  Systems orbit · assemble the stack
+                </h3>
+              </header>
+              <p class="mission-card__description" data-i18n="missionLanes.builder.description">
+                Use this route if you are building operations, governance, or infrastructure alongside us.
+              </p>
+              <ul class="mission-card__routes">
+                <li data-i18n="missionLanes.builder.routes.0">· Start with the planetary stack to inspect data, orchestration, and perception layers.</li>
+                <li data-i18n="missionLanes.builder.routes.1">· Consult the AI council transcripts for constraints and next strategic jumps.</li>
+                <li data-i18n="missionLanes.builder.routes.2">· Map deck filters to your own pipelines using the mission taxonomy.</li>
+              </ul>
+              <div class="mission-card__actions">
+                <a class="mission-card__link" href="#stack" data-i18n="missionLanes.builder.cta">Open systems view</a>
+              </div>
+            </article>
+            <article class="mission-card" aria-labelledby="mission-alliance-title" role="listitem">
+              <header class="mission-card__header">
+                <span class="mission-card__tag" data-i18n="missionLanes.alliance.tag">Alliance orbit</span>
+                <h3 id="mission-alliance-title" class="mission-card__title" data-i18n="missionLanes.alliance.title">
+                  Alliance orbit · activate collaboration
+                </h3>
+              </header>
+              <p class="mission-card__description" data-i18n="missionLanes.alliance.description">
+                The quickest path for institutions, labs, and communities ready to co-create or request support.
+              </p>
+              <ul class="mission-card__routes">
+                <li data-i18n="missionLanes.alliance.routes.0">· Explore the alliance harbor to see who is already in resonance.</li>
+                <li data-i18n="missionLanes.alliance.routes.1">· Jump to the docking station for direct contact channels.</li>
+                <li data-i18n="missionLanes.alliance.routes.2">· Share your telemetry so we can integrate and extend the simulator.</li>
+              </ul>
+              <div class="mission-card__actions">
+                <a class="mission-card__link" href="#alliances" data-i18n="missionLanes.alliance.cta">Plot alliance route</a>
+              </div>
+            </article>
           </div>
         </div>
       </section>
