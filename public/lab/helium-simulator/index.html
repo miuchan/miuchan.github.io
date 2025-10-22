@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Helium Simulator · Experience Systems Atlas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <header class="page-header">
+      <h1>Helium Simulator</h1>
+      <p>
+        Helium 模拟器是一套 WebGL 与 AI 协作引擎，用于编排行星级遥测、调度策略与任务自动化。该原型呈现多轨道物体、遥测数据流与协作指令的实时互联视图。
+      </p>
+    </header>
+
+    <main class="layout simulator-grid">
+      <section class="panel compact">
+        <div class="panel-header">
+          <h2>Control stack</h2>
+          <span class="badge">Live sandbox</span>
+        </div>
+        <fieldset>
+          <legend>轨道高度</legend>
+          <input type="range" id="altitude" min="160" max="420" value="280" step="10" />
+          <div class="metric"><span>Target altitude</span><strong id="altitudeValue">280 km</strong></div>
+        </fieldset>
+        <fieldset>
+          <legend>遥测平滑</legend>
+          <input type="range" id="smoothing" min="0" max="1" value="0.35" step="0.05" />
+          <div class="metric"><span>Kalman gain</span><strong id="smoothingValue">0.35</strong></div>
+        </fieldset>
+        <label class="toggle">
+          <input type="checkbox" id="copilotToggle" checked />
+          启用 AI Copilot
+        </label>
+        <label class="toggle">
+          <input type="checkbox" id="anomalyToggle" />
+          监测异常簇
+        </label>
+        <div class="detail-card" aria-live="polite">
+          <h3>Copilot 指令</h3>
+          <p id="copilotInstruction">维持同步轨道，准备重建遥测投影。</p>
+          <div class="token-row" id="copilotTags"></div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Orbital theatre</h2>
+          <span class="badge">3 assets</span>
+        </div>
+        <div class="canvas-shell">
+          <canvas id="simCanvas" aria-label="Orbit simulation"></canvas>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Telemetry</h2>
+          <span class="badge">Updated <strong id="telemetryTicker">0.3s</strong></span>
+        </div>
+        <table class="table" aria-describedby="telemetryTicker">
+          <thead>
+            <tr>
+              <th>Asset</th>
+              <th>Altitude</th>
+              <th>Velocity</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="telemetryTable"></tbody>
+        </table>
+        <div class="detail-card">
+          <h3>Event feed</h3>
+          <div class="list" id="eventFeed"></div>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="main.js"></script>
+  </body>
+</html>

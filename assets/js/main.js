@@ -62,8 +62,8 @@ const labDecks = [
   {
     id: 'atlas-console',
     type: 'lab',
-    external: true,
-    url: 'https://atlas.earthonline.systems',
+    external: false,
+    url: 'public/lab/atlas-console/index.html',
     translations: {
       en: {
         title: 'Atlas Console',
@@ -86,8 +86,8 @@ const labDecks = [
   {
     id: 'helium-simulator',
     type: 'lab',
-    external: true,
-    url: 'https://helium.earthonline.systems',
+    external: false,
+    url: 'public/lab/helium-simulator/index.html',
     translations: {
       en: {
         title: 'Helium Simulator',
@@ -110,8 +110,8 @@ const labDecks = [
   {
     id: 'council-studio',
     type: 'lab',
-    external: true,
-    url: 'https://council.earthonline.systems',
+    external: false,
+    url: 'public/lab/council-studio/index.html',
     translations: {
       en: {
         title: 'Council Studio',
