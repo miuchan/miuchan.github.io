@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>泉小 UI 引擎状态面板</title>
+    <meta
+      name="description"
+      content="仿照泉小 UI 引擎控制台设计的状态面板，展示信号、元素与 Effect 的实时指标与操作。"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="page" aria-labelledby="dashboard-title">
+      <a class="back-link" href="../../index.html#projects">← 返回体验集合</a>
+      <section class="overview-card" aria-label="泉小 UI 引擎状态">
+        <div class="overview-card__header">
+          <div>
+            <p class="eyebrow">Signal ⇆ Element</p>
+            <h1 id="dashboard-title">泉小 UI 引擎状态</h1>
+            <p class="intro">
+              Menu UI Engine 正在运行，定时同步 signal 状态并生成响应式元素树。保持 4ms 的
+              diff 间隔，确保界面在 60FPS 下稳定。
+            </p>
+          </div>
+          <div class="overview-meta" aria-label="引擎核心指标">
+            <dl>
+              <div>
+                <dt>渲染间隔</dt>
+                <dd>4ms</dd>
+              </div>
+              <div>
+                <dt>同步线程</dt>
+                <dd>3</dd>
+              </div>
+              <div>
+                <dt>优先级</dt>
+                <dd>实时</dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+        <div class="stats" role="list">
+          <article class="stat" role="listitem">
+            <div class="stat__label">实时信号</div>
+            <div class="stat__value" data-role="stat-value" data-target="62">0</div>
+            <p class="stat__hint">监听中的 createSignal 实例</p>
+          </article>
+          <article class="stat" role="listitem">
+            <div class="stat__label">已发布元素</div>
+            <div class="stat__value" data-role="stat-value" data-target="128">0</div>
+            <p class="stat__hint">Element 节点映射到 DOM</p>
+          </article>
+          <article class="stat" role="listitem">
+            <div class="stat__label">活跃 effect</div>
+            <div class="stat__value" data-role="stat-value" data-target="37">0</div>
+            <p class="stat__hint">追踪 signal 更新的 effect</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="grid">
+        <article class="card controls" aria-labelledby="controls-title">
+          <div class="card__header">
+            <div>
+              <p class="eyebrow">控制操作</p>
+              <h2 id="controls-title">操作面板</h2>
+            </div>
+            <span class="badge">4 条指令</span>
+          </div>
+          <ol class="control-list">
+            <li class="control-item">
+              <span class="control-item__index">01</span>
+              <div class="control-item__body">
+                <h3>构建 Signal</h3>
+                <p>使用 <code>createSignal()</code> 生成响应式源，默认读写延迟 2ms。</p>
+              </div>
+              <button type="button" class="icon-button" aria-label="构建 signal">↻</button>
+            </li>
+            <li class="control-item">
+              <span class="control-item__index">02</span>
+              <div class="control-item__body">
+                <h3>融合 Store</h3>
+                <p>合并 signal 形成 store，提供批量订阅与事务性更新。</p>
+              </div>
+              <button type="button" class="icon-button" aria-label="融合 store">⟳</button>
+            </li>
+            <li class="control-item">
+              <span class="control-item__index">03</span>
+              <div class="control-item__body">
+                <h3>发布 Element</h3>
+                <p>将编译后的模板挂载为元素树，自动绑定 props 与 children。</p>
+              </div>
+              <button type="button" class="icon-button" aria-label="发布 element">⇪</button>
+            </li>
+            <li class="control-item">
+              <span class="control-item__index">04</span>
+              <div class="control-item__body">
+                <h3>刷新 Effect</h3>
+                <p>调度 effect，追踪依赖图变化并触发差分渲染。</p>
+              </div>
+              <button type="button" class="icon-button" aria-label="刷新 effect">↺</button>
+            </li>
+          </ol>
+        </article>
+
+        <article class="card focus" aria-labelledby="focus-title">
+          <div class="card__header">
+            <div>
+              <p class="eyebrow">系统焦点</p>
+              <h2 id="focus-title">运行模块</h2>
+            </div>
+            <div class="tabs" role="tablist" aria-label="焦点切换">
+              <button class="tab is-active" role="tab" aria-selected="true" data-target="signal">信号</button>
+              <button class="tab" role="tab" aria-selected="false" data-target="system">系统</button>
+              <button class="tab" role="tab" aria-selected="false" data-target="effect">Effect</button>
+            </div>
+          </div>
+          <div class="tab-panels">
+            <section class="panel is-active" id="panel-signal" role="tabpanel">
+              <h3>Signal · createSignal()</h3>
+              <p>响应式数据源，支持读取与设置。与 effect 绑定后，写入值会触发依赖链更新。</p>
+              <dl class="meta-list">
+                <div>
+                  <dt>平均写入</dt>
+                  <dd>2.1ms</dd>
+                </div>
+                <div>
+                  <dt>订阅者</dt>
+                  <dd>124</dd>
+                </div>
+                <div>
+                  <dt>脉冲</dt>
+                  <dd>每 5s</dd>
+                </div>
+              </dl>
+            </section>
+            <section class="panel" id="panel-system" role="tabpanel" hidden>
+              <h3>System · 调度层</h3>
+              <p>统一管理所有 signal 与 effect 的调度循环，基于优先级划分渲染与 IO 队列。</p>
+              <dl class="meta-list">
+                <div>
+                  <dt>渲染队列</dt>
+                  <dd>8</dd>
+                </div>
+                <div>
+                  <dt>IO 监听</dt>
+                  <dd>15</dd>
+                </div>
+                <div>
+                  <dt>事件堆积</dt>
+                  <dd>0</dd>
+                </div>
+              </dl>
+            </section>
+            <section class="panel" id="panel-effect" role="tabpanel" hidden>
+              <h3>Effect · effect(() ⇒ …)</h3>
+              <p>对 signal 变化做出响应，封装渲染、日志与动画等副作用。支持批量刷新与撤销。</p>
+              <dl class="meta-list">
+                <div>
+                  <dt>等待队列</dt>
+                  <dd>5</dd>
+                </div>
+                <div>
+                  <dt>平均耗时</dt>
+                  <dd>6.4ms</dd>
+                </div>
+                <div>
+                  <dt>撤销缓存</dt>
+                  <dd>32</dd>
+                </div>
+              </dl>
+            </section>
+          </div>
+        </article>
+
+        <article class="card system" aria-labelledby="system-title">
+          <div class="card__header">
+            <div>
+              <p class="eyebrow">系统总览</p>
+              <h2 id="system-title">运行状态</h2>
+            </div>
+            <span class="badge badge--soft">同步中</span>
+          </div>
+          <ul class="timeline">
+            <li>
+              <span class="timeline__dot"></span>
+              <div>
+                <h3>Signal</h3>
+                <p>createSignal( )</p>
+                <p class="timeline__hint">实时更新：通过 getter/setter 访问。</p>
+              </div>
+            </li>
+            <li>
+              <span class="timeline__dot"></span>
+              <div>
+                <h3>Effect</h3>
+                <p>effect(() ⇒ …)</p>
+                <p class="timeline__hint">副作用：追踪 signal</p>
+              </div>
+            </li>
+            <li>
+              <span class="timeline__dot"></span>
+              <div>
+                <h3>Element</h3>
+                <p>h(tag, props, …children)</p>
+                <p class="timeline__hint">组件化：函数式描述 UI</p>
+              </div>
+            </li>
+            <li>
+              <span class="timeline__dot"></span>
+              <div>
+                <h3>Store</h3>
+                <p>结构体：批量 commit</p>
+                <p class="timeline__hint">事务协调：确保一致性</p>
+              </div>
+            </li>
+          </ul>
+        </article>
+
+        <article class="card events" aria-labelledby="events-title">
+          <div class="card__header">
+            <div>
+              <p class="eyebrow">事件流</p>
+              <h2 id="events-title">Menu UI Engine 时间线</h2>
+            </div>
+            <button class="icon-button" type="button" aria-label="刷新事件">⟲</button>
+          </div>
+          <ul class="event-feed" id="event-feed" aria-live="polite">
+            <li>
+              <span class="event__time">21:34:11</span>
+              <div>
+                <p class="event__title">Telemetry heartbeat</p>
+                <p class="event__desc">同步 37 个 effect，差分渲染完成。</p>
+              </div>
+            </li>
+            <li>
+              <span class="event__time">21:33:58</span>
+              <div>
+                <p class="event__title">Signal merge</p>
+                <p class="event__desc">4 个局部 signal 合并为 store: menu.session。</p>
+              </div>
+            </li>
+            <li>
+              <span class="event__time">21:33:40</span>
+              <div>
+                <p class="event__title">Element hydrate</p>
+                <p class="event__desc">UI tree 与服务端快照对齐，耗时 12ms。</p>
+              </div>
+            </li>
+            <li>
+              <span class="event__time">21:33:22</span>
+              <div>
+                <p class="event__title">Effect rollback</p>
+                <p class="event__desc">检测到 stale effect，撤销并重新编排。</p>
+              </div>
+            </li>
+          </ul>
+        </article>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>© <span id="year"></span> Menu UI Engine 体验面板</p>
+    </footer>
+
+    <script src="scripts.js" type="module"></script>
+  </body>
+</html>
