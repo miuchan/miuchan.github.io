@@ -545,6 +545,18 @@
         </div>
       </section>
 
+      <section id="research-library" class="section ia-surface" aria-labelledby="research-library-title">
+        <div class="inner">
+          <header class="section__header">
+            <p class="section__eyebrow" data-i18n="researchLibrary.eyebrow">Research library</p>
+            <h2 id="research-library-title" data-i18n="researchLibrary.title">Every research log, now on the homepage</h2>
+            <p data-i18n="researchLibrary.intro">Read every blueprint and proof without leaving this page.</p>
+          </header>
+          <p id="research-library-summary" class="browser-summary"></p>
+          <div class="research-library" id="research-library-list" aria-live="polite"></div>
+        </div>
+      </section>
+
       <section id="alliances" class="section ia-surface" aria-labelledby="alliances-title">
         <div class="inner">
           <header class="section__header">
@@ -560,6 +572,28 @@
               View full alliance index
               <span aria-hidden="true">↗</span>
             </a>
+          </div>
+        </div>
+      </section>
+
+      <section id="friend-network" class="section ia-surface" aria-labelledby="friend-network-title">
+        <div class="inner">
+          <header class="section__header">
+            <p class="section__eyebrow" data-i18n="alliances.network.eyebrow">Alliance atlas</p>
+            <h2 id="friend-network-title" data-i18n="alliances.network.title">Surface the entire partner signal on one screen</h2>
+            <p data-i18n="alliances.network.intro">
+              Scan the seasonal spotlight and collaboration clusters without leaving the homepage.
+            </p>
+          </header>
+          <div class="friend-network" role="list">
+            <section class="friend-network__feature" aria-labelledby="friend-network-feature-heading">
+              <h3 id="friend-network-feature-heading" data-i18n="alliances.network.featuredLabel">Featured orbit</h3>
+              <div id="friend-network-feature" class="friend-network__feature-card" aria-live="polite"></div>
+            </section>
+            <section class="friend-network__clusters" aria-labelledby="friend-network-clusters-heading">
+              <h3 id="friend-network-clusters-heading" data-i18n="alliances.network.clustersLabel">Collaboration clusters</h3>
+              <div id="friend-network-clusters" class="friend-network__cluster-list" aria-live="polite"></div>
+            </section>
           </div>
         </div>
       </section>

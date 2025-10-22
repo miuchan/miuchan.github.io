@@ -3132,3 +3132,268 @@ body.document-body {
     padding: 1.75rem 1.25rem;
   }
 }
+
+.research-library {
+  display: grid;
+  gap: clamp(1.2rem, 3vw, 1.8rem);
+}
+
+.research-entry {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  padding: clamp(1.4rem, 3vw, 2rem);
+  transition: border-color var(--transition), transform var(--transition);
+}
+
+.research-entry:hover,
+.research-entry:focus-within {
+  border-color: rgba(0, 245, 255, 0.38);
+  transform: translateY(-3px);
+}
+
+.research-entry__summary {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  cursor: pointer;
+  list-style: none;
+}
+
+.research-entry__summary::-webkit-details-marker {
+  display: none;
+}
+
+.research-entry__title {
+  font-family: 'Space Grotesk', system-ui;
+  font-size: clamp(1.2rem, 2.6vw, 1.6rem);
+  margin: 0;
+}
+
+.research-entry__description {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.research-entry__body {
+  margin-top: 1rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.research-entry__lead,
+.research-entry__alt-title,
+.research-entry__alt-description {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.research-entry__alt-title {
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.research-entry__link {
+  justify-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 245, 255, 0.3);
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.research-entry__content {
+  display: grid;
+}
+
+.research-entry__content-block {
+  background: var(--surface-strong);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(0, 245, 255, 0.18);
+  padding: 1rem;
+  font-family: 'Space Grotesk', 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  max-height: 420px;
+  overflow: auto;
+  white-space: pre-wrap;
+}
+
+.research-entry__status {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.research-entry__status--error {
+  color: var(--accent-warm);
+}
+
+.friend-network__feature,
+.friend-network__clusters {
+  margin-top: clamp(2rem, 5vw, 3rem);
+}
+
+.friend-network__feature-card,
+.friend-network__cluster-list {
+  display: grid;
+  gap: clamp(1.5rem, 4vw, 2.4rem);
+}
+
+.friend-feature-card {
+  background: linear-gradient(135deg, rgba(0, 245, 255, 0.14), rgba(76, 111, 255, 0.08));
+  border: 1px solid rgba(0, 245, 255, 0.3);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  padding: clamp(1.6rem, 3vw, 2.4rem);
+  display: grid;
+  gap: 1.2rem;
+}
+
+.friend-feature-card__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  color: var(--accent);
+}
+
+.friend-feature-card__title {
+  margin: 0;
+  font-family: 'Space Grotesk', system-ui;
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+}
+
+.friend-feature-card__summary {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.friend-feature-card__friend {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.friend-feature-card__friend h4 {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.friend-feature-card__note {
+  margin: 0;
+  border-left: 3px solid rgba(255, 142, 102, 0.45);
+  padding-left: 0.9rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.friend-feature-card__tags,
+.friend-card__tags {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.friend-feature-card__tags li,
+.friend-card__tags li {
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 245, 255, 0.28);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.friend-feature-card__link,
+.friend-card__link {
+  justify-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.friend-cluster {
+  background: var(--surface);
+  border: 1px solid rgba(0, 245, 255, 0.24);
+  border-radius: var(--radius-lg);
+  padding: clamp(1.4rem, 3vw, 2.2rem);
+  box-shadow: var(--shadow);
+  display: grid;
+  gap: 1.4rem;
+}
+
+.friend-cluster__header h3 {
+  margin: 0;
+  font-family: 'Space Grotesk', system-ui;
+  font-size: 1.4rem;
+}
+
+.friend-cluster__header p {
+  margin: 0.4rem 0 0;
+  color: var(--text-muted);
+}
+
+.friend-cluster__list {
+  display: grid;
+  gap: 1.1rem;
+}
+
+.friend-card {
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(0, 245, 255, 0.16);
+  background: rgba(0, 245, 255, 0.05);
+  padding: 1.1rem 1.2rem;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.friend-card h4 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.friend-card p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.friend-card__note {
+  border-left: 3px solid rgba(0, 245, 255, 0.28);
+  padding-left: 0.75rem;
+  font-size: 0.9rem;
+}
+
+.friend-card__link::after,
+.friend-feature-card__link::after,
+.research-entry__link::after {
+  content: '↗';
+  font-size: 1.1em;
+}
+
+@media (min-width: 960px) {
+  .friend-network__feature {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: clamp(1.8rem, 4vw, 3rem);
+    align-items: start;
+  }
+}
