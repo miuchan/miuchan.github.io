@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Demo Directory · Earth Online</title>
+    <meta
+      name="description"
+      content="Browse every interactive demo in the Earth Online archive with a navigable tree view, including nested experiment directories."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <main class="directory" id="directory">
+      <header class="directory__header">
+        <a class="directory__back" href="../../index.html#labs">← 返回体验舰队</a>
+        <p class="directory__eyebrow" lang="en">Demo archive</p>
+        <p class="directory__eyebrow" lang="zh">演示档案</p>
+        <h1 class="directory__title" lang="en">All interactive experiments</h1>
+        <h1 class="directory__title" lang="zh">所有交互式实验</h1>
+        <p class="directory__lead">
+          <span lang="en"
+            >Use the searchable tree to open any demo, including nested prototypes and historical experiments.</span
+          >
+          <span lang="zh"
+            >通过可搜索的树形目录快速访问所有 Demo，涵盖嵌套的原型与历史实验。</span
+          >
+        </p>
+        <p class="directory__meta" id="demoMeta"></p>
+      </header>
+
+      <section class="directory__controls" aria-label="Demo directory controls">
+        <label class="search" for="treeSearch">
+          <span class="search__label" lang="en">Search demos</span>
+          <span class="search__label" lang="zh">搜索 Demo</span>
+          <input
+            type="search"
+            id="treeSearch"
+            name="treeSearch"
+            autocomplete="off"
+            placeholder="Search by name or path…"
+          />
+        </label>
+      </section>
+
+      <section class="directory__tree" aria-live="polite">
+        <p class="directory__status" id="demoStatus">Loading demo directory…</p>
+        <div class="tree-root" id="demoTree" hidden></div>
+      </section>
+
+      <footer class="directory__footer">
+        <p>
+          <span lang="en"
+            >Tree data is generated from the repository with <code>scripts/generate_demo_tree.py</code>.</span
+          >
+          <span lang="zh"
+            >树形数据由 <code>scripts/generate_demo_tree.py</code> 自动生成，保持与仓库目录同步。</span
+          >
+        </p>
+      </footer>
+    </main>
+    <script type="module" src="index.js"></script>
+  </body>
+</html>
