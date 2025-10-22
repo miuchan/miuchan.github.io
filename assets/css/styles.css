@@ -961,6 +961,91 @@ a:focus {
   z-index: 1;
 }
 
+.priority-map__panel--map {
+  gap: 1.4rem;
+}
+
+.priority-map__orbits {
+  display: grid;
+  gap: 1rem;
+}
+
+.orbit-card {
+  display: grid;
+  gap: 0.8rem;
+  padding: 1.3rem 1.4rem;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(0, 245, 255, 0.12);
+  background: rgba(4, 9, 20, 0.7);
+  transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+}
+
+.orbit-card:hover,
+.orbit-card:focus-within {
+  transform: translateY(-2px);
+  border-color: rgba(0, 245, 255, 0.28);
+  box-shadow: 0 20px 44px rgba(0, 12, 45, 0.45);
+}
+
+.orbit-card__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.orbit-card__tag {
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(214, 226, 255, 0.72);
+}
+
+.orbit-card__title {
+  margin: 0;
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+}
+
+.orbit-card__description {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.orbit-card__routes {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.orbit-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.82rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(240, 246, 255, 0.88);
+}
+
+.orbit-card__link::after {
+  content: '↗';
+  font-size: 0.9rem;
+  transition: transform var(--transition);
+}
+
+.orbit-card__link:hover::after,
+.orbit-card__link:focus::after {
+  transform: translateX(4px);
+}
+
+.orbit-card__link--subtle {
+  color: rgba(214, 226, 255, 0.75);
+}
+
 .priority-map__intro {
   margin: 0;
   color: var(--text-muted);
@@ -1105,6 +1190,119 @@ a:focus {
   background: rgba(4, 9, 20, 0.6);
   color: var(--text-muted);
   font-size: 0.9rem;
+}
+
+.mission-lanes__inner {
+  display: grid;
+  gap: 2.5rem;
+}
+
+.mission-lanes__header p {
+  max-width: 42rem;
+}
+
+.mission-lanes__grid {
+  display: grid;
+  gap: 1.6rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.mission-card {
+  display: grid;
+  gap: 1.2rem;
+  padding: 1.8rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(0, 245, 255, 0.14);
+  background:
+    radial-gradient(circle at 15% 20%, rgba(0, 245, 255, 0.16), transparent 60%),
+    rgba(4, 9, 20, 0.78);
+  box-shadow: var(--shadow);
+}
+
+.mission-card__header {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.mission-card__tag {
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(214, 226, 255, 0.75);
+}
+
+.mission-card__title {
+  margin: 0;
+  font-size: 1.25rem;
+  letter-spacing: 0.015em;
+}
+
+.mission-card__description {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.mission-card__routes {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+  list-style: none;
+  color: rgba(214, 226, 255, 0.78);
+  font-size: 0.92rem;
+}
+
+.mission-card__actions {
+  display: flex;
+  align-items: center;
+}
+
+.mission-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.65rem 1.2rem;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 245, 255, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.78rem;
+  color: rgba(240, 246, 255, 0.95);
+  transition: background var(--transition), border-color var(--transition), transform var(--transition);
+}
+
+.mission-card__link::after {
+  content: '↗';
+  transition: transform var(--transition);
+}
+
+.mission-card__link:hover,
+.mission-card__link:focus {
+  background: rgba(0, 245, 255, 0.14);
+  border-color: rgba(0, 245, 255, 0.65);
+  transform: translateY(-1px);
+}
+
+.mission-card__link:hover::after,
+.mission-card__link:focus::after {
+  transform: translateX(4px);
+}
+
+@media (min-width: 900px) {
+  .priority-map__panel--map {
+    grid-column: span 2;
+  }
+
+  .priority-map__orbits {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .orbit-card__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
 .gradient-flow {
