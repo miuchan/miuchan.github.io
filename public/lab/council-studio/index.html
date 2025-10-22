@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Council Studio · Experience Systems Atlas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <header class="page-header">
+      <h1>Council Studio</h1>
+      <p>
+        Council Studio 是一个原生 AI 的治理工作室。它整合仪式脚本、指标 scorecard 与多语种决策日志，帮助联盟节点快速搭建协同结构并保持审计追踪。
+      </p>
+    </header>
+
+    <main class="layout studio-grid">
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Ritual builder</h2>
+          <span class="badge">Interactive</span>
+        </div>
+        <form id="agendaForm" class="list" autocomplete="off">
+          <label class="list-item">
+            <span class="tagline">议程主题</span>
+            <input type="text" id="agendaTopic" placeholder="例如：联盟节点入驻" required />
+          </label>
+          <label class="list-item">
+            <span class="tagline">责任人</span>
+            <input type="text" id="agendaOwner" placeholder="Responsible owner" required />
+          </label>
+          <label class="list-item">
+            <span class="tagline">时间长度 (分钟)</span>
+            <input type="number" id="agendaDuration" min="5" max="120" value="25" required />
+          </label>
+          <button type="submit" class="list-item" style="cursor: pointer">➕ 添加议程</button>
+        </form>
+        <div class="detail-card">
+          <h3>Agenda timeline</h3>
+          <div class="timeline" id="agendaTimeline"></div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Scorecard</h2>
+        </div>
+        <div class="metric">
+          <span>Alignment confidence</span>
+          <strong id="alignmentScore">82%</strong>
+        </div>
+        <input type="range" id="alignmentSlider" min="40" max="100" value="82" />
+        <div class="metric">
+          <span>Incentive health</span>
+          <strong id="incentiveScore">76%</strong>
+        </div>
+        <input type="range" id="incentiveSlider" min="30" max="100" value="76" />
+        <div class="metric">
+          <span>Execution readiness</span>
+          <strong id="readinessScore">64%</strong>
+        </div>
+        <input type="range" id="readinessSlider" min="20" max="100" value="64" />
+        <div class="detail-card">
+          <h3>Insights</h3>
+          <div class="list" id="insightList"></div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Decision log</h2>
+          <span class="badge">Auto generated</span>
+        </div>
+        <div class="list" id="decisionLog"></div>
+        <div class="detail-card">
+          <h3>Export snapshot</h3>
+          <button id="exportButton" class="list-item" type="button" style="cursor: pointer">
+            下载 JSON 摘要
+          </button>
+          <code id="exportPreview" style="font-size: 0.8rem; color: var(--text-secondary);"></code>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="main.js"></script>
+  </body>
+</html>

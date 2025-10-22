@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Atlas Console · Experience Systems Atlas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <header class="page-header">
+      <h1>Atlas Console</h1>
+      <p>
+        Atlas 控制台为研究资产、体验原型与治理仪式提供统一的导航层。系统内置空间星图、资产仪表与协作时间线，帮助分布式团队在同一张动态地图上对齐上下文。
+      </p>
+    </header>
+
+    <main class="layout atlas-grid" id="atlasLayout">
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Constellation graph</h2>
+          <span class="badge"><strong id="activeCluster">Atlas Core</strong></span>
+        </div>
+        <div class="canvas-shell" aria-hidden="true">
+          <canvas id="constellationCanvas"></canvas>
+        </div>
+        <div class="legend">
+          <span style="color: var(--accent)">Research track</span>
+          <span style="color: var(--success)">Operational ritual</span>
+          <span style="color: var(--warning)">Asset library</span>
+        </div>
+      </section>
+
+      <section class="panel compact">
+        <div class="panel-header">
+          <h2>Mission tracks</h2>
+          <span class="badge">3 active</span>
+        </div>
+        <div class="list" id="trackList">
+          <button data-track="constellation-design" aria-pressed="true">
+            <strong>Constellation design</strong>
+            <span class="tagline">建模跨学科系统并维护星图拓扑。</span>
+          </button>
+          <button data-track="experience-engineering">
+            <strong>Experience engineering</strong>
+            <span class="tagline">原型化空间界面与 AI 工具集。</span>
+          </button>
+          <button data-track="alliance-operations">
+            <strong>Alliance operations</strong>
+            <span class="tagline">编排伙伴计划与激励结构。</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Track intelligence</h2>
+        </div>
+        <article class="detail-card" aria-live="polite">
+          <h3 id="trackTitle">Constellation design</h3>
+          <p id="trackDescription">
+            维护星图拓扑和语义层，支持跨学科研究索引与路径推演。
+          </p>
+          <div class="token-row" id="trackTags">
+            <span class="token">Systems research</span>
+            <span class="token">Simulation</span>
+            <span class="token">Narratives</span>
+          </div>
+          <div class="metric">
+            <span>Active briefs</span>
+            <strong id="trackBriefs">6</strong>
+          </div>
+          <div class="metric">
+            <span>Research ingest (24h)</span>
+            <strong id="trackIngest">18</strong>
+          </div>
+        </article>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Ritual timeline</h2>
+        </div>
+        <div class="timeline" id="timeline"></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Asset inventory</h2>
+        </div>
+        <div class="list" id="assetList"></div>
+      </section>
+    </main>
+
+    <script type="module" src="main.js"></script>
+  </body>
+</html>
