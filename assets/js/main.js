@@ -51,6 +51,13 @@ const baseTranslations = {
       subtitle: '体验实验室 · Planetary Experience Lab',
       ariaLabel: 'Earth Online 实验室标识'
     },
+    primaryNav: {
+      ariaLabel: '主导航',
+      blog: '博客',
+      papers: '论文',
+      labs: '实验室',
+      friends: '友链'
+    },
     header: {
       statusAria: '地球 Online 当前指标',
       metrics: [
@@ -844,6 +851,13 @@ const baseTranslations = {
     brand: {
       subtitle: 'Planetary Experience Lab',
       ariaLabel: 'Earth Online lab mark'
+    },
+    primaryNav: {
+      ariaLabel: 'Primary navigation',
+      blog: 'Blog',
+      papers: 'Research',
+      labs: 'Labs',
+      friends: 'Friends'
     },
     header: {
       statusAria: 'Earth Online live indicators',
