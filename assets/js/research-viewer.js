@@ -1,205 +1,208 @@
-import { LANGUAGE_FALLBACK, setStoredLanguage } from './i18n/languages.js';
-import {
-  applyDocumentLanguage,
-  createTranslationRegistry,
-  resolveTranslation
-} from './i18n/registry.js';
-import { enhanceLanguageToggle } from './i18n/toggle.js';
 import { researchEntries } from './research-data.js';
 
-const baseTranslations = {
+const LANGUAGE_FALLBACK = 'en';
+const SUPPORTED_LANGUAGES = ['en', 'zh'];
+
+const textDictionary = {
   en: {
     documentTitle: 'Earth Online Research Library',
-    meta: {
-      htmlLang: 'en',
-      direction: 'ltr',
-      toggleLabel: 'Select language'
+    brand: { name: 'Earth Online' },
+    nav: {
+      mission: 'Mission',
+      labs: 'Labs',
+      research: 'Research',
+      signals: 'Signals',
+      alliances: 'Alliances',
+      contact: 'Contact',
+      blog: 'Blog',
+      home: 'Return home'
     },
-    language: {
-      toggleLabel: 'Select language',
-      selectorLabel: 'Select language',
-      fallbackTag: 'English content'
-    },
-    header: {
-      back: '← Return to Earth Online',
-      backAria: 'Return to the Earth Online homepage',
-      eyebrow: 'Research Library'
+    hero: {
+      eyebrow: 'Research library',
+      title: 'Earth Online Research Library',
+      description: 'Mathematical arguments, protocol design, and experience blueprints from Earth Online’s lab network.',
+      hint: 'Entries span both English and Chinese editions.',
+      stat(count) {
+        return `${count} manuscripts`;
+      }
     },
     sidebar: {
-      ariaLabel: 'Research index',
-      title: 'Research Index',
-      description: 'Browse all research papers and lab blueprints, or explore other assets in the experience decks.'
+      title: 'Research index',
+      description: 'Choose a manuscript to load its abstract and full text. Use the language toggle to switch editions.'
     },
+    toolbar: { language: 'Language' },
     status: {
-      loading: 'Loading research manuscript…',
+      loading: 'Loading manuscript…',
       error: 'Unable to load the document. Please try again later.'
     },
-    abstract: {
-      label: 'Research Overview'
+    abstract: { label: 'Research overview' },
+    footer: {
+      title: 'Earth Online · Experience Lab',
+      description: 'Building navigable systems for knowledge, alliances, and planetary scale collaboration.',
+      blog: 'Blog',
+      research: 'Research',
+      friends: 'Alliance Harbor',
+      github: 'GitHub',
+      note: '© {year} Earth Online Lab. All rights reserved.'
     }
   },
   zh: {
-    documentTitle: 'Earth Online 研究文稿',
-    meta: {
-      htmlLang: 'zh-CN',
-      direction: 'ltr',
-      toggleLabel: '选择语言'
+    documentTitle: 'Earth Online 研究文库',
+    brand: { name: 'Earth Online' },
+    nav: {
+      mission: '使命',
+      labs: '实验室',
+      research: '研究',
+      signals: '信号',
+      alliances: '联盟',
+      contact: '联络',
+      blog: '博客',
+      home: '返回首页'
     },
-    language: {
-      toggleLabel: '选择语言',
-      selectorLabel: '选择语言',
-      fallbackTag: '英文内容'
-    },
-    header: {
-      back: '← 返回 Earth Online',
-      backAria: '返回 Earth Online 首页',
-      eyebrow: '研究文稿库'
+    hero: {
+      eyebrow: '研究文库',
+      title: 'Earth Online 研究文库',
+      description: '来自 Earth Online 实验网络的数学证明、协议设计与体验蓝图。',
+      hint: '文稿覆盖中文与英文两个版本。',
+      stat(count) {
+        return `${count} 篇文稿`;
+      }
     },
     sidebar: {
-      ariaLabel: '研究论文索引',
       title: '研究索引',
-      description: '浏览所有研究论文与实验室蓝图，或前往体验簇探索其他资产。'
+      description: '选择一篇文稿查看摘要与全文，并通过语言切换按钮在不同版本间跳转。'
     },
+    toolbar: { language: '语言' },
     status: {
-      loading: '正在加载研究文稿…',
-      error: '暂时无法加载文稿，请稍后再试。'
+      loading: '正在加载文稿…',
+      error: '暂时无法加载文稿，请稍后重试。'
     },
-    abstract: {
-      label: '研究摘要'
+    abstract: { label: '研究摘要' },
+    footer: {
+      title: 'Earth Online · 体验实验室',
+      description: '构建可导航的知识、联盟与行星协作系统。',
+      blog: '博客',
+      research: '研究',
+      friends: '联盟星港',
+      github: 'GitHub',
+      note: '© {year} Earth Online Lab. 保留所有权利。'
     }
   }
 };
-
-const translationRegistry = createTranslationRegistry(baseTranslations, {
-  localizedLanguageCodes: ['en', 'zh']
-});
 
 const params = new URLSearchParams(window.location.search);
 const requestedId = params.get('doc');
 const requestedLang = params.get('lang');
 
 const initialEntry = researchEntries.find((entry) => entry.id === requestedId) || researchEntries[0];
-const initialLanguage = translationRegistry.has(requestedLang)
+const initialLanguage = SUPPORTED_LANGUAGES.includes(requestedLang)
   ? requestedLang
-  : translationRegistry.determineLanguage();
+  : (navigator.language?.toLowerCase().startsWith('zh') ? 'zh' : LANGUAGE_FALLBACK);
 
 const state = {
   language: initialLanguage,
   entryId: initialEntry?.id || null
 };
 
-const titleElement = document.getElementById('document-title');
+const sidebarListElement = document.getElementById('document-sidebar-list');
 const abstractElement = document.getElementById('document-abstract');
 const contentElement = document.getElementById('document-content');
-const sidebarListElement = document.getElementById('document-sidebar-list');
+const statusElement = document.getElementById('document-status');
+const titleElement = document.getElementById('document-title');
+const entryCountElement = document.getElementById('entry-count');
+const languageSelect = document.getElementById('language-select');
 const metaDescription = document.querySelector('meta[name="description"]');
-const statusElement = document.createElement('p');
-statusElement.className = 'document-status';
 
-let languageToggleBinding = null;
+function getDictionary(lang) {
+  return textDictionary[lang] || textDictionary[LANGUAGE_FALLBACK];
+}
+
+function applyStaticText(lang) {
+  const dictionary = getDictionary(lang);
+  const fallback = getDictionary(LANGUAGE_FALLBACK);
+  const docTitle = dictionary.documentTitle || fallback.documentTitle;
+  if (docTitle) {
+    document.title = docTitle;
+  }
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-i18n]').forEach((node) => {
+    const path = node.getAttribute('data-i18n');
+    if (!path) return;
+    const segments = path.split('.');
+    let current = dictionary;
+    let fallbackCursor = fallback;
+    for (const segment of segments) {
+      current = current?.[segment];
+      fallbackCursor = fallbackCursor?.[segment];
+    }
+    if (typeof current === 'string') {
+      if (path === 'footer.note') {
+        node.textContent = current.replace('{year}', new Date().getFullYear());
+      } else {
+        node.textContent = current;
+      }
+    } else if (typeof fallbackCursor === 'string') {
+      node.textContent = fallbackCursor.replace('{year}', new Date().getFullYear());
+    }
+  });
+}
 
 function getLocalizedEntry(entry, lang) {
   if (!entry) return null;
   const dictionary = entry.translations || {};
-  const fallbackTranslation = dictionary[LANGUAGE_FALLBACK] || {};
-  const localized = dictionary[lang] || fallbackTranslation;
+  const fallback = dictionary[LANGUAGE_FALLBACK] || {};
+  const localized = dictionary[lang] || fallback;
   const sources = entry.sources || {};
   return {
     id: entry.id,
-    source: sources[lang] || sources[LANGUAGE_FALLBACK],
-    title: localized.title || fallbackTranslation.title || entry.id,
-    description: localized.description || fallbackTranslation.description || '',
+    title: localized.title || fallback.title || entry.id,
+    description: localized.description || fallback.description || '',
+    source: sources[lang] || sources[LANGUAGE_FALLBACK] || null,
     sources
   };
 }
 
 function getLocalizedEntries(lang) {
-  return researchEntries
-    .map((entry) => getLocalizedEntry(entry, lang))
-    .filter(Boolean);
+  return researchEntries.map((entry) => getLocalizedEntry(entry, lang)).filter(Boolean);
 }
 
-function updateStaticContent(lang) {
-  const dictionary = translationRegistry.get(lang);
-  const fallbackDictionary = translationRegistry.get(LANGUAGE_FALLBACK);
-
-  document.querySelectorAll('[data-i18n]').forEach((element) => {
-    const key = element.getAttribute('data-i18n');
-    const value = resolveTranslation(dictionary, key, fallbackDictionary);
-    if (typeof value === 'string') {
-      element.textContent = value;
-    }
-  });
-
-  document.querySelectorAll('[data-i18n-attr]').forEach((element) => {
-    const descriptors = element
-      .getAttribute('data-i18n-attr')
-      .split(',')
-      .map((part) => part.trim())
-      .filter(Boolean);
-    descriptors.forEach((descriptor) => {
-      const [attr, key] = descriptor.split(':').map((part) => part.trim());
-      if (!attr || !key) return;
-      const value = resolveTranslation(dictionary, key, fallbackDictionary);
-      if (typeof value === 'string') {
-        element.setAttribute(attr, value);
-      }
-    });
-  });
-}
-
-function updateMeta(lang) {
-  const translation = translationRegistry.get(lang);
-  const fallbackTranslation = translationRegistry.get(LANGUAGE_FALLBACK);
-  applyDocumentLanguage(translation);
-  const title = translation.documentTitle || fallbackTranslation.documentTitle || document.title;
-  document.title = title;
-}
-
-function getLanguageToggleBinding() {
-  if (languageToggleBinding) {
-    return languageToggleBinding;
+function renderEntryCount(lang) {
+  if (!entryCountElement) return;
+  const dictionary = getDictionary(lang);
+  const total = researchEntries.length;
+  if (typeof dictionary.hero.stat === 'function') {
+    entryCountElement.textContent = dictionary.hero.stat(total);
+  } else {
+    entryCountElement.textContent = `${total}`;
   }
-
-  const select = document.querySelector('[data-language-toggle]');
-  languageToggleBinding = enhanceLanguageToggle(select, translationRegistry, {
-    onChange: (nextLanguage) => {
-      applyLanguage(nextLanguage);
-    }
-  });
-
-  return languageToggleBinding;
 }
 
-function updateLanguageSelector(lang) {
-  const binding = getLanguageToggleBinding();
-  binding.update(lang);
-}
-
-function renderSidebar(lang, activeId) {
+function renderSidebar(lang) {
   if (!sidebarListElement) return;
   sidebarListElement.innerHTML = '';
   const entries = getLocalizedEntries(lang);
   entries.forEach((entry) => {
     const item = document.createElement('li');
-    item.className = 'document-sidebar__item';
+    item.className = 'research-sidebar__item';
 
     const link = document.createElement('a');
+    link.className = 'research-sidebar__link';
     link.href = `research.html?doc=${entry.id}&lang=${lang}`;
-    link.className = 'document-sidebar__link';
-    const isActive = entry.id === activeId;
-    link.setAttribute('data-active', isActive ? 'true' : 'false');
-    if (isActive) {
+    link.textContent = entry.title;
+    if (entry.id === state.entryId) {
+      link.setAttribute('data-active', 'true');
       link.setAttribute('aria-current', 'page');
     }
-    link.textContent = entry.title;
+    link.addEventListener('click', (event) => {
+      event.preventDefault();
+      setEntry(entry.id);
+    });
 
     const description = document.createElement('p');
-    description.className = 'document-sidebar__description';
+    description.className = 'research-sidebar__description';
     description.textContent = entry.description;
 
-    item.appendChild(link);
-    item.appendChild(description);
+    item.append(link, description);
     sidebarListElement.appendChild(item);
   });
 }
@@ -207,35 +210,13 @@ function renderSidebar(lang, activeId) {
 function renderAbstract(lang, entry) {
   if (!abstractElement) return;
   abstractElement.innerHTML = '';
-  const dictionary = translationRegistry.get(lang);
-  const fallbackDictionary = translationRegistry.get(LANGUAGE_FALLBACK);
-  const labelText =
-    resolveTranslation(dictionary, 'abstract.label', fallbackDictionary) ||
-    resolveTranslation(fallbackDictionary, 'abstract.label') ||
-    'Research Overview';
-
-  const label = document.createElement('p');
-  label.className = 'document-abstract__label';
-  label.textContent = labelText;
-
+  if (!entry) return;
+  const dictionary = getDictionary(lang);
+  const label = document.createElement('h2');
+  label.textContent = dictionary.abstract.label;
   const description = document.createElement('p');
-  description.className = 'document-abstract__description';
-  description.textContent = entry?.description || '';
-
-  abstractElement.appendChild(label);
-  abstractElement.appendChild(description);
-}
-
-function showStatus(lang, key) {
-  const dictionary = translationRegistry.get(lang);
-  const fallbackDictionary = translationRegistry.get(LANGUAGE_FALLBACK);
-  const message =
-    resolveTranslation(dictionary, `status.${key}`, fallbackDictionary) ||
-    resolveTranslation(fallbackDictionary, `status.${key}`) ||
-    '';
-  contentElement.innerHTML = '';
-  statusElement.textContent = message;
-  contentElement.appendChild(statusElement);
+  description.textContent = entry.description;
+  abstractElement.append(label, description);
 }
 
 function convertMathNotation(input) {
@@ -266,7 +247,6 @@ function applyMathFormatting(root) {
     const paragraph = paragraphs[i];
     if (!paragraph || !paragraph.isConnected) continue;
     const text = paragraph.textContent.trim();
-
     if (text === '\\[') {
       const equationParts = [];
       let j = i + 1;
@@ -274,7 +254,6 @@ function applyMathFormatting(root) {
         equationParts.push(paragraphs[j].textContent.trim());
         j += 1;
       }
-
       if (j < paragraphs.length) {
         const equation = document.createElement('div');
         equation.className = 'equation';
@@ -290,17 +269,29 @@ function applyMathFormatting(root) {
       replaceInlineMath(paragraph);
     }
   }
-
   root.querySelectorAll('li').forEach(replaceInlineMath);
 }
 
 async function renderDocument(lang, entry) {
+  if (!contentElement || !statusElement) return;
   if (!entry) {
-    showStatus(lang, 'error');
+    const dictionary = getDictionary(lang);
+    statusElement.textContent = dictionary.status.error;
+    const message = document.createElement('p');
+    message.className = 'document-status';
+    message.textContent = dictionary.status.error;
+    contentElement.innerHTML = '';
+    contentElement.appendChild(message);
     return;
   }
 
-  showStatus(lang, 'loading');
+  const dictionary = getDictionary(lang);
+  statusElement.textContent = dictionary.status.loading;
+  const placeholder = document.createElement('p');
+  placeholder.className = 'document-status';
+  placeholder.textContent = dictionary.status.loading;
+  contentElement.innerHTML = '';
+  contentElement.appendChild(placeholder);
 
   const sourcesToTry = [];
   if (entry.source) {
@@ -321,28 +312,44 @@ async function renderDocument(lang, entry) {
         break;
       }
     } catch (error) {
-      // ignore fetch errors, try fallback
+      // ignore and try fallback
     }
   }
 
   if (!markdown) {
-    showStatus(lang, 'error');
+    statusElement.textContent = dictionary.status.error;
+    const errorMessage = document.createElement('p');
+    errorMessage.className = 'document-status';
+    errorMessage.textContent = dictionary.status.error;
+    contentElement.innerHTML = '';
+    contentElement.appendChild(errorMessage);
     return;
   }
 
   const html = window.marked.parse(markdown, { breaks: true, gfm: true });
   contentElement.innerHTML = html;
   applyMathFormatting(contentElement);
-
   const firstHeading = contentElement.querySelector('h1');
   if (firstHeading) {
     firstHeading.remove();
   }
+  statusElement.textContent = '';
+}
 
-  contentElement.querySelectorAll('table').forEach((table) => {
-    table.classList.add('document-table');
-    table.setAttribute('role', 'table');
-  });
+function updateMeta(entry, lang) {
+  const dictionary = getDictionary(lang);
+  if (metaDescription) {
+    const description = entry?.description || dictionary.hero.description;
+    const title = entry?.title || dictionary.documentTitle;
+    metaDescription.setAttribute('content', `${title}${description ? ` · ${description}` : ''}`);
+  }
+  const baseTitle = dictionary.documentTitle || getDictionary(LANGUAGE_FALLBACK).documentTitle;
+  if (baseTitle) {
+    document.title = entry?.title ? `${entry.title} · ${baseTitle}` : baseTitle;
+  }
+  if (titleElement) {
+    titleElement.textContent = entry?.title || dictionary.hero.title;
+  }
 }
 
 function updateHistory() {
@@ -356,31 +363,79 @@ function updateHistory() {
   window.history.replaceState({}, '', `${url.pathname}?${url.searchParams.toString()}`);
 }
 
-function applyLanguage(lang) {
-  const resolved = translationRegistry.has(lang) ? lang : LANGUAGE_FALLBACK;
-  state.language = resolved;
-  setStoredLanguage(resolved);
-
-  updateStaticContent(resolved);
-  updateMeta(resolved);
-  updateLanguageSelector(resolved);
-
+function setEntry(entryId) {
+  state.entryId = entryId;
+  updateHistory();
+  renderSidebar(state.language);
   const baseEntry = researchEntries.find((entry) => entry.id === state.entryId) || researchEntries[0];
-  const localizedEntry = getLocalizedEntry(baseEntry, resolved);
+  const localized = getLocalizedEntry(baseEntry, state.language);
+  renderAbstract(state.language, localized);
+  updateMeta(localized, state.language);
+  renderDocument(state.language, localized);
+}
 
-  if (titleElement) {
-    titleElement.textContent = localizedEntry?.title || '';
+function applyLanguage(lang) {
+  const resolved = SUPPORTED_LANGUAGES.includes(lang) ? lang : LANGUAGE_FALLBACK;
+  state.language = resolved;
+  window.localStorage.setItem('earth-online-language', resolved);
+  applyStaticText(resolved);
+  renderEntryCount(resolved);
+  if (languageSelect) {
+    languageSelect.value = resolved;
   }
-  if (metaDescription) {
-    const descriptionText = localizedEntry?.description || '';
-    const pageTitle = localizedEntry?.title || '';
-    metaDescription.setAttribute('content', `${pageTitle}${descriptionText ? ` · ${descriptionText}` : ''}`);
-  }
-
-  renderSidebar(resolved, localizedEntry?.id || null);
-  renderAbstract(resolved, localizedEntry);
-  renderDocument(resolved, localizedEntry);
+  const baseEntry = researchEntries.find((entry) => entry.id === state.entryId) || researchEntries[0];
+  const localized = getLocalizedEntry(baseEntry, resolved);
+  renderSidebar(resolved);
+  renderAbstract(resolved, localized);
+  updateMeta(localized, resolved);
+  renderDocument(resolved, localized);
   updateHistory();
 }
 
-applyLanguage(state.language);
+function handleLanguageToggle() {
+  if (!languageSelect) return;
+  languageSelect.addEventListener('change', (event) => {
+    applyLanguage(event.target.value);
+  });
+}
+
+function handleNavigation() {
+  const nav = document.getElementById('primary-nav');
+  const toggle = document.getElementById('nav-toggle');
+  if (!nav || !toggle) return;
+  toggle.addEventListener('click', () => {
+    const isOpen = nav.getAttribute('data-open') === 'true';
+    nav.setAttribute('data-open', String(!isOpen));
+    toggle.setAttribute('aria-expanded', String(!isOpen));
+  });
+  nav.querySelectorAll('a[href^="#"]').forEach((link) => {
+    link.addEventListener('click', () => {
+      nav.setAttribute('data-open', 'false');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+}
+
+function setYear() {
+  const node = document.getElementById('current-year');
+  if (node) {
+    node.textContent = String(new Date().getFullYear());
+  }
+}
+
+function init() {
+  setYear();
+  handleNavigation();
+  handleLanguageToggle();
+  const storedLanguage = window.localStorage.getItem('earth-online-language');
+  if (storedLanguage && SUPPORTED_LANGUAGES.includes(storedLanguage)) {
+    state.language = storedLanguage;
+  }
+  applyLanguage(state.language);
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}

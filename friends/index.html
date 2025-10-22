@@ -3,7 +3,11 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Alliance Harbor · Earth Online Experience Lab</title>
+    <title>Alliance Harbor · Earth Online</title>
+    <meta
+      name="description"
+      content="Discover Earth Online’s alliance harbor – a network of independent labs and studios building future experience systems together."
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -12,73 +16,111 @@
     />
     <link rel="stylesheet" href="../assets/css/styles.css" />
   </head>
-  <body>
-    <header class="site-header">
-      <div class="inner header__inner">
-        <div class="brand" aria-label="Earth Online lab mark" data-i18n-attr="aria-label:brand.ariaLabel">
-          <span class="brand__title">Earth Online</span>
-          <span class="brand__subtitle" data-i18n="brand.subtitle">Planetary Experience Lab</span>
-        </div>
-        <nav
-          class="site-nav site-nav--links"
-          aria-label="Primary navigation"
-          data-i18n-attr="aria-label:primaryNav.ariaLabel"
-        >
-          <a href="../public/blog/index.html" data-i18n="primaryNav.blog">Blog</a>
-          <a href="../docs/research.html" data-i18n="primaryNav.papers">Research</a>
-          <a href="../index.html#decks" data-i18n="primaryNav.labs">Labs</a>
-          <a href="./index.html" data-i18n="primaryNav.friends">Friends</a>
+  <body class="subpage">
+    <header class="top-bar" id="top">
+      <div class="container top-bar__inner">
+        <a class="brand" href="../index.html" data-i18n="brand.name">Earth Online</a>
+        <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="primary-nav">Menu</button>
+        <nav class="nav" id="primary-nav" aria-label="Primary navigation">
+          <ul class="nav__list">
+            <li><a href="../index.html#mission" data-i18n="nav.mission">Mission</a></li>
+            <li><a href="../index.html#labs" data-i18n="nav.labs">Labs</a></li>
+            <li><a href="../index.html#research" data-i18n="nav.research">Research</a></li>
+            <li><a href="../index.html#signals" data-i18n="nav.signals">Signals</a></li>
+            <li><a href="../index.html#alliances" data-i18n="nav.alliances">Alliances</a></li>
+            <li><a href="../index.html#contact" data-i18n="nav.contact">Contact</a></li>
+            <li><a href="../public/blog/index.html" data-i18n="nav.blog">Blog</a></li>
+          </ul>
         </nav>
-        <div class="header__actions">
-          <select
-            class="language-toggle"
-            id="friends-language-toggle"
-            data-language-toggle
-            aria-label="Select language"
-            data-i18n-attr="aria-label:language.toggleLabel"
-          ></select>
+        <div class="top-bar__actions">
+          <select id="language-select" class="language-select" aria-label="Change language">
+            <option value="en">English</option>
+            <option value="zh">中文</option>
+          </select>
+          <a class="button button--ghost" href="../index.html" data-i18n="nav.home">Return home</a>
         </div>
       </div>
     </header>
 
     <main>
-      <section class="subpage-hero" aria-labelledby="friends-title">
-        <div class="inner subpage-hero__inner">
-          <div class="subpage-hero__content">
-            <p class="section__eyebrow" data-i18n="hero.eyebrow">Alliance Network</p>
-            <h1 id="friends-title" data-i18n="hero.title">Alliance Harbor</h1>
-            <p class="subpage-hero__lead" data-i18n="hero.lead">
-              Earth Online’s partner network keeps expanding. Discover collaborators exploring the boundaries of experience and knowledge, and open a new line together.
+      <section class="sub-hero" id="hero">
+        <div class="container sub-hero__inner">
+          <div class="sub-hero__content">
+            <p class="eyebrow" data-i18n="hero.eyebrow">Alliance harbor</p>
+            <h1 data-i18n="hero.title">A network of independent labs building the future together</h1>
+            <p class="sub-hero__lead" data-i18n="hero.description">
+              Earth Online collaborates with studios, researchers, and community builders across the world. Together we design
+              new rituals, prototype AI-driven tooling, and activate learning constellations.
             </p>
-            <div
-              class="subpage-hero__actions"
-              role="group"
-              aria-label="Alliance actions"
-              data-i18n-attr="aria-label:hero.actionsAria"
-            >
-              <a class="button" href="../index.html#contact" data-i18n="hero.primaryCta">Request a link exchange</a>
-              <a class="button button--ghost" href="../index.html" data-i18n="hero.secondaryCta">Return to main site</a>
+            <div class="hero__actions">
+              <a class="button" href="#directory" data-i18n="hero.primaryCta">Browse the alliance directory</a>
+              <a class="button button--ghost" href="../index.html#contact" data-i18n="hero.secondaryCta">Start a partnership</a>
             </div>
+          </div>
+          <div class="sub-hero__meta">
+            <p class="sub-hero__stat" id="ally-count"></p>
+            <p class="sub-hero__hint" data-i18n="hero.hint">Each partner brings a first-person perspective on experience design.</p>
           </div>
         </div>
       </section>
 
-      <section
-        class="section section--alt"
-        aria-label="Alliance directory"
-        data-i18n-attr="aria-label:network.ariaLabel"
-      >
-        <div class="inner">
-          <div class="friend-network" id="friend-grid" aria-live="polite"></div>
+      <section class="section" id="featured">
+        <div class="container section__inner">
+          <div class="section__header">
+            <p class="eyebrow" data-i18n="featured.eyebrow">Featured orbit</p>
+            <h2 data-i18n="featured.title">Season spotlight</h2>
+            <p class="section__description" data-i18n="featured.description">
+              Each season we highlight one partner whose work expands the boundaries of Earth Online’s practice.
+            </p>
+          </div>
+          <article class="featured-card" id="featured-card"></article>
+        </div>
+      </section>
+
+      <section class="section section--accent" id="clusters">
+        <div class="container section__inner">
+          <div class="section__header">
+            <p class="eyebrow" data-i18n="clusters.eyebrow">Alliance clusters</p>
+            <h2 data-i18n="clusters.title">Constellations of collaboration</h2>
+            <p class="section__description" data-i18n="clusters.description">
+              Partners are organized by the missions they co-develop with us—from creation workflows to data storytelling and
+              open knowledge networks.
+            </p>
+          </div>
+          <div class="cluster-grid" id="cluster-grid"></div>
+        </div>
+      </section>
+
+      <section class="section" id="directory">
+        <div class="container section__inner">
+          <div class="section__header">
+            <p class="eyebrow" data-i18n="directory.eyebrow">Alliance directory</p>
+            <h2 data-i18n="directory.title">All partners</h2>
+            <p class="section__description" data-i18n="directory.description">
+              Explore every collaborator in the network. Visit their universes and start a conversation.
+            </p>
+          </div>
+          <div class="alliance-grid" id="directory-grid"></div>
         </div>
       </section>
     </main>
 
-    <footer class="site-footer">
-      <div class="inner">
-        <p data-i18n="footer.credit">© 2024 Earth Online Experience Lab · Powered by Aman Sharma</p>
-        <p class="footer-note" data-i18n="footer.note">Feel free to fork, cite, or embed these experiments into your interstellar project.</p>
+    <footer class="footer">
+      <div class="container footer__inner">
+        <div>
+          <p class="footer__brand" data-i18n="footer.title">Earth Online · Experience Lab</p>
+          <p class="footer__description" data-i18n="footer.description">
+            Building navigable systems for knowledge, alliances, and planetary scale collaboration.
+          </p>
+        </div>
+        <ul class="footer__links">
+          <li><a href="../public/blog/index.html" data-i18n="footer.blog">Blog</a></li>
+          <li><a href="../docs/research.html" data-i18n="footer.research">Research</a></li>
+          <li><a href="./index.html" data-i18n="footer.friends">Alliance Harbor</a></li>
+          <li><a href="https://github.com/miuchan" target="_blank" rel="noopener" data-i18n="footer.github">GitHub</a></li>
+        </ul>
       </div>
+      <p class="footer__note" data-i18n="footer.note">© <span id="current-year"></span> Earth Online Lab. All rights reserved.</p>
     </footer>
 
     <script type="module" src="../assets/js/friends-page.js"></script>

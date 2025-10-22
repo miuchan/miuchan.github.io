@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title data-i18n="documentTitle">Earth Online 研究文稿</title>
+    <title>Earth Online Research Library</title>
     <meta
       name="description"
-      content="Earth Online 研究图书馆，收录跨学科研究论文与实验室蓝图。"
+      content="Earth Online’s research library hosts mathematical proofs, lab blueprints, and narrative protocols from the planetary experience lab."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -16,46 +16,90 @@
     />
     <link rel="stylesheet" href="../assets/css/styles.css" />
   </head>
-  <body class="document-body">
-    <header class="document-header" role="banner">
-      <div class="inner document-header__inner">
-        <a
-          class="document-header__back"
-          href="../index.html"
-          data-i18n="header.back"
-          data-i18n-attr="aria-label: header.backAria"
-        >← 返回 Earth Online</a>
-        <div class="document-header__meta">
-          <p class="document-header__eyebrow" data-i18n="header.eyebrow">Research Library</p>
-          <h1 id="document-title">加载中…</h1>
+  <body class="subpage">
+    <header class="top-bar" id="top">
+      <div class="container top-bar__inner">
+        <a class="brand" href="../index.html" data-i18n="brand.name">Earth Online</a>
+        <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="primary-nav">Menu</button>
+        <nav class="nav" id="primary-nav" aria-label="Primary navigation">
+          <ul class="nav__list">
+            <li><a href="../index.html#mission" data-i18n="nav.mission">Mission</a></li>
+            <li><a href="../index.html#labs" data-i18n="nav.labs">Labs</a></li>
+            <li><a href="../index.html#research" data-i18n="nav.research">Research</a></li>
+            <li><a href="../index.html#signals" data-i18n="nav.signals">Signals</a></li>
+            <li><a href="../index.html#alliances" data-i18n="nav.alliances">Alliances</a></li>
+            <li><a href="../index.html#contact" data-i18n="nav.contact">Contact</a></li>
+            <li><a href="../public/blog/index.html" data-i18n="nav.blog">Blog</a></li>
+          </ul>
+        </nav>
+        <div class="top-bar__actions">
+          <select id="language-select" class="language-select" aria-label="Change language">
+            <option value="en">English</option>
+            <option value="zh">中文</option>
+          </select>
+          <a class="button button--ghost" href="../index.html" data-i18n="nav.home">Return home</a>
         </div>
-        <select
-          class="language-toggle"
-          id="research-language-toggle"
-          data-language-toggle
-          data-i18n-attr="aria-label: language.selectorLabel, title: language.selectorLabel"
-        ></select>
       </div>
     </header>
-    <main class="document-main" role="main">
-      <div class="inner document-layout">
-        <article class="document-article">
-          <section class="document-abstract" id="document-abstract"></section>
-          <div class="document-body-content" id="document-content" aria-live="polite"></div>
-        </article>
-        <aside
-          class="document-sidebar"
-          aria-label="研究论文索引"
-          data-i18n-attr="aria-label: sidebar.ariaLabel"
-        >
-          <h2 data-i18n="sidebar.title">研究索引</h2>
-          <p class="document-sidebar__hint" data-i18n="sidebar.description">
-            浏览全部研究论文与实验室蓝图，或在主站体验簇中筛选其它资产。
-          </p>
-          <ul class="document-sidebar__list" id="document-sidebar-list"></ul>
-        </aside>
-      </div>
+
+    <main>
+      <section class="research-hero" id="hero">
+        <div class="container research-hero__inner">
+          <div>
+            <p class="eyebrow" data-i18n="hero.eyebrow">Research library</p>
+            <h1 id="document-title" data-i18n="hero.title">Loading…</h1>
+            <p class="research-hero__lead" data-i18n="hero.description">
+              Mathematical arguments, protocol design, and experience blueprints from Earth Online’s lab network.
+            </p>
+          </div>
+          <div class="research-hero__meta">
+            <p class="research-hero__stat" id="entry-count"></p>
+            <p class="research-hero__hint" data-i18n="hero.hint">Entries span both English and Chinese editions.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="library">
+        <div class="container research-layout">
+          <aside class="research-sidebar" id="research-sidebar" aria-label="Research index">
+            <div class="research-sidebar__head">
+              <h2 data-i18n="sidebar.title">Research index</h2>
+              <p data-i18n="sidebar.description">
+                Choose a manuscript to load its abstract and full text. Use the language toggle to switch editions.
+              </p>
+            </div>
+            <ul class="research-sidebar__list" id="document-sidebar-list"></ul>
+          </aside>
+          <article class="research-article" id="research-article">
+            <div class="research-toolbar">
+              <label class="research-toolbar__label" for="language-select" data-i18n="toolbar.language">Language</label>
+              <div class="research-toolbar__info" id="document-status"></div>
+            </div>
+            <section class="research-abstract" id="document-abstract"></section>
+            <div class="research-body" id="document-content" aria-live="polite"></div>
+          </article>
+        </div>
+      </section>
     </main>
+
+    <footer class="footer">
+      <div class="container footer__inner">
+        <div>
+          <p class="footer__brand" data-i18n="footer.title">Earth Online · Experience Lab</p>
+          <p class="footer__description" data-i18n="footer.description">
+            Building navigable systems for knowledge, alliances, and planetary scale collaboration.
+          </p>
+        </div>
+        <ul class="footer__links">
+          <li><a href="../public/blog/index.html" data-i18n="footer.blog">Blog</a></li>
+          <li><a href="./research.html" data-i18n="footer.research">Research</a></li>
+          <li><a href="../friends/index.html" data-i18n="footer.friends">Alliance Harbor</a></li>
+          <li><a href="https://github.com/miuchan" target="_blank" rel="noopener" data-i18n="footer.github">GitHub</a></li>
+        </ul>
+      </div>
+      <p class="footer__note" data-i18n="footer.note">© <span id="current-year"></span> Earth Online Lab. All rights reserved.</p>
+    </footer>
+
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script type="module" src="../assets/js/research-viewer.js"></script>
   </body>
