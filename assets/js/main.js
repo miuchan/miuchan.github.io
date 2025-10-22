@@ -1,4 +1,5 @@
 import { friendContent } from './friends-data.js';
+import { researchEntries } from './research-data.js';
 import { LANGUAGE_DEFINITIONS, LANGUAGE_FALLBACK, setStoredLanguage } from './i18n/languages.js';
 import {
   applyDocumentLanguage,
@@ -10,7 +11,7 @@ import { computeInformationGradient, mapGradientToPercentages } from './recursiv
 
 const counts = {
   demos: 26,
-  research: 9,
+  research: researchEntries.length,
   blogs: 59,
   resume: 1
 };
@@ -893,13 +894,36 @@ const baseTranslations = {
       ]
     }
   },
+    researchLibrary: {
+      eyebrow: '研究档案库',
+      title: '在首页展开全部研究记录',
+      intro: '无需跳转即可浏览每一篇研究蓝图与证明档案。',
+      summary(count) {
+        return `共收录 ${count} 篇研究文档，全部可在此展开阅读。`;
+      },
+      loading: '正在载入原始文档…',
+      error: '暂时无法加载文档，请稍后再试。',
+      visitLabel: '打开原文',
+      openLabel: '展开全文',
+      closeLabel: '收起全文',
+      empty: '研究档案正在整理中。'
+    },
     alliances: {
       eyebrow: 'Alliance Network',
       title: '联盟星港：与我们同频的体验实验室',
       intro:
         '星港记录着与 Earth Online 长期共振的创作者与研究者。他们在各自的宇宙推进设计、技术与叙事的边界，欢迎沿航线拜访。',
       cta: '进入完整友链档案',
-      visitCta: '访问主页'
+      visitCta: '访问主页',
+      network: {
+        eyebrow: '联盟星网全图',
+        title: '将伙伴网络的全部脉冲收束到此',
+        intro:
+          '在这里一次性浏览精选友链、星港焦点与协作簇群，快速找到与你任务最契合的伙伴宇宙。',
+        featuredLabel: '本季焦点',
+        clustersLabel: '协作簇群',
+        visitLabel: '拜访此航线'
+      }
     },
     dock: {
       eyebrow: 'Docking Station',
@@ -1806,13 +1830,36 @@ const baseTranslations = {
       ]
     }
   },
+    researchLibrary: {
+      eyebrow: 'Research library',
+      title: 'Every research log, now on the homepage',
+      intro: 'Read every blueprint and proof without leaving this page.',
+      summary(count) {
+        return `${count} research documents are available to explore here.`;
+      },
+      loading: 'Loading original document…',
+      error: 'Unable to load the document right now. Please try again later.',
+      visitLabel: 'Open source file',
+      openLabel: 'Expand full text',
+      closeLabel: 'Collapse entry',
+      empty: 'Research documents are being prepared.'
+    },
     alliances: {
       eyebrow: 'Alliance Network',
       title: 'Alliance harbor: experience labs in resonance',
       intro:
         'Meet creators and researchers orbiting Earth Online. They stretch design, technology, and narrative in their universes—plot a course and say hello.',
       cta: 'View full alliance index',
-      visitCta: 'Visit site'
+      visitCta: 'Visit site',
+      network: {
+        eyebrow: 'Alliance atlas',
+        title: 'Surface the entire partner signal on one screen',
+        intro:
+          'Scan the seasonal spotlight and collaboration clusters without leaving the homepage.',
+        featuredLabel: 'Featured orbit',
+        clustersLabel: 'Collaboration clusters',
+        visitLabel: 'Visit this orbit'
+      }
     },
     dock: {
       eyebrow: 'Docking Station',
@@ -1847,8 +1894,33 @@ const baseTranslations = {
   }
 };
 
+function mapResearchLibraryItems(lang) {
+  return researchEntries.map((entry) => {
+    const translations = entry.translations || {};
+    const localized = translations[lang] || translations[LANGUAGE_FALLBACK] || {};
+    const sources = entry.sources || {};
+    return {
+      id: entry.id,
+      title: localized.title || entry.id,
+      description: localized.description || '',
+      source: sources[lang] || sources[LANGUAGE_FALLBACK] || '',
+      fallbackSource: sources[LANGUAGE_FALLBACK] || '',
+      fallbackLanguage: LANGUAGE_FALLBACK,
+      altTitle: translations[LANGUAGE_FALLBACK]?.title || '',
+      altDescription: translations[LANGUAGE_FALLBACK]?.description || ''
+    };
+  });
+}
+
+baseTranslations.zh.researchLibrary.items = mapResearchLibraryItems('zh');
+baseTranslations.en.researchLibrary.items = mapResearchLibraryItems('en');
+
 baseTranslations.zh.alliances.items = friendContent.zh.featuredAlliances;
 baseTranslations.en.alliances.items = friendContent.en.featuredAlliances;
+baseTranslations.zh.alliances.network.featured = friendContent.zh.friendNetwork.featured;
+baseTranslations.zh.alliances.network.clusters = friendContent.zh.friendNetwork.clusters;
+baseTranslations.en.alliances.network.featured = friendContent.en.friendNetwork.featured;
+baseTranslations.en.alliances.network.clusters = friendContent.en.friendNetwork.clusters;
 
 baseTranslations.en.decks.entries.forEach((entry, index) => {
   const zhKeywords = baseTranslations.zh.decks.entries[index].keywords || [];
@@ -3331,6 +3403,303 @@ function renderChronicle(lang) {
   container.appendChild(fragment);
 }
 
+function renderResearchLibrary(lang) {
+  const config = getLocalizedValue(lang, 'researchLibrary') || {};
+  const fallbackConfig = getLocalizedValue(LANGUAGE_FALLBACK, 'researchLibrary') || {};
+  const summary = document.getElementById('research-library-summary');
+  const list = document.getElementById('research-library-list');
+  if (summary) {
+    if (typeof config.summary === 'function') {
+      summary.textContent = config.summary(Array.isArray(config.items) ? config.items.length : 0);
+    } else if (typeof fallbackConfig.summary === 'function') {
+      summary.textContent = fallbackConfig.summary(Array.isArray(config.items) ? config.items.length : 0);
+    } else {
+      summary.textContent = '';
+    }
+  }
+
+  if (!list) return;
+  list.innerHTML = '';
+
+  const items = Array.isArray(config.items) ? config.items : [];
+  if (!items.length) {
+    const emptyText = config.empty || fallbackConfig.empty || '';
+    if (emptyText) {
+      const empty = document.createElement('p');
+      empty.className = 'research-library__empty';
+      empty.textContent = emptyText;
+      list.appendChild(empty);
+    }
+    return;
+  }
+
+  const visitLabel = config.visitLabel || fallbackConfig.visitLabel || 'Open document';
+  const loadingLabel = config.loading || fallbackConfig.loading || 'Loading…';
+  const errorLabel = config.error || fallbackConfig.error || 'Unable to load document.';
+
+  const fragment = document.createDocumentFragment();
+  items.forEach((item) => {
+    const details = document.createElement('details');
+    details.className = 'research-entry';
+    details.dataset.entryId = item.id;
+
+    const summaryEl = document.createElement('summary');
+    summaryEl.className = 'research-entry__summary';
+    const titleSpan = document.createElement('span');
+    titleSpan.className = 'research-entry__title';
+    titleSpan.textContent = item.title || item.id;
+    const descriptionSpan = document.createElement('span');
+    descriptionSpan.className = 'research-entry__description';
+    descriptionSpan.textContent = item.description || '';
+    summaryEl.appendChild(titleSpan);
+    summaryEl.appendChild(descriptionSpan);
+    details.appendChild(summaryEl);
+
+    const body = document.createElement('div');
+    body.className = 'research-entry__body';
+
+    if (item.description) {
+      const paragraph = document.createElement('p');
+      paragraph.className = 'research-entry__lead';
+      paragraph.textContent = item.description;
+      body.appendChild(paragraph);
+    }
+
+    if (item.altTitle && item.altTitle !== item.title) {
+      const alt = document.createElement('p');
+      alt.className = 'research-entry__alt-title';
+      alt.textContent = item.altTitle;
+      body.appendChild(alt);
+    }
+    if (item.altDescription && item.altDescription !== item.description) {
+      const altDescription = document.createElement('p');
+      altDescription.className = 'research-entry__alt-description';
+      altDescription.textContent = item.altDescription;
+      body.appendChild(altDescription);
+    }
+
+    if (item.source) {
+      const link = document.createElement('a');
+      link.className = 'research-entry__link';
+      link.href = `docs/${item.source}`;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.textContent = visitLabel;
+      body.appendChild(link);
+    }
+
+    const content = document.createElement('div');
+    content.className = 'research-entry__content';
+    body.appendChild(content);
+
+    details.appendChild(body);
+
+    details.addEventListener('toggle', async () => {
+      if (!details.open || details.dataset.loaded === 'true') return;
+      details.dataset.loaded = 'loading';
+      content.innerHTML = '';
+      if (loadingLabel) {
+        const loading = document.createElement('p');
+        loading.className = 'research-entry__status';
+        loading.textContent = loadingLabel;
+        content.appendChild(loading);
+      }
+
+      const sourcePath = item.source ? `docs/${item.source}` : '';
+      const fallbackPath = item.fallbackSource ? `docs/${item.fallbackSource}` : '';
+      const paths = [sourcePath, fallbackPath].filter(Boolean);
+      let loaded = false;
+      for (const path of paths) {
+        try {
+          const response = await fetch(path);
+          if (!response.ok) {
+            continue;
+          }
+          const text = await response.text();
+          content.innerHTML = '';
+          const pre = document.createElement('pre');
+          pre.className = 'research-entry__content-block';
+          pre.textContent = text.trim();
+          content.appendChild(pre);
+          loaded = true;
+          break;
+        } catch (error) {
+          // Continue to next path
+        }
+      }
+
+      if (!loaded) {
+        content.innerHTML = '';
+        if (errorLabel) {
+          const error = document.createElement('p');
+          error.className = 'research-entry__status research-entry__status--error';
+          error.textContent = errorLabel;
+          content.appendChild(error);
+        }
+      }
+
+      details.dataset.loaded = 'true';
+    });
+
+    fragment.appendChild(details);
+  });
+
+  list.appendChild(fragment);
+}
+
+function renderFriendNetwork(lang) {
+  const network = getLocalizedValue(lang, 'alliances.network') || {};
+  const fallbackNetwork = getLocalizedValue(LANGUAGE_FALLBACK, 'alliances.network') || {};
+  const featureContainer = document.getElementById('friend-network-feature');
+  const clustersContainer = document.getElementById('friend-network-clusters');
+  const visitLabel =
+    network.visitLabel ||
+    fallbackNetwork.visitLabel ||
+    getLocalizedValue(lang, 'alliances.visitCta') ||
+    getLocalizedValue(LANGUAGE_FALLBACK, 'alliances.visitCta') ||
+    'Visit site';
+
+  if (featureContainer) {
+    featureContainer.innerHTML = '';
+    const featured = network.featured || fallbackNetwork.featured;
+    if (featured && featured.friend) {
+      const card = document.createElement('article');
+      card.className = 'friend-feature-card';
+
+      const badge = document.createElement('span');
+      badge.className = 'friend-feature-card__badge';
+      badge.textContent = featured.badge || '';
+      card.appendChild(badge);
+
+      const title = document.createElement('h3');
+      title.className = 'friend-feature-card__title';
+      title.textContent = featured.title || '';
+      card.appendChild(title);
+
+      const summary = document.createElement('p');
+      summary.className = 'friend-feature-card__summary';
+      summary.textContent = featured.summary || '';
+      card.appendChild(summary);
+
+      const friend = document.createElement('div');
+      friend.className = 'friend-feature-card__friend';
+      const friendName = document.createElement('h4');
+      friendName.textContent = featured.friend.name || '';
+      friend.appendChild(friendName);
+      if (featured.friend.description) {
+        const friendDescription = document.createElement('p');
+        friendDescription.textContent = featured.friend.description;
+        friend.appendChild(friendDescription);
+      }
+      if (featured.friend.note) {
+        const friendNote = document.createElement('p');
+        friendNote.className = 'friend-feature-card__note';
+        friendNote.textContent = featured.friend.note;
+        friend.appendChild(friendNote);
+      }
+      if (Array.isArray(featured.friend.tags) && featured.friend.tags.length) {
+        const tagList = document.createElement('ul');
+        tagList.className = 'friend-feature-card__tags';
+        featured.friend.tags.forEach((tag) => {
+          const tagItem = document.createElement('li');
+          tagItem.textContent = tag;
+          tagList.appendChild(tagItem);
+        });
+        friend.appendChild(tagList);
+      }
+      if (featured.friend.url) {
+        const anchor = document.createElement('a');
+        anchor.className = 'friend-feature-card__link';
+        anchor.href = featured.friend.url;
+        anchor.target = '_blank';
+        anchor.rel = 'noopener noreferrer';
+        anchor.textContent = visitLabel;
+        friend.appendChild(anchor);
+      }
+      card.appendChild(friend);
+
+      featureContainer.appendChild(card);
+    }
+  }
+
+  if (clustersContainer) {
+    clustersContainer.innerHTML = '';
+    const clusters = Array.isArray(network.clusters) && network.clusters.length
+      ? network.clusters
+      : fallbackNetwork.clusters || [];
+
+    const fragment = document.createDocumentFragment();
+    clusters.forEach((cluster) => {
+      const section = document.createElement('section');
+      section.className = 'friend-cluster';
+
+      const heading = document.createElement('header');
+      heading.className = 'friend-cluster__header';
+      const title = document.createElement('h3');
+      title.textContent = cluster.title || '';
+      heading.appendChild(title);
+      if (cluster.summary) {
+        const summary = document.createElement('p');
+        summary.textContent = cluster.summary;
+        heading.appendChild(summary);
+      }
+      section.appendChild(heading);
+
+      const list = document.createElement('div');
+      list.className = 'friend-cluster__list';
+      (Array.isArray(cluster.friends) ? cluster.friends : []).forEach((friend) => {
+        const card = document.createElement('article');
+        card.className = 'friend-card';
+
+        const name = document.createElement('h4');
+        name.textContent = friend.name || '';
+        card.appendChild(name);
+
+        if (friend.description) {
+          const description = document.createElement('p');
+          description.textContent = friend.description;
+          card.appendChild(description);
+        }
+
+        if (friend.note) {
+          const note = document.createElement('p');
+          note.className = 'friend-card__note';
+          note.textContent = friend.note;
+          card.appendChild(note);
+        }
+
+        if (Array.isArray(friend.tags) && friend.tags.length) {
+          const tags = document.createElement('ul');
+          tags.className = 'friend-card__tags';
+          friend.tags.forEach((tag) => {
+            const tagItem = document.createElement('li');
+            tagItem.textContent = tag;
+            tags.appendChild(tagItem);
+          });
+          card.appendChild(tags);
+        }
+
+        if (friend.url) {
+          const anchor = document.createElement('a');
+          anchor.className = 'friend-card__link';
+          anchor.href = friend.url;
+          anchor.target = '_blank';
+          anchor.rel = 'noopener noreferrer';
+          anchor.textContent = visitLabel;
+          card.appendChild(anchor);
+        }
+
+        list.appendChild(card);
+      });
+
+      section.appendChild(list);
+      fragment.appendChild(section);
+    });
+
+    clustersContainer.appendChild(fragment);
+  }
+}
+
 function renderAlliances(lang) {
   const alliances = getLocalizedValue(lang, 'alliances') || {};
   const fallbackVisit = getLocalizedValue(LANGUAGE_FALLBACK, 'alliances.visitCta') || 'Visit site';
@@ -3836,6 +4205,8 @@ function applyLanguage(lang) {
   renderCouncil(lang);
   renderTelemetryStreams(lang);
   renderChronicle(lang);
+  renderResearchLibrary(lang);
+  renderFriendNetwork(lang);
   renderAlliances(lang);
   renderDock(lang);
   renderGradientFlowSection(lang);
