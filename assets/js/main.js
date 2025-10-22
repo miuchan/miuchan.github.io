@@ -135,6 +135,40 @@ const labDecks = [
 
 const demoDecks = [
   {
+    id: 'demo-directory',
+    type: 'demo',
+    external: false,
+    url: 'public/demo/index.html',
+    translations: {
+      en: {
+        title: 'Demo Directory',
+        summary: 'Browse the full archive with a navigable tree that lists every experiment and nested prototype.',
+        tags: ['Archive', 'Tree view'],
+        cta: 'Open directory'
+      },
+      zh: {
+        title: '演示目录',
+        summary: '以树状结构浏览全部实验与嵌套原型，快速定位历史 Demo。',
+        tags: ['归档', '目录视图'],
+        cta: '打开目录'
+      }
+    },
+    status: {
+      en: 'Auto-generated map',
+      zh: '自动生成目录'
+    },
+    links: [
+      {
+        url: 'https://github.com/miuchan/miuchan.github.io/blob/main/scripts/generate_demo_tree.py',
+        external: true,
+        translations: {
+          en: 'View generation script',
+          zh: '查看生成脚本'
+        }
+      }
+    ]
+  },
+  {
     id: 'branch-prediction-lab',
     type: 'demo',
     external: true,

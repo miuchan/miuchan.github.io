@@ -1,0 +1,354 @@
+[
+  {
+    "name": "agi-asi-reaction-chamber",
+    "label": "AGI ASI Reaction Chamber",
+    "path": "agi-asi-reaction-chamber/index.html",
+    "children": []
+  },
+  {
+    "name": "ambient-sketch",
+    "label": "Ambient Sketch",
+    "path": "ambient-sketch/index.html",
+    "children": []
+  },
+  {
+    "name": "baidu-ife-task",
+    "label": "Baidu IFE Task",
+    "path": null,
+    "children": [
+      {
+        "name": "task_1_01",
+        "label": "Task 1 01",
+        "path": "baidu-ife-task/task_1_01/index.html",
+        "children": []
+      },
+      {
+        "name": "task_1_02",
+        "label": "Task 1 02",
+        "path": "baidu-ife-task/task_1_02/index.html",
+        "children": []
+      },
+      {
+        "name": "task_1_03",
+        "label": "Task 1 03",
+        "path": null,
+        "children": [
+          {
+            "name": "0",
+            "label": "0",
+            "path": "baidu-ife-task/task_1_03/0/index.html",
+            "children": []
+          },
+          {
+            "name": "1",
+            "label": "1",
+            "path": "baidu-ife-task/task_1_03/1/index.html",
+            "children": []
+          },
+          {
+            "name": "2",
+            "label": "2",
+            "path": "baidu-ife-task/task_1_03/2/index.html",
+            "children": []
+          },
+          {
+            "name": "3",
+            "label": "3",
+            "path": "baidu-ife-task/task_1_03/3/index.html",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "task_1_04",
+        "label": "Task 1 04",
+        "path": "baidu-ife-task/task_1_04/index.html",
+        "children": []
+      },
+      {
+        "name": "task_1_05",
+        "label": "Task 1 05",
+        "path": "baidu-ife-task/task_1_05/index.html",
+        "children": []
+      },
+      {
+        "name": "task_1_06",
+        "label": "Task 1 06",
+        "path": "baidu-ife-task/task_1_06/index.html",
+        "children": []
+      },
+      {
+        "name": "task_1_07",
+        "label": "Task 1 07",
+        "path": "baidu-ife-task/task_1_07/index.html",
+        "children": []
+      },
+      {
+        "name": "task_1_08",
+        "label": "Task 1 08",
+        "path": "baidu-ife-task/task_1_08/index.html",
+        "children": []
+      },
+      {
+        "name": "task_1_10",
+        "label": "Task 1 10",
+        "path": "baidu-ife-task/task_1_10/index.html",
+        "children": []
+      },
+      {
+        "name": "task_2_13",
+        "label": "Task 2 13",
+        "path": "baidu-ife-task/task_2_13/index.html",
+        "children": []
+      },
+      {
+        "name": "task_2_14",
+        "label": "Task 2 14",
+        "path": "baidu-ife-task/task_2_14/index.html",
+        "children": []
+      },
+      {
+        "name": "task_2_15",
+        "label": "Task 2 15",
+        "path": "baidu-ife-task/task_2_15/index.html",
+        "children": []
+      },
+      {
+        "name": "task_2_16",
+        "label": "Task 2 16",
+        "path": "baidu-ife-task/task_2_16/index.html",
+        "children": []
+      },
+      {
+        "name": "task_2_17",
+        "label": "Task 2 17",
+        "path": "baidu-ife-task/task_2_17/index.html",
+        "children": []
+      },
+      {
+        "name": "task_2_18",
+        "label": "Task 2 18",
+        "path": "baidu-ife-task/task_2_18/index.html",
+        "children": []
+      },
+      {
+        "name": "task_2_19",
+        "label": "Task 2 19",
+        "path": "baidu-ife-task/task_2_19/index.html",
+        "children": []
+      },
+      {
+        "name": "task_2_20",
+        "label": "Task 2 20",
+        "path": "baidu-ife-task/task_2_20/index.html",
+        "children": []
+      },
+      {
+        "name": "task_2_21",
+        "label": "Task 2 21",
+        "path": "baidu-ife-task/task_2_21/index.html",
+        "children": []
+      },
+      {
+        "name": "task_2_22",
+        "label": "Task 2 22",
+        "path": "baidu-ife-task/task_2_22/index.html",
+        "children": []
+      },
+      {
+        "name": "task_2_23",
+        "label": "Task 2 23",
+        "path": "baidu-ife-task/task_2_23/index.html",
+        "children": []
+      },
+      {
+        "name": "task_2_24",
+        "label": "Task 2 24",
+        "path": "baidu-ife-task/task_2_24/index.html",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "bchan-pchan-synchrony",
+    "label": "Bchan Pchan Synchrony",
+    "path": "bchan-pchan-synchrony/index.html",
+    "children": []
+  },
+  {
+    "name": "blockchan",
+    "label": "Blockchan",
+    "path": "blockchan/index.html",
+    "children": []
+  },
+  {
+    "name": "branch-prediction",
+    "label": "Branch Prediction",
+    "path": "branch-prediction/index.html",
+    "children": []
+  },
+  {
+    "name": "canvas-demo",
+    "label": "Canvas Demo",
+    "path": null,
+    "children": [
+      {
+        "name": "lowpoly",
+        "label": "Lowpoly",
+        "path": "canvas-demo/lowpoly/index.html",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "compute-god-standard-model-validator",
+    "label": "Compute GOD Standard Model Validator",
+    "path": "compute-god-standard-model-validator/index.html",
+    "children": []
+  },
+  {
+    "name": "ctc",
+    "label": "CTC",
+    "path": "ctc/index.html",
+    "children": []
+  },
+  {
+    "name": "ctc-optimizer",
+    "label": "CTC Optimizer",
+    "path": "ctc-optimizer/index.html",
+    "children": []
+  },
+  {
+    "name": "featherlight-fixed-point-recursion",
+    "label": "Featherlight Fixed Point Recursion",
+    "path": "featherlight-fixed-point-recursion/index.html",
+    "children": []
+  },
+  {
+    "name": "feynman-wormhole",
+    "label": "Feynman Wormhole",
+    "path": "feynman-wormhole/index.html",
+    "children": []
+  },
+  {
+    "name": "game-of-life",
+    "label": "Game OF Life",
+    "path": null,
+    "children": [
+      {
+        "name": "3d-life",
+        "label": "3D Life",
+        "path": "game-of-life/3d-life/index.html",
+        "children": []
+      },
+      {
+        "name": "eater-catalysis",
+        "label": "Eater Catalysis",
+        "path": "game-of-life/eater-catalysis/index.html",
+        "children": []
+      },
+      {
+        "name": "non-euclidean",
+        "label": "NON Euclidean",
+        "path": "game-of-life/non-euclidean/index.html",
+        "children": []
+      },
+      {
+        "name": "sweet-life",
+        "label": "Sweet Life",
+        "path": "game-of-life/sweet-life/index.html",
+        "children": []
+      },
+      {
+        "name": "thermal-dual",
+        "label": "Thermal Dual",
+        "path": "game-of-life/thermal-dual/index.html",
+        "children": []
+      },
+      {
+        "name": "triangular",
+        "label": "Triangular",
+        "path": "game-of-life/triangular/index.html",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "intelligent-driving-lab",
+    "label": "Intelligent Driving LAB",
+    "path": "intelligent-driving-lab/index.html",
+    "children": []
+  },
+  {
+    "name": "lorenz-convex",
+    "label": "Lorenz Convex",
+    "path": "lorenz-convex/index.html",
+    "children": []
+  },
+  {
+    "name": "menu-ui-engine",
+    "label": "Menu UI Engine",
+    "path": "menu-ui-engine/index.html",
+    "children": []
+  },
+  {
+    "name": "minimal-ui-engine",
+    "label": "Minimal UI Engine",
+    "path": "minimal-ui-engine/index.html",
+    "children": []
+  },
+  {
+    "name": "miu-tiantian-gradient-descent",
+    "label": "MIU Tiantian Gradient Descent",
+    "path": "miu-tiantian-gradient-descent/index.html",
+    "children": []
+  },
+  {
+    "name": "neutrino-catalysis",
+    "label": "Neutrino Catalysis",
+    "path": "neutrino-catalysis/index.html",
+    "children": []
+  },
+  {
+    "name": "qed",
+    "label": "QED",
+    "path": "qed/index.html",
+    "children": []
+  },
+  {
+    "name": "qianli-bingfeng",
+    "label": "Qianli Bingfeng",
+    "path": "qianli-bingfeng/index.html",
+    "children": []
+  },
+  {
+    "name": "seek-child-ssb",
+    "label": "Seek Child SSB",
+    "path": "seek-child-ssb/index.html",
+    "children": []
+  },
+  {
+    "name": "singularity-life",
+    "label": "Singularity Life",
+    "path": "singularity-life/index.html",
+    "children": []
+  },
+  {
+    "name": "time-crystal",
+    "label": "Time Crystal",
+    "path": "time-crystal/index.html",
+    "children": []
+  },
+  {
+    "name": "wuxing-bagua",
+    "label": "Wuxing Bagua",
+    "path": "wuxing-bagua/index.html",
+    "children": []
+  },
+  {
+    "name": "yuko-bingzi-resonance",
+    "label": "Yuko Bingzi Resonance",
+    "path": "yuko-bingzi-resonance/index.html",
+    "children": []
+  }
+]
