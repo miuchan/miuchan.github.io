@@ -31,6 +31,24 @@ const [getLogs, setLogs] = createSignal([
   }
 ]);
 
+const stackOutline = [
+  {
+    id: 'signal',
+    title: 'Signal · createSignal()',
+    detail: '声明响应式状态容器，驱动 UI 渲染刷新。'
+  },
+  {
+    id: 'effect',
+    title: 'Effect · effect(fn)',
+    detail: '追踪依赖并在状态变化时重新执行计算。'
+  },
+  {
+    id: 'element',
+    title: 'Element · h(tag, props, ...children)',
+    detail: '描述 UI 节点与属性，将状态映射为界面。'
+  }
+];
+
 setInterval(() => {
   setPulse((value) => value + 1);
   logEvent('引擎脉冲同步完成。');
@@ -106,43 +124,59 @@ function view() {
     { class: 'app-shell' },
     h(
       'section',
-      { class: 'panel' },
-      h('h2', null, '最小 UI 引擎状态'),
+      { class: 'panel status-panel' },
+      h(
+        'header',
+        { class: 'panel-header' },
+        h('h2', { class: 'panel-title' }, '最小 UI 引擎状态'),
+        h('p', { class: 'panel-subtitle' }, '实时追踪微型 UI 引擎的脉冲与运行节奏。')
+      ),
       h(
         'div',
-        { class: 'stat-grid' },
+        { class: 'status-metrics' },
         metrics.map((metric) =>
           h(
-            'div',
-            { class: 'stat-card' },
-            h('span', { class: 'muted' }, metric.label),
-            h('strong', null, metric.value),
-            h('p', { class: 'muted' }, metric.hint)
+            'article',
+            { class: 'metric-card' },
+            h('span', { class: 'metric-label' }, metric.label),
+            h('span', { class: 'metric-value' }, metric.value),
+            h('p', { class: 'metric-hint' }, metric.hint)
           )
         )
       )
     ),
     h(
       'section',
-      { class: 'panel' },
-      h('h2', null, '构建剧本'),
+      { class: 'panel script-panel' },
+      h(
+        'header',
+        { class: 'panel-header' },
+        h('h2', { class: 'panel-title' }, '构建剧本'),
+        h('p', { class: 'panel-subtitle' }, '按序列执行构建步骤，确保最小系统稳定上线。')
+      ),
       h(
         'ul',
         { class: 'step-list' },
-        steps.map((step) =>
+        steps.map((step, index) =>
           h(
             'li',
             { class: 'step-item' },
             h(
               'div',
-              null,
-              h('strong', null, step.title),
-              h('p', { class: 'muted' }, step.detail)
+              { class: 'step-info' },
+              h('span', { class: 'step-index' }, `0${index + 1}`),
+              h(
+                'div',
+                null,
+                h('strong', null, step.title),
+                h('p', { class: 'muted' }, step.detail)
+              )
             ),
             h(
               'button',
               {
                 type: 'button',
+                class: 'step-action',
                 onClick: () => toggleStep(step.id),
                 'aria-pressed': step.status === 'complete'
               },
@@ -154,8 +188,13 @@ function view() {
     ),
     h(
       'section',
-      { class: 'panel' },
-      h('h2', null, '系统焦点'),
+      { class: 'panel focus-panel' },
+      h(
+        'header',
+        { class: 'panel-header' },
+        h('h2', { class: 'panel-title' }, '系统焦点'),
+        h('p', { class: 'panel-subtitle' }, '切换关注模式，检视引擎、系统与时间线的不同视角。')
+      ),
       h(
         'div',
         { class: 'focus-tabs', role: 'tablist' },
@@ -165,6 +204,7 @@ function view() {
             {
               type: 'button',
               role: 'tab',
+              class: 'focus-tab',
               onClick: () => activateFocus(mode),
               'aria-pressed': focus === mode
             },
@@ -174,30 +214,57 @@ function view() {
       ),
       h(
         'div',
-        { class: 'system-map', role: 'region', 'aria-live': 'polite' },
+        { class: 'focus-grid', role: 'region', 'aria-live': 'polite' },
         focusCopy[focus].map((item) =>
           h(
-            'div',
-            null,
-            h('strong', null, `${item.label} · ${item.value}`),
-            h('span', { class: 'muted' }, item.description)
+            'article',
+            { class: 'focus-card' },
+            h('strong', { class: 'focus-title' }, `${item.label} · ${item.value}`),
+            h('p', { class: 'focus-detail' }, item.description)
           )
         )
       )
     ),
     h(
       'section',
-      { class: 'panel' },
-      h('h2', null, '事件流'),
+      { class: 'panel stack-panel' },
+      h(
+        'header',
+        { class: 'panel-header' },
+        h('h2', { class: 'panel-title' }, '系统栈'),
+        h('p', { class: 'panel-subtitle' }, '核心原语组成的运行基座，保障信号与渲染协同。')
+      ),
+      h(
+        'ul',
+        { class: 'stack-list' },
+        stackOutline.map((item) =>
+          h(
+            'li',
+            { class: 'stack-item' },
+            h('span', { class: 'stack-title' }, item.title),
+            h('p', { class: 'stack-detail' }, item.detail)
+          )
+        )
+      )
+    ),
+    h(
+      'section',
+      { class: 'panel log-panel' },
+      h(
+        'header',
+        { class: 'panel-header' },
+        h('h2', { class: 'panel-title' }, '事件流'),
+        h('p', { class: 'panel-subtitle' }, '记录脉冲广播与操作指令，构成调试与回溯基线。')
+      ),
       h(
         'div',
         { class: 'log-stream', role: 'log', 'aria-live': 'polite' },
         logs.map((entry) =>
           h(
-            'div',
+            'article',
             { class: 'log-entry' },
-            h('strong', null, entry.time),
-            h('div', null, entry.message)
+            h('span', { class: 'log-time' }, entry.time),
+            h('p', { class: 'log-message' }, entry.message)
           )
         )
       )
