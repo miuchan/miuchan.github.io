@@ -770,14 +770,139 @@ h3 {
   letter-spacing: 0.04em;
 }
 
-.deck__footer {
-  margin-top: 1.6rem;
+.deck {
   display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.deck__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
   justify-content: space-between;
-  align-items: center;
   gap: 0.75rem;
+}
+
+.deck__title {
+  margin: 0;
+}
+
+.deck__title a {
+  text-decoration: none;
+}
+
+.deck__title a:hover,
+.deck__title a:focus {
+  text-decoration: underline;
+}
+
+.deck__status {
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(140, 123, 255, 0.2);
+  color: var(--color-highlight);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.deck__summary {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.deck__meta {
+  margin-top: 0.95rem;
+}
+
+.deck__actions {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.deck__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.45rem 0.95rem;
+  border-radius: 999px;
+  border: 1px solid rgba(140, 123, 255, 0.28);
+  background: rgba(69, 209, 255, 0.12);
+  color: var(--color-text);
+  font-weight: 600;
   font-size: 0.85rem;
-  color: var(--color-muted);
+  letter-spacing: 0.02em;
+  transition: border-color var(--transition), background var(--transition), transform var(--transition);
+}
+
+.deck__link:hover,
+.deck__link:focus {
+  text-decoration: none;
+  border-color: var(--color-highlight);
+  background: rgba(69, 209, 255, 0.18);
+  transform: translateY(-1px);
+}
+
+.deck__link span:last-child {
+  font-size: 0.8rem;
+}
+
+.deck-grid--compact .deck {
+  padding: 1.45rem;
+}
+
+.deck--compact {
+  gap: 0.95rem;
+}
+
+.deck--compact .deck__summary {
+  font-size: 0.9rem;
+}
+
+.deck--compact .deck__meta {
+  margin-top: 0.75rem;
+}
+
+.deck--compact .deck__actions {
+  margin-top: 0.85rem;
+}
+
+.deck-clusters {
+  display: grid;
+  gap: clamp(2rem, 4vw, 3.5rem);
+}
+
+.deck-cluster {
+  display: grid;
+  gap: clamp(1.4rem, 3vw, 2.2rem);
+}
+
+.deck-cluster__header {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.deck-cluster__eyebrow {
+  font-size: 0.8rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-highlight);
+}
+
+.deck-cluster__title {
+  font-size: clamp(1.4rem, 2.2vw, 1.8rem);
+}
+
+.deck-cluster__description {
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
+  max-width: 62ch;
 }
 
 .inline-link {

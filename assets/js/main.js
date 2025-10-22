@@ -61,17 +61,21 @@ const missionTracks = [
 const labDecks = [
   {
     id: 'atlas-console',
+    type: 'lab',
+    external: true,
     url: 'https://atlas.earthonline.systems',
     translations: {
       en: {
         title: 'Atlas Console',
         summary: 'A navigation layer for research, assets, and governance rituals with multiplayer spatial UI.',
-        tags: ['Spatial UI', 'Knowledge graph']
+        tags: ['Spatial UI', 'Knowledge graph'],
+        cta: 'Visit console'
       },
       zh: {
         title: 'Atlas 控制台',
         summary: '将研究、资产与治理仪式串联的导航层，配备多人空间界面。',
-        tags: ['空间界面', '知识图谱']
+        tags: ['空间界面', '知识图谱'],
+        cta: '访问控制台'
       }
     },
     status: {
@@ -81,17 +85,21 @@ const labDecks = [
   },
   {
     id: 'helium-simulator',
+    type: 'lab',
+    external: true,
     url: 'https://helium.earthonline.systems',
     translations: {
       en: {
         title: 'Helium Simulator',
         summary: 'A WebGL engine orchestrating planetary telemetry and AI copilots for operations teams.',
-        tags: ['WebGL', 'AI copilot']
+        tags: ['WebGL', 'AI copilot'],
+        cta: 'Launch simulator'
       },
       zh: {
         title: 'Helium 模拟器',
         summary: '驱动行星遥测与 AI 协同体的 WebGL 引擎，服务操作团队。',
-        tags: ['WebGL', 'AI 协作']
+        tags: ['WebGL', 'AI 协作'],
+        cta: '启动模拟器'
       }
     },
     status: {
@@ -101,22 +109,162 @@ const labDecks = [
   },
   {
     id: 'council-studio',
+    type: 'lab',
+    external: true,
     url: 'https://council.earthonline.systems',
     translations: {
       en: {
         title: 'Council Studio',
         summary: 'An AI-native governance studio that scripts rituals, scorecards, and shared decision records.',
-        tags: ['Governance', 'Narrative tools']
+        tags: ['Governance', 'Narrative tools'],
+        cta: 'Enter studio'
       },
       zh: {
         title: 'Council Studio',
         summary: '面向 AI 的治理工作室，编排仪式、记分卡与共享决策记录。',
-        tags: ['治理体系', '叙事工具']
+        tags: ['治理体系', '叙事工具'],
+        cta: '进入工作室'
       }
     },
     status: {
       en: 'Design partner program',
       zh: '设计伙伴计划'
+    }
+  }
+];
+
+const demoDecks = [
+  {
+    id: 'branch-prediction-lab',
+    type: 'demo',
+    external: true,
+    url: 'public/demo/branch-prediction/index.html',
+    translations: {
+      en: {
+        title: 'Branch Prediction Lab',
+        summary: 'Experiment with branch predictor strategies using live traces, rolling accuracy, and pipeline flush costs.',
+        tags: ['Microarchitecture', 'Visualization'],
+        cta: 'Launch demo'
+      },
+      zh: {
+        title: '分支预测策略实验室',
+        summary: '通过交互式轨迹与统计面板体验分支预测策略，观察命中率与流水线冲刷成本。',
+        tags: ['微架构', '可视化'],
+        cta: '启动演示'
+      }
+    },
+    status: {
+      en: 'Playable in browser',
+      zh: '浏览器演示'
+    }
+  },
+  {
+    id: 'compute-god-validator',
+    type: 'demo',
+    external: true,
+    url: 'public/demo/compute-god-standard-model-validator/index.html',
+    translations: {
+      en: {
+        title: 'Compute-God Validator',
+        summary: 'Load the Standard Model registry in-browser and generate traceable validation reports across symmetries and constraints.',
+        tags: ['Physics', 'Field tools'],
+        cta: 'Run validator'
+      },
+      zh: {
+        title: 'Compute-God 标准模型验证控制台',
+        summary: '在浏览器中载入标准模型登记表，对对称性与实验约束生成可追踪的验证报告。',
+        tags: ['物理', '场景工具'],
+        cta: '启动验证器'
+      }
+    },
+    status: {
+      en: 'Interactive console',
+      zh: '交互式控制台'
+    }
+  },
+  {
+    id: 'agi-asi-reaction',
+    type: 'demo',
+    external: true,
+    url: 'public/demo/agi-asi-reaction-chamber/index.html',
+    translations: {
+      en: {
+        title: 'AGI / ASI Reaction Chamber',
+        summary: 'Balance innovation and alignment by tuning feedback loops inside an evolving intelligence chamber visualization.',
+        tags: ['Systems dynamics', 'AI governance'],
+        cta: 'Enter chamber'
+      },
+      zh: {
+        title: 'AGI / ASI 反应室',
+        summary: '调节反馈与监督参数，观察智能反应室在创新与对齐之间的动态。',
+        tags: ['系统动力学', 'AI 治理'],
+        cta: '进入反应室'
+      }
+    },
+    status: {
+      en: 'Interactive field study',
+      zh: '交互式场域'
+    }
+  },
+  {
+    id: 'ambient-sketch',
+    type: 'demo',
+    external: true,
+    url: 'public/demo/ambient-sketch/index.html',
+    translations: {
+      en: {
+        title: 'Ambient Music Sketch',
+        summary: 'Compose a gentle ambient loop with Web Audio controls for tempo, chords, and melodic phrasing.',
+        tags: ['Sound', 'Web Audio'],
+        cta: 'Play composition'
+      },
+      zh: {
+        title: '环境乐随想',
+        summary: '使用 Web Audio 控制速度与和弦，生成一段为数字花园写下的环境乐循环。',
+        tags: ['声音', 'Web Audio'],
+        cta: '播放乐段'
+      }
+    },
+    status: {
+      en: 'Audio playground',
+      zh: '音频体验'
+    }
+  }
+];
+
+const deckClusters = [
+  {
+    id: 'production-labs',
+    variant: 'default',
+    decks: labDecks,
+    translations: {
+      en: {
+        eyebrow: 'Production fleet',
+        title: 'Operational lab consoles',
+        description: 'Interfaces shipping with live telemetry, active partners, and governance rituals.'
+      },
+      zh: {
+        eyebrow: '生产舰队',
+        title: '运行中的实验室控制台',
+        description: '这些界面携带遥测、伙伴协作与治理仪式，持续在生产环境迭代。'
+      }
+    }
+  },
+  {
+    id: 'demo-garden',
+    variant: 'compact',
+    decks: demoDecks,
+    translations: {
+      en: {
+        eyebrow: 'Demo garden',
+        title: 'Interactive research experiments',
+        description: 'Hand-picked prototypes exploring microarchitecture, physics field tools, and narrative soundscapes.'
+      },
+      zh: {
+        eyebrow: '演示花园',
+        title: '交互式研究实验',
+        description: '精选展示微架构、物理工具与叙事声景的交互原型。'
+      }
     }
   }
 ];
@@ -367,8 +515,9 @@ function renderHeroStats(lang) {
   const heroStatsElement = document.getElementById('hero-stats');
   if (!heroStatsElement) return;
   const allianceCount = getFriendContent(lang).featuredAlliances.length;
+  const deckCount = deckClusters.reduce((total, cluster) => total + cluster.decks.length, 0);
   const context = {
-    decks: labDecks.length,
+    decks: deckCount,
     research: researchEntries.length,
     signals: signalLog.length,
     alliances: allianceCount
@@ -431,42 +580,159 @@ function renderMission(lang) {
   });
 }
 
-function renderDecks(lang) {
-  const grid = document.getElementById('lab-grid');
-  if (!grid) return;
-  grid.innerHTML = '';
-  labDecks.forEach((deck) => {
-    const copy = resolveTranslation(deck.translations, lang);
-    const deckCard = document.createElement('article');
-    deckCard.className = 'deck';
+function getDeckDefaultLabel(type, lang) {
+  const defaults = {
+    lab: { en: 'Visit lab', zh: '访问实验室' },
+    demo: { en: 'Launch demo', zh: '启动 Demo' }
+  };
+  const mapping = defaults[type] || defaults.lab;
+  return mapping?.[lang] || mapping?.[LANGUAGE_FALLBACK] || (lang === 'zh' ? '打开链接' : 'Open link');
+}
 
-    const title = document.createElement('h3');
-    title.className = 'deck__title';
-    const link = document.createElement('a');
-    link.href = deck.url;
-    link.target = '_blank';
-    link.rel = 'noopener';
-    link.textContent = copy.title;
-    title.appendChild(link);
+function createDeckCard(deck, lang, options = {}) {
+  const copy = resolveTranslation(deck.translations, lang);
+  const fallbackCopy = resolveTranslation(deck.translations, LANGUAGE_FALLBACK);
+  const card = document.createElement('article');
+  card.className = 'deck';
+  if (options.variant === 'compact') {
+    card.classList.add('deck--compact');
+  }
 
+  const header = document.createElement('div');
+  header.className = 'deck__header';
+
+  const title = document.createElement('h3');
+  title.className = 'deck__title';
+  const titleLink = document.createElement('a');
+  titleLink.href = deck.url;
+  if (deck.external !== false) {
+    titleLink.target = '_blank';
+    titleLink.rel = 'noopener';
+  }
+  titleLink.textContent = copy.title;
+  title.appendChild(titleLink);
+  header.appendChild(title);
+
+  const statusText = deck.status?.[lang] || deck.status?.[LANGUAGE_FALLBACK];
+  if (statusText) {
+    const status = document.createElement('span');
+    status.className = 'deck__status';
+    status.textContent = statusText;
+    header.appendChild(status);
+  }
+
+  card.appendChild(header);
+
+  if (copy.summary) {
     const summary = document.createElement('p');
+    summary.className = 'deck__summary';
     summary.textContent = copy.summary;
+    card.appendChild(summary);
+  }
 
+  const tags = copy.tags?.length ? copy.tags : fallbackCopy?.tags;
+  if (tags?.length) {
     const meta = document.createElement('div');
     meta.className = 'deck__meta';
-    copy.tags?.forEach((tag) => {
+    tags.forEach((tag) => {
       const badge = document.createElement('span');
       badge.className = 'tag';
       badge.textContent = tag;
       meta.appendChild(badge);
     });
+    card.appendChild(meta);
+  }
 
-    const footer = document.createElement('div');
-    footer.className = 'deck__footer';
-    footer.innerHTML = `<span>${deck.status?.[lang] || deck.status?.[LANGUAGE_FALLBACK] || ''}</span><span aria-hidden="true">↗</span>`;
+  const actions = [];
+  const defaultLabel = copy.cta || fallbackCopy?.cta || getDeckDefaultLabel(deck.type, lang);
+  if (deck.url) {
+    actions.push({ url: deck.url, label: defaultLabel, external: deck.external });
+  }
 
-    deckCard.append(title, summary, meta, footer);
-    grid.appendChild(deckCard);
+  if (Array.isArray(deck.links)) {
+    deck.links.forEach((link) => {
+      if (!link?.url) return;
+      const label =
+        link.translations?.[lang] ||
+        link.translations?.[LANGUAGE_FALLBACK] ||
+        link.label ||
+        (lang === 'zh' ? '了解更多' : 'Learn more');
+      actions.push({ url: link.url, label, external: link.external ?? deck.external });
+    });
+  }
+
+  if (actions.length) {
+    const actionGroup = document.createElement('div');
+    actionGroup.className = 'deck__actions';
+    actions.forEach((action) => {
+      const anchor = document.createElement('a');
+      anchor.className = 'deck__link';
+      anchor.href = action.url;
+      if (action.external !== false) {
+        anchor.target = '_blank';
+        anchor.rel = 'noopener';
+      }
+      anchor.innerHTML = `<span>${action.label}</span><span aria-hidden="true">↗</span>`;
+      actionGroup.appendChild(anchor);
+    });
+    card.appendChild(actionGroup);
+  }
+
+  return card;
+}
+
+function renderDecks(lang) {
+  const grid = document.getElementById('lab-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  grid.classList.add('deck-clusters');
+
+  deckClusters.forEach((cluster) => {
+    const clusterCopy = resolveTranslation(cluster.translations, lang);
+    const section = document.createElement('section');
+    section.className = 'deck-cluster';
+
+    const header = document.createElement('div');
+    header.className = 'deck-cluster__header';
+
+    if (clusterCopy?.eyebrow) {
+      const eyebrow = document.createElement('p');
+      eyebrow.className = 'deck-cluster__eyebrow';
+      eyebrow.textContent = clusterCopy.eyebrow;
+      header.appendChild(eyebrow);
+    }
+
+    if (clusterCopy?.title) {
+      const title = document.createElement('h3');
+      title.className = 'deck-cluster__title';
+      title.textContent = clusterCopy.title;
+      header.appendChild(title);
+    }
+
+    if (clusterCopy?.description) {
+      const description = document.createElement('p');
+      description.className = 'deck-cluster__description';
+      description.textContent = clusterCopy.description;
+      header.appendChild(description);
+    }
+
+    if (header.children.length) {
+      section.appendChild(header);
+    }
+
+    const clusterGrid = document.createElement('div');
+    clusterGrid.className = 'deck-grid';
+    if (cluster.variant === 'compact') {
+      clusterGrid.classList.add('deck-grid--compact');
+    }
+
+    cluster.decks.forEach((deck) => {
+      const card = createDeckCard(deck, lang, { variant: cluster.variant });
+      clusterGrid.appendChild(card);
+    });
+
+    section.appendChild(clusterGrid);
+    grid.appendChild(section);
   });
 }
 
