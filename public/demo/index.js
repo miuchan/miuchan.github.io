@@ -6,6 +6,25 @@ const metaEl = document.getElementById('demoMeta');
 let treeData = [];
 let totalDemoCount = 0;
 
+function getInitialQuery() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get('search') || params.get('q') || '';
+}
+
+function updateUrlQuery(query) {
+  const params = new URLSearchParams(window.location.search);
+  if (query) {
+    params.set('search', query);
+  } else {
+    params.delete('search');
+    params.delete('q');
+  }
+
+  const newQuery = params.toString();
+  const newUrl = `${window.location.pathname}${newQuery ? `?${newQuery}` : ''}${window.location.hash}`;
+  window.history.replaceState(null, '', newUrl);
+}
+
 async function fetchDemoTree() {
   const response = await fetch('demo-tree.json', { cache: 'no-store' });
   if (!response.ok) {
@@ -194,6 +213,13 @@ function updateStatus(query, visibleNodes) {
   }
 }
 
+function applyQuery(query) {
+  const filtered = filterTree(treeData, query);
+  renderTree(filtered, query);
+  updateStatus(query, filtered);
+  updateUrlQuery(query);
+}
+
 function updateMeta(nodes) {
   const directoryCount = nodes.length;
   metaEl.innerHTML = '';
@@ -216,8 +242,11 @@ async function initialise() {
     treeData = data;
     totalDemoCount = treeData.reduce((total, node) => total + countDemos(node), 0);
     updateMeta(treeData);
-    renderTree(treeData, '');
-    updateStatus('', treeData);
+    const initialQuery = getInitialQuery();
+    if (initialQuery) {
+      searchInput.value = initialQuery;
+    }
+    applyQuery(initialQuery);
     treeContainer.hidden = false;
   } catch (error) {
     console.error(error);
@@ -227,9 +256,7 @@ async function initialise() {
 
   searchInput.addEventListener('input', (event) => {
     const query = event.target.value.trim();
-    const filtered = filterTree(treeData, query);
-    renderTree(filtered, query);
-    updateStatus(query, filtered);
+    applyQuery(query);
   });
 }
 

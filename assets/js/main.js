@@ -173,6 +173,16 @@ const demoDecks = [
     type: 'demo',
     external: true,
     url: 'public/demo/branch-prediction/index.html',
+    links: [
+      {
+        url: 'public/demo/index.html?search=branch-prediction',
+        external: false,
+        translations: {
+          en: 'View in directory tree',
+          zh: '在目录树中查看'
+        }
+      }
+    ],
     translations: {
       en: {
         title: 'Branch Prediction Lab',
@@ -197,6 +207,16 @@ const demoDecks = [
     type: 'demo',
     external: true,
     url: 'public/demo/compute-god-standard-model-validator/index.html',
+    links: [
+      {
+        url: 'public/demo/index.html?search=compute-god-standard-model-validator',
+        external: false,
+        translations: {
+          en: 'View in directory tree',
+          zh: '在目录树中查看'
+        }
+      }
+    ],
     translations: {
       en: {
         title: 'Compute-God Validator',
@@ -221,6 +241,16 @@ const demoDecks = [
     type: 'demo',
     external: true,
     url: 'public/demo/agi-asi-reaction-chamber/index.html',
+    links: [
+      {
+        url: 'public/demo/index.html?search=agi-asi-reaction-chamber',
+        external: false,
+        translations: {
+          en: 'View in directory tree',
+          zh: '在目录树中查看'
+        }
+      }
+    ],
     translations: {
       en: {
         title: 'AGI / ASI Reaction Chamber',
@@ -245,6 +275,16 @@ const demoDecks = [
     type: 'demo',
     external: true,
     url: 'public/demo/ambient-sketch/index.html',
+    links: [
+      {
+        url: 'public/demo/index.html?search=ambient-sketch',
+        external: false,
+        translations: {
+          en: 'View in directory tree',
+          zh: '在目录树中查看'
+        }
+      }
+    ],
     translations: {
       en: {
         title: 'Ambient Music Sketch',
