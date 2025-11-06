@@ -270,6 +270,12 @@
         "label": "Triangular",
         "path": "game-of-life/triangular/index.html",
         "children": []
+      },
+      {
+        "name": "spontaneous-symmetry-breaking",
+        "label": "Spontaneous Symmetry Breaking",
+        "path": "game-of-life/spontaneous-symmetry-breaking/index.html",
+        "children": []
       }
     ]
   },
