@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>生命游戏：自发对称破缺实验室</title>
+  <meta name="description" content="在康威生命游戏的基础上引入自旋与噪声，观察从完全对称态出发如何自发选择一个宏观序参量。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="layout">
+    <header class="hero">
+      <a class="back" href="../../../index.html#projects">← 返回作品集合</a>
+      <h1>生命游戏：自发对称破缺实验室</h1>
+      <p>给康威生命游戏的每个活细胞赋予红 / 蓝两种自旋朝向，让规则保持左右对称，再通过微弱噪声与邻域耦合，见证系统从完全对称的初态中自发挑选出一个宏观取向。</p>
+      <div class="tags" aria-label="演示标签">
+        <span class="tag">生命游戏</span>
+        <span class="tag">自发对称破缺</span>
+        <span class="tag">非平衡统计物理</span>
+      </div>
+    </header>
+
+    <section class="stage">
+      <canvas id="lifeCanvas" width="720" height="540" role="img" aria-label="展示红蓝自旋生命游戏演化的画布"></canvas>
+      <aside class="panel">
+        <h2>玩法说明</h2>
+        <ul>
+          <li>点击或拖动画布布置种子，使用下方的刷子选择红色（+）或蓝色（−）自旋。</li>
+          <li>规则依旧是 B3/S23，但每个活细胞会根据邻居自旋与噪声调整朝向，宏观序参量可能随时间突然偏向一侧。</li>
+          <li>尝试使用“对称晶种”按钮放置一个左右镜像的初态，然后调节耦合与噪声，观察系统如何打破对称。</li>
+        </ul>
+      </aside>
+    </section>
+
+    <section class="controls" aria-describedby="controls-help">
+      <div class="stats" role="status" aria-live="polite">
+        <div class="stat">
+          <span class="label">代数</span>
+          <strong data-generation>0</strong>
+        </div>
+        <div class="stat">
+          <span class="label">活细胞</span>
+          <strong data-alive>0</strong>
+        </div>
+        <div class="stat">
+          <span class="label">序参量</span>
+          <strong data-order>0.00</strong>
+        </div>
+        <div class="stat">
+          <span class="label">红/蓝占比</span>
+          <strong data-ratio>0 / 0</strong>
+        </div>
+      </div>
+      <div class="control-group">
+        <button type="button" id="toggle">开始演化</button>
+        <button type="button" id="step" class="secondary">单步</button>
+        <button type="button" id="clear" class="secondary">清空</button>
+        <button type="button" id="symmetricSeed" class="secondary">对称晶种</button>
+        <button type="button" id="random" class="secondary">随机噪声</button>
+      </div>
+      <div class="control-group brush">
+        <span class="label">刷子</span>
+        <button type="button" id="brushPositive" class="brush-button active">红色（+）</button>
+        <button type="button" id="brushNegative" class="brush-button">蓝色（−）</button>
+      </div>
+      <div class="control-group sliders">
+        <label class="slider">
+          <span>演化速度 <strong data-speed>140 ms</strong></span>
+          <input type="range" id="speed" min="40" max="400" value="140" step="10">
+        </label>
+        <label class="slider">
+          <span>耦合强度 <strong data-coupling>0.70</strong></span>
+          <input type="range" id="coupling" min="0" max="100" value="70">
+        </label>
+        <label class="slider">
+          <span>热噪声 <strong data-noise>0.08</strong></span>
+          <input type="range" id="noise" min="0" max="30" value="8">
+        </label>
+        <label class="slider">
+          <span>对称偏置 <strong data-bias>0.00</strong></span>
+          <input type="range" id="bias" min="-10" max="10" value="0">
+        </label>
+      </div>
+      <p id="controls-help">耦合越强，细胞越倾向跟随邻居的自旋；噪声越大，局部涨落越容易翻转取向；偏置则模拟外场，为自发对称破缺提供一个轻微的“方向提示”。</p>
+    </section>
+
+    <section class="chart" aria-labelledby="chart-title">
+      <div class="chart-header">
+        <h2 id="chart-title">序参量演化</h2>
+        <p>曲线记录最近 200 代的平均自旋值（-1 到 +1）。水平线表示完全对称的零序参量状态。</p>
+      </div>
+      <canvas id="orderChart" width="720" height="120" role="img" aria-label="序参量随时间的折线图"></canvas>
+    </section>
+
+    <section class="insight">
+      <h2>为什么这是一次“自发”的破缺？</h2>
+      <p>规则本身完全对称：出生与存活条件对红蓝不做区分，自旋的翻转只依赖邻居的相对多数与热噪声。初态如果完全对称（左右镜像且红蓝等量），系统本应保持不偏不倚。然而一旦加入极小的噪声或有限网格，任意微扰都会被耦合放大，序参量突然奔向 +1 或 -1，一侧的颜色逐渐统治全局。这种“没有显式外场却最终选择了一边”的机制，就是自发对称破缺。</p>
+      <p>调节偏置可以观察到从自发破缺到显式破缺的过渡；降低噪声还能形成稳定的畴界，模拟 Ising 模型在低温下的行为。试着捕捉序参量图中的临界点，看看当噪声略大于耦合时系统如何在两侧徘徊。</p>
+    </section>
+
+    <footer class="footer">
+      <p>© <span id="year"></span> Miuchan · 自发对称破缺生命游戏实验</p>
+    </footer>
+  </main>
+  <script type="module" src="ssb-life.js"></script>
+</body>
+</html>
