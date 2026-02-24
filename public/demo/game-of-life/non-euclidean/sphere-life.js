@@ -1,5 +1,5 @@
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.159/build/three.module.js';
-import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.159/examples/jsm/controls/OrbitControls.js';
+import * as THREE from 'https://esm.sh/three@0.159.0';
+import { OrbitControls } from 'https://esm.sh/three@0.159.0/examples/jsm/controls/OrbitControls.js';
 
 const canvas = document.getElementById('life-sphere');
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
