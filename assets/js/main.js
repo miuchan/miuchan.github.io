@@ -135,6 +135,40 @@ const labDecks = [
 
 const demoDecks = [
   {
+    id: 'alpha-hunter',
+    type: 'demo',
+    external: true,
+    url: 'public/demo/alpha-hunter/index.html',
+    links: [
+      {
+        url: 'public/demo/index.html?search=alpha-hunter',
+        external: false,
+        translations: {
+          en: 'View in directory tree',
+          zh: '在目录树中查看'
+        }
+      }
+    ],
+    translations: {
+      en: {
+        title: 'Alpha Hunter',
+        summary: 'A 20-day market card game about reading signals, managing risk, and compounding insight.',
+        tags: ['Game', 'Strategy', 'Godot'],
+        cta: 'Play game'
+      },
+      zh: {
+        title: 'Alpha Hunter',
+        summary: '一款 20 天市场卡牌游戏：读信号、控风险，把洞察滚成收益。',
+        tags: ['游戏', '策略', 'Godot'],
+        cta: '开始游戏'
+      }
+    },
+    status: {
+      en: 'Playable web build',
+      zh: 'Web 可玩版本'
+    }
+  },
+  {
     id: 'demo-directory',
     type: 'demo',
     external: false,

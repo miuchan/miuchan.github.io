@@ -6,6 +6,12 @@
     "children": []
   },
   {
+    "name": "alpha-hunter",
+    "label": "Alpha Hunter",
+    "path": "alpha-hunter/index.html",
+    "children": []
+  },
+  {
     "name": "ambient-sketch",
     "label": "Ambient Sketch",
     "path": "ambient-sketch/index.html",
@@ -254,6 +260,12 @@
         "children": []
       },
       {
+        "name": "spontaneous-symmetry-breaking",
+        "label": "Spontaneous Symmetry Breaking",
+        "path": "game-of-life/spontaneous-symmetry-breaking/index.html",
+        "children": []
+      },
+      {
         "name": "sweet-life",
         "label": "Sweet Life",
         "path": "game-of-life/sweet-life/index.html",
@@ -269,12 +281,6 @@
         "name": "triangular",
         "label": "Triangular",
         "path": "game-of-life/triangular/index.html",
-        "children": []
-      },
-      {
-        "name": "spontaneous-symmetry-breaking",
-        "label": "Spontaneous Symmetry Breaking",
-        "path": "game-of-life/spontaneous-symmetry-breaking/index.html",
         "children": []
       }
     ]
